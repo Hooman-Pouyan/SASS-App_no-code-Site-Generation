@@ -1,0 +1,340 @@
+<div class="base-theme8-landing" fxLayout="column" fxLayoutAlign="start stretch">
+
+  <div class="header-section jarallax" fxLayout="column" fxLayoutAlign="start stretch">
+
+    <header class="menu container py-2 my-2" fxLayout="row" fxLayoutAlign="space-between center" fxHide.lt-md>
+
+      <div class="list-item" fxLayout="row" fxLayoutAlign="space-around center" fxLayoutGap="35px">
+
+        <a [href]="dragDropService.fieldLink('base-theme8-header-main-page') || '/'" cdkDrag
+           [cdkDragDisabled]="dragDropService.disabled" fxFlex="60px"
+           [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme8-header-main-page')"
+           (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme8-header-main-page')" editElement
+           editType="base-theme8-header-main-page">
+          <img [src]="storeSettingService.store.logo" [alt]="storeSettingService.store.name" class="img-fluid">
+        </a>
+
+        <div fxLayout="row" fxLayoutAlign="start center" cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+             [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme8-header-search')"
+             (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme8-header-search')" editElement
+             editType="base-theme8-header-search">
+          <div *ngIf="searchIcon" class="search-input" fxLayout="row" fxLayoutAlign="space-evenly center">
+            <mat-icon (click)="searchIcon = !searchIcon" style="cursor:pointer">
+              close
+            </mat-icon>
+            <search [circleShape]="true" [useButton]="false" [searchColor]="'primary'"
+                    style="width: 85%; align-self: center;"
+                    [ngStyle]="{'direction': modulesService.lang == 'fa' ? 'ltr' : 'rtl' }">
+            </search>
+          </div>
+          <button *ngIf="!searchIcon" (click)="searchIcon = !searchIcon" mat-icon-button>
+            <mat-icon>search</mat-icon>
+          </button>
+        </div>
+
+        <a [href]="dragDropService.fieldLink('base-theme8-header-main-page') || '/'" cdkDrag
+           [cdkDragDisabled]="dragDropService.disabled"
+           [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme8-header-main-page')"
+           (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme8-header-main-page')" editElement
+           editType="base-theme8-header-main-page">
+          {{(dragDropService.fieldText('base-theme8-header-main-page') || 'صفحه اصلی') | translate}}
+        </a>
+        <a [href]="dragDropService.fieldLink('base-theme8-header-products') || '/store'" cdkDrag
+           [cdkDragDisabled]="dragDropService.disabled"
+           [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme8-header-products')"
+           (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme8-header-products')" editElement
+           editType="base-theme8-header-products">
+          {{(dragDropService.fieldText('header-products') || 'محصولات') | translate}}
+        </a>
+        <a [href]="dragDropService.fieldLink('base-theme8-header-about') || '/about-us'" cdkDrag
+           [cdkDragDisabled]="dragDropService.disabled"
+           [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme8-header-about')"
+           (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme8-header-about')" editElement
+           editType="base-theme8-header-about">
+          {{(dragDropService.fieldText('base-theme8-header-about') || 'درباره ما') | translate}}
+        </a>
+        <ng-container *ngIf="credentialsService.isGuest else loggedIn">
+          <a [href]="dragDropService.fieldLink('base-theme8-header-sign-up') || '/auth'" cdkDrag
+             [cdkDragDisabled]="dragDropService.disabled"
+             [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme8-header-sign-up')"
+             (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme8-header-sign-up')">
+            {{'ثبت نام' | translate}}
+            /
+            {{'ورود' | translate}}
+          </a>
+        </ng-container>
+        <ng-template #loggedIn>
+          <button [dir]="modulesService.lang == 'fa' ? 'rtl' : 'ltr' " mat-button [matMenuTriggerFor]="profileAction"
+                  cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+                  [cdkDragFreeDragPosition]="dragDropService.findPosition('header-login')"
+                  (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'header-login')">
+            <mat-icon class="mx-1">expand_more</mat-icon>
+            <span>{{credentialsService.credentials?.NAME}}</span>
+          </button>
+          <mat-menu #profileAction="matMenu">
+            <a mat-menu-item routerLink="/profile">
+              <mat-icon>account_circle</mat-icon>
+              <span>{{'پروفایل' | translate}}</span>
+            </a>
+            <a mat-menu-item (click)="credentialsService.logout()">
+              <mat-icon>logout</mat-icon>
+              <span>{{'خروج' | translate}}</span>
+            </a>
+          </mat-menu>
+        </ng-template>
+
+      </div>
+
+      <button mat-mini-fab color="primary" [matBadge]="cartCount" matBadgeColor="warn"
+              (click)="cartService.cartSidenav = sidenavStatus.open" cdkDrag
+              [cdkDragDisabled]="dragDropService.disabled"
+              [cdkDragFreeDragPosition]="dragDropService.findPosition('header-cart')"
+              (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'header-cart')">
+        <mat-icon>shopping_cart</mat-icon>
+      </button>
+
+    </header>
+    <app-header fxHide.gt-sm></app-header>
+
+    <div class="main-slide" fxLayout="column" fxLayoutAlign="start stretch">
+      <div class="section-parallax jarallax" fxLayout="column" fxLayoutAlign="center center">
+        <div fxLayout="column" fxLayoutAlign="center center" class="title">
+          <a href="./" class="title-p">
+            <h1 class="text">
+              بهترین محصولات در
+              <br>
+              <span class="store-name">
+                {{storeSettingService.store.name}}
+              </span>
+            </h1>
+          </a>
+          <div class="title-btn" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="5px">
+            <a mat-raised-button class="buy-btn"
+               [href]="dragDropService.fieldLink('base-theme7-slider-store-btn') || '/store'" cdkDrag
+               [cdkDragDisabled]="dragDropService.disabled"
+               [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme7-slider-store-btn')"
+               (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme7-slider-store-btn')" editElement
+               editType="base-theme7-slider-store-btn">
+              {{dragDropService.fieldText('base-theme7-slider-store-btn') || "خرید" | translate}}
+            </a>
+            <a mat-raised-button class="about-btn"
+               [href]="dragDropService.fieldLink('base-theme7-slider-about-us-btn') || '/about-us'" cdkDrag
+               [cdkDragDisabled]="dragDropService.disabled"
+               [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme7-slider-about-us-btn')"
+               (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme7-slider-about-us-btn')"
+               editElement
+               editType="base-theme7-slider-about-us-btn">
+              {{dragDropService.fieldText('base-theme7-slider-about-us-btn') || "درباره ما" | translate}}
+            </a>
+          </div>
+
+        </div>
+      </div>
+      <div class="overlay"></div>
+      <img class="slide-iamge" [src]="dynamicMediaService.getMedia('base-theme8-intro')" [alt]="'base-theme8-intro'"
+           class="jarallax-img img-fluid" editElement [editType]="'base-theme8-intro'"
+           >
+    </div>
+
+  </div>
+
+  <div class="about-us-section container" fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign.lt-md="start stretch"
+       fxLayoutAlign="space-around center">
+    <div class="image" fxFlex="40%" *ngIf="dynamicMediaService.getMedia('base-theme8-about-us')" cdkDrag
+         [cdkDragDisabled]="dragDropService.disabled"
+         [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme8-about-us-img')"
+         (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme8-about-us-img')">
+      <ng-container *ngIf="dynamicMediaService.getMediaLink('base-theme8-about-us') else noLink">
+        <a [href]="dynamicMediaService.getMediaLink('base-theme8-about-us')" target="_blank">
+          <img [src]="dynamicMediaService.getMedia('base-theme8-about-us')" [alt]="'base-theme8-about-us'"
+               class="text-center img-fluid" editElement [editType]="'base-theme8-about-us'"
+               >
+        </a>
+      </ng-container>
+      <ng-template #noLink>
+        <img [src]="dynamicMediaService.getMedia('base-theme8-about-us')" [alt]="'base-theme8-about-us'"
+             class="text-center img-fluid" editElement [editType]="'base-theme8-about-us'"
+             >
+      </ng-template>
+    </div>
+    <div fxLayout="column" fxLayoutAlign="start stretch" fxFlex="45%" class="p-1">
+      <h2 cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+          [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme8-about-us-title')"
+          (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme8-about-us-title')" editElement
+          editType="base-theme8-about-us-title">
+        {{dragDropService.fieldText('base-theme8-about-us-title') || 'درباره ما' | translate}}
+      </h2>
+      <p class="text-justify text-preWrap" cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+         [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme8-about-us-sub-title')"
+         (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme8-about-us-sub-title')" editElement
+         editType="base-theme8-about-us-sub-title">
+        {{dragDropService.fieldText('base-theme8-about-us-sub-title') || 'لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است، و برای شرایط فعلی تکنولوژی مورد نیاز، و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد، کتابهای زیادی در شصت و سه درصد گذشته حال و آینده، شناخت فراوان جامعه و متخصصان را می طلبد، تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی، و فرهنگ پیشرو در زبان فارسی ایجاد کرد، در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها، و شرایط سخت تایپ به پایان رسد و زمان مورد نیاز شامل حروفچینی دستاوردهای اصلی، و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.'}}
+      </p>
+    </div>
+  </div>
+
+  <div class="categories-section container my-2" fxLayout="row wrap" fxLayoutAlign="space-around center" cdkDrag
+       [cdkDragDisabled]="dragDropService.disabled"
+       [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme8-categories')"
+       (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme8-categories')">
+    <div class="category " fxLayout="column" fxLayoutAlign="start center"
+         *ngFor="let category of categories | slice: -6; let i = index" fxFlex="15%" fxFlex.lt-md="42%">
+      <a [href]="'/store/category/' + category.PRODUCT_ID + '/' + category.NAME.split(' ').join('-')"
+         class="img" fxLayout="column" fxLayoutAlign="center center">
+        <div class="img-overlay"></div>
+        <ng-container *ngIf="category.PRODUCT_NAME && category.PRODUCT_NAME != 'null' else defaultCategory">
+          <img [src]="imageUrl + '/assets/img/categories/category_logo/' + category.PRODUCT_NAME" [alt]="category.NAME"
+               class="img-fluid">
+        </ng-container>
+        <ng-template #defaultCategory>
+          <img src="../../../../../assets/img/default/category.png" [alt]="category.NAME" class="img-fluid">
+        </ng-template>
+      </a>
+      <h5 fxLayout="column" fxLayoutAlign="center center" style="height: 50px;">{{category.NAME}}</h5>
+    </div>
+  </div>
+
+  <div class="products-section" fxLayout="column" fxLayoutAlign="start stretch" cdkDrag
+       [cdkDragDisabled]="dragDropService.disabled"
+       [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme8-products')"
+       (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme8-products')">
+
+    <div class="products container my-2" fxLayout="row wrap" fxLayoutAlign="space-around center">
+      <div class="product" fxLayout="column" fxLayoutAlign="start stretch"
+           *ngFor="let product of productsSummary?.products | slice: -6; let i = index" fxFlex="27.5%"
+           fxFlex.lt-md="40.5%">
+
+        <div class="img" fxLayout="column" fxLayoutAlign="center center">
+          <ng-container *ngIf="product.IMAGE != 'null' else defaultCategory">
+            <img [src]="imageUrl + '/assets/img/products/' + product.IMAGE" [alt]="product.NAME" class="img-fluid">
+          </ng-container>
+          <ng-template #defaultCategory>
+            <img src="../../../../../assets/img/default/category.png" class="img-fluid">
+          </ng-template>
+          <div class="img-overlay" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="5px">
+            <a [routerLink]="'/product/' + (product.PRODUCT_STORE_ID || product.PRODUCT_ID) + '/' + product.NAME.replace('/', '').split(' ').join('-')"
+               [queryParams]="{'name': product.NAME}" target="_blank" class="product-icon" fxLayout="column"
+               fxLayoutAlign="center center">
+              <mat-icon>
+                visibility
+              </mat-icon>
+            </a>
+            <a href="" class="product-icon" fxLayout="column" fxLayoutAlign="center center"
+               (click)="favourite(product.PRODUCT_STORE_ID)"
+               [ngStyle]="{'color':isFavourite? 'red' : 'lightpink'}">
+              <mat-icon>{{isFavourite ? 'favorite' : 'favorite_border'}}</mat-icon>
+            </a>
+            <a href="" class="product-icon" fxLayout="column" fxLayoutAlign="center center"
+               *ngIf="checkProductStatus(product.PRODUCT_STATUS_ID)" (click)="addToCart(product)">
+              <mat-icon>
+                shopping_cart
+              </mat-icon>
+            </a>
+          </div>
+        </div>
+        <div class="name" fxLayout="column" fxLayoutAlign="center center">
+          <h5>
+            {{product.NAME}}
+          </h5>
+        </div>
+
+        <div class="price-section text-left" fxLayout="column" fxLayoutGap="5px">
+          <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="space-between center">
+            <div fxLayout="row" fxLayoutAlign="end center">
+              <b>
+                {{product.PRICE_AFTER_OFFER | number}}
+                {{'تومان' | translate}}
+              </b>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="end center" class="discount-section text-left">
+              <ng-container *ngIf="product.PRICE != product.PRICE_AFTER_OFFER">
+                <span class="discount-percentage" *ngIf="product.PRICE != product.PRICE_AFTER_OFFER">
+                  {{calculateDiscount(product.PRICE, product.PRICE_AFTER_OFFER)}}%
+                </span>
+                <del class="before-price">
+                  {{product.PRICE | number}}
+                  {{storeSettingService.storeCurrency | translate}}
+                </del>
+              </ng-container>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="end center">
+              <span class="discount-percentage" *ngIf="product.PRICE != product.PRICE_AFTER_OFFER">
+                {{calculateDiscount(product.PRICE, product.PRICE_AFTER_OFFER)}}%
+              </span>
+              <b>
+                {{product.PRICE_AFTER_OFFER | number}}
+                {{storeSettingService.storeCurrency | translate}}
+              </b>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="product-btn" fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="center center" cdkDrag
+         [cdkDragDisabled]="dragDropService.disabled"
+         [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme8-products-btn')"
+         (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme8-products-btn')">
+      <a href="/store" mat-raised-button color="primary" fxFlex="20%">
+        {{dragDropService.fieldText('base-theme8-products-btn') || 'محصولات بیشتر' | translate}}
+      </a>
+    </div>
+  </div>
+
+  <app-section></app-section>
+
+  <div *ngIf="modulesService.hasBlog && blogs.length" class="blog-section" fxLayout="column"
+       fxLayoutAlign="start center" cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+       [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme8-blogs')"
+       (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme8-blogs')">
+    <a href="/blogs" fxLayout="column" fxLayoutAlign="start center">
+      <i cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+         [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme8-blog-sub-title')"
+         (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme8-blog-sub-title')" editElement
+         [editType]="'base-theme8-blog-sub-title'">
+        {{dragDropService.fieldText('base-theme8-blog-sub-title') || 'مقاله' | translate}}
+      </i>
+      <h3 cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+          [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme8-blog-title')"
+          (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme8-blog-title')" editElement
+          [editType]="'base-theme8-blog-title'">
+        {{dragDropService.fieldText('base-theme8-blog-title') || 'آخرین مقالات' | translate}}
+      </h3>
+    </a>
+    <div class="blog container" fxLayout="row wrap" fxLayoutAlign="center center">
+      <mat-card class="mat-card" *ngFor="let blog of blogs" fxLayout="column" fxLayoutAlign="start stretch" fxFlex="45%"
+                fxFlex.lt-md="85%" fxLayoutGap="2.5%">
+
+        <h3>{{blog.TITLE}}</h3>
+
+        <div class="card" fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="space-between start" fxLayoutGap="2rem">
+
+          <img [src]="blog.FILES" [alt]="blog.TITLE" class="img-fluid" fxFlex="49.5%">
+
+          <div class="card-desc" fxLayout="column" fxLayoutAlign="start stretch" fxFlex="49.5%">
+            <mat-hint fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="5px">
+              <mat-icon>calendar_month</mat-icon>
+              <span>{{blog.CREATE_DATE | jalaliDate: 'dateTime'}}</span>
+            </mat-hint>
+
+            <p class="text-justify text-preWrap blog-preview" limitCharacter>
+              {{blog.DESCRIPTION}}
+            </p>
+
+            <a [routerLink]="blog.ID.toString()" class="my-4" mat-stroked-button color="warn">
+              {{'ادامه مطلب' | translate}}
+            </a>
+
+          </div>
+
+
+        </div>
+
+      </mat-card>
+    </div>
+  </div>
+
+  <app-footer></app-footer>
+
+</div>

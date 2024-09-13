@@ -1,0 +1,194 @@
+<div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="10px"
+     #financialRecordEl id="financialRecordEl" class="financial-detail">
+
+  <ng-container *ngIf="financialRecord">
+    <div fxLayout="row" fxLayoutAlign="space-between center" fxLayout.lt-md="column"
+         fxLayoutAlign.lt-md="start stretch" fxLayoutGap="10px">
+
+      <h2>
+        {{'فاکتور' | translate}}
+        {{financialRecord.ORDER_ID}}
+      </h2>
+
+      <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="7px">
+        <button mat-stroked-button color="primary"
+                [disabled]="disableExportBtn" [matMenuTriggerFor]="menu">
+          <span>{{'خروجی فاکتور' | translate}}</span>
+          <mat-icon>file_download</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button (click)="exportPDF()" mat-menu-item>
+            <mat-icon color="primary">picture_as_pdf</mat-icon>
+            {{"PDF خروجی" | translate }}
+          </button>
+          <button (click)="exportPicture()" mat-menu-item>
+            <mat-icon color="primary">image</mat-icon>
+            {{"خروجی عکس" | translate}}
+          </button>
+        </mat-menu>
+      </div>
+
+    </div>
+
+    <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="25px" class="financial-detail">
+
+      <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="10px">
+
+        <div class="financial-header" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+          <b>{{'اطلاعات سفارش' | translate}}</b>
+          <div fxFlex class="divider">
+            <mat-divider></mat-divider>
+          </div>
+        </div>
+
+        <div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="3%">
+          <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="5px" fxFlex="22%" class="financial-item">
+            <div class="title">{{'شماره سفارش' | translate}}</div>
+            <div class="desc">{{financialRecord.ORDER_ID}}</div>
+          </div>
+
+          <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="5px" fxFlex="22%" class="financial-item">
+            <div class="title">{{'تاریخ سفارش' | translate}}</div>
+            <div class="desc">{{financialRecord.ORDER_DATE | jalaliDate}}</div>
+          </div>
+
+          <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="5px" fxFlex="22%" class="financial-item">
+            <div class="title">{{'سفارش' | translate}}</div>
+            <a mat-stroked-button color="accent" class="desc"
+               [routerLink]="'/admin/orders/' + financialRecord.ORDER_ID">
+              {{'مشاهده سفارش' | translate}}
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="10px">
+        <div class="financial-header" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+          <b>{{'اطلاعات پرداخت کننده' | translate}}</b>
+          <div fxFlex class="divider">
+            <mat-divider></mat-divider>
+          </div>
+        </div>
+
+        <div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="3%">
+          <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="5px" fxFlex="22%" class="financial-item">
+            <div class="title">{{'آیدی پرداخت کننده' | translate}}</div>
+            <div class="desc">{{financialRecord.CUSTOMER_ID}}</div>
+          </div>
+
+          <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="5px" fxFlex="22%" class="financial-item">
+            <div class="title">{{'آدرس پرداخت کننده' | translate}}</div>
+            <div class="desc">{{financialRecord.CUSOTMER_ADDRESS}}</div>
+          </div>
+
+          <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="5px" fxFlex="22%" class="financial-item">
+            <div class="title">{{'نام پرداخت کننده' | translate}}</div>
+            <div class="desc">{{financialRecord.CUSTOMER_NAME}}</div>
+          </div>
+
+          <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="5px" fxFlex="22%" class="financial-item">
+            <div class="title">{{'شماره تماس پرداخت کننده' | translate}}</div>
+            <div class="desc">{{financialRecord.CUSTOMER_USER_NAME}}</div>
+          </div>
+        </div>
+      </div>
+
+      <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="10px">
+
+        <div class="financial-header" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+          <b>{{'اطلاعات پرداخت' | translate}}</b>
+          <div fxFlex class="divider">
+            <mat-divider></mat-divider>
+          </div>
+        </div>
+
+        <div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="3%">
+          <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="5px" fxFlex="22%" class="financial-item">
+            <div class="title">{{'تاریخ پرداخت' | translate}}</div>
+            <div class="desc">{{financialRecord.PAYMENT_DATE | jalaliDate}}</div>
+          </div>
+
+          <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="5px" fxFlex="22%" class="financial-item">
+            <div class="title">{{'شیوه پرداخت' | translate}}</div>
+            <div class="desc">{{financialRecord.PAYMENT_TYPE_NAME}}</div>
+          </div>
+
+          <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="5px" fxFlex="22%" class="financial-item">
+            <div class="title">{{'نام فروشگاه' | translate}}</div>
+            <div class="desc">{{financialRecord.STORE_NAME}}</div>
+          </div>
+
+          <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="5px" fxFlex="22%" class="financial-item">
+            <div class="title">{{'مبلغ پرداختی' | translate}}</div>
+            <div class="desc">
+              {{financialRecord.TOTAL_PAYMENT | number}}
+              تومان
+            </div>
+          </div>
+
+          <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="5px" fxFlex="22%" class="financial-item">
+            <div class="title">{{'شماره ارجاع بانک' | translate}}</div>
+            <div class="desc">{{financialRecord.BANK_REFRENCE_ID}}</div>
+          </div>
+        </div>
+
+      </div>
+
+      <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="10px">
+        <div class="financial-header" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+          <b>{{'اطلاعات تخفیف' | translate}}</b>
+          <div fxFlex class="divider">
+            <mat-divider></mat-divider>
+          </div>
+        </div>
+
+        <div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="3%">
+
+          <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="5px" fxFlex="22%" class="financial-item">
+            <div class="title">{{'هزینه پیک' | translate}}</div>
+            <div class="desc">
+              {{financialRecord.CORIER_VALUE | number}}
+              تومان
+            </div>
+          </div>
+
+          <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="5px" fxFlex="22%" class="financial-item">
+            <div class="title">{{'پیک' | translate}}</div>
+            <div class="desc">
+              {{financialRecord.INPUT_CORIER_VALUE | number}}
+              تومان
+            </div>
+          </div>
+
+          <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="5px" fxFlex="22%" class="financial-item">
+            <div class="title">{{'تخفیف پیک' | translate}}</div>
+            <div class="desc">
+              {{financialRecord.OFFER_COURIER_SUM | number}}
+              تومان
+            </div>
+          </div>
+
+          <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="5px" fxFlex="22%" class="financial-item">
+            <div class="title">{{'تخفیف فاکتور' | translate}}</div>
+            <div class="desc">
+              {{financialRecord.OFFER_INVOICE_SUM | number}}
+              تومان
+            </div>
+          </div>
+
+          <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="5px" fxFlex="22%" class="financial-item">
+            <div class="title">{{'تخفیف محصولات' | translate}}</div>
+            <div class="desc">
+              {{financialRecord.OFFER_PRODUCT_SUM | number}}
+              تومان
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </ng-container>
+
+</div>

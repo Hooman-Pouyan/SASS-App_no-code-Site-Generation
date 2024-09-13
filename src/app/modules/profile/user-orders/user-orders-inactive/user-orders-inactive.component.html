@@ -1,0 +1,36 @@
+<div fxLayout="column" fxLayoutAlign="start stretch" class="p-3" fxLayoutGap="20px">
+
+  <div class="order-detail" *ngFor="let order of inactiveOrder" fxLayoutGap="10px" fxLayout="row"
+    fxLayoutAlign="space-between center" fxLayoutGap.lt-md="20px" fxLayout.lt-md="column"
+    fxLayoutAlign.lt-md="start center">
+
+    <div class="time-detail p-3" fxLayoutGap="5px" fxLayout="column" fxLayoutAlign="center center">
+      <span>{{order.ORDER_DATE}}</span>
+      <span>{{order.ORDER_TIME}}</span>
+    </div>
+
+    <h3>
+      {{'سفارش شماره' | translate}}
+      {{order.ORDER_ID}}
+    </h3>
+
+    <b fxFlex>
+      {{order.ORDER_STATUS_NAME}}
+    </b>
+
+    <div class="action-buttons" fxLayout="column" fxLayoutAlign="start stretch">
+
+      <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="5px">
+        <button *ngIf="modulesService.orderComment" mat-icon-button
+                (click)="commentOnOrder(order.ORDER_ID)">
+          <mat-icon>rate_review</mat-icon>
+        </button>
+        <a mat-icon-button [routerLink]="'./' + order.ORDER_ID">
+          <mat-icon>remove_red_eye</mat-icon>
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+</div>

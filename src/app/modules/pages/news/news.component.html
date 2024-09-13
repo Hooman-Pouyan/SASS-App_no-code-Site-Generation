@@ -1,0 +1,81 @@
+<app-header></app-header>
+
+<div fxLayout="column" fxLayoutAlign="start stretch">
+
+  <div class="desc jarallax" fxLayoutAlign="center center">
+    <div class="decs-text" fxLayout="column" fxLayoutAlign="center center">
+      <h2 cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+          [cdkDragFreeDragPosition]="dragDropService.findPosition('news-title')"
+          (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'news-title')"
+          editElement editType="news-title" class="text-center">
+        {{dragDropService.fieldText('news-title') || ('اخبار' | translate)}}
+      </h2>
+      <h3 cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+          [cdkDragFreeDragPosition]="dragDropService.findPosition('news-sub-title')"
+          (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'news-sub-title')"
+          editElement editType="news-sub-title" class="text-center">
+        {{dragDropService.fieldText('news-sub-title') || ('آخرین اخبار را میتوانید در این صفحه مشاهده کنید' | translate)}}
+      </h3>
+    </div>
+    <img [src]="dynamicMediaService.getMedia('news-img') || defaultImage"
+         [alt]="" class="jarallax-img"
+         editElement [editType]="'news-img'">
+  </div>
+
+  <div class="container mt-5" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="25px">
+
+    <div class="search-bar container mt-5" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+
+      <mat-form-field appearance="outline">
+        <mat-label>{{'جستجو' | translate}}</mat-label>
+        <input [(ngModel)]="search"  (ngModelChange)="updateSearch()" matInput autocomplete="off" type="text">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" *ngIf="newCategories.length">
+        <mat-label>{{'انتخاب دسته بندی' | translate}}</mat-label>
+        <mat-select [(ngModel)]="selectedCatrgory" (ngModelChange)="updateListCategory($event)">
+          <mat-option *ngFor="let category of newCategories" [value]="category">
+            {{category.CATEGORY_NAME }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!--    <button type="submit" mat-stroked-button color="primary" (click)="updateList()">-->
+      <!--      {{"اعمال" | translate }}-->
+      <!--    </button>-->
+
+    </div>
+
+    <mat-card *ngFor="let oneNews of news" fxLayout="column" fxLayoutAlign="start stretch">
+
+      <h3>{{oneNews.TITLE}}</h3>
+
+      <div fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="2rem">
+
+        <div fxLayout="column" fxLayoutAlign="start stretch">
+          <mat-hint fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="5px">
+            <mat-icon>calendar_month</mat-icon>
+            <span>{{oneNews.CREATE_DATE | jalaliDate: 'dateTime'}}</span>
+          </mat-hint>
+
+          <p class="text-justify text-preWrap news-preview">
+            {{oneNews.DESCRIPTION}}
+          </p>
+
+          <a [routerLink]="oneNews.ID.toString() + '/' + oneNews.TITLE.split(' ')?.join('-')" class="my-4"
+             mat-stroked-button color="warn">
+            {{'ادامه مطلب' | translate}}
+          </a>
+
+        </div>
+
+        <img [src]="oneNews.FILES" [alt]="oneNews.TITLE" class="img-fluid" fxFlex="30%">
+
+      </div>
+
+    </mat-card>
+  </div>
+
+</div>
+
+<app-footer></app-footer>

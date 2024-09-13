@@ -1,0 +1,41 @@
+<div class="wrapper">
+  <div class="bg-overlay"></div>
+  <div class="logo-container">
+    <a [routerLink]="'/'" class="logo-link" title="">
+      <img class="logo" [src]="storeSettingService.store.logo" [alt]="storeSettingService.store.name">
+    </a>
+  </div>
+
+  <div class="body" fxLayout="column" fxLayoutAlign="center center">
+    <div class="form-container" fxLayout="row" fxLayoutAlign="center center">
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" autocomplete="on">
+        <div class="form-group-container">
+          <div class="form-group">
+            <mat-icon class="icon">email</mat-icon>
+            <input type="text" formControlName="username" class="form-control" placeholder="Email">
+          </div>
+
+          <div class="form-group">
+            <mat-icon class="icon">lock</mat-icon>
+            <input type="text" formControlName="password" class="form-control" placeholder="Password">
+          </div>
+        </div>
+
+        <div class="btn-container">
+          <button type="submit" class="btn">Login</button>
+          <button type="button" (click)="loginWithGoogle()" class="btn">
+            <img src="../../../../../../assets/img/renovation/login/gmail-icon.svg" class="icon-img" alt="icon">
+            Login with Google
+          </button>
+        </div>
+        <div class="link-container">
+          <a routerLink="./register-user" class="link">Register</a>
+          <a (click)="openForgetPassDg()" class="link">Forget password</a>
+        </div>
+      </form>
+    </div>
+
+
+
+  </div>
+</div>

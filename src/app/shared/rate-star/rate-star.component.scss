@@ -1,0 +1,21 @@
+.rate {
+  width: 150px;
+  height: 25px;
+
+  mat-icon {
+    color: #bababa;
+    cursor: pointer;
+  }
+
+  .selected {
+    color: #F8B400;
+  }
+
+  mat-icon:hover {
+    color: #F8B400;
+  }
+}
+
+.hovering {
+  pointer-events: none;
+}

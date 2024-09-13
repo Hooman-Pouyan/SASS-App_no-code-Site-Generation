@@ -1,0 +1,42 @@
+<div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="10px">
+
+  <div fxLayout="row" fxLayoutAlign="space-between center">
+    <b>
+      {{'ویرایش المنت' | translate}}
+    </b>
+    <button mat-icon-button color="warn" (click)="closeDialog()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <div>
+    <mat-divider></mat-divider>
+  </div>
+
+  <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="10px">
+    <mat-form-field appearance="outline">
+      <mat-label>{{'تکست المنت' | translate }} </mat-label>
+      <textarea [(ngModel)]="data.text" matInput rows="8"
+                autocomplete="off" type="text"></textarea>
+    </mat-form-field>
+    <mat-form-field appearance="outline" *ngIf="modulesService.allLanguages.includes('en')">
+      <mat-label>{{'تکست المنت (انگلیسی)' | translate }} </mat-label>
+      <textarea [(ngModel)]="data.text_en" matInput rows="8" dir="ltr"
+                autocomplete="off" type="text"></textarea>
+    </mat-form-field>
+    <mat-form-field appearance="outline" *ngIf="data.hasLink">
+      <mat-label>{{'لینک المنت' | translate }} </mat-label>
+      <input [(ngModel)]="data.link" matInput autocomplete="off" type="text" dir="ltr">
+    </mat-form-field>
+  </div>
+
+  <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="10px">
+    <button mat-raised-button color="warn" (click)="closeDialog()">
+      <span>{{'لغو' | translate}}</span>
+    </button>
+    <button mat-raised-button color="primary" (click)="closeDialog(data)">
+      <span>{{'ثبت' | translate}}</span>
+    </button>
+  </div>
+
+</div>

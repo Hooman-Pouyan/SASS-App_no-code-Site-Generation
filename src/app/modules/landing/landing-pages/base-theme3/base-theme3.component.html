@@ -1,0 +1,176 @@
+<app-header></app-header>
+
+<div fxLayout="column" fxLayoutAlign="start stretch"
+     class="base-theme3-landing container mb-4">
+
+  <div fxLayout="row" fxLayout.lt-md="column-reverse" fxLayoutAlign.lt-md="start stretch"
+       fxLayoutAlign="space-between stretch" class="base-theme3-slider">
+    <div fxLayout="column" fxLayout.lt-md="row"
+         fxLayoutAlign="space-between stretch" fxFlex="25%">
+
+      <div *ngFor="let idx of [1, 2];" fxFlex="45%" class="decorative"
+           fxLayoutAlign="center center"
+           cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+           [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme3-upper-decoration-' + idx)"
+           (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme3-upper-decoration-' + idx)">
+        <img [src]="dynamicMediaService.getMedia('decorationUp' + idx)" alt="" class="img-fluid"
+             editElement [editType]="'decorationUp' + idx">
+
+        <div
+          *ngIf="dragDropService.fieldText('base-theme3-upper-decoration-' + idx) || dynamicMediaService.getMedia('desc' + (idx+2))"
+          class="color-overlay"></div>
+
+        <a *ngIf="dynamicMediaService.getMediaLink('base-theme3-upper-decoration-' + idx) else blankText"
+           [href]="dragDropService.fieldLink('base-theme3-upper-decoration-' + idx)" target="_blank"
+           class="decorative-desc text-preWrap text-justify"
+           editElement [editType]="'base-theme3-upper-decoration-' + idx">
+          {{(dragDropService.fieldText('base-theme3-upper-decoration-' + idx) || 'محصولات روز') | translate}}
+        </a>
+        <ng-template #blankText>
+          <p class="decorative-desc text-preWrap text-justify"
+             editElement [editType]="'base-theme3-upper-decoration-' + idx">
+            {{(dragDropService.fieldText('base-theme3-upper-decoration-' + idx) || 'محصولات روز') | translate}}
+          </p>
+        </ng-template>
+
+      </div>
+    </div>
+
+    <div fxLayout="column" fxLayoutAlign="start stretch" fxFlex.gt-sm="73%"
+         cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+         [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme3-swiper')"
+         (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme3-swiper')">
+
+      <swiper [config]="mainSliderConfig" class="base-theme3-swiper">
+        <ng-container *ngFor="let sliderIdx of dynamicMediaService.mediaSliderLoop">
+          <ng-template swiperSlide *ngIf="dynamicMediaService.getMedia('slider' + sliderIdx)">
+            <div fxFill fxLayout="column" fxLayoutAlign="center stretch">
+              <a *ngIf="dynamicMediaService.getMediaLink('slider' + sliderIdx) else noLink"
+                 [href]="dynamicMediaService.getMediaLink('slider' + sliderIdx)" target="_blank">
+                <image-lazy [src]="dynamicMediaService.getMedia('slider' + sliderIdx)"
+                            fxLayout="row" fxLayoutAlign="center center"
+                            [alt]="'slider' + sliderIdx" class="text-center img-fluid" editElement
+                            [editType]="'slider' + sliderIdx"></image-lazy>
+              </a>
+              <ng-template #noLink>
+                <image-lazy [src]="dynamicMediaService.getMedia('slider' + sliderIdx)"
+                            fxLayout="row" fxLayoutAlign="center center"
+                            [alt]="'slider' + sliderIdx" class="text-center img-fluid" editElement
+                            [editType]="'slider' + sliderIdx"></image-lazy>
+              </ng-template>
+            </div>
+          </ng-template>
+        </ng-container>
+      </swiper>
+    </div>
+
+  </div>
+
+  <products-packs-slider></products-packs-slider>
+
+  <div class="base-theme3-banner my-3"
+       cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+       [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme3-banner')"
+       (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme3-banner')">
+
+    <a [href]="dynamicMediaService.getMediaLink('banner')" target="_blank"
+       *ngIf="dynamicMediaService.getMediaLink('banner') else noLink">
+      <image-lazy [src]="dynamicMediaService.getMedia('banner')"
+                  [alt]="'banner'" class="text-center img-fluid" editElement
+                  editType="banner"></image-lazy>
+    </a>
+    <ng-template #noLink>
+      <image-lazy [src]="dynamicMediaService.getMedia('banner')"
+                  [alt]="'banner'" class="text-center img-fluid" editElement
+                  editType="banner"></image-lazy>
+    </ng-template>
+  </div>
+
+  <div class="base-theme3-category-products my-4" fxLayout.lt-md="column" fxLayout="row"
+       fxLayoutAlign="space-between start">
+
+    <div fxFlex="25%" fxLayout="column" class="p-3 categories-list"
+         cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+         [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme3-categories-list')"
+         (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme3-categories-list')">
+
+      <mat-hint class="title text-center mb-4">
+        {{'دسته بندی محصولات' | translate }}
+      </mat-hint>
+      <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap.gt-sm="35px" fxLayout.lt-md="row"
+           fxLayoutAlign.lt-md="space-around start">
+        <a *ngFor="let category of categories | slice: -4" target="_blank" fxFlex.lt-md="20%"
+           [href]="'/store/category/' + category.PRODUCT_ID + '/' + category.NAME.split(' ').join('-')"
+           fxLayout="column" fxLayoutAlign="start center">
+          <ng-container *ngIf="category.PRODUCT_NAME && category.PRODUCT_NAME != 'null' else defaultCategory">
+            <image-lazy [src]="imageUrl + '/assets/img/categories/category_logo/' + category.PRODUCT_NAME"
+                        fxLayout="row" fxLayoutAlign="center center" [alt]="category.NAME"
+                        class="img-fluid"></image-lazy>
+          </ng-container>
+          <ng-template #defaultCategory>
+            <img src="../../../../../assets/img/default/category.png" [alt]="category.NAME" class="img-fluid">
+          </ng-template>
+          <b>{{category.NAME}}</b>
+        </a>
+      </div>
+    </div>
+
+    <div fxFlex="70%" class="products" fxLayoutAlign="start stretch" fxLayout="column"
+         cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+         [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme3-categories-products')"
+         (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme3-categories-products')">
+
+      <div fxLayout="row wrap" fxLayoutAlign="space-between stretch">
+        <ng-container *ngIf="appService.windowWidth > 959 else mobileProduct">
+          <product-slide *ngFor="let product of categoryProducts" class="mb-3" [product]="product"
+                         fxFlex="30%">
+          </product-slide>
+        </ng-container>
+        <ng-template #mobileProduct>
+          <product-slide-mobile *ngFor="let product of categoryProducts"
+                                fxFlex="48%" class="mb-3" [product]="product"></product-slide-mobile>
+        </ng-template>
+      </div>
+    </div>
+
+
+  </div>
+
+  <div fxLayout="column" fxLayoutAlign="start stretch" class="my-2"
+       cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+       [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme3-downer-decoratives')"
+       (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme3-downer-decoratives')">
+
+
+    <div fxLayout="row" fxLayoutAlign="space-between center" class="base-theme3-downer-decoratives">
+      <div *ngFor="let idx of [1, 2]" fxFlex="47%"
+           cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+           [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme3-downer-decoratives' + idx)"
+           (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme3-downer-decoratives' + idx)">
+
+        <ng-container *ngIf="dynamicMediaService.getMediaLink('decorationDown' + idx) else noLink">
+          <a [href]="dynamicMediaService.getMediaLink('decorationDown' + idx)" target="_blank">
+            <image-lazy [src]="dynamicMediaService.getMedia('decorationDown' + idx)"
+                        alt="" class="img-fluid"
+                        editElement [editType]="'decorationDown' + idx"></image-lazy>
+          </a>
+        </ng-container>
+        <ng-template #noLink>
+          <image-lazy [src]="dynamicMediaService.getMedia('decorationDown' + idx)"
+                      alt="" class="img-fluid"
+                      editElement [editType]="'decorationDown' + idx"></image-lazy>
+        </ng-template>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<luck-wheel></luck-wheel>
+
+<app-section></app-section>
+
+<app-brands-slider></app-brands-slider>
+
+<app-footer></app-footer>

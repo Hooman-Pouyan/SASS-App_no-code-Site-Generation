@@ -1,0 +1,51 @@
+.renovation-header {
+  width: 100%;
+  height: 70px;
+
+  .inner-header {
+    & {
+      width: 85%;
+    }
+
+    .link-lists {
+
+      list-style: square;
+      padding: 0;
+      margin: 0;
+
+      .myOrder {
+        border: 1px solid var(--custom-primary-color);
+        padding: 4px 30px;
+        border-radius: 6px;
+        &:hover {
+          background-color: var(--custom-primary-color) !important;
+          color: white !important;
+          transition: 0.5s ease-in-out;
+        }
+      }
+
+      li {
+        color: #B91646;
+
+        &:nth-child(1) {
+          list-style-type: none;
+        }
+
+        a {
+          color: #444444;
+          text-decoration: none;
+          cursor: pointer;
+        }
+      }
+    }
+
+    .login-action {
+      margin-left: 40px;
+    }
+
+    .header-renovation-username {
+      color: red !important;
+    }
+  }
+
+}

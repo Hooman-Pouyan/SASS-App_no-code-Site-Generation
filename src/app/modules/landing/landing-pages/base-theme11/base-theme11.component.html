@@ -1,0 +1,311 @@
+<div fxLayout="column" fxLayoutAlign="start stretch" class="base-theme11-landing">
+
+  <header fxLayout="row" fxLayoutAlign="start center" *ngIf="appService.windowWidth > 959 else appHeader"
+          [ngClass]="{'base-theme11-header-solid': fixedHeader}"
+          [ngStyle]="{'left': !fixedHeader && credentialsService.isAdmin ? '50px' : '0'}" class="base-theme11-header">
+    <div fxLayout="row" fxLayoutAlign="start center"
+         class="container py-3" fxLayoutGap="10px">
+      <a [href]="dragDropService.fieldLink('base-theme11-header-main-page') || '/'" cdkDrag
+         [cdkDragDisabled]="dragDropService.disabled"
+         [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme11-header-main-page')"
+         (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme11-header-main-page')"
+         editElement editType="base-theme11-header-main-page">
+        {{(dragDropService.fieldText('base-theme11-header-main-page') || 'صفحه اصلی') | translate}}
+      </a>
+      <a [href]="dragDropService.fieldLink('base-theme11-header-products') || '/store'" cdkDrag
+         [cdkDragDisabled]="dragDropService.disabled"
+         [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme11-header-products')"
+         (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme11-header-products')"
+         editElement editType="base-theme11-header-products">
+        {{(dragDropService.fieldText('base-theme11-header-products') || 'محصولات') | translate}}
+      </a>
+      <a [href]="dragDropService.fieldLink('base-theme11-header-about') || '/about-us'" cdkDrag
+         [cdkDragDisabled]="dragDropService.disabled"
+         [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme11-header-about')"
+         (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme11-header-about')"
+         editElement editType="base-theme11-header-about">
+        {{(dragDropService.fieldText('base-theme11-header-about') || 'درباره ما') | translate}}
+      </a>
+      <a *ngIf="modulesService.hasBlog" [href]="dragDropService.fieldLink('base-theme11-header-blog') || '/blogs'"
+         cdkDrag
+         [cdkDragDisabled]="dragDropService.disabled"
+         [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme11-header-blog')"
+         (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme11-header-blog')"
+         editElement editType="base-theme11-header-blog">
+        {{(dragDropService.fieldText('base-theme11-header-blog') || 'بلاگ') | translate}}
+      </a>
+      <a [href]="dragDropService.fieldLink('base-theme11-header-contact-us') || '/contact-us'" cdkDrag
+         [cdkDragDisabled]="dragDropService.disabled"
+         [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme11-header-contact-us')"
+         (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme11-header-contact-us')"
+         editElement editType="base-theme11-header-contact-us">
+        {{(dragDropService.fieldText('base-theme11-header-contact-us') || 'تماس با ما') | translate}}
+      </a>
+      <ng-container *ngIf="credentialsService.isGuest else loggedIn">
+        <a [href]="dragDropService.fieldLink('header-sign-up') || '/auth'" cdkDrag
+            [cdkDragDisabled]="dragDropService.disabled"
+            [cdkDragFreeDragPosition]="dragDropService.findPosition('header-sign-up')"
+            (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'header-sign-up')">
+            {{'ثبت نام' | translate}}
+            /
+            {{'ورود' | translate}}
+        </a>
+    </ng-container>
+    <ng-template #loggedIn>
+        <button [dir]="modulesService.lang == 'fa' ? 'rtl' : 'ltr' " mat-button
+            [matMenuTriggerFor]="profileAction" cdkDrag
+            [cdkDragDisabled]="dragDropService.disabled"
+            [cdkDragFreeDragPosition]="dragDropService.findPosition('header-login')"
+            (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'header-login')">
+            <mat-icon class="mx-1">expand_more</mat-icon>
+            <span>{{credentialsService.credentials?.NAME}}</span>
+        </button>
+        <mat-menu #profileAction="matMenu">
+            <a mat-menu-item routerLink="/profile">
+                <mat-icon>account_circle</mat-icon>
+                <span>{{'پروفایل' | translate}}</span>
+            </a>
+            <a mat-menu-item (click)="credentialsService.logout()">
+                <mat-icon>logout</mat-icon>
+                <span>{{'خروج' | translate}}</span>
+            </a>
+        </mat-menu>
+    </ng-template>
+    </div>
+  </header>
+
+  <ng-template #appHeader>
+    <app-header></app-header>
+  </ng-template>
+
+  <section class="base-theme11-intro jarallax" fxLayout="column" fxLayoutAlign="center center">
+
+    <img [src]="dynamicMediaService.getMedia('base-theme11-intro')"
+         [alt]="'base-theme11-intro'" class="jarallax-img"
+         editElement [editType]="'base-theme11-intro'"
+         >
+
+    <div cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+         [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme11-intro-card1')"
+         (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme11-intro-card1')"
+         class="base-theme11-intro-card first-card" fxLayout="column" fxLayoutAlign="center center">
+      <h1 class="mt-0"
+          cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+          [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme11-title')"
+          (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme11-title')"
+          editElement [editType]="'base-theme11-title'">
+        {{dragDropService.fieldText('base-theme11-title') || storeSettingService.store.name}}
+      </h1>
+      <h2 cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+          [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme11-sub-title')"
+          (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme11-sub-title')"
+          editElement [editType]="'base-theme11-sub-title'">
+        {{dragDropService.fieldText('base-theme11-sub-title') || 'لورم ایپسوم متن ساختگی'}}
+      </h2>
+    </div>
+
+    <div cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+         [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme11-intro-card2')"
+         (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme11-intro-card2')"
+         class="base-theme11-intro-card my-4" fxLayout="column" fxLayoutAlign="center center">
+      <p cdkDrag [cdkDragDisabled]="dragDropService.disabled" class="text-justify"
+         [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme11-desc')"
+         (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme11-desc')"
+         editElement [editType]="'base-theme11-desc'">
+        {{dragDropService.fieldText('base-theme11-desc') || 'لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد کتابهای زیادی در شصت و سه درصد گذشته حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد'}}
+      </p>
+    </div>
+
+    <a mat-button href="./store"
+       cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+       [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme11-intro-products')"
+       (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme11-intro-products')"
+       class="route-link" fxLayout="column" fxLayoutAlign="center center"
+       editElement [editType]="'base-theme11-products'">
+      {{dragDropService.fieldText('base-theme11-products') || 'محصولات'}}
+    </a>
+
+  </section>
+
+  <section class="base-theme11-products jarallax" fxLayout="column" fxLayoutAlign="start stretch">
+
+    <img [src]="dynamicMediaService.getMedia('base-theme11-products-banner')"
+         [alt]="'base-theme11-products-banner'" class="jarallax-img"
+         editElement [editType]="'base-theme11-products-banner'"
+         >
+
+    <h2 cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+        [ngStyle]="{'color': adjustColor(20)}"
+        [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme11-products-title')"
+        (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme11-products-title')"
+        editElement [editType]="'base-theme11-products-title'" class="title text-center">
+      {{dragDropService.fieldText('base-theme11-products-title') || 'محصولات ما'}}
+    </h2>
+
+    <div fxLayout="row" fxLayoutAlign="space-between stretch" *ngIf="products.length" class="my-5 container">
+      <div fxLayout="column" fxLayoutAlign="start stretch" *ngFor="let index of [0,1]"
+           [fxHide.lt-md]="index == 1" fxFlex.lt-md
+           fxLayoutGap="2rem" class="products-card" fxFlex.gt-sm="47%"
+           [ngStyle]="{'background-color': adjustColor(-100)}">
+        <div *ngFor="let product of products | slice:0 : 5"
+             fxLayout="row" fxLayoutAlign="start stretch" fxLayoutGap="10px">
+          <img *ngIf="product.IMAGE && !product.IMAGE.includes('null') else noImage"
+               [src]="imageUrl + '/assets/img/products/' + product.IMAGE"
+               [alt]="product.NAME" [title]="product.NAME" class="img-fluid">
+          <ng-template #noImage>
+            <img src="../../../../../assets/img/default/product.png"
+                 class="img-fluid" [alt]="product.NAME">
+          </ng-template>
+          <div fxLayout="column" fxLayoutAlign="space-between stretch">
+            <a [href]="'/product/' + (product.PRODUCT_STORE_ID || product.PRODUCT_ID) + '/' + product.NAME.replace('/', '').split(' ').join('-')"
+               style="font-weight: bold" [ngStyle]="{'color': adjustColor(100)}">
+              {{product.NAME}}
+            </a>
+            <div class="price-section text-left" fxLayout="column" fxLayoutGap="5px" *ngIf="product.PRICE != 1">
+              <div fxLayout="row" fxLayoutAlign="end center" class="discount-section text-left">
+                <ng-container *ngIf="product.PRICE != product.PRICE_AFTER_OFFER">
+                  <del class="before-price">
+                    {{product.PRICE | number}}
+                    {{storeSettingService.storeCurrency | translate}}
+                  </del>
+                </ng-container>
+              </div>
+              <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="7px">
+                <span class="discount-percentage" *ngIf="product.PRICE != product.PRICE_AFTER_OFFER">
+                  {{calculateDiscount(product.PRICE, product.PRICE_AFTER_OFFER)}}%
+                </span>
+                <b>
+                  {{product.PRICE_AFTER_OFFER | number}}
+                  {{storeSettingService.storeCurrency | translate}}
+                </b>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <section class="base-theme11-about-us" fxLayout="row" fxLayoutAlign="space-between stretch"
+           fxLayout.lt-md="column" fxLayoutAlign.lt-md="start stretch">
+
+    <div fxFlex="50%" class="jarallax" fxLayout="column" fxLayoutAlign="center end" fxLayoutGap="1.5rem">
+
+      <img [src]="dynamicMediaService.getMedia('base-theme11-about-us-banner')"
+           [alt]="'base-theme11-about-us-banner'" class="jarallax-img"
+           editElement [editType]="'base-theme11-about-us-banner'"
+           >
+
+      <div class="about-us-card" ngClass.gt-sm="ml-3" fxLayout="column" fxLayoutAlign="start stretch"
+           cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+           [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme11-about-us-card')"
+           (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme11-about-us-card')">
+        <h3 editElement [editType]="'base-theme11-about-us-card-title'">
+          {{dragDropService.fieldText('base-theme11-about-us-title') || 'درباره ما'}}
+        </h3>
+        <p editElement [editType]="'base-theme11-about-us-card-desc'">
+          {{dragDropService.fieldText('base-theme11-about-us-card-desc') || storeSettingService.store.aboutUs}}
+        </p>
+      </div>
+
+      <a href="./about-us" target="_self" mat-raised-button color="primary"
+         editElement [editType]="'base-theme11-about-us'" class="px-4 py-2" ngClass.gt-sm="ml-3">
+        {{dragDropService.fieldText('base-theme11-about-us-route') || 'ارتباط با ما'}}
+      </a>
+    </div>
+
+    <div fxFlex="50%" class="jarallax">
+
+      <img [src]="dynamicMediaService.getMedia('base-theme11-blank-banner')"
+           [alt]="'base-theme11-blank-banner'" class="jarallax-img"
+           editElement [editType]="'base-theme11-blank-banner'"
+           >
+    </div>
+
+  </section>
+
+  <section class="base-theme11-contact-us" fxLayout="row" fxLayoutAlign="space-between stretch"
+           fxLayout.lt-md="column" fxLayoutAlign.lt-md="start stretch">
+
+    <div fxFlex="50%" class="jarallax" ngClass.lt-md="py-5"
+         fxLayout="column" fxLayoutAlign="center stretch">
+
+      <img [src]="dynamicMediaService.getMedia('base-theme11-contact-us-banner')"
+           [alt]="'base-theme11-contact-us-banner'" class="jarallax-img"
+           editElement [editType]="'base-theme11-contact-us-banner'"
+           >
+
+      <div class="contact-us-info-card" ngClass.gt-sm="mx-3" fxLayout="column" fxLayoutAlign="start stretch"
+           cdkDrag [cdkDragDisabled]="dragDropService.disabled" fxLayoutGap="10px"
+           [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme11-contact-us-card')"
+           (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme11-contact-us-card')">
+        <h3 editElement [editType]="'base-theme11-contact-us-card-title'">
+          {{dragDropService.fieldText('base-theme11-contact-us-title') || 'ارتباط با ما'}}
+        </h3>
+        <p editElement [editType]="'base-theme11-contact-us-card-desc'">
+          {{dragDropService.fieldText('base-theme11-contact-us-card-desc') || 'لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد کتابهای زیادی در شصت و سه درصد گذشته حال و آینده'}}
+        </p>
+        <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap.lt-md="3px" class="info-detail"
+             cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+             [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme11-contact-us-address')"
+             (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme11-contact-us-address')">
+          <mat-icon>location_on</mat-icon>
+          <span>{{storeSettingService.store.address}}</span>
+        </div>
+
+        <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap.lt-md="3px" class="info-detail"
+             cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+             [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme11-contact-us-phone')"
+             (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme11-contact-us-phone')">
+          <mat-icon>phone</mat-icon>
+          <a [href]="'tel:' + storeSettingService.store.phone">
+            {{storeSettingService.store.phone}}
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div fxFlex="50%" class="jarallax" fxLayout="column" fxLayoutAlign="center stretch">
+
+      <img [src]="dynamicMediaService.getMedia('base-theme11-contact-us-form-banner')"
+           [alt]="'base-theme11-contact-us-form-banner'" class="jarallax-img"
+           editElement [editType]="'base-theme11-contact-us-form-banner'"
+           >
+
+      <form class="contact-us-form-card" ngClass.gt-sm="mx-3" fxLayout="column" fxLayoutAlign="start stretch"
+            cdkDrag [cdkDragDisabled]="dragDropService.disabled" fxLayoutGap="10px" [formGroup]="ticketForm"
+            [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme11-contact-us-form')"
+            (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme11-contact-us-form')">
+        <mat-form-field appearance="outline" fxFlex.lt-md="48%" color="primary">
+          <mat-label>{{'دسته بندی پیام' | translate }}</mat-label>
+          <mat-select formControlName="CATALOG_ID">
+            <mat-option *ngFor="let item of catalogs" [value]="item.ID">
+              {{item.NAME}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" fxFlex.lt-md="48%" color="primary">
+          <input formControlName="PHONE_NUMBER" [placeholder]="'شماره تلفن' | translate" matInput autocomplete="off">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" fxFlex.lt-md="100%" color="primary">
+          <input formControlName="SUBJECT" type="text" [placeholder]="'عنوان' | translate" matInput autocomplete="off">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" fxFlex.lt-md="100%" color="primary">
+          <textarea formControlName="CONTENT" rows="8" cols="40" matInput
+                    [placeholder]="'متن پیام را اینجا وارد کنید' | translate"></textarea>
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" (click)="saveChange()"
+                [disabled]="ticketForm.invalid">
+          {{'ارسال' | translate}}
+        </button>
+      </form>
+    </div>
+
+  </section>
+
+</div>

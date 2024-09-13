@@ -1,0 +1,70 @@
+.renovation-store {
+    position: relative;
+    margin-bottom: 100px;
+  
+    .img-info {
+    //  background-image: url("../../../../../assets/img/renovation/mockup.png");
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      min-height: 300px;
+  
+      width: 100%;
+      position: relative;
+  
+      .color-overlay {
+        position: absolute;
+        background-color: #105652;
+        opacity: 0.4;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 0;
+      }
+  
+      p {
+        font-size: 64px;
+        z-index: 1;
+        color: white;
+      }
+  
+    }
+  
+    .store-info {
+      margin-top: -60px;
+      width: 100%;
+      max-width: 85%;
+      text-align: center;
+      padding: 40px 20px !important;
+      font-size: 28px;
+    }
+  
+    .categories {
+      max-width: 85%;
+      margin-top: 100px;
+      align-self: center;
+  
+      .category {
+        margin-bottom: 50px;
+  
+        img {
+          border-radius: 25px;
+          max-width: 100%;
+          height: auto;
+        }
+  
+        .action {
+          color: #B91646;
+        }
+  
+        .title {
+          margin-top: 30px;
+          margin-bottom: 10px;
+        }
+      }
+    }
+  
+  }
+  

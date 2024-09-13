@@ -1,0 +1,71 @@
+<div class="app-section" *ngIf="modulesService.hasApplication"
+     cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+     [cdkDragFreeDragPosition]="dragDropService.findPosition('app-section')"
+     (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'app-section')"
+     [ngStyle]="{'direction': modulesService.lang == 'fa' ? 'rtl' : 'ltr' }">
+
+  <div class="background-overlay jarallax">
+    <div class="color-overlay"></div>
+    <img [src]="dynamicMediaService.getMedia('app')"
+         [alt]="'app'" class="jarallax-img img-fluid"
+         editElement [editType]="'app'"
+    >
+  </div>
+
+  <div fxLayout="row" fxLayout.lt-md="column"
+       class="app-description" fxLayoutAlign="space-around center">
+
+    <div fxLayout="column" fxLayoutAlign="center center"
+         class="app-texts" fxFlex="45%"
+         [ngStyle]="{'color': dynamicMediaService.getMedia('app') ? 'white': 'black'}">
+      <a target="_blank" [href]="dynamicMediaService.getMedia('appLink')">
+        <img [src]="storeSettingService.store.logo"
+             class="img-fluid logo" [alt]="storeSettingService.store.name"
+             cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+             [cdkDragFreeDragPosition]="dragDropService.findPosition('app-logo')"
+             (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'app-logo')">
+      </a>
+
+
+      <h2 cdkDrag [cdkDragDisabled]="dragDropService.disabled" class="display-8"
+          [cdkDragFreeDragPosition]="dragDropService.findPosition('app-title')"
+          (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'app-title')"
+          editElement editType="app-title">
+        {{
+        dragDropService.fieldText('app-title') ||
+        (storeSettingService.store.name) + ' ' +  ('رو توی جیبت داشته باش' | translate)  }}
+      </h2>
+
+      <p cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+         [cdkDragFreeDragPosition]="dragDropService.findPosition('app-desc')"
+         (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'app-desc')"
+         editElement editType="app-desc">
+        {{
+        dragDropService.fieldText('app-desc') ||
+        'خرید آسان و راحت با تخفیف های جذاب لحظه ای دانلود برای سیستم عاملهای اندروید و آیفون' | translate
+        }}
+      </p>
+
+      <a target="_blank" [href]="storeSettingService.store.appLink"
+         class="btn-app-download" download mat-button
+         cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+         [cdkDragFreeDragPosition]="dragDropService.findPosition('app-download-btn')"
+         (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'app-download-btn')">
+        <mat-icon>
+          download
+        </mat-icon>
+        {{'دانلود اپلیکیشن' | translate }}
+      </a>
+    </div>
+
+    <div fxFlex="45%" fxLayoutAlign="center center" class="app-mockup"
+         cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+         [cdkDragFreeDragPosition]="dragDropService.findPosition('app-mockup')"
+         (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'app-mockup')">
+      <img src="../../../assets/img/app/app.png" alt="application mockup"
+           class="img-fluid">
+    </div>
+
+  </div>
+
+</div>

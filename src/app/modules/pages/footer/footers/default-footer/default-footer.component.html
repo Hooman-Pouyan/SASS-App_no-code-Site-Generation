@@ -1,0 +1,179 @@
+<footer fxLayout="column" fxLayoutAlign="start stretch" class="default-footer"
+        [ngStyle]="{'direction': modulesService.lang == 'fa' ? 'rtl' : 'ltr', 'background-color': backgroundColor }">
+
+  <div fxLayout="column" fxLayoutAlign="start stretch" ngClass.gt-sm="px-5" ngClass.lt-md="container">
+
+    <div fxLayout="row" fxLayoutAlign="space-between center" class="header-footer">
+      <h2 cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+          [cdkDragFreeDragPosition]="dragDropService.findPosition('footer-title')"
+          (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'footer-title')">
+        <span>{{storeSettingService.store.name}}</span>
+      </h2>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="space-between start"
+         fxLayout.lt-md="column" fxLayoutAlign.lt-md="start stretch"
+         fxLayoutGap.lt-md="30px" class="pb-3 my-2">
+
+      <div fxFlex="27%" fxLayout="column" class="store-about-us">
+        <span class="text-justify"
+              cdkDrag [cdkDragDisabled]="dragDropService.disabled" editElement editType="footer-desc"
+              [cdkDragFreeDragPosition]="dragDropService.findPosition('footer-desc')"
+              (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'footer-desc')">
+              {{dragDropService.fieldText('footer-desc') || storeSettingService.store.aboutUs}}
+        </span>
+      </div>
+
+      <div fxFlex="22%" fxLayout="column" fxLayoutAlign="start stretch">
+
+        <div fxLayout="row wrap" fxLayoutGap="5%" class="links"
+             [dir]="modulesService.lang == 'fa' ? 'rtl' : 'ltr' " fxLayoutAlign="start center">
+          <a *ngFor="let footerLink of footerLinks"
+             fxFlex="45%" [href]="dragDropService.fieldLink(footerLink.type) || footerLink.defaultLink" cdkDrag
+             [cdkDragDisabled]="dragDropService.disabled"
+             [cdkDragFreeDragPosition]="dragDropService.findPosition(footerLink.type)"
+             (cdkDragEnded)="dragDropService.dropEvent($event.distance, footerLink.type)">
+            <span editElement [editType]="footerLink.type">
+              {{(dragDropService.fieldText(footerLink.type) || footerLink.defaultText) | translate}}
+            </span>
+          </a>
+          <b *ngIf="customersCount">
+            تعداد کاربران سایت:
+            {{customersCount | number}}
+            نفر
+          </b>
+        </div>
+      </div>
+
+      <div fxFlex="26%" fxLayout="column" fxLayoutAlign="start stretch" class="info">
+        <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap.lt-md="3px" class="info-detail"
+             cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+             [cdkDragFreeDragPosition]="dragDropService.findPosition('footer-address')"
+             (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'footer-address')">
+          <mat-icon>location_on</mat-icon>
+          <span>{{storeSettingService.store.address}}</span>
+        </div>
+
+        <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap.lt-md="3px" class="info-detail"
+             cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+             [cdkDragFreeDragPosition]="dragDropService.findPosition('footer-phone')"
+             (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'footer-phone')">
+          <mat-icon>phone</mat-icon>
+          <a [href]="'tel:' + storeSettingService.store.phone">
+            {{storeSettingService.store.phone}}
+          </a>
+        </div>
+
+        <div *ngFor="let spNumbers of storeSettingService.store.supportNumbers;let idx = index"
+             fxLayout="row" fxLayoutAlign="start start" fxLayoutGap.lt-md="3px" class="info-detail"
+             cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+             [cdkDragFreeDragPosition]="dragDropService.findPosition('footer-phone-' + idx)"
+             (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'footer-phone-' + idx)">
+          <ng-container *ngIf="spNumbers.VALUE && spNumbers.VALUE != 'null' && spNumbers.VALUE != 'undefined'">
+            <mat-icon>phone</mat-icon>
+            <a [href]="'tel:' + spNumbers.VALUE">
+              {{spNumbers.VALUE}}
+            </a>
+          </ng-container>
+
+        </div>
+
+      </div>
+
+      <div fxFlex="15%" fxLayout="row wrap" *ngIf="modulesService.lang == 'fa' && !modulesService.isInfoBase"
+           fxLayoutAlign="space-around center" fxLayoutAlign.lt-md="center center">
+
+        <div id="zarinpal" fxFlex="43%" fxFlex.lt-md="23%" *ngIf="modulesService.zarinpalGateway">
+          <a (click)="zarinpalLink()" title="دروازه پرداخت معتبر">
+            <img src="https://cdn.zarinpal.com/badges/trustLogo/1.svg"
+                 class="img-fluid" alt="دروازه پرداخت معتبر">
+          </a>
+        </div>
+
+        <div class="enamad" id="enamad" [innerHTML]="storeSettingService.store.etemad_electronic"
+             fxFlex="43%" fxFlex.lt-md="23%"
+             *ngIf="storeSettingService.store.etemad_electronic &&  storeSettingService.store.etemad_electronic != ' '"
+             cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+             [cdkDragFreeDragPosition]="dragDropService.findPosition('footer-e-namad')"
+             (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'footer-e-namad')">
+        </div>
+        <img src="../../../../../../assets/img/footer/enamad.png"
+             *ngIf="modulesService.isFreeTry"
+             alt="enamad" fxFlex="43%" fxFlex.lt-md="23%"
+             cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+             [cdkDragFreeDragPosition]="dragDropService.findPosition('footer-e-namad')"
+             (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'footer-e-namad')">
+
+        <div class="samandehi" id="samandehi" fxFlex="43%" fxFlex.lt-md="23%"
+             *ngIf="storeSettingService.store.samandehiId && storeSettingService.store.samandehiImg && storeSettingService.store.samandehiLink"
+             cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+             [cdkDragFreeDragPosition]="dragDropService.findPosition('footer-samandehi')"
+             (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'footer-samandehi')">
+          <img referrerpolicy='origin' [id]='storeSettingService.store.samandehiId' style='cursor:pointer'
+               (click)='window.open(storeSettingService.store.samandehiLink, "Popup","toolbar=no, scrollbars=no, location=no, statusbar=no, menubar=no, resizable=0, width=450, height=630, top=30")'
+               alt='logo-samandehi' [src]='storeSettingService.store.samandehiImg'/>
+        </div>
+        <img src="../../../../../../assets/img/footer/samandehi.png"
+             *ngIf="modulesService.isFreeTry"
+             alt="samandehi" fxFlex="43%" fxFlex.lt-md="23%" cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+             [cdkDragFreeDragPosition]="dragDropService.findPosition('footer-samandehi')"
+             (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'footer-samandehi')">
+
+      </div>
+
+    </div>
+
+    <div class="app-section" fxLayout="row" *ngIf="modulesService.hasApplication"
+         fxLayoutAlign="center center" fxLayout.lt-md="column">
+      <a target="_blank" [href]="storeSettingService.store.appLink"
+         class="btn-app-download" download mat-button cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+         [cdkDragFreeDragPosition]="dragDropService.findPosition('footer-app-download')"
+         (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'footer-app-download')">
+        <mat-icon>
+          download
+        </mat-icon>
+        {{'دانلود اپلیکیشن' | translate }}
+      </a>
+
+      <p cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+         [cdkDragFreeDragPosition]="dragDropService.findPosition('footer-app-text')"
+         (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'footer-app-text')">
+        {{ storeSettingService.store.name }} {{'رو توی جیبت داشته باش' | translate }}
+      </p>
+
+    </div>
+
+    <div class="socials my-1" fxLayout="row" [dir]="modulesService.lang == 'fa' ? 'rtl' : 'ltr' "
+         fxLayoutAlign="center center" fxLayoutGap="20px">
+      <ng-container *ngFor="let social of storeSettingService.store.socials">
+        <a [href]="socialLink(social)" target="_blank" *ngIf="social.link != 'null' "
+           fxFlex="24px" cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+           [cdkDragFreeDragPosition]="dragDropService.findPosition('footer-social-' + social.type)"
+           (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'footer-social-' + social.type)">
+          <img [src]=" '/assets/icons/socials/' + social.type + '.svg' " class="img-fluid" [title]="social.type"
+               [alt]="social.type">
+        </a>
+      </ng-container>
+
+    </div>
+
+  </div>
+
+  <div class="manufacturer-section p-1" fxLayout="row" fxLayoutAlign="center center"
+       *ngIf="!modulesService.siteeshoLicense">
+    <ng-container *ngIf="modulesService.lang == 'fa' else digiBull">
+      <span>طراحی و توسعه توسط</span>
+      <a href="https://siteesho.com" target="_blank">
+        <b style="color: #ff6100">سایتی‌شو</b>
+      </a>
+    </ng-container>
+
+    <ng-template #digiBull>
+      <span>@ 2023 Copyright:</span>
+      <a href="#" target="_blank">
+        <b style="color: #ff6100">Siteesho Studio</b>
+      </a>
+    </ng-template>
+  </div>
+
+</footer>

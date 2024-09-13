@@ -1,0 +1,73 @@
+<app-header></app-header>
+
+<div fxLayout="column" fxLayoutAlign="start stretch"
+     fxLayoutGap="8rem" fxLayoutGap.lt-md="1.5rem"
+     class="info-base-landing">
+
+  <swiper [config]="mainSliderConfig" class="info-base-slider">
+    <ng-template swiperSlide *ngFor="let slider of mainSlider">
+      <img [src]="slider" [alt]="slider" class="img-fluid text-center">
+    </ng-template>
+  </swiper>
+
+  <div fxLayout="column" fxLayoutAlign="start stretch" class="landing-blogs" *ngIf="blogs.length">
+    <h2 class="text-center my-4">{{'آخرین مطالب وبلاگ' | translate}}</h2>
+    <div class="container py-5" fxLayout="row" fxLayoutAlign="space-between stretch"
+         fxLayout.lt-md="column" fxLayoutAlign.lt-md="start stretch" fxLayoutGap.lt-md="1rem">
+      <div class="blog"  *ngFor="let blog of blogs | slice: -3" fxFlex.gt-sm="32%">
+        <img [src]="blog.FILES">
+        <div fxLayout="column" fxLayoutAlign="start stretch"
+             class="blog-desc" fxLayoutGap="10px">
+          <b class="text-center">{{blog?.TITLE}}</b>
+          <span class="text-justify px-2 blog-short-desc" [innerHTML]="blog?.DESCRIPTION"></span>
+          <a mat-stroked-button color="warn" [href]="'/blogs/' + blog?.ID">{{'ادامه مطلب' | translate}}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div fxLayout="row" fxLayoutAlign="space-between stretch" class="container landing-about-us"
+       fxLayoutGap.lt-md="1rem"
+       fxLayout.lt-md="column" fxLayoutAlign.lt-md="start center">
+    <div fxFlex="47%" class="p-5 desc"
+              fxLayout="column" fxLayoutAlign="start stretch">
+      <h2 class="about-us-title">{{'درباره ما' | translate}}</h2>
+      <p class="text-justify" [innerHTML]="storeSettingService.store.aboutUs"></p>
+    </div>
+    <div fxFlex="47%" fxLayout="column" fxLayoutAlign="center stretch">
+      <img [src]="aboutUsImage" alt="about_us" class="img-fluid">
+    </div>
+  </div>
+
+  <div fxLayout="row" fxLayoutAlign="center center" class="landing-faq py-5"
+       *ngIf="storeSettingService.store?.questions?.length">
+    <div fxLayout="column" fxLayoutAlign="start stretch"
+         fxLayoutGap="40px" class="container">
+
+      <h2 class="faq-title"
+           fxLayout="column" fxLayoutAlign="start center">
+        {{'سوالات متداول' | translate}}
+      </h2>
+
+      <div fxLayout="row wrap" fxLayoutAlign="space-between stretch">
+        <div *ngFor="let faq of storeSettingService.store.questions | slice: -6" class="mb-3"
+             fxLayout="column" fxLayoutAlign="start stretch" fxFlex="46%">
+          <b class="faq-question py-3 text-center">
+            {{faq.QUESTION}}
+          </b>
+          <p class="faq-answer text-justify px-3">
+            {{faq.ANSWER}}
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<app-brands-slider></app-brands-slider>
+
+<default-contact-us [asComponent]="true"></default-contact-us>
+
+<app-footer></app-footer>

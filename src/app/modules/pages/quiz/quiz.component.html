@@ -1,0 +1,115 @@
+<app-header></app-header>
+
+<div fxLayout="column" fxLayoutAlign="start stretch" class="quiz-page container">
+  <div fxLayout="column" fxLayoutAlign="start stretch">
+    <h2>
+      آزمون تعیین سطح
+    </h2>
+  </div>
+  <div fxLayout="column" fxLayoutAlign="start center" class="container" *ngIf="step == 1">
+    <p>
+      آزمون تعیین سطح زبان انگلیسی آکادمی زبان ملینا مداح
+
+      سیستم ارزیابی این آزمون تعیین سطح براساس استاندارد (CEFR) طراحی شده است و به کلیه افراد، زبان آموزان، ‌شرکت‌ها،
+      سازمان‌ها که علاقه‌مند به سنجش دانش زبانی خود و یا پرسنل خود هستند پیشنهاد می‌شود.
+      با انجام این آزمون تعیین سطح آنلاین در مدت ۱۰ دقیقه از سطح زبان خود آگاه خواهید شد و میتوانید دوره آموزشی مناسب
+      خود
+      را تهیه کنید.
+      این آزمون شامل ۲۵ سوال است و با پاسخ دادن به هر سوال یک نمره دریافت خواهید کرد و مجموع نمرات هم ۲۵ است و آزمون
+      نمره
+      منفی ندارد.
+      لطفا دقت نمایید که سوالات به ترتیب از آسان به سخت مرتب شده است.
+      در حین آزمون لطفا دقت کنید تصادفی گزینه ها رو انتخاب نکنید تا نتیجه مطلوب را در آزمون دریافت نمایید. با آرزوی
+      موفقیت
+      برای شما دوست عزیز و توانمند✌️
+
+      برای شروع آزمون روی دکمه زیر کلیک کنید.
+    </p>
+    <button mat-raised-button color="primary" (click)="start()">
+      شروع آزمون
+    </button>
+  </div>
+
+  <ng-container *ngIf="step==2">
+    <form [formGroup]="form" dir="ltr" class="p-4" *ngIf="questionList.length>0 else noQuestion"
+          fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="2rem">
+      <div class="count-down-timer" fxLayout="row" fxLayoutAlign="end center">
+        <p>
+          زمان:
+          {{display}}
+        </p>
+      </div>
+      <ng-container *ngFor="let question of questionList; let i = index">
+        <h5>
+          {{question.NUMBERS}})
+          {{question.QUESTION}}
+        </h5>
+        <mat-radio-group [formControlName]="question.NUMBERS" fxLayout="column" fxLayoutAlign="start stretch"
+                         fxLayoutGap="1.5rem" color="primary">
+          <mat-radio-button value="a">
+            {{question.OPTION1}}
+          </mat-radio-button>
+          <mat-radio-button value="b">
+            {{question.OPTION2}}
+          </mat-radio-button>
+          <mat-radio-button value="c">
+            {{question.OPTION3}}
+          </mat-radio-button>
+          <mat-radio-button value="d">
+            {{question.OPTION4}}
+          </mat-radio-button>
+        </mat-radio-group>
+        <ng-container *ngIf="done && userSelected[question.NUMBERS]">
+          <mat-icon *ngIf="question.SELECTION == userSelected[question.NUMBERS]" style="color: #1BEA7A">
+            task_alt
+          </mat-icon>
+          <mat-icon *ngIf="question.SELECTION != userSelected[question.NUMBERS]" style="color: #b91646">
+            dangerous
+          </mat-icon>
+        </ng-container>
+      </ng-container>
+
+      <div *ngIf="done && score >= 0" fxLayout="column" fxLayoutAlign="start center">
+        <p>
+          آزمون به پایان رسیده
+          نمره شما:
+          {{score}}
+        </p>
+          <ng-container *ngIf="score <= 3">
+            سطح صفر، شما نیاز دارید زبان انگلیسی را از مطالب کاملا ابتدایی بیاموزید
+          </ng-container>
+          <ng-container *ngIf="score <= 9 && score >= 4">
+            سطح پایه(A1)
+          </ng-container>
+          <ng-container *ngIf="score <= 14 && score >= 10">
+            (A2) سطح مقدماتی
+          </ng-container>
+          <ng-container *ngIf="score <= 18 && score >= 15">
+            (B1) سطح متوسط
+          </ng-container>
+          <ng-container *ngIf="score <= 22 && score >= 19">
+            (B2) سطح متوسط به بالا
+          </ng-container>
+          <ng-container *ngIf="score >= 23">
+            (C1)  سطح پیشرفته
+          </ng-container>
+      </div>
+
+
+      <div fxLayout="row" fxLayoutAlign="start center">
+        <button mat-raised-button color="primary" fxFlex="15%" [disabled]="done" (click)="setData()">
+          ثبت
+        </button>
+      </div>
+
+    </form>
+    <ng-template #noQuestion>
+      <h2 fxLayout="column" fxLayoutAlign="start center">
+        هیچ سوالی یافت نشد
+      </h2>
+    </ng-template>
+  </ng-container>
+
+</div>
+
+<app-footer></app-footer>

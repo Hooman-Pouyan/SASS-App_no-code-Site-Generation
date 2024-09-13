@@ -1,0 +1,93 @@
+::-webkit-scrollbar {
+  width: 0; /* Remove scrollbar space */
+  background: transparent; /* Optional: just make scrollbar invisible */
+}
+
+.section-services {
+  .services {
+    @media screen and (min-width: 960px) {
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .service-part {
+      padding: 25px 10px;
+    }
+
+    .section-services-h {
+      border-bottom: 1px solid #555;
+      padding-bottom: 30px;
+      align-self: center;
+      width: 100%;
+      text-align: center;
+    }
+  }
+}
+
+.renovation-category-list {
+  border: 1px solid #000;
+  text-align: left;
+  border-radius: 5px;
+  padding: 8px;
+
+  h2 {
+    text-align: center;
+  }
+
+  mat-list-option .mat-list-item-content-reverse {
+    flex-direction: row !important;
+    text-align: left;
+  }
+
+  ::ng-deep.mat-list-item-content-reverse {
+    display: flex !important;
+    padding: 0 16px !important;
+    flex-direction: row !important;
+    justify-content: space-around !important;
+  }
+
+}
+
+.example-section {
+  margin: 12px 0;
+}
+
+.example-margin {
+  margin: 0 12px;
+}
+
+ul {
+  list-style-type: none;
+  margin-top: 4px;
+}
+
+$gradient: linear-gradient(to right, var(--custom-primary-color) 0%, var(--custom-primary-color) 100%);
+
+
+li.ng-star-inserted {
+  border-radius: 20px !important;
+  margin: 0 5px !important;
+  border: 1px solid rgba(107, 110, 112, 0.25) !important;
+}
+
+li.ng-star-inserted:hover {
+  border: 1px solid var(--custom-primary-color) !important;
+}
+
+a,
+button {
+  transition: all 200ms ease !important;
+  min-width: 13px !important;
+}
+
+a:hover,
+button:hover {
+  border-radius: 20px !important;
+  background: rgba(70, 72, 73, 0.025) !important;
+  color: var(--custom-primary-color) !important;
+}
+
+
+.project {
+  margin: 30px 0 0;
+}

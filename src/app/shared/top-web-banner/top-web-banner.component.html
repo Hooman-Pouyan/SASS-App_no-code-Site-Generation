@@ -1,0 +1,9 @@
+<div fxLayout="row" fxLayoutAlign="space-between center"
+     [ngClass]="{'hide-free-try-alert': !freeTryBanner}"
+     *ngIf="modulesService.isFreeTry && !modulesService.isMotolead" class="free-try-alert">
+  <div></div>
+  <b>این سایت آزمایشی و موقت است.</b>
+  <button (click)="hideFreeTryBanner()" mat-icon-button>
+    <mat-icon>close</mat-icon>
+  </button>
+</div>

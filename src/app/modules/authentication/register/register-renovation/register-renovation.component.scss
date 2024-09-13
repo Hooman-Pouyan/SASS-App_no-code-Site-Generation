@@ -1,0 +1,185 @@
+.wrapper {
+  background-image: url(../../../../../assets/img/renovation/register/register-bg.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.bg-overlay {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: #000;
+  opacity: 0.4;
+  z-index: 9;
+}
+
+.header {
+  height: 80px;
+  position: relative;
+  z-index: 99;
+
+  .logo-container {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: flex-end;
+
+    .logo-link {
+      display: inline-block;
+
+      .logo {
+        display: inline-block;
+        width: 75px;
+        height: 75px;
+        object-fit: cover;
+      }
+    }
+  }
+}
+
+.body {
+  height: calc(100vh - 80px);
+  display: flex;
+  position: relative;
+  z-index: 99;
+
+  .form-container {
+    width: 100%;
+    form {
+      width: 400px;
+    }
+    .form-group-container {
+      @media (max-width: 760px) {
+        width: 65%;
+      }
+      background-color: rgba(255, 255, 255, 0.4);
+      padding: 0 30px;
+      margin: 0 auto 30px;
+      border-radius: 10px;
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+    }
+
+    .form-group {
+      position: relative;
+      width: 100%;
+      margin-bottom: 0;
+
+      &:nth-child(1),
+      &:nth-child(2),
+      &:nth-child(3) {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+      }
+
+      .icon {
+        color: #fff;
+        position: absolute;
+        left: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+
+      .form-control {
+        width: 100%;
+        background-color: transparent !important;
+        outline: none !important;
+        padding: 8px 6px 8px 45px;
+        height: 54px;
+        border: 0;
+        font-size: 16px;
+        color: #fff;
+
+        &:focus,
+        &:active {
+          background-color: transparent;
+          border: 0;
+        }
+      }
+    }
+
+    .btn-container {
+      @media (max-width: 760px) {
+        width: 80%;
+      }
+      margin: 0 auto;
+    }
+
+    .btn {
+      display: inline-block;
+      cursor: pointer;
+      width: 100%;
+      background-color: rgba(255, 255, 255, 0.4);
+      height: 50px;
+      border-radius: 10px;
+      margin-bottom: 12px;
+      color: #fff;
+      font-size: 16px;
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+
+      .icon-img {
+        margin-right: 6px;
+        vertical-align: middle;
+      }
+    }
+
+    .link-container {
+      display: flex;
+      flex-flow: row nowrap;
+      align-items: center;
+      justify-content: space-between;
+      margin: 5px auto 0;
+      width: 90%;
+
+      .link {
+        font-size: 16px;
+        color: #fff;
+        margin-bottom: 15px;
+
+        .link-rules {
+          margin-left: 10px;
+          cursor: pointer;
+        }
+      }
+    }
+
+    ::ng-deep {
+      .link-container {
+        .link {
+          .mat-checkbox-frame {
+            border-color: #fff;
+            border-width: 2px;
+          }
+        }
+      }
+    }
+  }
+}
+
+.form-control::-webkit-input-placeholder {
+  /* Chrome/Opera/Safari */
+  color: #fff;
+  font-size: 16px;
+}
+
+.form-control::-moz-placeholder {
+  /* Firefox 19+ */
+  color: #fff;
+  font-size: 16px;
+}
+
+.form-control:-ms-input-placeholder {
+  /* IE 10+ */
+  color: #fff;
+  font-size: 16px;
+}
+
+.form-control:-moz-placeholder {
+  /* Firefox 18- */
+  color: #fff;
+  font-size: 16px;
+}

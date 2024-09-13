@@ -1,0 +1,21 @@
+<div fxLayout="column" class="popUp" *ngIf="popUpImage" (click)="close()"
+     fxLayoutAlign="center center" fxFlex="100%">
+
+  <div fxLayout="row" fxLayoutAlign="end center" class="btn-limiter">
+    <button mat-icon-button style="color: white; background-color: black">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+
+  <a *ngIf="popUpLink else noLink" [href]="popUpLink" target="_self" (click)="close()">
+    <img [src]="popUpImage"
+         alt="advertise" class="img-limiter">
+  </a>
+
+  <ng-template #noLink>
+    <img [src]="popUpImage"
+         alt="advertise" class="img-limiter">
+  </ng-template>
+
+</div>

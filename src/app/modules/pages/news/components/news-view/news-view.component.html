@@ -1,0 +1,39 @@
+<app-header></app-header>
+
+<div fxLayout="row" fxLayoutAlign="center center">
+
+  <div class="container mt-4"
+       fxLayout="row" fxLayoutAlign="start start" fxLayoutGap.gt-sm="1.5rem"
+       fxLayout.lt-md="column-reverse" fxLayoutAlign.lt-md="start stretch">
+
+    <div class="blog" fxFlex="75%" fxLayout="column" fxLayoutAlign="start stretch">
+      <h2 class="mt-0">{{oneNew.TITLE}}</h2>
+      <mat-hint fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="5px">
+        <mat-icon>calendar_month</mat-icon>
+        <span>{{oneNew.CREATE_DATE | jalaliDate: 'dateTime'}}</span>
+      </mat-hint>
+      <img [src]="oneNew.FILES" [alt]="oneNew.TITLE" class="img-fluid">
+      <p class="text-justify text-preWrap" [innerHTML]="oneNew.DESCRIPTION"></p>
+    </div>
+
+    <div fxLayout="column" fxLayoutAlign="start stretch" fxFlex
+         class="recent-blogs" fxLayoutGap="15px" *ngIf="news.length">
+      <b>{{"اخبار اخیر" | translate }}</b>
+      <mat-divider></mat-divider>
+      <ng-container *ngFor="let recentNews of news | slice: -3">
+        <a [routerLink]="'../' + recentNews.ID + '/' + recentNews.TITLE.split(' ')?.join('-')"
+           fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="5px">
+          <img [src]="recentNews.FILES" [alt]="recentNews.TITLE" class="img-fluid" fxFlex="30%">
+          <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="5px">
+            <span>{{recentNews.TITLE}}</span>
+            <span>{{recentNews.CREATE_DATE | jalaliDate}}</span>
+          </div>
+        </a>
+      </ng-container>
+    </div>
+
+  </div>
+
+</div>
+
+<app-footer></app-footer>

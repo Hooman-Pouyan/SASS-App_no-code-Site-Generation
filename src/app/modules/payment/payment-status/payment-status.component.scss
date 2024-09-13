@@ -1,0 +1,25 @@
+.payment-status {
+  height: 100vh;
+  width: 100vw;
+
+  mat-card {
+    img {
+      max-width: 100px;
+      align-self: center;
+    }
+    border-radius: 15px !important;
+    box-shadow: none !important;
+    padding: 2rem;
+    min-width: 300px;
+    max-width: 100%;
+  }
+
+}
+
+.invalid-payment {
+  background-color: rgba(207, 24, 24, 0.5);
+}
+
+.valid-payment {
+  background-color: rgba(179, 236, 205, 0.5);
+}

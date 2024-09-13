@@ -1,0 +1,23 @@
+<div fxLayout="column" fxLayoutAlign="start stretch">
+
+  <div fxLayout="row" fxLayoutAlign="space-between center">
+    <h3>
+      {{'افزایش اعتبار' | translate }}
+    </h3>
+    <button (click)="closeDialog()" mat-icon-button color="warn">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+
+  <mat-form-field appearance="outline" class="my-4">
+    <mat-label>{{'مبلغ' | translate }}( {{storeSettingService.storeCurrency | translate }} )</mat-label>
+    <input matInput [(ngModel)]="creditValue" autocomplete="off">
+  </mat-form-field>
+
+  <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="5px">
+    <button (click)="pay()" [disabled]="!creditValue || paymentTypes.length == 0" mat-raised-button color="primary">{{'ثبت' | translate }}</button>
+    <button mat-stroked-button color="accent" (click)="closeDialog()">{{'لغو' | translate }}</button>
+  </div>
+
+</div>

@@ -1,0 +1,17 @@
+<section class="counter-section container"  fxLayout.lt-md="row wrap"
+         fxLayout="row wrap" fxLayoutAlign="center center"
+         [style]="{'--counter-gradient':adjustColor(180)}" >
+  <div *ngFor="let element of counterElement; let idx = index" fxFlex="24%" fxFlex.lt-md="49%"
+       class="counter wow fadeIn py-3" ngClass.lt-md="mb-3"
+       fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="1.5rem"
+       [ngStyle]="{'background-color': adjustColor(140)}">
+    <img editElement [editType]="'counter-section' + idx" class="img-fluid"
+         [src]="dynamicMediaService.getMedia('counter-section' + idx)" alt="">
+    <p editElement [editType]="'counter-section-title' + idx">
+      {{dragDropService.fieldText('counter-section-title' + idx) || element.name}}
+    </p>
+    <b counterUp [maxCounter]="+dragDropService.fieldText('counter-section-counter'+idx) || (element.count)"
+       editElement [editType]="'counter-section-counter'+idx" class="display-5">
+    </b>
+  </div>
+</section>

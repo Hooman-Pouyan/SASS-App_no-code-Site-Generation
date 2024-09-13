@@ -1,0 +1,39 @@
+<app-header></app-header>
+
+<div class="wrap mb-4" dir="rtl">
+  <div class="container" fxFlex="column">
+
+    <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="space-around center">
+      <div class="text-center" fxFlex="40%">
+        <h1 class="title-faq">
+          {{'سوالات متداول' | translate}}
+        </h1>
+      </div>
+      <div fxFlex="40%">
+        <image-lazy src="../../.././../assets/img/help/faq.png" [alt]="storeSettingService.store.logo"
+         [title]="storeSettingService.store.logo" class="w-100">
+        </image-lazy>
+      </div>
+    </div>
+
+    <div class="w-100">
+      <mat-accordion>
+
+        <ng-container *ngFor="let QA of storeSettingService.store?.questions">
+          <mat-expansion-panel *ngIf="QA.QUESTION && QA.ANSWER">
+            <mat-expansion-panel-header>
+              <mat-panel-title class="question">
+                {{QA.QUESTION}}
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <p class="text-right answer">
+              {{QA.ANSWER}}
+            </p>
+          </mat-expansion-panel>
+        </ng-container>
+
+      </mat-accordion>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>

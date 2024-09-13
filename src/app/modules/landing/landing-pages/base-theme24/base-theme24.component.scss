@@ -1,0 +1,407 @@
+$first-gradient: var(--first-gradient);
+$second-gradient: var(--second-gradient);
+$third-gradient: var(--third-gradient);
+$fourth-gradient: var(--fourth-gradient);
+
+.base-theme24 {
+
+  .header-top {
+    position: fixed !important;
+    top: 0;
+    background: #000 !important;
+    opacity: 0.8;
+    height: 8vh !important;
+    transition: .5s ease-out;
+  }
+
+  .header-below {
+    transition: .5s ease-out;
+  }
+
+
+  .base24-header-nav {
+    color: #fff;
+    height: 6vh;
+    background: transparent;
+    width: 100%;
+    position: absolute;
+    z-index: 1100;
+
+
+    .header {
+      height: 100%;
+
+      .list-item {
+        padding: 0.5rem 1rem;
+
+        &:hover {
+          color: var(--custom-primary-color) !important;
+        }
+      }
+
+      .header-item {
+        .base24-login-header {
+          button {
+            border-radius: 50px;
+          }
+        }
+      }
+    }
+  }
+
+  .base-theme24-slider {
+    width: 100%;
+
+    swiper {
+      width: 100%;
+
+      .each-swiper {
+        position: relative;
+        z-index: 1;
+        width: 100%;
+
+        .each-swiper-content {
+          position: absolute;
+          z-index: 3;
+          text-align: center;
+
+          h1 {
+            color: #fff !important;
+            @media screen and (max-width: 559px) {
+              font-size: 16px;
+            }
+            .slider-title-store-name {
+              color: var(--custom-primary-color) !important;
+            }
+          }
+
+          h4 {
+            color: #fff !important;
+            @media screen and (max-width: 559px) {
+              font-size: 10px;
+              width: 60%;
+              align-self: center;
+            }
+          }
+
+          .content-btns {
+            .base-theme24-slider-btn {
+              border: 2px solid var(--custom-primary-color);
+              color: #fff;
+              font-weight: 600;
+              font-size: 13px;
+              letter-spacing: 1px;
+              text-transform: uppercase;
+              display: inline-block;
+              padding: 12px 30px;
+              border-radius: 50px;
+              transition: 0.5s;
+              line-height: 1;
+              margin: 0 10px;
+
+              &:hover {
+                background-color: var(--custom-primary-color);
+              }
+            }
+          }
+        }
+
+        .img-overlay {
+          width: 100%;
+          position: relative;
+          height: 80vh;
+
+          .color-overlay {
+            position: absolute;
+            background-color: #000;
+            width: 100%;
+            height: 100%;
+            opacity: 0.4;
+            z-index: 2;
+          }
+
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+          }
+        }
+      }
+    }
+  }
+
+  .base24-about-us {
+    margin: 80px 0;
+    align-self: center;
+
+    .base24-about-us-desc {
+      .base24-about-us-badge {
+        color: var(--custom-primary-color);
+      }
+
+      .base24-about-us-title{
+        @media screen and (max-width: 559px) {
+          font-size: 14px;
+        }
+      }
+
+      .base24-about-us-p{
+        @media screen and (max-width: 559px) {
+          font-size: 12px;
+          width: 100%;
+        }
+      }
+
+      .about-us-service{
+        .about-us{
+          .about-us-service-name{
+            margin: 15px 0;
+            @media screen and (max-width: 559px) {
+              font-size: 11px;
+              margin: 0 !important;
+            }
+          }
+          .about-us-service-p{
+            margin: 0 !important;
+            @media screen and (max-width: 559px) {
+              font-size: 10px;
+              width: 100%;
+            }
+          }
+        }
+      }
+
+    }
+
+    .base24-about-us-img {
+      height: 50vh;
+      position: relative;
+
+      .overlay-img {
+        height: 100%;
+        width: 100%;
+        opacity: 0.5;
+        position: absolute;
+        z-index: 1;
+        background: linear-gradient(
+            -45deg,
+            $first-gradient,
+            $second-gradient,
+            $third-gradient,
+            $fourth-gradient
+        );
+        background-size: 400% 400%;
+        animation: gradient-animation 15s ease infinite;
+      }
+
+      img {
+        height: 100%;
+        width: 100%;
+      }
+    }
+  }
+
+  .base24-why-us {
+    .why-us-1, .why-us-2, .why-us-3 {
+      padding: 50px 30px;
+      box-shadow: 0px 2px 15px rgb(0 0 0 / 10%);
+      transition: all ease-in-out 0.3s;
+
+
+      .badge-count {
+        color: var(--custom-primary-color) !important;
+      }
+
+      .title {
+        color: #000;
+
+      }
+
+      .desc {
+        color: #333;
+      }
+
+      &:hover {
+        background: var(--custom-primary-color);
+        padding: 30px 30px 70px 30px;
+        box-shadow: 10px 15px 30px rgb(0 0 0 / 18%);
+
+        .badge-count, .title, .desc {
+          color: #fff !important;
+        }
+      }
+    }
+  }
+
+  .base-theme24-products {
+    h2 {
+      .product-title-store {
+        color: var(--custom-primary-color);
+      }
+    }
+
+    .categories-toggle {
+      border: none !important;
+
+      mat-button-toggle {
+        margin: 0.5rem;
+        border: 1px solid var(--custom-primary-color) !important;
+        border-radius: 50px;
+        color: var(--custom-primary-color) !important;
+        font-size: 12px;
+        @media screen and (max-width: 559px) {
+          font-size: 8px;
+          width: 25%;
+        }
+      }
+
+      .mat-button-toggle-checked {
+        background-color: var(--custom-primary-color) !important;
+        color: white !important;
+      }
+    }
+
+    .products {
+      min-height: 300px;
+      width: 100%;
+
+      .product {
+        height: 100%;
+        border-radius: 5px;
+        padding: 20px;
+        background-color: white;
+        transition: all 0.5s ease-in-out;
+
+        &:hover {
+          transition: all .35s ease-in-out;
+          -webkit-box-shadow: 0 0 12px -3px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 0 12px -3px rgba(0, 0, 0, 0.2);
+        }
+
+        img, image-lazy {
+          aspect-ratio: 1/1;
+          object-fit: contain;
+          max-height: 180px;
+        }
+
+        mat-hint {
+          font-size: 12px;
+        }
+
+        .product-name {
+          a {
+            font-size: 14px;
+            font-weight: bold;
+            word-break: break-word;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            height: 45px;
+            //line-height: 16px; /* fallback */
+            //max-height: 32px; /* fallback */
+            -webkit-line-clamp: 2; /* number of lines to show */
+            -webkit-box-orient: vertical;
+          }
+        }
+
+        .price-section {
+          height: 60px;
+
+          .discount-section {
+            height: 17px;
+
+            .before-price {
+              color: #909090;
+              text-decoration-color: #909090 !important;
+              font-size: 14px;
+            }
+          }
+
+          .discount-percentage {
+            background-color: #B91646;
+            color: white;
+            border-radius: 15px;
+            padding: 1px 10px;
+          }
+        }
+
+        .add-to-cart {
+          border-radius: 20px;
+          font-size: 12px;
+          @media screen and (max-width: 559px) {
+            font-size: 11px;
+            padding: 5px;
+          }
+        }
+
+      }
+    }
+
+    .header-top {
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1001;
+      height: 8vh;
+      background-color: var(--custom-primary-color) !important;
+      opacity: 0.5;
+    }
+
+  }
+
+  .base24-introduce-store {
+    margin: 100px 0;
+    padding: 1rem;
+
+    .introduce-title {
+      background: linear-gradient(var(--third-gradient) 0 0) bottom/var(--d, 0) 3px no-repeat;
+      transition: 0.5s;
+      padding: 0.5rem;
+      cursor: pointer;
+
+      &:hover {
+        --d: 100%;
+      }
+    }
+
+    .introduce-p {
+      font-size: 14px;
+      text-align: center;
+    }
+
+    .introduce-store-banner {
+
+
+      .introduce-img {
+        overflow: hidden;
+        border-right: 5px solid #fff;
+        border-bottom: 5px solid #fff;
+
+        img {
+          aspect-ratio: 1/1;
+          transition: .5s ease-out;
+          display: block;
+
+          &:hover {
+            transform: scale(1.1);
+            transition: .5s ease-out;
+          }
+        }
+      }
+
+    }
+  }
+}
+
+
+@keyframes gradient-animation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}

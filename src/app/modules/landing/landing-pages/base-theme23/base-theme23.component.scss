@@ -1,0 +1,199 @@
+@import '~swiper/swiper';
+@import '~swiper/components/navigation/navigation';
+
+.base-theme23-landing {
+
+  .base-theme23-header {
+    background-color: var(--custom-accent-color);
+    color: white;
+
+    mat-divider {
+      border-color: white !important;
+    }
+  }
+
+  .base-theme23-slider {
+    height: calc(100vh - 90px);
+    @media screen and (max-width: 959px) {
+      height: calc(100vh - 90px);
+    }
+
+    swiper {
+      width: 100%;
+      height: 100%;
+
+      .swiper-slide {
+        .animated {
+          display: none !important;
+        }
+      }
+
+      .swiper-slide-active {
+        .animated {
+          display: flex !important;
+        }
+      }
+
+      .swiper-button-prev, .swiper-button-next {
+        color: white !important;
+        background-color: var(--custom-accent-color) !important;
+        border-radius: 100%;
+        width: 55px;
+        height: 55px;
+        @media screen and (max-width: 959px) {
+          width: 35px;
+          height: 35px;
+        }
+      }
+
+      .swiper-button-prev:after, .swiper-button-next:after {
+        font-size: 25px;
+        @media screen and (max-width: 959px) {
+          font-size: 16px;
+        }
+      }
+
+      .each-swiper {
+        position: relative;
+        color: white;
+
+        .animated {
+          @media screen and (min-width: 959px) {
+            padding-right: 8rem;
+          }
+
+          @media screen and (max-width: 959px) {
+            padding: 0 1rem;
+          }
+          background-color: rgba(0, 0, 0, 0.3);
+          @media screen and (max-width: 959px) {
+            margin: auto 0;
+          }
+        }
+
+        a {
+          color: white;
+          background-color: var(--custom-primary-color);
+          border-color: var(--custom-primary-color);
+        }
+
+        .img-overlay {
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          z-index: -1;
+
+          img {
+            width: 100%;
+            @media screen and (max-width: 959px) {
+              object-fit: cover;
+              height: 100%;
+            }
+          }
+
+        }
+      }
+
+    }
+  }
+
+  .base-theme23-blogs {
+    .each-blog {
+      outline: 2px solid #DDDDDD;
+      border-radius: 5px;
+
+      *:not(:first-child) {
+        padding: 0 20px;
+      }
+
+      .blog-desc {
+        -webkit-box-orient: vertical;
+        white-space: pre-wrap;
+        font-size: 14px;
+        word-break: break-word;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 7;
+        height: 150px;
+        max-height: 150px;
+        margin-bottom: 1rem;
+      }
+
+      .created-time {
+        color: #AAAAAA;
+        font-size: 12px;
+      }
+    }
+  }
+
+  .base-theme23-categories {
+    background-color: var(--custom-accent-color);
+    color: white;
+
+    swiper {
+      width: 100%;
+      height: 100%;
+
+      .swiper-button-prev, .swiper-button-next {
+        color: white !important;
+      }
+
+      .category-slide {
+        border: 2px solid white;
+        color: white;
+        background-color: transparent;
+        border-radius: 2rem;
+        transition: all 0.3s ease-in-out;
+        max-width: 110px;
+
+        &:hover {
+          color: black;
+          background-color: white;
+        }
+      }
+
+    }
+
+  }
+
+  .base-theme23-news {
+    .each-new {
+      outline: 2px solid #DDDDDD;
+      border-radius: 5px;
+      margin-bottom: 1.5rem;
+
+      img {
+        max-height: 200px;
+        width: 100%;
+        object-fit: cover;
+      }
+
+      *:not(:first-child) {
+        padding: 0 20px;
+      }
+
+      .new-desc {
+        -webkit-box-orient: vertical;
+        white-space: pre-wrap;
+        font-size: 14px;
+        word-break: break-word;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        height: 50px;
+        max-height: 50px;
+        margin-bottom: 1rem;
+      }
+
+      .created-time {
+        color: #AAAAAA;
+        font-size: 12px;
+      }
+    }
+  }
+
+}

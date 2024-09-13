@@ -1,0 +1,82 @@
+<renovation-store-header class="renovation-store-header" [ngStyle]="{'position': headerPosition}"
+  (complete)="cartToggle = !cartToggle" [change]="cartToggle">
+</renovation-store-header>
+
+<div fxLayout="row" style="width: 100%" fxLayoutAlign="space-around center">
+
+  <div class="renovation-category-list" fxHide.lt-md *ngIf="isCategory" [fxFlex]="isCategory ? '20%' : '0%'"
+    fxFlex.lt-md="0%">
+    <renovation-store-categories-list (scrollTo)="scrollToCategory($event)" [mainCategory]="categoryName"
+      [categories]="subCategories"></renovation-store-categories-list>
+  </div>
+
+
+  <div fxLayout="column" fxLayoutAlign="center center" fxFlex="75%" fxFlex.lt-md="100%">
+    <div class="category-list" fxLayout="column" fxLayoutAlign="start center">
+
+      <div *ngFor="let category of subCategories" class="sub-category" [id]="category?.NAME" fxLayout="column"
+        fxLayoutAlign="start start">
+
+        <b class="category-title" *ngIf="isCategory">
+          {{category?.NAME}}
+        </b>
+
+        <a routerLink="../" class="prev-category" *ngIf="isSubCategory">
+          <button mat-button color="primary">
+            <mat-icon>west</mat-icon>
+            Back To {{prevCategoryName}}
+          </button>
+        </a>
+
+        <div fxLayout="row wrap" dir="ltr" fxLayoutGap="1%" class="w-100" fxLayoutAlign="start stretch"
+          *ngIf="category?.products?.length">
+          <div *ngFor="let product of category.products" class="product" [fxFlex]="isCategory ? '24%' : '19%'"
+            fxFlex.lt-md="48%" fxLayout="column" fxLayoutAlign="start center">
+            <div class="image-product" fxLayoutAlign="center center">
+              <img [src]="adminImageUrlDevelop + '/assets/img/products/' + product.IMAGE" [alt]="product.NAME">
+            </div>
+            <b class="product-name">{{product.NAME}}</b>
+            <span class="final-price just-final-price" *ngIf="product.PRICE == product.PRICE_AFTER_OFFER else discount">
+              {{ (product.PRICE_AFTER_OFFER - product?.productAdditional?.ADITIONAL_PRICE) | number}} $
+            </span>
+            <ng-template #discount>
+              <div fxLayout="row" fxLayoutAlign="space-between center" class="discount-price">
+                <del>{{ (product.PRICE - product?.productAdditional?.ADITIONAL_PRICE) | number}} $</del>
+                <span>{{calculateDiscount(product.PRICE, product.PRICE_AFTER_OFFER)}}%</span>
+              </div>
+              <span class="final-price">
+                {{ (product.PRICE_AFTER_OFFER - product?.productAdditional?.ADITIONAL_PRICE) | number}} $
+              </span>
+            </ng-template>
+            <a [routerLink]="'/product/' + product.ID + '/' + product.NAME.replace('/', '').split(' ').join('-')" target="_blank">
+              <button mat-stroked-button class="show-product-btn">
+                More Detail
+              </button>
+            </a>
+          </div>
+          <div fxLayout="row" fxLayoutAlign="end center" class="navigate-category"
+            *ngIf="isCategory && category.products.length > 9">
+            <a [routerLink]="category.ID">
+              View more
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<button routerLink="../" mat-flat-button color="primary" class="back-button">
+  back
+  <mat-icon>east</mat-icon>
+</button>
+
+<button routerLink="/factor" mat-flat-button color="primary" class="proceed-button">
+  <mat-icon>west</mat-icon>
+  proceed
+</button>
+
+<app-footer></app-footer>

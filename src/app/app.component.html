@@ -1,0 +1,11 @@
+<div class="min-vh-100"
+     [ngClass]="[checkLanguage(), checkFont(), checkTheme(), checkDragging()]">
+  <top-web-banner></top-web-banner>
+  <router-outlet>
+    <loading></loading>
+    <whatsapp-contact *ngIf="modulesService.whatsAppBtn && !credentialsService.isAdmin"></whatsapp-contact>
+    <mini-contact-us *ngIf="modulesService.miniContactUs && !credentialsService.isAdmin"></mini-contact-us>
+    <admin-editor-controller *ngIf="credentialsService.isAdmin"></admin-editor-controller>
+    <scroll-to-top *ngIf="!credentialsService.isAdmin"></scroll-to-top>
+  </router-outlet>
+</div>

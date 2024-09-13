@@ -1,0 +1,50 @@
+<div fxLayout="column" fxLayoutAlign="start stretch">
+
+  <div fxLayout="row" fxLayoutAlign="space-around start">
+
+    <div class="renovation-category-list" fxHide.lt-md fxFlex="20%" fxFlex.lt-md="0%">
+      <h2>Categories</h2>
+      <mat-selection-list #list (selectionChange)="filterByCategory($event)">
+        <mat-list-option *ngFor="let category of categories" [value]="category.PRODUCT_CATEGORY">
+          {{category.NAME}}
+        </mat-list-option>
+      </mat-selection-list>
+      <mat-selection-list>
+        <mat-list-option (click)="checkAll(list)">
+          All
+        </mat-list-option>
+      </mat-selection-list>
+    </div>
+
+    <div fxLayout="column" fxLayoutAlign="start stretch" fxFlex="70%" fxFlex.lt-md="100%" class="section-services"
+      *ngIf="projects.length">
+
+      <div fxLayout="column" fxLayoutAlign="start stretch" class="services">
+        <h2 class="section-services-h">
+          EXPLORE
+          <br>
+          our range of services
+        </h2>
+
+        <!--        <div fxLayout="column" class="service-part" *ngFor="let project of projects | paginate: paginationConfig">-->
+        <!--          <div fxLayout="column" fxLayoutAlign="space-around start">-->
+        <!--            <h3>{{project.NAME}}</h3>-->
+        <!--            <p>-->
+        <!--              {{project.DESCRIPTION}}-->
+        <!--            </p>-->
+        <!--          </div>-->
+        <!--          <div fxLayout="row" fxLayoutAlign="center center">-->
+        <!--            <beer-slider [image]="project"></beer-slider>-->
+        <!--          </div>-->
+        <!--        </div>-->
+      </div>
+
+      <!--      <pagination-controls previousLabel="{{'قبلی' | translate }}" nextLabel="{{'بعدی' | translate }}"-->
+      <!--        (pageChange)="paginationConfig.currentPage = $event ;getProjects($event)">-->
+      <!--      </pagination-controls>-->
+
+    </div>
+
+  </div>
+
+</div>

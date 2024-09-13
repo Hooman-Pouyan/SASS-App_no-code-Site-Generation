@@ -1,0 +1,21 @@
+<ng-container [ngSwitch]="modulesService.theme">
+
+  <renovation-header
+    *ngSwitchCase="[500] | customSwitch: modulesService.theme">
+  </renovation-header>
+
+  <mega-header
+    *ngSwitchCase="[1111] | customSwitch: modulesService.theme">
+  </mega-header>
+
+  <dark-header
+    *ngSwitchCase="[528] | customSwitch: modulesService.theme">
+  </dark-header>
+
+  <motolead-header
+    *ngSwitchCase="[629] | customSwitch: modulesService.theme">
+  </motolead-header>
+
+  <default-header *ngSwitchDefault></default-header>
+
+</ng-container>

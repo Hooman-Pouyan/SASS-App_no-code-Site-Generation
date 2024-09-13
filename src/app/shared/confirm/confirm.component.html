@@ -1,0 +1,6 @@
+<h1 mat-dialog-title class="normal-title" *ngIf="!message" [ngStyle]="{'direction': modulesService.lang == 'fa' ? 'rtl' : 'ltr' }">{{"آیا اطمینان دارید؟" | translate }} </h1>
+<h1 mat-dialog-title class="normal-title" *ngIf="message">{{message | translate}}</h1>
+<div mat-dialog-actions >
+  <button color="warn" mat-button (click)="dialogRef.close(true)">{{"بله" | translate }}</button>
+  <button color="accent" mat-button (click)="dialogRef.close(false)">{{"خیر" | translate }}</button>
+</div>

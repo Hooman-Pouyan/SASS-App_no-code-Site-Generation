@@ -1,0 +1,18 @@
+<mat-menu [xPosition]="modulesService.lang == 'fa' ? 'after' :'before'"
+          #childMenu="matMenu" [overlapTrigger]="false">
+  <span *ngFor="let child of items">
+    <ng-container *ngIf="child?.children?.length else noChild">
+      <a mat-menu-item [matMenuTriggerFor]="menu.childMenu">
+        <mat-icon *ngIf="child.iconName">{{child.iconName}}</mat-icon>
+        <span>{{child.displayName}}</span>
+      </a>
+      <dynamic-nested-menu #menu [items]="child.children"></dynamic-nested-menu>
+    </ng-container>
+    <ng-template #noChild>
+      <a mat-menu-item [routerLink]="child.route">
+        <mat-icon *ngIf="child.iconName">{{child.iconName}}</mat-icon>
+        <span>{{child.displayName}}</span>
+      </a>
+    </ng-template>
+  </span>
+</mat-menu>

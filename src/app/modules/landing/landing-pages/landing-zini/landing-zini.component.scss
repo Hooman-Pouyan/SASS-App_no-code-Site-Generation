@@ -1,0 +1,53 @@
+.landing-zini {
+  background: var(--custom-primary-color);
+
+  .zini-slider {
+
+    li {
+      cursor: pointer;
+    }
+
+    swiper {
+      width: 100%;
+      height: 100%;
+
+      .swiper-slide {
+        color: white !important;
+        @media screen and (min-width: 959px) {
+          height: 60vh;
+        }
+
+        img {
+          object-fit: contain;
+          width: 100%;
+          max-height: 100%;
+        }
+      }
+
+    }
+  }
+
+  .zini-categories {
+    img, image-lazy {
+      aspect-ratio: 1/1;
+      object-fit: contain;
+    }
+  }
+
+  .zini-upper-decoratives {
+    img {
+      border-radius: 10px;
+      aspect-ratio: 4/3;
+      object-fit: contain;
+    }
+  }
+
+  .zini-desc-card {
+    background: var(--custom-accent-color);
+    @media screen and (max-width: 959px) {
+      padding: 2rem;
+    }
+    padding: 4rem;
+  }
+
+}

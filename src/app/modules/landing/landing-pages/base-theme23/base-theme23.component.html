@@ -1,0 +1,261 @@
+<div fxLayout="column" fxLayoutAlign="start stretch"
+     class="base-theme23-landing">
+
+  <header *ngIf="appService.windowWidth > 959 else mobileHeader"
+          fxLayout="row" fxLayoutAlign="center center" class="base-theme23-header">
+    <div fxLayout="row" fxLayoutAlign="space-between center" class="py-3 container">
+
+      <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="2rem">
+        <a [href]="dragDropService.fieldLink('base-theme23-header-main-page') || '/'" cdkDrag
+           [cdkDragDisabled]="dragDropService.disabled"
+           [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme23-header-main-page')"
+           (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme23-header-main-page')"
+           editElement editType="base-theme23-header-main-page">
+          <img [src]="storeSettingService.store.logo" [alt]="storeSettingService.store.name" fxFlex="50px">
+        </a>
+        <a [href]="dragDropService.fieldLink('base-theme23-header-products') || '/store'" cdkDrag
+           [cdkDragDisabled]="dragDropService.disabled"
+           [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme23-header-products')"
+           (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme23-header-products')"
+           editElement editType="base-theme23-header-products">
+          {{(dragDropService.fieldText('base-theme23-header-products') || 'محصولات') | translate}}
+        </a>
+        <a [href]="dragDropService.fieldLink('base-theme23-header-contact-us') || '/contact-us'" cdkDrag
+           [cdkDragDisabled]="dragDropService.disabled"
+           [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme23-header-contact-us')"
+           (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme23-header-contact-us')"
+           editElement editType="base-theme23-header-contact-us">
+          {{(dragDropService.fieldText('base-theme23-header-contact-us') || 'امور مشتریان') | translate}}
+        </a>
+        <a [href]="dragDropService.fieldLink('base-theme23-header-about') || '/about-us'" cdkDrag
+           [cdkDragDisabled]="dragDropService.disabled"
+           [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme23-header-about')"
+           (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme23-header-about')"
+           editElement editType="base-theme23-header-about">
+          {{(dragDropService.fieldText('base-theme23-header-about') || 'درباره ما') | translate}}
+        </a>
+        <a *ngIf="modulesService.hasBlog" [href]="dragDropService.fieldLink('base-theme23-header-blog') || '/blogs'"
+           cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+           [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme23-header-blog')"
+           (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme23-header-blog')"
+           editElement editType="base-theme23-header-blog">
+          {{(dragDropService.fieldText('base-theme23-header-blog') || 'بلاگ') | translate}}
+        </a>
+        <a *ngIf="modulesService.hasNews" [href]="dragDropService.fieldLink('base-theme23-header-news') || '/news'"
+           cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+           [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme23-header-news')"
+           (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme23-header-news')"
+           editElement editType="base-theme23-header-news">
+          {{(dragDropService.fieldText('base-theme23-header-news') || 'اخبار') | translate}}
+        </a>
+        <div fxLayout="row" style="height: 2rem"
+             fxFlex="2px" fxLayoutAlign="start stretch">
+          <mat-divider vertical></mat-divider>
+        </div>
+        <ng-container *ngIf="credentialsService.isGuest else loggedIn">
+          <a [href]="dragDropService.fieldLink('base-theme23-header-sign-up') || '/auth'" cdkDrag
+             [cdkDragDisabled]="dragDropService.disabled"
+             [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme23-header-sign-up')"
+             (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme23-header-sign-up')">
+            {{'ورود کاربران' | translate}}
+          </a>
+        </ng-container>
+        <ng-template #loggedIn>
+          <button [dir]="modulesService.lang == 'fa' ? 'rtl' : 'ltr' "
+                  mat-button [matMenuTriggerFor]="profileAction"
+                  cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+                  [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme23-header-login')"
+                  (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme23-header-login')">
+            <mat-icon class="mx-1">expand_more</mat-icon>
+            <span>{{credentialsService.credentials?.NAME}}</span>
+          </button>
+          <mat-menu #profileAction="matMenu">
+            <a mat-menu-item routerLink="/profile">
+              <mat-icon>account_circle</mat-icon>
+              <span>{{'پروفایل' | translate}}</span>
+            </a>
+            <a mat-menu-item (click)="credentialsService.logout()">
+              <mat-icon>logout</mat-icon>
+              <span>{{'خروج' | translate}}</span>
+            </a>
+          </mat-menu>
+        </ng-template>
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="2rem">
+        <button mat-icon-button (click)="openSearchDg()">
+          <mat-icon>search</mat-icon>
+        </button>
+        <button mat-icon-button [matBadge]="cartCount" matBadgeColor="warn"
+                (click)="cartService.cartSidenav = sidenavStatus.open"
+                cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+                [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme23-header-cart')"
+                (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme23-header-cart')">
+          <mat-icon>shopping_cart</mat-icon>
+        </button>
+      </div>
+
+    </div>
+  </header>
+  <ng-template #mobileHeader>
+    <app-header></app-header>
+  </ng-template>
+
+  <section class="base-theme23-slider" fxLayout="column" fxLayoutAlign="start stretch"
+           cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+           [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme23-slider')"
+           (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme23-slider')">
+    <swiper [config]="mainSliderConfig">
+      <ng-container *ngFor="let sliderIdx of dynamicMediaService.mediaSliderLoop">
+        <ng-template swiperSlide *ngIf="dynamicMediaService.getMedia('base-theme23-slider' + sliderIdx)">
+          <div fxFill fxLayout="row" fxLayoutAlign="start center" class="each-swiper">
+            <div fxLayout="column" fxLayoutAlign="start start" class="animated slideInRight py-4"
+                 fxFlex.gt-sm="50%" fxFlex>
+              <h2 editElement [editType]="'base-theme23-slider' + (sliderIdx + 1) + '-sub-title'" class="display-6">
+                {{dragDropService.fieldText('base-theme23-slider' + (sliderIdx + 1) + '-sub-title') || 'لورم ایپسوم متن'}}
+              </h2>
+              <h1 editElement [editType]="'base-theme23-slider' + (sliderIdx + 1) + '-title'" class="display-5">
+                {{dragDropService.fieldText('base-theme23-slider' + (sliderIdx + 1) + '-title') || 'لورم ایپسوم متن ساختگی با'}}
+              </h1>
+              <a editElement [editType]="'base-theme23-slider' + (sliderIdx + 1) + '-btn'"
+                 [href]="dragDropService.fieldLink('base-theme23-slider' + (sliderIdx + 1) + '-btn') || '/store'"
+                 class="py-2 px-5">
+                {{ dragDropService.fieldText('base-theme23-slider' + (sliderIdx + 1) + '-btn') || 'خرید' | translate}}
+              </a>
+            </div>
+            <div class="img-overlay">
+              <img editElement [editType]="'base-theme23-slider' + sliderIdx" class="img-fluid"
+                   [src]="dynamicMediaService.getMedia('base-theme23-slider' + sliderIdx)" alt="">
+            </div>
+          </div>
+        </ng-template>
+      </ng-container>
+    </swiper>
+  </section>
+
+  <section *ngIf="blogs.length"
+           class="base-theme23-blogs container my-5"
+           fxLayout="row" fxLayoutAlign="space-between stretch"
+           fxLayout.lt-md="column" fxLayoutAlign.lt-md="start stretch" fxLayoutGap.lt-md="1rem"
+           cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+           [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme23-blogs-section')"
+           (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme23-blogs-section')">
+
+    <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="3rem">
+      <h2 editElement editType="base-theme23-blogs-title" class="display-6">
+        {{dragDropService.fieldText('base-theme23-blogs-title') || 'مقاله های مرتبط'}}
+      </h2>
+      <a editElement editType="base-theme23-blogs-btn"
+         [href]="dragDropService.fieldLink('base-theme23-blogs-btn') || '/blogs'"
+         class="py-2 px-5" mat-raised-button color="primary">
+        {{ dragDropService.fieldText('base-theme23-blogs-btn') || 'نمايش همه' | translate}}
+      </a>
+    </div>
+
+    <div *ngFor="let blog of blogs | slice: -3;let idx = index"
+         class="each-blog wow" ngClass.gt-sm="fadeInRight" ngClass.lt-md="fadeInUp"
+         [ngStyle]="{'animation-delay': idx * 0.3 + 's'}"
+         fxFlex.gt-sm="300px" fxLayout="column" fxLayoutAlign="start stretch">
+      <a [href]="'blogs/' + blog.ID">
+        <img [src]="blog.FILES" [alt]="blog.TITLE" class="img-fluid">
+      </a>
+      <h4>
+        {{blog.TITLE}}
+      </h4>
+      <p class="blog-desc">
+        {{blog.DESCRIPTION}}
+      </p>
+      <div fxLayout="row" fxLayoutAlign="space-between center"
+           class="mb-4">
+        <span class="created-time">
+          {{'ایجاد شده در' | translate}}
+          :
+          {{blog.CREATE_DATE | jalaliDate}}
+        </span>
+        <a mat-stroked-button color="primary"
+           [href]="'blogs/' + blog.ID" class="rounded-md"
+           [ngStyle]="{'background-color': HEXtoRGBA(modulesService.primaryColor, 0.33)}">
+          {{'بیشتر' | translate}}
+          ...
+        </a>
+      </div>
+    </div>
+
+  </section>
+
+  <section class="base-theme23-categories wow fadeIn py-5"
+           fxLayout="row" fxLayoutAlign="center center"
+           cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+           [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme23-categories')"
+           (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme23-categories')">
+    <div class="container" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="30px">
+      <a editElement editType="base-theme23-categories"
+         [href]="dragDropService.fieldLink('base-theme23-categories') || '/categories'">
+        {{ dragDropService.fieldText('base-theme23-categories') || 'دسته بندی ها' | translate}}
+      </a>
+      <swiper [config]="categoriesSliderConfig">
+        <ng-template swiperSlide *ngFor="let category of categories">
+          <a class="category-slide"
+             [href]="'/store/category/' + category.PRODUCT_ID + '/' + category.NAME.split(' ').join('-')"
+             fxLayout="row" fxLayoutAlign="center center">
+            {{category.NAME}}
+          </a>
+        </ng-template>
+      </swiper>
+    </div>
+  </section>
+
+  <section *ngIf="news.length" dir="ltr"
+           class="base-theme23-news container my-5"
+           fxLayout="row wrap" fxLayoutAlign="space-between stretch"
+           fxLayout.lt-md="column" fxLayoutAlign.lt-md="start stretch" fxLayoutGap.lt-md="1rem"
+           cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+           [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme23-news-section')"
+           (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme23-news-section')">
+
+    <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="3rem"
+         fxFlex.gt-sm="49%" dir="rtl">
+      <h2 editElement editType="base-theme23-news-title" class="display-6">
+        {{dragDropService.fieldText('base-theme23-news-title') || 'اخبار مرتبط'}}
+      </h2>
+      <a editElement editType="base-theme23-news-btn"
+         [href]="dragDropService.fieldLink('base-theme23-news-btn') || '/news'"
+         class="py-2 px-5" mat-raised-button color="primary">
+        {{ dragDropService.fieldText('base-theme23-news-btn') || 'نمايش همه' | translate}}
+      </a>
+    </div>
+
+    <div *ngFor="let oneNews of news | slice: -3;let idx = index"
+         class="each-new wow fadeInUp" dir="rtl"
+         [ngStyle]="{'animation-delay': idx * 0.3 + 's'}"
+         fxFlex.gt-sm="49%" fxLayout="column" fxLayoutAlign="start stretch">
+      <a [href]="'news' + oneNews.ID">
+        <img [src]="oneNews.FILES" [alt]="oneNews.TITLE" class="img-fluid">
+      </a>
+      <h4>
+        {{oneNews.TITLE}}
+      </h4>
+      <p class="new-desc">
+        {{oneNews.DESCRIPTION}}
+      </p>
+      <div fxLayout="row" fxLayoutAlign="space-between center"
+           class="mb-4">
+        <span class="created-time">
+          {{'ایجاد شده در' | translate}}
+          :
+          {{oneNews.CREATE_DATE | jalaliDate}}
+        </span>
+        <a mat-stroked-button color="primary"
+           [href]="'news' + oneNews.ID" class="rounded-md"
+           [ngStyle]="{'background-color': HEXtoRGBA(modulesService.primaryColor, 0.33)}">
+          {{'بیشتر' | translate}}
+          ...
+        </a>
+      </div>
+    </div>
+
+  </section>
+
+</div>
+
+<app-footer></app-footer>

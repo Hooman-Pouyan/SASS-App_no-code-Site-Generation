@@ -1,0 +1,49 @@
+@import '~swiper/swiper';
+@import '~swiper/components/navigation/navigation';
+
+.product-slider {
+  width: 100%;
+  height: 100%;
+
+  .swiper-button-prev,
+  .swiper-button-next {
+    color: white !important;
+    background-color: var(--custom-primary-color) !important;
+    border-radius: 100%;
+    width: 40px;
+    height: 40px;
+  }
+
+  .swiper-button-disabled {
+    opacity: 0.25;
+    cursor: not-allowed;
+  }
+
+  .swiper-button-prev:after,
+  .swiper-button-next:after {
+    font-size: 18px;
+  }
+
+  .swiper-wrapper {
+    padding: 10px;
+  }
+
+  .swiper-slide {
+    height: auto;
+
+    @media screen and (min-width: 959px) {
+      max-width: 250px;
+    }
+  }
+
+}
+
+.more{
+  @media screen and (max-width: 559px) {
+    font-size: 14px;
+  }
+}
+
+.dark-class{
+  color: #fff;
+}

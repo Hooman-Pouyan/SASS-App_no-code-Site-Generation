@@ -1,0 +1,232 @@
+<header fxLayout="row" fxLayoutAlign="space-between center" class="header py-1" fxHide.lt-md>
+
+  <div fxLayout="row" fxLayoutAlign="space-between center" class="header-styles">
+    <div fxLayout="row" fxLayoutAlign="start center" class="routes-links"
+         fxLayoutGap="25px" fxFlex="80%" [dir]="modulesService.lang == 'fa' ? 'rtl' : 'ltr' ">
+      <a href="/" cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+         [cdkDragFreeDragPosition]="dragDropService.findPosition('header-logo')"
+         (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'header-logo')">
+        <img [src]="storeSettingService.store.logo" class="img-fluid header-logo"
+             [alt]="storeSettingService.store.name">
+      </a>
+      <search [circleShape]="true" [useButton]="false" [searchColor]="'primary'" style="width: 30%; align-self: center;"
+              [ngStyle]="{'direction': modulesService.lang == 'fa' ? 'ltr' : 'rtl' }"
+              cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+              [cdkDragFreeDragPosition]="dragDropService.findPosition('header-search')"
+              (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'header-search')">
+      </search>
+      <a [href]="dragDropService.fieldLink('header-main-page') || '/'" cdkDrag
+         [cdkDragDisabled]="dragDropService.disabled"
+         [cdkDragFreeDragPosition]="dragDropService.findPosition('header-main-page')"
+         (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'header-main-page')"
+         editElement editType="header-main-page">
+        {{(dragDropService.fieldText('header-main-page') || 'صفحه اصلی') | translate}}
+      </a>
+      <a *ngIf="!modulesService.isInfoBase"
+         [href]="dragDropService.fieldLink('header-products') || (modulesService.isBazargardon || modulesService.isMotolead) ? '/store/category/1':'/store'"
+         cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+         [cdkDragFreeDragPosition]="dragDropService.findPosition('header-products')"
+         (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'header-products')"
+         editElement editType="header-products">
+        {{(dragDropService.fieldText('header-products') || 'محصولات') | translate}}
+      </a>
+      <a *ngIf="!modulesService.isInfoBase && !modulesService.categoriesDrawer"
+         [href]="dragDropService.fieldLink('header-categories') || '/store/category'" cdkDrag
+         [cdkDragDisabled]="dragDropService.disabled"
+         [cdkDragFreeDragPosition]="dragDropService.findPosition('header-categories')"
+         (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'header-categories')"
+         editElement editType="header-categories">
+        {{(dragDropService.fieldText('header-categories') || 'دسته‌بندی') | translate}}
+      </a>
+      <button cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+              [cdkDragFreeDragPosition]="dragDropService.findPosition('header-categories')"
+              (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'header-categories')"
+              mat-button class="categories-drawer"
+              *ngIf="modulesService.categoriesDrawer && categories?.length && !modulesService.isInfoBase"
+              [matMenuTriggerFor]="profileMenu">
+        <span editElement editType="header-categories">
+        {{(dragDropService.fieldText('header-categories') || 'دسته‌بندی') | translate}}
+        </span>
+        <mat-icon>expand_more</mat-icon>
+        <mat-menu #profileMenu="matMenu">
+          <a mat-menu-item
+             [routerLink]="'/store/category/' + category.PRODUCT_ID + '/' + category.NAME.split(' ').join('-')"
+             *ngFor="let category of categories">
+            {{category.NAME}}
+          </a>
+        </mat-menu>
+      </button>
+      <a [href]="dragDropService.fieldLink('header-about') || '/about-us'" cdkDrag
+         [cdkDragDisabled]="dragDropService.disabled"
+         [cdkDragFreeDragPosition]="dragDropService.findPosition('header-about')"
+         (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'header-about')"
+         editElement editType="header-about">
+        {{(dragDropService.fieldText('header-about') || 'درباره ما') | translate}}
+      </a>
+      <a *ngIf="modulesService.hasBlog" [href]="dragDropService.fieldLink('header-blog') || '/blogs'" cdkDrag
+         [cdkDragDisabled]="dragDropService.disabled"
+         [cdkDragFreeDragPosition]="dragDropService.findPosition('header-blog')"
+         (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'header-blog')"
+         editElement editType="header-blog">
+        {{(dragDropService.fieldText('header-blog') || 'بلاگ') | translate}}
+      </a>
+      <a *ngIf="modulesService.hasNews" [href]="dragDropService.fieldLink('header-news') || '/news'" cdkDrag
+         [cdkDragDisabled]="dragDropService.disabled"
+         [cdkDragFreeDragPosition]="dragDropService.findPosition('header-news')"
+         (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'header-news')"
+         editElement editType="header-news">
+        {{(dragDropService.fieldText('header-news') || 'اخبار') | translate}}
+      </a>
+      <a [href]="dragDropService.fieldLink('header-help') || '/help'" cdkDrag
+         [cdkDragDisabled]="dragDropService.disabled"
+         [cdkDragFreeDragPosition]="dragDropService.findPosition('header-help')"
+         (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'header-help')"
+         editElement editType="header-help">
+        {{(dragDropService.fieldText('header-help') || 'راهنما') | translate}}
+      </a>
+      <a [href]="dragDropService.fieldLink('header-contact-us') || '/contact-us'" cdkDrag
+         [cdkDragDisabled]="dragDropService.disabled"
+         [cdkDragFreeDragPosition]="dragDropService.findPosition('header-contact-us')"
+         (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'header-contact-us')"
+         editElement editType="header-contact-us">
+        {{(dragDropService.fieldText('header-contact-us') || 'تماس با ما') | translate}}
+      </a>
+      <a *ngIf="modulesService.quiz && !credentialsService.isGuest" class="quiz" href="/quiz" cdkDrag
+         [cdkDragDisabled]="dragDropService.disabled"
+         [cdkDragFreeDragPosition]="dragDropService.findPosition('header-contact-us')"
+         (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'header-contact-us')"
+         editElement editType="header-contact-us">
+        {{(dragDropService.fieldText('header-quiz') || 'آزمون تعین سطح') | translate}}
+      </a>
+      <a *ngIf="modulesService.quiz && credentialsService.isGuest" class="quiz" href="/auth" cdkDrag
+         [cdkDragDisabled]="dragDropService.disabled"
+         [cdkDragFreeDragPosition]="dragDropService.findPosition('header-contact-us')"
+         (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'header-contact-us')"
+         editElement editType="header-contact-us">
+        {{(dragDropService.fieldText('header-quiz') || 'آزمون تعین سطح') | translate}}
+      </a>
+
+      <a href="https://siteesho.com" target="_blank"
+         class="p-2" *ngIf="modulesService.isSampleSiteesho">
+        {{'بازگشت به سایتی شو' | translate}}
+      </a>
+    </div>
+
+    <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign.lt-md="start stretch"
+         fxLayoutAlign="start center" fxLayoutGap="20px" [dir]="modulesService.lang == 'fa' ? 'rtl' : 'ltr'">
+      <show-point cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+                  [cdkDragFreeDragPosition]="dragDropService.findPosition('header-show-point')"
+                  (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'header-show-point')"></show-point>
+      <ng-container *ngIf="credentialsService.isGuest else loggedIn">
+        <a [href]="dragDropService.fieldLink('header-sign-up') || '/auth'" cdkDrag
+           [cdkDragDisabled]="dragDropService.disabled"
+           [cdkDragFreeDragPosition]="dragDropService.findPosition('header-sign-up')"
+           (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'header-sign-up')">
+          <ng-container *ngIf="!modulesService.isInfoBase else infoBaseAuth">
+            {{'ثبت نام' | translate}}
+            /
+            {{'ورود' | translate}}
+          </ng-container>
+          <ng-template #infoBaseAuth>
+            {{'ورود به باشگاه مشتریان' | translate}}
+          </ng-template>
+        </a>
+      </ng-container>
+      <ng-template #loggedIn>
+        <button [dir]="modulesService.lang == 'fa' ? 'rtl' : 'ltr' "
+                mat-button [matMenuTriggerFor]="profileAction"
+                cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+                [cdkDragFreeDragPosition]="dragDropService.findPosition('header-login')"
+                (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'header-login')">
+          <mat-icon class="mx-1">expand_more</mat-icon>
+          <span>{{credentialsService.credentials?.NAME}}</span>
+        </button>
+        <mat-menu #profileAction="matMenu">
+          <a mat-menu-item routerLink="/profile">
+            <mat-icon>account_circle</mat-icon>
+            <span>{{'پروفایل' | translate}}</span>
+          </a>
+          <a mat-menu-item (click)="credentialsService.logout()">
+            <mat-icon>logout</mat-icon>
+            <span>{{'خروج' | translate}}</span>
+          </a>
+        </mat-menu>
+      </ng-template>
+      <button *ngIf="!modulesService.isInfoBase"
+              mat-mini-fab color="primary" [matBadge]="cartCount" matBadgeColor="warn"
+              (click)="cartService.cartSidenav = sidenavStatus.open"
+              cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+              [cdkDragFreeDragPosition]="dragDropService.findPosition('header-cart')"
+              (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'header-cart')">
+        <mat-icon>shopping_cart</mat-icon>
+      </button>
+    </div>
+  </div>
+
+</header>
+
+<header fxHide.gt-sm fxLayout="column" fxLayoutAlign="start stretch" class="header">
+
+  <div fxLayout="row" fxLayoutAlign="space-between center" class="container">
+    <button mat-icon-button (click)="appService.headerSidenav = sidenavStatus.open"
+            cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+            [cdkDragFreeDragPosition]="dragDropService.findPosition('header-menu-drawer')"
+            (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'header-menu-drawer')">
+      <mat-icon>menu</mat-icon>
+    </button>
+
+    <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="5px">
+      <div fxLayout="row" fxLayoutAlign="end center" class="login-action">
+        <ng-container *ngIf="credentialsService.isGuest else loggedIn">
+          <a mat-stroked-button color="accent"
+             [href]="dragDropService.fieldLink('header-sign-up') || '/auth'" cdkDrag
+             [cdkDragDisabled]="dragDropService.disabled"
+             [cdkDragFreeDragPosition]="dragDropService.findPosition('header-sign-up')"
+             (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'header-sign-up')">
+            {{'ورود به حساب' | translate}}
+          </a>
+        </ng-container>
+        <ng-template #loggedIn>
+          <button [dir]="modulesService.lang == 'fa' ? 'rtl' : 'ltr' "
+                  mat-button [matMenuTriggerFor]="profileAction">
+            <mat-icon class="mx-1">expand_more</mat-icon>
+            <span>{{credentialsService.credentials?.NAME}}</span>
+          </button>
+          <mat-menu #profileAction="matMenu">
+            <a mat-menu-item routerLink="/profile">
+              <mat-icon>account_circle</mat-icon>
+              <span>{{'پروفایل' | translate}}</span>
+            </a>
+            <a mat-menu-item (click)="credentialsService.logout()">
+              <mat-icon>logout</mat-icon>
+              <span>{{'خروج' | translate}}</span>
+            </a>
+          </mat-menu>
+        </ng-template>
+      </div>
+      <button mat-icon-button (click)="appService.goBack()">
+        <mat-icon>
+          west
+        </mat-icon>
+      </button>
+    </div>
+
+  </div>
+
+  <mat-divider *ngIf="!modulesService.isInfoBase"></mat-divider>
+
+  <div *ngIf="!modulesService.isInfoBase"
+       fxLayout="row" fxLayoutAlign="space-between center" class="container pt-2" fxLayoutGap="20px">
+    <search [circleShape]="true" [useButton]="false" [searchColor]="'primary'" fxFlex
+            [ngStyle]="{'direction': modulesService.lang == 'fa' ? 'ltr' : 'rtl' }">
+    </search>
+
+    <button mat-mini-fab color="primary" [matBadge]="cartCount" matBadgeColor="warn" class="Nbox-shadow"
+            (click)="cartService.cartSidenav = sidenavStatus.open">
+      <mat-icon>shopping_cart</mat-icon>
+    </button>
+
+  </div>
+
+</header>
+

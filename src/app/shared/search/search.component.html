@@ -1,0 +1,128 @@
+<div *ngIf="circleShape" class="search-radius">
+  <mat-form-field class="search-input" [appearance]="border">
+    <input matInput [matAutocomplete]="auto" [formControl]="SearchCtrl" autocomplete="off" #SearchCtrlElem
+           placeholder="{{'جستجو' | translate }}">
+    <button *ngIf="useButton" color="primary" mat-icon-button matPrefix>
+      <mat-icon>search</mat-icon>
+    </button>
+    <mat-autocomplete class="search-mat-autocomplete" #auto="matAutocomplete">
+      <mat-option *ngIf="LoadingAutoCompelate">
+        <mat-spinner [diameter]="3"></mat-spinner>
+      </mat-option>
+      <mat-optgroup class="search-mat-optgroup  border-0 not-found" *ngIf="(!LoadingAutoCompelate && !SearchCtrlLoading && SearchCtrlElem.value.length > 0 ) &&
+                      allDataFiltered && allDataFiltered.Product && allDataFiltered.Product.length === 0
+                       && allDataFiltered.StoreCategory && allDataFiltered.StoreCategory.length === 0 &&
+                      allDataFiltered.subCategory && allDataFiltered.subCategory.length === 0"
+                    [label]="'یافت نشد' | translate">
+        <mat-option class="search-mat-option" [value]="'موردی یافت نشد!' | translate">
+          <span class="title">{{'موردی یافت نشد!' | translate }}</span>
+          <img src="../../../assets/img/default/product.png" fxFlex="40px" alt="">
+        </mat-option>
+      </mat-optgroup>
+
+      <span *ngIf="allDataFiltered && allDataFiltered.StoreCategory && allDataFiltered.StoreCategory.length>0">
+        <mat-option class="option-value" *ngFor="let storeCategory of allDataFiltered.StoreCategory; let i = index;"
+                    [routerLink]="'/store/category/' + storeCategory.PRODUCT_ID + '/' + storeCategory.NAME.split(' ').join('-')"
+                    [value]="storeCategory.NAME">
+          <span>
+            <span class="subtitle-dark"> {{'همه ی کالاهای دسته بندی' | translate }} </span>
+            <span class="title">{{storeCategory.NAME}}</span>
+          </span>
+        </mat-option>
+      </span>
+
+      <span *ngIf="allDataFiltered && allDataFiltered.subCategory">
+        <mat-option class="option-value" *ngFor="let subCat of allDataFiltered.subCategory; let i = index;"
+                    [routerLink]="'/store/category/' + subCat.PRODUCT_ID + '/' + subCat.NAME.split(' ').join('-')"
+                    [value]="subCat.NAME">
+          <span>
+            <span class="title">{{subCat.NAME}}</span>
+            <span class="subtitle mx-2"> {{'در دسته' | translate }}&nbsp;</span>
+            <span class="value">{{subCat.PRODUCT_PARENT_NAME}}</span>
+          </span>
+        </mat-option>
+      </span>
+
+      <mat-optgroup *ngIf="allDataFiltered && allDataFiltered.Product.length>0" [label]="'محصولات' | translate">
+
+        <mat-option *ngFor="let product of allDataFiltered.Product; let i = index;"
+                    [routerLink]="'/product/' + product.ID + '/' + product.NAME.replace('/', '').split(' ').join('-')"
+                    [queryParams]="{search: '1' }" [value]="product.NAME">
+
+          <div fxFill fxLayout="row" fxLayoutAlign="space-between center">
+            <span class="value">{{product.NAME}}</span>
+            <img *ngIf="product.IMAGE" [src]="imageUrlDevelop +  '/assets/img/products/'+product.IMAGE" fxFlex="40px">
+            <img *ngIf="!product.IMAGE" src="../../../assets/img/default/product.png" fxFlex="40px">
+          </div>
+
+        </mat-option>
+      </mat-optgroup>
+
+    </mat-autocomplete>
+  </mat-form-field>
+</div>
+
+<div *ngIf="!circleShape" class="search-square">
+  <mat-form-field class="search-input" appearance="outline">
+    <input matInput [matAutocomplete]="auto" [formControl]="SearchCtrl" autocomplete="off" #SearchCtrlElem
+           placeholder="{{'جستجو' | translate }}">
+    <button *ngIf="useButton" color="primary" mat-icon-button matPrefix>
+      <mat-icon>search</mat-icon>
+    </button>
+    <mat-autocomplete class="search-mat-autocomplete" #auto="matAutocomplete">
+      <mat-option *ngIf="LoadingAutoCompelate">
+        <mat-spinner [diameter]="3"></mat-spinner>
+      </mat-option>
+
+      <mat-optgroup class="search-mat-optgroup  border-0 not-found" *ngIf="(!LoadingAutoCompelate && !SearchCtrlLoading && SearchCtrlElem.value.length > 0 ) &&
+                      allDataFiltered && allDataFiltered.Product && allDataFiltered.Product.length === 0
+                       && allDataFiltered.StoreCategory && allDataFiltered.StoreCategory.length === 0 &&
+                      allDataFiltered.subCategory && allDataFiltered.subCategory.length === 0"
+                    [label]="'یافت نشد' | translate">
+        <mat-option class="search-mat-option" [value]="'موردی یافت نشد!' | translate">
+          <span class="title">{{'موردی یافت نشد!' | translate }}</span>
+          <img src="../../../assets/img/default/product.png" fxFlex="40px">
+        </mat-option>
+      </mat-optgroup>
+
+      <span *ngIf="allDataFiltered && allDataFiltered.StoreCategory && allDataFiltered.StoreCategory.length>0">
+        <mat-option class="option-value" *ngFor="let storeCategory of allDataFiltered.StoreCategory; let i = index;"
+                    [routerLink]="'/store/renovation' + storeCategory.ID" [value]="storeCategory.NAME">
+          <span>
+            <span class="subtitle-dark"> {{'همه ی کالاهای دسته بندی' | translate }} </span>
+            <span class="title">{{storeCategory.NAME}}</span>
+          </span>
+        </mat-option>
+      </span>
+
+      <span *ngIf="allDataFiltered && allDataFiltered.subCategory">
+        <mat-option class="option-value" *ngFor="let subCat of allDataFiltered.subCategory; let i = index;"
+                    [routerLink]="'/store/renovation/' + subCat.PRODUCT_PARENT_ID + '/' + subCat.PRODUCT_ID "
+                    [value]="subCat.NAME">
+          <span>
+            <span class="title">{{subCat.NAME}}</span>
+            <span class="subtitle mx-2"> {{'در دسته' | translate }} &nbsp;</span>
+            <span class="value">{{subCat.PRODUCT_PARENT_NAME}}</span>
+          </span>
+        </mat-option>
+      </span>
+
+      <mat-optgroup *ngIf="allDataFiltered && allDataFiltered.Product.length>0" [label]="'محصولات' | translate">
+
+        <mat-option *ngFor="let product of allDataFiltered.Product; let i = index;"
+                    [routerLink]="'/product/' + product.ID + '/' + product.NAME.split(' ').join('-')"
+                    [queryParams]="{ search: '1' }"
+                    [value]="product.NAME">
+
+          <div fxFill fxLayout="row" fxLayoutAlign="space-between center">
+            <span class="value">{{product.NAME}}</span>
+            <img *ngIf="product.IMAGE" [src]="imageUrlDevelop +  '/assets/img/products/'+product.IMAGE" fxFlex="40px">
+            <img *ngIf="!product.IMAGE" src="../../../assets/img/default/product.png" fxFlex="40px">
+          </div>
+
+        </mat-option>
+      </mat-optgroup>
+
+    </mat-autocomplete>
+  </mat-form-field>
+</div>

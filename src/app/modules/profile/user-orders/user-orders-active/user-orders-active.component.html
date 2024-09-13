@@ -1,0 +1,91 @@
+<div fxLayout="column" fxLayoutAlign="start stretch" class="p-3" fxLayoutGap="20px">
+
+  <div class="order-detail" *ngFor="let order of activeOrder" fxLayoutGap="5px" fxLayout="row"
+    fxLayoutAlign="space-between center" fxLayoutGap.lt-md="20px" fxLayout.lt-md="column"
+    fxLayoutAlign.lt-md="start center">
+
+    <div class="time-detail p-3" fxLayoutGap="5px" fxLayout="column" fxLayoutAlign="center center">
+      <span>{{order.ORDER_DATE}}</span>
+      <span>{{order.ORDER_TIME}}</span>
+    </div>
+
+    <div fxLayout="column" class="desc-detail" fxFlex fxLayoutAlign="center center" fxLayoutGap="5px">
+      <h3>
+        {{'سفارش شماره' | translate}}
+        {{order.ORDER_ID}}
+      </h3>
+      <ng-container>
+        <span *ngIf="order.ORDER_STATUS_ID == OrderStatus.customerAccepted ||
+        order.ORDER_STATUS_ID == OrderStatus.adminAcceptPending">
+          {{'منتظریم تا فروشگاه سفارشت رو تایید کنه' | translate }}!
+        </span>
+        <span *ngIf="order.ORDER_STATUS_ID == OrderStatus.returned">
+          {{'فروشگاه یه تغییر کوچیک توی سفارشت داده،' | translate }}
+          ، {{'لطفا چک کن و اگه مورد تاییدت بود تایید سفارش رو بزن' | translate }}!
+        </span>
+        <span *ngIf="order.ORDER_STATUS_ID == OrderStatus.customerPayPending">
+          {{'بریم برای پرداخت!' | translate }} </span>
+        <span *ngIf="(
+        order.ORDER_STATUS_ID == OrderStatus.courierOnWay ||
+        order.ORDER_STATUS_ID == OrderStatus.customerReceived ||
+        order.ORDER_STATUS_ID == OrderStatus.courierInStore ||
+        order.ORDER_STATUS_ID == OrderStatus.courierArrived ||
+        order.ORDER_STATUS_ID == OrderStatus.courierFinding ||
+        order.ORDER_STATUS_ID == OrderStatus.customerPayed ||
+        order.ORDER_STATUS_ID == OrderStatus.courierAccepted
+        )">
+          {{'ممنون که مارو انتخاب کردی!' | translate }}
+          {{'سفارشت داره آماده میشه و همون زمانی که مشخص کردی به دستت می رسه!' | translate }}
+        </span>
+      </ng-container>
+    </div>
+
+    <div class="svg" fxLayout="row" fxLayoutAlign="start center" fxLayout.lt-md="row wrap">
+      <embed class="enable-icon" src="../../../../../assets/icons/order/create_order.svg">
+
+      <div class="separator-dashed"></div>
+      <embed src="../../../../../assets/icons/order/customer.svg"
+        [ngClass]="{'disable-icon':order.ORDER_STATUS_ID == OrderStatus.returned}">
+
+      <div class="separator-dashed"></div>
+      <embed src="../../../../../assets/icons/order/shop.svg"
+        [ngClass]="{'disable-icon':order.ORDER_STATUS_ID < OrderStatus.courierOnWay}">
+
+      <div class="separator-dashed"></div>
+      <embed src="../../../../../assets/icons/order/pay.svg" [ngClass]="{'disable-icon':(order.ORDER_STATUS_ID < OrderStatus.courierOnWay  ||  order.ORDER_STATUS_ID ==
+             OrderStatus.customerPayPending)}">
+
+      <div class="separator-dashed" *ngIf="!modulesService.isRenovation"></div>
+      <embed class="disable-icon" src="../../../../../assets/icons/order/delivery.svg"
+        *ngIf="!modulesService.isRenovation" [ngClass]="{'enable-icon':(
+             order.ORDER_STATUS_ID == OrderStatus.courierOnWay ||
+              order.ORDER_STATUS_ID == OrderStatus.customerReceived ||
+              order.ORDER_STATUS_ID == OrderStatus.courierInStore ||
+              order.ORDER_STATUS_ID == OrderStatus.courierArrived ||
+              order.ORDER_STATUS_ID == OrderStatus.courierFinding ||
+               order.ORDER_STATUS_ID == OrderStatus.customerPayed ||
+               order.ORDER_STATUS_ID == OrderStatus.courierAccepted)}">
+    </div>
+
+    <div class="action-buttons" fxLayout="column" fxLayoutAlign="start stretch">
+
+      <button mat-raised-button color="primary" (click)="pay(order)"
+        *ngIf="order.ORDER_STATUS_ID == OrderStatus.customerPayPending">
+        {{'پرداخت' | translate }}
+      </button>
+
+
+      <div fxLayout="row" fxLayoutAlign="space-between center">
+        <a mat-icon-button [routerLink]="'./' + order.ORDER_ID">
+          <mat-icon>remove_red_eye</mat-icon>
+        </a>
+        <button mat-icon-button color="warn" *ngIf="order.PAYMENT_STATUS == 2"
+                (click)="deleteOrder(order.ORDER_ID)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+</div>

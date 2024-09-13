@@ -1,0 +1,87 @@
+<div fxLayout="column" fxLayoutAlign="start stretch"
+     class="question_answer-section mt-4">
+  <h2 class="title" *ngIf="1"> {{"پرسش ها" | translate }} </h2>
+
+  <div fxLayout="row" fxLayoutAlign="space-between stretch"
+       class="question_answer">
+
+    <div class="add-Q-A" fxLayout="column" fxLayoutAlign="start stretch" fxFlex="30%">
+      <span class="add-question-hint">شما هم درباره این کالا پرسش ثبت کنید</span>
+      <div class="add-Q-A-btn" fxLayout="column" fxLayoutAlign="center stretch">
+        <button mat-stroked-button color="primary" (click)="QA_dialog('question' ,  1)" fxFlex>
+          {{this.credentialService.isGuest ? ('برای ثبت پرسش وارد حساب کاربری شوید' | translate) : ('ثبت پرسش' | translate) }}
+        </button>
+      </div>
+    </div>
+
+    <div class="each-Q-A-section" fxLayout="column" fxLayoutAlign="start stretch" fxFlex="70%">
+      <div class="each-Q-A" *ngFor="let item of Q_A?.DATA" fxLayout="column" fxLayoutAlign="start stretch">
+
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px" class="each_Q">
+          <button mat-icon-button color="primary">
+            <mat-icon>account_circle</mat-icon>
+          </button>
+          <span class="user-name">
+            {{ item.NAME }}
+          </span>
+
+        </div>
+
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px" class="each_Q">
+          <span>پرسش:</span>
+          <span>{{ item.QUESTION }}</span>
+        </div>
+
+        <div fxLayout="row" fxLayoutAlign="space-between center" class="each_A"
+             *ngFor="let ans of item.ANSWER.DATA| slice: 0:AnswerSlice">
+          <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
+            <span>  پاسخ:</span>
+            <span>{{ ans.QUESTION }}</span>
+          </div>
+          <div class="like-dislike" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
+            <span>{{ ans.LIKES }}</span>
+            <button mat-icon-button [color]="ans.LIKED == 1 ? 'primary' : '' ">
+              <mat-icon (click)="setAction(ans ,1)">
+                thumb_up
+              </mat-icon>
+            </button>
+
+            <span>{{ans.DISLIKE}}</span>
+            <button mat-icon-button [color]="ans.LIKED == -1 ? 'warn' : '' ">
+              <mat-icon (click)="setAction(ans ,-1)">
+                thumb_down
+              </mat-icon>
+            </button>
+
+          </div>
+        </div>
+
+        <div fxLayout="row" fxLayoutAlign="start center" *ngIf="AnswerSlice < Q_A.DATA.length">
+          <button mat-button color="primary" (click)="AnswerSlice = AnswerSlice + AnswerSlice" fxFlex="20%">
+            {{'جواب های دیگر' | translate}}
+            <mat-icon>arrow_back</mat-icon>
+          </button>
+        </div>
+
+        <div fxLayout="row" fxLayoutAlign="end center" class="Add_A">
+          <button mat-stroked-button color="primary"
+                  (click)="this.credentialService.isGuest ? QA_dialog('login' ,  item.QUESTION_ID , item.QUESTION)
+                   : QA_dialog('answer' ,  item.QUESTION_ID , item.QUESTION )"
+                  fxFlex="20%">
+            ثبت پاسخ
+          </button>
+        </div>
+
+      </div>
+
+      <mat-paginator [pageSizeOptions]="[2, 5, 15, 25, 50, 100]"
+                     (page)="paginatorEvent($event)"
+                     showFirstLastButtons
+                     [pageSize]="paginatorConfig.PAGE_SIZE"
+                     [length]="paginatorConfig.TOTAL_COUNT"></mat-paginator>
+    </div>
+
+
+  </div>
+
+</div>

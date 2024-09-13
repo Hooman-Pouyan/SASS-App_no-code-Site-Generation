@@ -1,0 +1,44 @@
+<form [formGroup]="ticketForm" fxLayoutGap="1rem"
+      fxLayout="column" fxLayoutAlign="start stretch">
+
+  <ng-container *ngIf="ticketParentID == 0">
+    <mat-form-field appearance="outline">
+      <mat-label>
+        {{"دسته بندی" | translate}}
+      </mat-label>
+      <mat-select formControlName="CATALOG_ID">
+        <mat-option *ngFor="let item of catalogs" [value]="item.ID">
+          {{item.NAME}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{"موضوع" | translate}}</mat-label>
+      <input type="text" matInput formControlName="SUBJECT">
+    </mat-form-field>
+  </ng-container>
+
+  <mat-form-field appearance="outline">
+    <mat-label>{{"متن پیام" | translate }}</mat-label>
+    <textarea type="text" matInput rows="8"
+              formControlName="CONTENT"></textarea>
+  </mat-form-field>
+
+  <div class="file-upload" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="10px">
+    <button mat-raised-button color="accent" (click)="uploadFileInput.click()">
+      {{"آپلود فایل" | translate}}
+    </button>
+    <input (change)="uploadFile($event.target.files[0])"
+           style="display: none" type="file" #uploadFileInput>
+    <mat-hint>{{"فرمت های مجاز فایل png, jpg, jpeg, pdf, zip, rar می باشند." | translate }}</mat-hint>
+  </div>
+
+  <div fxLayout="row" fxLayoutAlign="end center">
+    <button mat-raised-button color="primary"
+            (click)="submitForm()">
+      {{ticketParentID == 0 ? ('ارسال تیکت' | translate) : ('ارسال پاسخ' | translate) }}
+    </button>
+  </div>
+
+</form>

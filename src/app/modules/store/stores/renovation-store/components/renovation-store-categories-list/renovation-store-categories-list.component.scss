@@ -1,0 +1,26 @@
+.store-categories-list {
+    margin: 2rem auto;
+    border: 1px solid #B1B1B1;
+    border-radius: 5px;
+  
+    .mat-list-item {
+      cursor: pointer;
+      padding: 0 16px;
+    }
+  
+    b {
+      width: 100%;
+      text-align: center;
+      font-size: 18px;
+      margin: 25px 0;
+    }
+  
+    mat-icon {
+      font-size: 12px;
+      width: 12px;
+      height: 12px;
+      color: #B91646;
+    }
+  
+  }
+  

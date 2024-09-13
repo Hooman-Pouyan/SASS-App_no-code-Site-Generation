@@ -1,0 +1,17 @@
+$counter-gradient: var(--counter-gradient);
+
+.counter-section {
+  margin-top: 5rem;
+  margin-bottom: 5rem;
+
+  .counter {
+    transition: .3s all ease-in-out;
+    border-radius: 8px;
+    &:hover {
+      margin-top: -10px;
+      background: #FFFFFF !important;
+      box-shadow: 0 1px 30px $counter-gradient;
+    }
+  }
+
+}

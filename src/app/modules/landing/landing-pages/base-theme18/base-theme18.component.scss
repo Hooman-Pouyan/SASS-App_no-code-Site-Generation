@@ -1,0 +1,329 @@
+.base-theme18-landing {
+
+  .base-theme18-top-header {
+    background-color: var(--custom-accent-color);
+    color: white;
+    height: 48px;
+
+    img {
+      filter: invert(1);
+      max-width: 18px;
+      aspect-ratio: 1;
+      object-fit: contain;
+    }
+  }
+
+  .base-theme18-header {
+    transition: all .2s ease-in-out;
+    position: fixed;
+    top: 48px;
+    left: 0;
+    right: 0;
+    z-index: 3;
+    color: white;
+
+    .header-contact {
+      .contact-icon {
+        border: 1px solid #FDF5EB;
+        border-radius: 50%;
+        aspect-ratio: 1;
+        width: 48px;
+      }
+    }
+  }
+
+  .fixed-header {
+    top: 0;
+    left: 0 !important;
+    background-color: var(--custom-accent-color);
+  }
+
+  .base-theme18-slider {
+    height: 110vh;
+
+    swiper {
+      width: 100%;
+      height: 100%;
+
+      .swiper-slide {
+        .animated {
+          display: none !important;
+        }
+      }
+
+      .swiper-slide-active {
+        .animated {
+          display: flex !important;
+        }
+      }
+
+      .each-swiper {
+        position: relative;
+        color: white;
+
+        @media screen and (min-width: 959px) {
+          padding-right: 8rem;
+        }
+
+        @media screen and (max-width: 959px) {
+          padding: 0 1rem;
+        }
+
+        .animated {
+          color: white;
+          z-index: 5;
+          @media screen and (max-width: 959px) {
+            margin: auto 0;
+          }
+        }
+
+        a {
+          background-color: var(--custom-primary-color);
+          border-color: var(--custom-primary-color);
+        }
+
+        .img-overlay {
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+
+          img {
+            @media screen and (max-width: 959px) {
+              object-fit: cover;
+              height: 100%;
+            }
+            z-index: -1;
+          }
+
+        }
+
+        .color-overlay {
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background-color: rgba(0, 0, 0, 0.5);
+        }
+      }
+
+    }
+  }
+
+  .base-theme18-slider-nav {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    margin: -40px auto 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &::before {
+      position: absolute;
+      content: "";
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      background: #FFFFFF;
+      transform: rotate(45deg);
+    }
+
+  }
+
+  .base-theme18-counter-section {
+    margin-top: 5rem;
+    margin-bottom: 5rem;
+
+    .counter-section {
+      transition: .3s all ease-in-out;
+
+      &:hover {
+        margin-top: -10px;
+        background: #FFFFFF !important;
+        box-shadow: 0 0 45px rgba(0, 0, 0, .07);
+      }
+    }
+
+  }
+
+  .base-theme18-about-us {
+    margin-top: 5rem;
+    margin-bottom: 5rem;
+
+    .base-theme18-about-us-tiles {
+      position: relative;
+
+      &::before {
+        position: absolute;
+        content: "";
+        width: 60%;
+        height: 80%;
+        top: 10%;
+        left: 20%;
+        background: var(--custom-primary-color);
+        border: 25px solid #FDF5EB;
+        border-radius: 6px;
+        z-index: -1;
+      }
+    }
+
+    .about-us-text-tile {
+      a {
+        color: white;
+        background-color: var(--custom-primary-color);
+        border-color: var(--custom-primary-color);
+      }
+
+      .about-us-list {
+        padding: 0;
+        list-style-type: "✔";
+
+        li {
+          margin: 1rem 0;
+        }
+      }
+    }
+  }
+
+  .base-theme18-products {
+    margin-top: 5rem;
+    margin-bottom: 5rem;
+
+    .call-us-section {
+      background-color: var(--custom-primary-color);
+      color: white;
+
+      .header-contact {
+        a {
+          font-size: 1.5rem;
+        }
+      }
+    }
+
+    .product-desc {
+
+      p {
+        @media screen and (max-width: 559px) {
+          font-size: 14px;
+        }
+      }
+    }
+
+    .product-item {
+      transition: .5s;
+      background-color: #fff !important;
+      overflow: hidden !important;
+
+      &:hover {
+        background: var(--custom-primary-color) !important;
+        color: white;
+
+        .product-overlay {
+          height: 100%;
+          opacity: 1;
+        }
+      }
+
+      .product-overlay {
+        position: absolute;
+        width: 100%;
+        height: 0;
+        top: 0;
+        left: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(0, 0, 0, .5);
+        overflow: hidden;
+        opacity: 0;
+        transition: .5s;
+      }
+    }
+  }
+
+  .base-theme18-why-us {
+    margin-top: 5rem;
+    margin-bottom: 5rem;
+
+    .base-theme18-why-us-tiles {
+      position: relative;
+
+      &::before {
+        position: absolute;
+        content: "";
+        width: 60%;
+        height: 80%;
+        top: 10%;
+        left: 20%;
+        background: var(--custom-primary-color);
+        border: 25px solid #FDF5EB;
+        border-radius: 6px;
+        z-index: -1;
+      }
+    }
+
+    .why-us-text-tile {
+      a {
+        color: white;
+        background-color: var(--custom-primary-color);
+        border-color: var(--custom-primary-color);
+      }
+
+      .why-us-list {
+        padding: 0;
+        list-style-type: "✔";
+        text-align: center;
+
+        li {
+          margin: 1rem 0;
+        }
+      }
+
+      h2{
+        @media screen and (max-width: 559px) {
+          font-size: 14px !important;
+        }
+      }
+    }
+  }
+
+  .base-theme18-footer {
+    background-color: var(--custom-primary-color);
+    color: #fff;
+    padding: 3rem 0;
+
+    h5 {
+      font-size: 20px;
+      @media screen and (max-width: 559px) {
+        font-size: 14px;
+      }
+    }
+
+    .footer-group-link {
+      transition: 0.25s all ease-in-out;
+      margin-bottom: 0.5rem;
+      @media screen and (max-width: 559px) {
+        font-size: 12px;
+      }
+      &:hover {
+        color: white;
+        letter-spacing: 1px;
+      }
+    }
+
+    .licences {
+      padding-top: 1.67em;
+
+      .enamad, .samandehi {
+        img {
+          max-width: 100%;
+        }
+      }
+    }
+  }
+
+}

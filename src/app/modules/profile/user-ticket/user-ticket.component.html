@@ -1,0 +1,65 @@
+<div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="1rem">
+
+  <div fxLayout="row" fxLayoutAlign="space-between center">
+
+    <h2>
+      {{"تیکت ها" | translate}}
+    </h2>
+
+    <a mat-raised-button color="primary" routerLink="new/0">
+      {{"تیکت جدید" | translate}}
+    </a>
+
+  </div>
+
+  <table mat-table [dataSource]="tickets" class="tickets-table">
+
+    <ng-container matColumnDef="no">
+      <th mat-header-cell *matHeaderCellDef>
+        {{"شماره" | translate}}
+      </th>
+      <td mat-cell *matCellDef="let element"> {{element.TICKET_ID}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="section">
+      <th mat-header-cell *matHeaderCellDef>
+        {{"بخش" | translate}}
+      </th>
+      <td mat-cell *matCellDef="let element"> {{element.CATALOG_NAME}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="subject">
+      <th mat-header-cell *matHeaderCellDef>
+        {{"موضوع" | translate}}
+      </th>
+      <td mat-cell *matCellDef="let element"> {{element.SUBJECT}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="date">
+      <th mat-header-cell *matHeaderCellDef>
+        {{"تاریخ آخرین بروزرسانی" | translate}}
+      </th>
+      <td mat-cell *matCellDef="let element">
+        {{element.STATUS_DATETIME | jalaliDate: 'dateTime'}}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="advance">
+      <th mat-header-cell *matHeaderCellDef>
+        {{"عملیات" | translate}}
+      </th>
+      <td mat-cell *matCellDef="let element">
+        <a mat-stroked-button color="primary"
+           [queryParams]="{'name': element.SUBJECT, 'catalogID': element.CATALOG_ID}"
+           [routerLink]="'timeline/'+ element.TICKET_ID" [matBadge]="element.SEEN == 1 ? '' : '!'" matBadgeColor="warn">
+          {{"مشاهده" | translate }}
+        </a>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+
+</div>

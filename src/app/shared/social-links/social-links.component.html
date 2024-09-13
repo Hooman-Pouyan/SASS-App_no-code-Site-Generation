@@ -1,0 +1,30 @@
+<section class="social-link-section" fxLayout="row" fxLayoutAlign="start center">
+
+  <div fxLayout="row" fxLayoutAlign="start center">
+    <button mat-icon-button [matTooltip]="'اشتراک گذاری' | translate"
+            (click)="showLinks =!showLinks">
+      <mat-icon>
+        share
+      </mat-icon>
+    </button>
+    <span [ngClass]="{'share-title-notShow': showLinks, 'share-title-show' : !showLinks }"
+    >{{"اشتراک‌‌گذاری محصول" | translate }}</span>
+  </div>
+
+  <div class="btn-list" fxLayout="row" fxLayoutAlign="space-around center"
+       [ngClass]="{'show-social-list': showLinks}">
+
+    <a fxLayout="row" fxLayoutAlign="center center"
+       *ngFor="let social of socials;let idx = index"
+       [href]=" social.link + route" target="_blank"
+       [ngStyle]="{'animation-delay': idx * 0.2 + 's'}"
+       class="item wow fadeInLeft">
+      <img [src]="'../../../assets/icons/socials/' + social.svg" [alt]="social.svg" class="img-fluid">
+    </a>
+
+    <button mat-icon-button (click)="copyToClipboard()" [matTooltip]="'کپی لینک صفحه' | translate">
+      <mat-icon>content_copy</mat-icon>
+    </button>
+  </div>
+
+</section>

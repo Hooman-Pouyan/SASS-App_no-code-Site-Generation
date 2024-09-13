@@ -1,0 +1,20 @@
+.save-drag-drop-btns {
+  position: fixed;
+  left: 10px;
+  bottom: -100px !important;
+  z-index: 100000;
+  transition: all 0.7s ease-in-out;
+  mat-icon {
+    $size: 32px;
+    width: $size;
+    height: $size;
+    font-size: $size;
+  }
+  ::ng-deep.mat-button-wrapper {
+    padding: 0 !important;
+  }
+}
+
+.activated-btns {
+  bottom: 5px !important;
+}

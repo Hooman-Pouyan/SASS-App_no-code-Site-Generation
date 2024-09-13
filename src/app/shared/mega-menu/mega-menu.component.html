@@ -1,0 +1,43 @@
+<div class="mega-menu-moudule">
+  <button mat-flat-button class="mega-menu-btn" fxLayout="row" fxLayoutAlign="start center" (mouseover)="Detail = true">
+    <mat-icon>menu</mat-icon>
+    دسته بندی
+  </button>
+  <div fxLayout="row" fxLayoutAlign="start start" class="mega-menu-content" *ngIf="Detail" (mouseleave)="Detail = false">
+
+    <div fxLayout="column" fxLayoutAlign="start stretch" fxFlex="15%" class="menu p-2">
+      <h5 [routerLink]="'/store/category'" class="all-cat">
+        {{ "همه دسته بندی ها" | translate }}
+      </h5>
+      <h5 (mouseover)="addCat(category)" class="each-item"
+          *ngFor="let category of categories">
+        {{category}}
+      </h5>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="space-around stetch" class="subCat-menu" fxFlex="85%">
+
+      <div fxLayout="row wrap" fxLayoutAlign="start stetch" class="p-4 subCat-list" fxFlex="65%" fxLayoutGap="2%">
+
+        <a fxLayout="column" fxLayoutAlign="start start" class="subCat" fxFlex="30%"
+           *ngFor="let sub of subCategories">
+          <b class="sub-cat-title">{{ sub }} </b>
+          <a fxLayout="column" fxLayoutAlign="start start" class="sub-cat-child"
+             *ngFor="let subInner of groupBySubCat[sub]">
+            <span>{{ subInner.CHILD  }} </span>
+          </a>
+        </a>
+
+      </div>
+
+      <div fxLayout="column" fxLayoutAlign="center center" class="category-image" fxFlex="25%">
+
+        <img [src]="imageUrl + '/assets/img/categories/category_logo/' + currentCat.IMAGE" [alt]="currentCat.IMAGE"
+             class="img-fluid">
+
+      </div>
+
+    </div>
+
+  </div>
+

@@ -1,0 +1,39 @@
+<div *ngIf="brands?.length || dynamicMediaService.mediaBrandsLoop?.length"
+  fxLayout="column" fxLayoutAlign="start stretch" class="my-2" [ngClass.lt-md]="['py-2']"
+     cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+     [cdkDragFreeDragPosition]="dragDropService.findPosition('brands-slider')"
+     (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'brands-slider')">
+
+  <h2 class="text-center my-5"
+      editElement editType="brands-slider-title">
+    {{(dragDropService.fieldText('brands-slider-title') || 'برخی از برندهای موجود') | translate}}
+  </h2>
+
+  <swiper [config]="brandsSliderConfig" class="brands-slider" *ngIf="oldBrandService else newBrandService">
+    <ng-template swiperSlide *ngFor="let brand of brands;let i = index">
+      <img [src]="brand" [alt]="'brand_' + i"
+           class="img-fluid text-center">
+    </ng-template>
+  </swiper>
+
+  <ng-template #newBrandService>
+    <swiper [config]="brandsSliderConfig" class="brands-slider">
+      <ng-container *ngFor="let sliderIdx of dynamicMediaService.mediaBrandsLoop">
+        <ng-template swiperSlide *ngIf="dynamicMediaService.getMedia('brand-slider' + sliderIdx)">
+          <a *ngIf="dynamicMediaService.getMediaLink('brand-slider' + sliderIdx) else noLink"
+             [href]="dynamicMediaService.getMediaLink('brand-slider' + sliderIdx)" target="_blank">
+            <img [src]="dynamicMediaService.getMedia('brand-slider' + sliderIdx)"
+                 [alt]="'brand-slider' + sliderIdx" class="text-center img-fluid"
+                 editElement [editType]="'brand-slider' + sliderIdx">
+          </a>
+          <ng-template #noLink>
+            <img [src]="dynamicMediaService.getMedia('brand-slider' + sliderIdx)"
+                 [alt]="'brand-slider' + sliderIdx" class="text-center img-fluid"
+                 editElement [editType]="'brand-slider' + sliderIdx">
+          </ng-template>
+        </ng-template>
+      </ng-container>
+    </swiper>
+  </ng-template>
+
+</div>

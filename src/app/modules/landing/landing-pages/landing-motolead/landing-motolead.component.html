@@ -1,0 +1,122 @@
+<app-header></app-header>
+
+<div class="landing-motolead" fxLayout="column"
+     fxLayoutAlign="start stretch">
+
+  <section fxLayout="column" fxLayoutAlign="start stretch">
+    <swiper [config]="mainSliderConfig" class="motolead-slider">
+      <ng-container *ngFor="let sliderIdx of dynamicMediaService.mediaSliderLoop">
+        <ng-template swiperSlide *ngIf="dynamicMediaService.getMedia('motolead-slider' + sliderIdx)">
+          <img [src]="dynamicMediaService.getMedia('motolead-slider' + sliderIdx)"
+               [alt]="'motolead-slider' + sliderIdx" class="text-center img-fluid"
+               editElement [editType]="'motolead-slider' + sliderIdx">
+        </ng-template>
+      </ng-container>
+    </swiper>
+  </section>
+
+  <div fxLayout="column" fxLayoutAlign="start stretch" class="container" fxLayoutGap="3rem">
+
+    <app-brands-slider></app-brands-slider>
+
+    <products-slider [products]="mostSellSlider.products" [queryParams]="mostSellSlider.query"
+                     [title]="mostSellSlider.name" [link]="mostSellSlider.link">
+    </products-slider>
+
+    <section class="motolead-categories  fadeIn"
+             fxLayout="row" fxLayoutAlign="center center">
+      <div class="container" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="30px">
+        <a routerLink="/categories">
+          {{'دسته بندی ها' | translate}}
+        </a>
+        <swiper [config]="categoriesSliderConfig">
+          <ng-template swiperSlide *ngFor="let category of categories">
+            <a class="category-slide"
+               [routerLink]="'/store/category/' + category.PRODUCT_ID + '/' + category.NAME.split(' ').join('-')"
+               fxLayout="row" fxLayoutAlign="center center">
+              {{category.NAME}}
+            </a>
+          </ng-template>
+        </swiper>
+      </div>
+    </section>
+
+    <section class="motolead-tiles" fxLayout="column" fxLayoutAlign="start stretch">
+      <div fxLayout="row" fxLayoutAlign="space-between center"
+           [style.direction]="idx % 2 == 0 ? 'ltr !important' : 'rtl !important'"
+           *ngFor="let idx of [1,2,3,4]">
+        <div fxFlex="50%">
+          <img [src]="dynamicMediaService.getMedia('motolead-tile-img'+idx)"
+               editElement [editType]="'motolead-tile-img'+idx"
+               [alt]="'motolead-tile-img'+idx" class="img-fluid rounded">
+        </div>
+        <div fxFlex="50%" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="1rem">
+          <span editElement [editType]="'motolead-tile-sub-title'+ idx" class="section-sub-title">
+            {{dragDropService.fieldText('motolead-tile-sub-title' + idx) || 'لورم ایپسوم متن'}}
+          </span>
+          <p editElement [editType]="'motolead-tile-title'+ idx" class="section-title">
+            {{dragDropService.fieldText('motolead-tile-title' + idx) || 'لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است.'}}
+          </p>
+          <a editElement [editType]="'motolead-tile-btn'+ idx"
+             [href]="dragDropService.fieldLink('motolead-tile-btn'+ idx) || '/'" class="section-btn">
+            {{ dragDropService.fieldText('motolead-tile-btn' + idx) || 'عنوان دکمه'}}
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <products-slider [products]="recentProductSlider.products"
+                     [queryParams]="recentProductSlider.query"
+                     [title]="recentProductSlider.name" [link]="recentProductSlider.link">
+    </products-slider>
+
+    <section *ngIf="blogs.length" dir="ltr"
+             class="base-theme23-news container my-5"
+             fxLayout="row wrap" fxLayoutAlign="space-between stretch"
+             fxLayout.lt-md="column" fxLayoutAlign.lt-md="start stretch" fxLayoutGap.lt-md="1rem">
+
+      <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="3rem"
+           fxFlex.gt-sm="49%" dir="rtl">
+        <h2 class="display-6" editElement >
+          {{'مقالات' | translate}}
+        </h2>
+        <a routerLink="/blogs" class="section-btn"
+           mat-raised-button color="primary">
+          {{'نمايش همه' | translate}}
+        </a>
+      </div>
+
+      <div *ngFor="let blog of blogs | slice: -3;let idx = index"
+           class="each-new" dir="rtl"
+           fxFlex.gt-sm="49%" fxLayout="column" fxLayoutAlign="start stretch">
+        <a [routerLink]="'blogs/' + blog.ID">
+          <img [src]="blog.FILES" [alt]="blog.TITLE" class="img-fluid rounded">
+        </a>
+        <h4>
+          {{blog.TITLE}}
+        </h4>
+        <p class="new-desc" limitCharacter [limit]="150">
+          {{blog.DESCRIPTION}}
+        </p>
+        <div fxLayout="row" fxLayoutAlign="space-between center"
+             class="mb-4">
+        <span class="created-time">
+          {{'ایجاد شده در' | translate}}
+          :
+          {{blog.CREATE_DATE | jalaliDate}}
+        </span>
+          <a mat-stroked-button color="primary"
+             [routerLink]="'blogs/' + blog.ID" class="rounded-md"
+             [ngStyle]="{'background-color': HEXtoRGBA(modulesService.primaryColor, 0.1)}">
+            {{'بیشتر' | translate}}
+          </a>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+</div>
+
+<app-footer></app-footer>

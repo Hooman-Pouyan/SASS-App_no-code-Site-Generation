@@ -1,0 +1,64 @@
+.price-section {
+  .price {
+    height: 30px;
+    font-size: 10px;
+  }
+}
+
+.discount-section {
+  .discount {
+    height: 30px;
+
+    .discount-percentage {
+      font-size: 10px;
+      background-color: #B91646;
+      color: white;
+      border-radius: 10px;
+      padding: 2px 8px;
+    }
+  }
+
+  .button-add {
+    background-color: var(--custom-primary-color);
+    color: #fff;
+    aspect-ratio: 1/1;
+    min-width: 20px;
+    font-size: 18px;
+    line-height: 0px;
+    padding: 11px;
+  }
+
+}
+
+.call{
+  font-size: 10px;
+}
+
+
+
+.product-border {
+  border: 2px solid #EEEEEE;
+  padding: 10px;
+  height: 300px;
+}
+
+.images-slide-mobile {
+
+  img, image-lazy {
+    width: 150px;
+    height: 150px;
+    aspect-ratio: 1/1;
+  }
+
+}
+
+.dark-class {
+  color: #fff;
+  background-color: #111;
+  border: 1px solid #333;
+}
+
+.dark-font {
+  color: #fff !important;
+
+}

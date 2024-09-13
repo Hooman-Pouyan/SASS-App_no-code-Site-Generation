@@ -1,0 +1,9 @@
+<ng-container [ngSwitch]="modulesService.theme"
+              >
+
+  <renovation-login *ngSwitchCase="[500] | customSwitch: modulesService.theme">
+  </renovation-login>
+
+  <default-login *ngSwitchDefault></default-login>
+
+</ng-container>

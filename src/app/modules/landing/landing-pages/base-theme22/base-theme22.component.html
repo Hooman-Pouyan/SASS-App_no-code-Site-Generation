@@ -1,0 +1,678 @@
+<div class="base-theme22-landing" fxLayout="column" fxLayoutAlign="start stretch"
+     [style]="{'--first-gradient':adjustColor(180), '--second-gradient': adjustColor(100) , '--third-gradient':adjustColor(-80) }">
+
+  <section class="base22-header-top" fxLayout="row" fxLayoutAlign="space-around center" fxHide.lt-md>
+
+    <div class="address-social" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+      <a mat-mini-fab color="primary" fxLayout="row" fxLayoutAlign="center center" [href]="socialLink(social)"
+         target="_blank"
+         *ngFor="let social of storeSettingService.store.socials" cdkDrag
+         [cdkDragDisabled]="dragDropService.disabled"
+         [cdkDragFreeDragPosition]="dragDropService.findPosition('base22-footer-social-' + social.type)"
+         (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base22-footer-social-' + social.type)">
+        <img [src]=" '/assets/icons/socials/' + social.type + '.svg' " class="img-fluid" [title]="social.type"
+             [alt]="social.type">
+      </a>
+    </div>
+
+    <p>
+      {{storeSettingService.store.name}}
+    </p>
+
+    <div class="base22-contact-us" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="10px">
+      <p class="phone">
+        {{storeSettingService.store.phone}}
+
+      </p>
+      <svg xmlns="http://www.w3.org/2000/svg" width="46" height="46" class="bi bi-phone-vibrate"
+           viewBox="0 0 16 16">
+        <path
+          d="M10 3a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h4zM6 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H6z"/>
+        <path
+          d="M8 12a1 1 0 1 0 0-2 1 1 0 0 0 0 2zM1.599 4.058a.5.5 0 0 1 .208.676A6.967 6.967 0 0 0 1 8c0 1.18.292 2.292.807 3.266a.5.5 0 0 1-.884.468A7.968 7.968 0 0 1 0 8c0-1.347.334-2.619.923-3.734a.5.5 0 0 1 .676-.208zm12.802 0a.5.5 0 0 1 .676.208A7.967 7.967 0 0 1 16 8a7.967 7.967 0 0 1-.923 3.734.5.5 0 0 1-.884-.468A6.967 6.967 0 0 0 15 8c0-1.18-.292-2.292-.807-3.266a.5.5 0 0 1 .208-.676zM3.057 5.534a.5.5 0 0 1 .284.648A4.986 4.986 0 0 0 3 8c0 .642.12 1.255.34 1.818a.5.5 0 1 1-.93.364A5.986 5.986 0 0 1 2 8c0-.769.145-1.505.41-2.182a.5.5 0 0 1 .647-.284zm9.886 0a.5.5 0 0 1 .648.284C13.855 6.495 14 7.231 14 8c0 .769-.145 1.505-.41 2.182a.5.5 0 0 1-.93-.364C12.88 9.255 13 8.642 13 8c0-.642-.12-1.255-.34-1.818a.5.5 0 0 1 .283-.648z"/>
+      </svg>
+
+    </div>
+
+  </section>
+
+  <section class="base22-header-nav" fxLayout="column" fxLayoutAlign="center stretch"
+           [ngClass]="{ 'header-top' : !ScrollFlag, 'header-below': ScrollFlag }"
+           *ngIf="appService.windowWidth > 959 else appHeader">
+    <div class="header" fxLayout="row" fxLayoutAlign="center center">
+
+      <a [href]="dragDropService.fieldLink('header-main-page') || '/'" cdkDrag
+         [cdkDragDisabled]="dragDropService.disabled"
+         [cdkDragFreeDragPosition]="dragDropService.findPosition('header-main-page')"
+         (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'header-main-page')" editElement
+         editType="header-main-page" class="header-main-page">
+        {{(dragDropService.fieldText('header-main-page') || 'صفحه اصلی') |
+        translate}}
+      </a>
+
+      <a [href]="dragDropService.fieldLink('header-products') || '/store'" cdkDrag
+         [cdkDragDisabled]="dragDropService.disabled"
+         [cdkDragFreeDragPosition]="dragDropService.findPosition('header-products')"
+         (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'header-products')" editElement
+         editType="header-products" class="list-item">
+        {{(dragDropService.fieldText('header-products') || 'محصولات') | translate}}
+      </a>
+
+      <a [href]="dragDropService.fieldLink('header-categories') || '/store/category'" cdkDrag
+         [cdkDragDisabled]="dragDropService.disabled"
+         [cdkDragFreeDragPosition]="dragDropService.findPosition('header-categories')"
+         (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'header-categories')" editElement
+         editType="header-categories" *ngIf="!modulesService.categoriesDrawer" class="list-item">
+        {{(dragDropService.fieldText('header-categories') || 'دسته‌بندی') |
+        translate}}
+      </a>
+
+      <button cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+              [cdkDragFreeDragPosition]="dragDropService.findPosition('header-categories')"
+              (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'header-categories')" mat-button
+              class="categories-drawer" *ngIf="modulesService.categoriesDrawer && categories?.length"
+              [matMenuTriggerFor]="profileMenu" class="list-item">
+                <span editElement editType="header-categories">
+                    {{(dragDropService.fieldText('header-categories') || 'دسته‌بندی') |
+                  translate}}
+                </span>
+        <mat-icon>expand_more</mat-icon>
+        <mat-menu #profileMenu="matMenu">
+          <a mat-menu-item [href]="'/store/category/' + category.PRODUCT_ID + '/' + category.NAME.split(' ').join('-')"
+             *ngFor="let category of categories">
+            {{category.NAME}}
+          </a>
+        </mat-menu>
+      </button>
+
+      <a [href]="dragDropService.fieldLink('header-about') || '/about-us'" cdkDrag
+         [cdkDragDisabled]="dragDropService.disabled"
+         [cdkDragFreeDragPosition]="dragDropService.findPosition('header-about')"
+         (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'header-about')" editElement
+         editType="header-about" class="list-item">
+        {{(dragDropService.fieldText('header-about') || 'درباره ما') | translate}}
+      </a>
+
+    </div>
+  </section>
+  <ng-template #appHeader>
+    <app-header style="width: 100%;"></app-header>
+  </ng-template>
+
+  <section class="base22-swiper-slider" fxLayout="column" fxLayoutAlign="center stretch"
+           fxLayoutAlign.lt-md="space-around stretch" cdkDrag
+           [cdkDragDisabled]="dragDropService.disabled"
+           [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme22-slider')"
+           (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme22-slider')">
+
+    <div class="store-name" fxLayout="row" fxLayoutAlign="center center">
+      <h1>
+        {{   storeSettingService.store.name     }}
+      </h1>
+    </div>
+
+    <div class="img-overlay overlay-image">
+      <img [src]="dynamicMediaService.getMedia('base-theme22-overlay-image' )"
+           [alt]="'base-theme22-overlay-image' " class="text-center img-fluid" editElement
+           [editType]="'base-theme22-overlay-image' "
+           (mediaUpdated)="$event == true ? dynamicMediaService.initMedias() : null">
+    </div>
+
+    <swiper #swiper class="slider-image mx-0" [config]="mainSliderConfig">
+      <ng-container *ngFor="let category of categories">
+        <ng-template swiperSlide>
+          <div class="slide" fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="space-around stretch"
+               fxLayoutAlign.lt-md="center stretch">
+
+            <img [src]="imageUrl + '/assets/img/categories/category_logo/' + category.PRODUCT_NAME"
+                 fxFlex="50%">
+
+            <div class="slide-category-desc" fxLayout="column" fxLayoutAlign="center start" fxFlex="50%">
+              <h4 class="slide-category-desc-title">
+                {{(dragDropService.fieldText('category-desc-name') || category.NAME) | translate }}
+              </h4>
+            </div>
+
+          </div>
+
+        </ng-template>
+      </ng-container>
+    </swiper>
+
+  </section>
+
+  <section class="base22-features" fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="center center">
+
+    <div class="base22-feature-1" fxLayout="row" fxLayoutAlign="center center" fxFlex="40%">
+      <div class="overlay-feature-1" fxLayout="row" fxLayoutAlign="start center">
+        <img [src]="dynamicMediaService.getMedia('base-theme22-feature-1' )" [alt]="'base-theme22-feature-1' "
+             class="text-center img-fluid" editElement [editType]="'base-theme22-feature-1' "
+             (mediaUpdated)="$event == true ? dynamicMediaService.initMedias() : null">
+      </div>
+
+      <div class="feature-desc-1" fxLayout="column" fxLayoutAlign="start center" fxHide.lt-md>
+        <h4>
+          {{(dragDropService.fieldText('feature-desc-1-title') || 'لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است') | translate}}
+        </h4>
+        <p>
+          {{(dragDropService.fieldText('feature-desc-1-p') || 'لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است') | translate}}
+        </p>
+      </div>
+
+    </div>
+
+    <div class="base22-feature-2" fxLayout="row" fxLayoutAlign="center center" fxFlex="40%">
+      <div class="overlay-feature-2">
+        <img [src]="dynamicMediaService.getMedia('base-theme22-feature-2' )" [alt]="'base-theme22-feature-2' "
+             class="text-center img-fluid" editElement [editType]="'base-theme22-feature-2' "
+             (mediaUpdated)="$event == true ? dynamicMediaService.initMedias() : null">
+      </div>
+
+      <div class="feature-desc-2" fxLayout="column" fxLayoutAlign="start center" fxHide.lt-md>
+        <h4>
+          {{(dragDropService.fieldText('feature-desc-2-title') || 'لورم ایپسوم متن ساختگی با تولید
+          سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است') | translate}}
+        </h4>
+        <p>
+          {{(dragDropService.fieldText('feature-desc-2-p') || 'لورم ایپسوم متن ساختگی با تولید
+          سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است') | translate}}
+        </p>
+      </div>
+
+    </div>
+
+  </section>
+
+  <section class="base22-about-us" fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="center center"
+           fxLayouGap="2rem">
+    <div class="base22-about-us-desc" fxLayout="column" fxLayoutAlign="start stretch" fxFlex="40%">
+            <span class="base22-about-us-badge" cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+                  [cdkDragFreeDragPosition]="dragDropService.findPosition('base22-about-us-badge')"
+                  (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base22-about-us-badge')" editElement
+                  editType="base22-about-us-badge">
+                {{dragDropService.fieldText('base22-about-us-badge') ||
+            '// درباره ما'
+              }}
+
+            </span>
+      <h2 class="base22-about-us-title" cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+          [cdkDragFreeDragPosition]="dragDropService.findPosition('base22-about-us-title')"
+          (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base22-about-us-title')" editElement
+          editType="base22-about-us-title">
+        {{dragDropService.fieldText('base22-about-us-title') ||
+      storeSettingService.store.name }}
+      </h2>
+      <p class="base22-about-us-p text-justify" cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+         [cdkDragFreeDragPosition]="dragDropService.findPosition('base22-about-us-p')"
+         (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base22-about-us-p')" editElement
+         editType="base22-about-us-p">
+        {{dragDropService.fieldText('base22-about-us-p') ||
+      storeSettingService.store.aboutUs }}
+      </p>
+      <div class="base22-about-us-feature" fxLayout="row wrap" fxLayoutAlign="start stretch">
+        <div *ngFor="let feature of features | slice:-2" class="feature" fxLayout="column"
+             fxLayoutAlign="start stretch" fxFlex="48%">
+          <img [src]="feature.FILES" [alt]="feature.FILES">
+          <h4 class="feature-title">
+            {{feature.TITLE}}
+          </h4>
+          <p class="feature-desc-p text-justify">
+            {{
+            feature.DESCRIPTION
+            }}
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="base22-about-us-img" fxLayout="row" fxLayoutAlign="center center" fxFlex="35%">
+      <img [src]="dynamicMediaService.getMedia('base22-about-us-img' )" [alt]="'base22-about-us-img' "
+           class="text-center img-fluid" editElement [editType]="'base22-about-us-img' "
+           (mediaUpdated)="$event == true ? dynamicMediaService.initMedias() : null">
+    </div>
+
+
+  </section>
+
+  <section class="base22-counter-up-section" fxLayout="row wrap" fxLayoutAlign="space-around center" cdkDrag
+           [cdkDragDisabled]="dragDropService.disabled"
+           [cdkDragFreeDragPosition]="dragDropService.findPosition('base22-feature-counters')"
+           (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base22-feature-counters')" editElement
+           editType="base22-feature-counters">
+    <div class="base-counter base-counter-1" fxFlex="22.5%" fxFlex.lt-md="45%" fxLayout="column"
+         fxLayoutAlign="space-between center" cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+         [cdkDragFreeDragPosition]="dragDropService.findPosition('base22-counter-1')"
+         (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base22-counter-1')" editElement
+         editType="base22-counter-1">
+      <button mat-mini-fab class="base22-counter-btn" cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+              [cdkDragFreeDragPosition]="dragDropService.findPosition('base22-counter-1-icon')"
+              (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base22-counter-1-icon')" editElement
+              editType="base22-feature-icon">
+        <mat-icon class="base22-counter-icon">
+          verified
+        </mat-icon>
+      </button>
+      <h4 class="base22-counter-title" cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+          [cdkDragFreeDragPosition]="dragDropService.findPosition('base22-counter-1-title')"
+          (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base22-counter-1-title')" editElement
+          editType="base22-counter-1-title">
+        سابقه فعالیت
+      </h4>
+      <span class="base22-counter-up base22-counter-up-1" cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+            counterUp [maxCounter]="+dragDropService.fieldText('base22-counter-up-1') || 1225"
+            [cdkDragFreeDragPosition]="dragDropService.findPosition('base22-counter-up-1')"
+            (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base22-counter-up-1')" editElement
+            [editType]="'base22-counter-up-1'">
+            </span>
+    </div>
+
+    <div class="base-counter base-counter-2" fxFlex="22.5%" fxFlex.lt-md="45%" fxLayout="column"
+         fxLayoutAlign="space-between center" cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+         [cdkDragFreeDragPosition]="dragDropService.findPosition('base22-counter-2')"
+         (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base22-counter-2')" editElement
+         editType="base22-counter-2">
+      <button mat-mini-fab class="base22-counter-btn" cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+              [cdkDragFreeDragPosition]="dragDropService.findPosition('base22-counter-2-icon')"
+              (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base22-counter-2-icon')" editElement
+              editType="base22-counter-2-icon">
+        <mat-icon class="base22-counter-icon">
+          groups
+        </mat-icon>
+      </button>
+      <h4 class="base22-counter-title" cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+          [cdkDragFreeDragPosition]="dragDropService.findPosition('base22-counter-2-title')"
+          (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base22-counter-2-title')" editElement
+          editType="base22-counter-2-title">
+        کارمندان
+      </h4>
+      <span class="base22-counter-up base22-counter-up-2" cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+            counterUp [maxCounter]="+dragDropService.fieldText('base22-counter-up-2') || 1455"
+            [cdkDragFreeDragPosition]="dragDropService.findPosition('base22-counter-up-2')"
+            (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base22-counter-up-2')" editElement
+            [editType]="'base22-counter-up-2'">
+            </span>
+    </div>
+
+    <div class="base-counter base-counter-3" fxFlex="22.5%" fxFlex.lt-md="45%" fxLayout="column"
+         fxLayoutAlign="space-between center" cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+         [cdkDragFreeDragPosition]="dragDropService.findPosition('base22-counter-3')"
+         (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base22-counter-3')" editElement
+         editType="base22-counter-3">
+      <button mat-mini-fab class="base22-counter-btn" cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+              [cdkDragFreeDragPosition]="dragDropService.findPosition('base22-counter-3-icon')"
+              (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base22-counter-3-icon')" editElement
+              editType="base22-counter-3-icon">
+        <mat-icon class="base22-counter-icon">
+          breakfast_dining
+        </mat-icon>
+      </button>
+      <h4 class="base22-counter-title" cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+          [cdkDragFreeDragPosition]="dragDropService.findPosition('base22-counter-3-title')"
+          (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base22-counter-3-title')" editElement
+          editType="base22-counter-3-title">
+        محصولات
+      </h4>
+      <span class="base22-counter-up base22-counter-up-2" cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+            counterUp [maxCounter]="+dragDropService.fieldText('base22-counter-up-3') || 1345"
+            [cdkDragFreeDragPosition]="dragDropService.findPosition('base22-counter-up-3')"
+            (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base22-counter-up-3')" editElement
+            [editType]="'base22-counter-up-3'">
+            </span>
+    </div>
+
+    <div class="base-counter base-counter-4" fxFlex="22.5%" fxFlex.lt-md="45%" fxLayout="column"
+         fxLayoutAlign="space-between center" cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+         [cdkDragFreeDragPosition]="dragDropService.findPosition('base22-counter-4')"
+         (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base22-counter-4')" editElement
+         editType="base22-counter-4">
+      <button mat-mini-fab class="base22-counter-btn" cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+              [cdkDragFreeDragPosition]="dragDropService.findPosition('base22-counter-4-icon')"
+              (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base22-counter-4-icon')" editElement
+              editType="base22-counter-4-icon">
+        <mat-icon class="base22-counter-icon">
+          shopping_cart
+        </mat-icon>
+      </button>
+
+      <h4 class="base22-counter-title" cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+          [cdkDragFreeDragPosition]="dragDropService.findPosition('base22-counter-4-title')"
+          (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base22-counter-4-title')" editElement
+          editType="base22-counter-4-title">
+        سفارش
+      </h4>
+      <span class="base22-counter-up base22-counter-up-2" cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+            counterUp [maxCounter]="+dragDropService.fieldText('base22-counter-up-4') || 4225"
+            [cdkDragFreeDragPosition]="dragDropService.findPosition('base22-counter-up-4')"
+            (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base22-counter-up-4')" editElement
+            [editType]="'base22-counter-up-4'">
+            </span>
+    </div>
+
+  </section>
+
+  <section class="base22-our-services container" fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="center center"
+           fxLayoutGap="5%" cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+           [cdkDragFreeDragPosition]="dragDropService.findPosition('base22-our-services')"
+           (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base22-our-services')" editElement
+           editType="base22-our-services">
+
+
+    <div class="base22-our-services-desc" fxLayout="column" fxLayoutAlign="start stretch" fxFlex="45%" cdkDrag
+         [cdkDragDisabled]="dragDropService.disabled"
+         [cdkDragFreeDragPosition]="dragDropService.findPosition('base22-our-services-desc')"
+         (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base22-our-services-desc')" editElement
+         editType="base22-our-services-desc">
+            <span class="base22-our-services-badge" cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+                  [cdkDragFreeDragPosition]="dragDropService.findPosition('base22-our-services-badge')"
+                  (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base22-our-services-badge')" editElement
+                  editType="base22-our-services-badge">
+                {{dragDropService.fieldText('base22-our-services-badge') ||
+            '//خدمات ما'
+              }}
+            </span>
+      <h2 class="base22-our-service-title" cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+          [cdkDragFreeDragPosition]="dragDropService.findPosition('base22-our-services-badge')"
+          (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base22-our-services-badge')" editElement
+          editType="base22-our-services-badge">
+        {{dragDropService.fieldText('base22-our-services-badge') ||
+      'چه محصولاتی ما برای شما ارائه میکنیم ؟'
+        }}
+      </h2>
+      <p class="w-75 base22-our-service-p" cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+         [cdkDragFreeDragPosition]="dragDropService.findPosition('base22-our-services-p')"
+         (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base22-our-services-p')" editElement
+         editType="base22-our-services-p">
+        {{dragDropService.fieldText('base22-our-service-p') ||
+      'لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است'
+        }}
+
+      </p>
+
+      <div class="services" fxLayout="row wrap" fxLayoutAlign="space-between center" cdkDrag
+           [cdkDragDisabled]="dragDropService.disabled"
+           [cdkDragFreeDragPosition]="dragDropService.findPosition('base22-our-services-section')"
+           (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base22-our-services-section')" editElement
+           editType="base22-our-services-section">
+
+        <div class="service" fxLayout="column" fxLayoutAlign="start stretch" fxFlex="45%" cdkDrag
+             [cdkDragDisabled]="dragDropService.disabled"
+             [cdkDragFreeDragPosition]="dragDropService.findPosition('base22-our-service-1')"
+             (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base22-our-service-1')" editElement
+             editType="base22-our-service-1">
+          <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="5px">
+            <button mat-mini-fab class="our-service-btn" cdkDrag
+                    [cdkDragDisabled]="dragDropService.disabled"
+                    [cdkDragFreeDragPosition]="dragDropService.findPosition('base22-our-service-btn-1')"
+                    (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base22-our-service-btn-1')"
+                    editElement editType="base22-our-service-btn-1">
+              <mat-icon>
+                shopping_cart
+              </mat-icon>
+            </button>
+            <h4 class="service-name" cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+                [cdkDragFreeDragPosition]="dragDropService.findPosition('base22-our-service-name-1')"
+                (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base22-our-service-name-1')"
+                editElement editType="base22-our-service-name-1">
+              {{dragDropService.fieldText('base22-our-service-name-1') ||
+            'محصولات سفارشی'
+              }}
+
+            </h4>
+          </div>
+          <p class="service-p w-75 text-justify" cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+             [cdkDragFreeDragPosition]="dragDropService.findPosition('base22-our-service-p-1')"
+             (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base22-our-service-p-1')"
+             editElement editType="base22-our-service-p-1">
+            {{dragDropService.fieldText('base22-our-service-p-1') ||
+          'از صنعت چاپ و با استفاده از طراحان گرافیک است'
+            }}
+
+          </p>
+
+        </div>
+
+        <div class="service" fxLayout="column" fxLayoutAlign="start stretch" fxFlex="45%" cdkDrag
+             [cdkDragDisabled]="dragDropService.disabled"
+             [cdkDragFreeDragPosition]="dragDropService.findPosition('base22-our-service-2')"
+             (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base22-our-service-2')" editElement
+             editType="base22-our-service-2">
+          <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="5px">
+            <button mat-mini-fab class="our-service-btn" cdkDrag
+                    [cdkDragDisabled]="dragDropService.disabled"
+                    [cdkDragFreeDragPosition]="dragDropService.findPosition('base22-our-service-btn-2')"
+                    (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base22-our-service-btn-2')"
+                    editElement editType="base22-our-service-btn-2">
+              <mat-icon>
+                local_shipping
+              </mat-icon>
+            </button>
+            <h4 class="service-name" cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+                [cdkDragFreeDragPosition]="dragDropService.findPosition('base22-our-service-name-2')"
+                (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base22-our-service-name-2')"
+                editElement editType="base22-our-service-name-2">
+              {{dragDropService.fieldText('base22-our-service-name-2') ||
+            'ارسال رایگان'
+              }}
+            </h4>
+          </div>
+          <p class="service-p w-75 text-justify" cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+             [cdkDragFreeDragPosition]="dragDropService.findPosition('base22-our-service-p-2')"
+             (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base22-our-service-p-2')"
+             editElement editType="base22-our-service-p-2">
+            {{dragDropService.fieldText('base22-our-service-p-2') ||
+          'از صنعت چاپ و با استفاده از طراحان گرافیک است'
+            }}
+          </p>
+
+        </div>
+
+        <div class="service" fxLayout="column" fxLayoutAlign="start stretch" fxFlex="45%" cdkDrag
+             [cdkDragDisabled]="dragDropService.disabled"
+             [cdkDragFreeDragPosition]="dragDropService.findPosition('base22-our-service-3')"
+             (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base22-our-service-3')" editElement
+             editType="base22-our-service-3">
+          <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="5px">
+            <button mat-mini-fab class="our-service-btn" cdkDrag
+                    [cdkDragDisabled]="dragDropService.disabled"
+                    [cdkDragFreeDragPosition]="dragDropService.findPosition('base22-our-service-btn-3')"
+                    (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base22-our-service-btn-3')"
+                    editElement editType="base22-our-service-btn-3">
+              <mat-icon>
+                inventory_2
+              </mat-icon>
+            </button>
+            <h4 class="service-name" cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+                [cdkDragFreeDragPosition]="dragDropService.findPosition('base22-our-service-name-3')"
+                (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base22-our-service-name-3')"
+                editElement editType="base22-our-service-name-3">
+              {{dragDropService.fieldText('base22-our-service-name-3') ||
+            'محصولات با کیفیت'
+              }}
+            </h4>
+          </div>
+          <p class="service-p w-75 text-justify" cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+             [cdkDragFreeDragPosition]="dragDropService.findPosition('base22-our-service-p-3')"
+             (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base22-our-service-p-3')"
+             editElement editType="base22-our-service-p-3">
+            {{dragDropService.fieldText('base22-our-service-p-3') ||
+          'از صنعت چاپ و با استفاده از طراحان گرافیک است'
+            }}
+          </p>
+        </div>
+
+        <div class="service" fxLayout="column" fxLayoutAlign="start stretch" fxFlex="45%" cdkDrag
+             [cdkDragDisabled]="dragDropService.disabled"
+             [cdkDragFreeDragPosition]="dragDropService.findPosition('base22-our-service-4')"
+             (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base22-our-service-4')" editElement
+             editType="base22-our-service-4">
+          <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="5px">
+            <button mat-mini-fab class="our-service-btn" cdkDrag
+                    [cdkDragDisabled]="dragDropService.disabled"
+                    [cdkDragFreeDragPosition]="dragDropService.findPosition('base22-our-service-btn-4')"
+                    (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base22-our-service-btn-4')"
+                    editElement editType="base22-our-service-btn-4">
+              <mat-icon>
+                query_stats
+              </mat-icon>
+            </button>
+            <h4 class="service-name" cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+                [cdkDragFreeDragPosition]="dragDropService.findPosition('base22-our-service-name-4')"
+                (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base22-our-service-name-4')"
+                editElement editType="base22-our-service-name-4">
+              {{dragDropService.fieldText('base22-our-service-name-4') ||
+            'جستجوی سریع'
+              }}
+            </h4>
+          </div>
+          <p class="service-p w-75 text-justify" cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+             [cdkDragFreeDragPosition]="dragDropService.findPosition('base22-our-service-p-4')"
+             (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base22-our-service-p-4')"
+             editElement editType="base22-our-service-p-4">
+            {{dragDropService.fieldText('base22-our-service-p-4') || 'از صنعت چاپ و با استفاده از طراحان
+            گرافیک است'}}
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="base22-our-services-img" fxLayout="row" fxLayoutAlign="center center" fxFlex="45%"
+         cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+         [cdkDragFreeDragPosition]="dragDropService.findPosition('base22-our-services-img')"
+         (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base22-our-services-img')" editElement
+         editType="base22-our-services-img">
+      <div class="base22-our-services-overlay-1" fxLayout="column" fxLayoutAlign="center center">
+        <div class="base22-our-services-overlay-2"></div>
+      </div>
+      <div class="base22-services-image" fxLayout="row" fxLayoutAlign="space-between center">
+        <div class="base22-our-services-img-1" cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+             [cdkDragFreeDragPosition]="dragDropService.findPosition('base22-our-services-img-1')"
+             (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base22-our-services-img-1')">
+          <img [src]="dynamicMediaService.getMedia('base22-our-services-img-1')"
+               [alt]="'base22-our-services-img-1'" class="img-overlay" editElement
+               editType="base22-our-services-img-1">
+        </div>
+
+        <div class="base22-our-services-img-2" cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+             [cdkDragFreeDragPosition]="dragDropService.findPosition('base22-our-services-img-2')"
+             (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base22-our-services-img-2')">
+          <img [src]="dynamicMediaService.getMedia('base22-our-services-img-2')"
+               [alt]="'base22-our-services-img-2'" class="img-overlay" editElement
+               editType="base22-our-services-img-2">
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <section class="base22-product-slider" fxLayout="column" fxLayoutAlign="center stretch">
+
+    <div class="base22-product-slider-title" fxLayout="column" fxLayoutAlign="center center">
+            <span class="base22-product-slider-badge" cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+                  [cdkDragFreeDragPosition]="dragDropService.findPosition('base22-product-slider-badge')"
+                  (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base22-product-slider-badge')" editElement
+                  editType="base22-product-slider-badge">
+                {{dragDropService.fieldText('base22-product-slider-badge') ||
+            '//محصولات ما'
+              }}
+            </span>
+      <h2 class="base22-product-slider-h" cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+          [cdkDragFreeDragPosition]="dragDropService.findPosition('base22-product-slider-h')"
+          (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base22-product-slider-h')" editElement
+          editType="base22-product-slider-h">
+        {{dragDropService.fieldText('base22-product-slider-h') ||
+      'محصولاتی که برای شما ارائه می کنیم'
+        }}
+      </h2>
+    </div>
+
+    <swiper #productSwiper class="swiper" [config]="productSliderConfig">
+      <ng-container *ngFor="let product of products">
+        <ng-template swiperSlide>
+          <div class="base22-slide" fxLayout="column" fxLayoutAlign="start center">
+            <div class="base22-slide-img" fxLayout="column" fxLayoutAlign="start center"
+                 cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+                 [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme18-slider')"
+                 (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme18-slider')">
+              <a [routerLink]="'/product/' + (product.PRODUCT_STORE_ID || product.PRODUCT_ID) + '/' + product.NAME.replace('/', '').split(' ').join('-')">
+                <img [src]="imageUrl + '/assets/img/products/' + product.IMAGE">
+              </a>
+              <span class="product-name">
+                                {{product.NAME}}
+                            </span>
+            </div>
+            <div class="slide-info" fxLayout="column" fxLayoutAlign="center center">
+              <b class="product-price">
+                {{product.PRICE}}
+                تومان
+              </b>
+            </div>
+            <div class="overlay" data-wow-delay="0.9s" fxLayout="row"
+                 fxLayoutAlign="center center">
+              <a mat-flat-button color="primary"
+                 [routerLink]="'/product/' + (product.PRODUCT_STORE_ID || product.PRODUCT_ID) + '/' + product.NAME.replace('/', '').split(' ').join('-')"
+                 target="_blank" class="product-icon-visited"
+                 fxLayout="column" fxLayoutAlign="center center">
+                <mat-icon>
+                  visibility
+                </mat-icon>
+              </a>
+              <a mat-flat-button color="accent" class="product-icon-cart" fxLayout="column"
+                 fxLayoutAlign="center center" *ngIf="checkProductStatus(product.PRODUCT_STATUS_ID)"
+                 (click)="addToCart(product)">
+                <mat-icon>
+                  shopping_cart
+                </mat-icon>
+              </a>
+            </div>
+          </div>
+
+        </ng-template>
+      </ng-container>
+    </swiper>
+
+    <div class="base22-product-overlay" fxLayout="column" fxLayoutAlign="end center">
+
+      <div class="product-overlay-img" fxLayout="row" fxLayoutAlign="space-between center">
+        <div class="overlay-img-1" fxLayout="column" fxLayoutAlign="center stretch">
+          <img [src]="dynamicMediaService.getMedia('base22-product-overlay-1')"
+               [alt]="'base22-product-overlay-1'" class="img-overlay product-overlay-img-1" editElement
+               editType="base22-product-overlay-1">
+        </div>
+        <div class="overlay-img-2" fxLayout="column" fxLayoutAlign="center stretch">
+          <img [src]="dynamicMediaService.getMedia('base22-product-overlay-2')"
+               [alt]="'base22-product-overlay-2'" class="img-overlay product-overlay-img-2" editElement
+               editType="base22-product-overlay-2">
+        </div>
+
+
+      </div>
+
+      <div class="base22-arrow-shape">
+        <div class="item" fxLayout="row" fxLayoutAlign="space-between center">
+          <mat-icon (click)="slideNext()" class="arrow-right icon">
+            arrow_forward_ios
+          </mat-icon>
+          <mat-icon (click)="slidePrev()" class="arrow-left icon">
+            arrow_back_ios
+          </mat-icon>
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <app-brands-slider></app-brands-slider>
+
+  <app-section></app-section>
+
+  <default-contact-us [asComponent]="true"></default-contact-us>
+
+  <app-footer></app-footer>
+
+</div>

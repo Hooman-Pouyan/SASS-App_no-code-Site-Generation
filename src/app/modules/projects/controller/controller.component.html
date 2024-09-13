@@ -1,0 +1,12 @@
+<app-header></app-header>
+
+<ng-container [ngSwitch]="modulesService.theme">
+
+  <renovation-projects *ngSwitchCase="[500] | customSwitch: modulesService.theme">
+  </renovation-projects>
+
+  <default-project *ngSwitchDefault></default-project>
+
+</ng-container>
+
+<app-footer></app-footer>

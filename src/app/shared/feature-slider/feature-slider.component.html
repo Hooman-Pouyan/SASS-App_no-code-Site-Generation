@@ -1,0 +1,35 @@
+<div fxLayout="column" fxLayoutAlign="start stretch"
+     cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+     [cdkDragFreeDragPosition]="dragDropService.findPosition('feature-slider')"
+     (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'feature-slider')">
+  <ng-container *ngIf="showAsSlider else showAsRow">
+    <div fxLayout="column" fxLayoutAlign="start stretch" class="px-2" *ngIf="features.length">
+      <swiper [config]="featuresSliderConfig" class="feature-slider">
+        <ng-template swiperSlide *ngFor="let feature of features">
+          <div class="feature" (click)="openFeatureDialog(feature)"
+               fxLayout="column" fxLayoutAlign="space-between center">
+            <img [src]="feature.FILES" [alt]="feature.FILES" class="text-center">
+            <p>
+              {{feature.TITLE}}
+            </p>
+          </div>
+        </ng-template>
+      </swiper>
+    </div>
+  </ng-container>
+
+  <ng-template #showAsRow>
+    <div fxLayout="row wrap" *ngIf="features.length"
+         fxLayoutAlign="start stretch" fxLayoutGap="1%">
+      <div class="feature" (click)="openFeatureDialog(feature)"
+           *ngFor="let feature of features" fxFlex="32%"
+           fxLayout="column" fxLayoutAlign="space-between center">
+        <img [src]="feature.FILES" [alt]="feature.FILES" class="text-center">
+        <p>
+          {{feature.TITLE}}
+        </p>
+      </div>
+    </div>
+  </ng-template>
+
+</div>

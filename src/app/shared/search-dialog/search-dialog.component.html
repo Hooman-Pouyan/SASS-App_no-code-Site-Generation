@@ -1,0 +1,57 @@
+<div fxLayout="column" fxLayoutAlign="start stretch" class="search-dg">
+
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+        <b>{{'جستجوی پیشرفته' | translate}}</b>
+        <button (click)="closeDialog()" mat-icon-button color="warn">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+
+    <mat-form-field class="search-input" appearance="outline">
+        <input matInput [formControl]="SearchCtrl" autocomplete="off" #SearchCtrlElem
+            placeholder="{{'جستجو' | translate }}">
+        <button color="primary" mat-icon-button matPrefix>
+            <mat-icon>search</mat-icon>
+        </button>
+    </mat-form-field>
+
+    <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="1rem" class="search-autocomplete">
+
+        <div class="search-optgroup border-0 not-found" *ngIf="(!LoadingAutoCompelate && !SearchCtrlLoading && SearchCtrlElem.value.length > 0 ) &&
+                      allDataFiltered && allDataFiltered.Product && allDataFiltered.Product.length === 0
+                       && allDataFiltered.StoreCategory && allDataFiltered.StoreCategory.length === 0 &&
+                      allDataFiltered.subCategory && allDataFiltered.subCategory.length === 0">
+            <mat-option class="search-mat-option" [value]="'موردی یافت نشد!' | translate">
+                <span class="title">{{'موردی یافت نشد!' | translate }}</span>
+                <img src="../../../assets/img/default/product.png" fxFlex="40px">
+            </mat-option>
+        </div>
+
+        <div *ngIf="allDataFiltered && allDataFiltered.subCategory" fxLayout="row wrap" fxLayoutAlign="start center">
+            <mat-chip-list class="option-value" fxLayout="row wrap" fxLayoutAlign="start center">
+                <mat-chip color="primary" *ngFor="let subCat of allDataFiltered.subCategory;"
+                    [routerLink]="'/store/category/' + subCat.PRODUCT_ID + '/' + subCat.NAME.split(' ').join('-')"
+                          class="m-1" (click)="closeDialog()">
+                    {{subCat.PRODUCT_PARENT_NAME}}
+                </mat-chip>
+            </mat-chip-list>
+        </div>
+
+        <div class="search-list" *ngIf="allDataFiltered?.Product?.length" fxLayout="row wrap"
+            fxLayoutAlign="space-between center">
+
+            <a *ngFor="let product of allDataFiltered.Product" [routerLink]="'/product/' + product.ID"
+                [queryParams]="{ name : product.NAME, 'search': '1' }" fxLayout="row" fxLayoutAlign="start center"
+                fxLayoutGap="15px" fxFlex="49%" class="item my-2" (click)="closeDialog()">
+
+                <img *ngIf="product.IMAGE" class="img-fluid" fxFlex="30%"
+                    [src]="imageUrlDevelop +  '/assets/img/products/'+product.IMAGE">
+                <img *ngIf="!product.IMAGE" class="img-fluid" fxFlex="30%"
+                    src="../../../assets/img/default/product.png">
+                <span class="name" fxFlex>{{product.NAME}}</span>
+
+            </a>
+        </div>
+
+    </div>
+</div>

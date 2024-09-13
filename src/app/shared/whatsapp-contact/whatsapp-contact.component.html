@@ -1,0 +1,8 @@
+<ng-container *ngIf="showBtn && phoneNumber">
+  <a [href]="'https://api.whatsapp.com/send?phone=' + phoneNumber "
+     fxHide.gt-sm target="_blank"
+     [matTooltip]="'با ما در ارتباط باشید' | translate"
+     fxLayoutAlign="center center" class="button-whatsapp" color="primary" mat-fab>
+    <img src='../../../assets/icons/socials/whatsapp-button.png' alt="whatsapp">
+  </a>
+</ng-container>

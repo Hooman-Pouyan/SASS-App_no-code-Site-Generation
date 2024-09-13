@@ -1,0 +1,95 @@
+<app-header></app-header>
+
+<div fxLayout="column" fxLayoutAlign="start stretch" class="felor-landing">
+
+  <div fxLayout="column" fxLayoutAlign="start stretch" cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+       [cdkDragFreeDragPosition]="dragDropService.findPosition('felor-swiper')"
+       (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'felor-swiper')">
+
+    <swiper [config]="mainSliderConfig" class="felor-slider">
+      <ng-template swiperSlide *ngFor="let slider of mainSlider">
+        <ng-container *ngIf="slider.link else noLink">
+          <a [href]="slider.link" target="_blank">
+            <img [src]="slider.image" [alt]="slider.image" class="text-center img-fluid">
+          </a>
+        </ng-container>
+        <ng-template #noLink>
+          <img [src]="slider.image" [alt]="slider.image" class="text-center img-fluid">
+        </ng-template>
+      </ng-template>
+    </swiper>
+  </div>
+
+  <div fxLayout="column" fxLayoutAlign="start stretch">
+
+    <feature-slider style="color: white;"></feature-slider>
+
+    <div fxLayout="column" fxLayoutAlign="start stretch" cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+         [cdkDragFreeDragPosition]="dragDropService.findPosition('felor-categories-list')"
+         (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'felor-categories-list')">
+
+
+      <div class="sections-cat" fxLayout="row wrap" fxLayoutAlign="space-around stretch">
+
+        <ng-container *ngFor="let section of sections; let i = index">
+<!--             [queryParams]="{'category_pack': section.SELECTED_CATEGORIES}"-->
+          <a class="section" fxLayout="column" fxLayoutAlign="space-evenly center" href="/store/category/1"
+             [fxFlex.lt-md]="(i+1) == sections.length && sections.length % 2 == 1 ? '100%' : '50%'"
+             [fxFlex]="setCategoriesWidthStyle(sections.length, i)">
+            <img [src]="section.IMAGE" alt="section" class="img-fluid" fxFlex="65%">
+            <p>
+              {{ section.NAME }}
+            </p>
+          </a>
+        </ng-container>
+
+        <div fxFlex="100%" fxLayout="row" fxLayoutAlign="start center">
+          <a class="section" fxLayout="column" href="/store/category"
+             fxLayoutAlign="space-evenly center" fxFlex="50%">
+            <img src="../../../../../assets/img/felor/categories.png" alt="section" class="img-fluid"
+                 fxFlex="65%">
+            <p>
+              {{ 'دسته بندی ها' | translate}}
+            </p>
+          </a>
+          <div class="section" fxLayout="column" fxLayoutAlign="space-evenly center" (click)="openRareProduct()"
+               fxFlex="50%">
+            <img src="../../../../../assets/img/felor/rare_product.png" alt="section" class="img-fluid" fxFlex="65%">
+            <p>
+              {{ 'سفارش محصولات نایاب و کم یاب' | translate}}
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div ngClass.gt-sm="container" fxLayout="column" fxLayoutAlign="start stretch">
+    <products-packs-slider theme="dark" market="felor"></products-packs-slider>
+  </div>
+
+  <landing-video></landing-video>
+
+  <app-section style="z-index: 2"></app-section>
+
+  <div class="introduce my-4" fxLayoutGap="2rem" cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+       [cdkDragFreeDragPosition]="dragDropService.findPosition('felor-downer-desc')"
+       (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'felor-downer-desc')">
+
+    <div fxLayout="column" class="title" fxLayoutAlign="start center" fxLayoutGap="1rem">
+      <h2>
+        {{storeSettingService.store.name}}
+      </h2>
+      <div class="desc" [innerHTML]="downerDecoratives.text">
+      </div>
+    </div>
+  </div>
+
+  <app-brands-slider style="color: white"></app-brands-slider>
+
+</div>
+
+<app-footer></app-footer>

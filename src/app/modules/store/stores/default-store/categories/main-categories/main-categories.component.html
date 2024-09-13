@@ -1,0 +1,28 @@
+<div class="container my-5" fxLayout="row wrap"
+     fxLayoutAlign="space-around stretch">
+  <div *ngFor="let category of categories" class="category p-2 my-3"
+       fxFlex.lt-md="100%" fxFlex="31%" fxLayout="row"
+       fxLayoutAlign="space-around stretch">
+
+    <div fxLayoutAlign="center center" fxFlex="40%">
+      <ng-container *ngIf="category.PRODUCT_NAME && category.PRODUCT_NAME != 'null' else defaultCategory">
+        <img [src]="imageUrl + '/assets/img/categories/category_logo/' + category.PRODUCT_NAME" [alt]="category.NAME"
+             class="img-fluid">
+      </ng-container>
+      <ng-template #defaultCategory>
+        <img src="../../../../../../../assets/img/default/category.png" [alt]="category.NAME" class="img-fluid">
+      </ng-template>
+    </div>
+
+    <div fxLayout="column" fxLayoutAlign="start stretch" fxFlex="40%">
+      <a [routerLink]="'/store/category/' + category.PRODUCT_ID + '/' + category.NAME.split(' ').join('-')" class="my-2 category-name">
+        <b>{{category.NAME}}</b>
+      </a>
+      <a *ngFor="let subCategory of category.subCategories | slice: -4" class="my-1 sub-categories"
+         [routerLink]="'/store/category/' + subCategory.PRODUCT_ID + '/' + subCategory.NAME.split(' ').join('-')">
+        {{subCategory.NAME}}
+      </a>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,27 @@
+<div fxLayout="column" class="products-packs-slider"
+     fxLayoutAlign="start stretch"
+     cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+     [cdkDragFreeDragPosition]="dragDropService.findPosition('products-packs-slider')"
+     (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'products-packs-slider')">
+  <span [ngClass]="{'sliders-header mr-n3': market != 'felor', 'felor-sliders-header': market == 'felor'}">
+    {{'محصولات' | translate }}
+  </span>
+  <nav mat-tab-nav-bar [ngClass]="{'dark-slider-pack' : theme == 'dark'}">
+    <a mat-tab-link *ngFor="let productSlider of productsSlider"
+       (click)="activeSlider = productSlider;getProductSlider(activeSlider)"
+       [active]="activeSlider.index == productSlider.index">
+      <span class="px-2">
+        {{productSlider.name | translate }}
+      </span>
+    </a>
+  </nav>
+  <div dir="rtl">
+    <products-slider *ngIf="activeSlider.products?.length else noProductSlider"
+                     [products]="activeSlider.products" [theme]="theme"></products-slider>
+    <ng-template #noProductSlider>
+      <h1 class="text-center my-5" [ngStyle]="{'color': theme == 'dark' ? 'white' : 'black'}">
+        {{'محصولی یافت نشد!' | translate}}
+      </h1>
+    </ng-template>
+  </div>
+</div>

@@ -1,0 +1,22 @@
+<div class="wallet container" fxLayout="column" fxLayoutAlign="center stretch">
+  <div class="wallet-title container" fxLayout="row" fxLayoutAlign="start center">
+    {{'کیف پول' | translate }}
+  </div>
+
+  <div class="container" fxLayout="row" fxLayoutAlign="space-between center" fxLayout.lt-md="column">
+
+    <div *ngIf="wallet !== null" class="wallet-value">
+      {{'موجودی کیف پول شما' | translate }}:
+      {{ wallet ? (wallet | number) : 0 }}
+      {{storeSettingService.storeCurrency | translate }}
+    </div>
+
+    <div class="operation">
+      <button mat-raised-button color="primary" (click)="openAddCredit()">
+        <mat-icon>add</mat-icon>
+        {{'افزایش اعتبار' | translate }}
+      </button>
+    </div>
+
+  </div>
+</div>

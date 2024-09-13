@@ -1,0 +1,42 @@
+<div class="Q-A-section p-3" fxLayout="column" fxLayoutAlign="start stretch">
+  <div class="" fxLayout="row" fxLayoutAlign="end stretch">
+    <mat-icon (click)="dialogRef.close()" style="cursor:pointer">
+      close
+    </mat-icon>
+  </div>
+
+  <div fxLayout="column" fxLayoutAlign="start stretch" *ngIf="data.type == 'answer' ">
+    <h4 fxLayout="row" fxLayoutAlign="start stretch">
+      پرسش :
+      {{data.QUESTION}}
+    </h4>
+    <div class="add-Q-A" fxLayout="column" fxLayoutAlign="start stretch" fxFlex="30%">
+      <mat-form-field appearance="outline">
+                 <textarea matInput rows="7" [maxlength]="QuestionMaxChar" [placeholder]="'پاسخ شما' | translate"
+                           [(ngModel)]="Question"></textarea>
+      </mat-form-field>
+      <div class="add-Q-A-btn" fxLayout="column" fxLayoutAlign="center stretch">
+        <button mat-stroked-button color="primary" (click)="addProductQuestions()" [disabled]="Question === '' " fxFlex>
+          ثبت پاسخ
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <div fxLayout="column" fxLayoutAlign="start stretch" *ngIf="data.type == 'question' ">
+    <div class="add-Q-A" fxLayout="column" fxLayoutAlign="start stretch" fxFlex="30%">
+      <mat-form-field appearance="outline">
+                 <textarea matInput rows="7" [maxlength]="QuestionMaxChar" [placeholder]="'پرسش شما' | translate"
+                           [(ngModel)]="Question"></textarea>
+      </mat-form-field>
+      <div class="add-Q-A-btn" fxLayout="column" fxLayoutAlign="center stretch">
+        <button mat-stroked-button color="primary" (click)="addProductQuestions()" [disabled]="Question === '' " fxFlex>
+          ثبت پرسش شما
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+</div>

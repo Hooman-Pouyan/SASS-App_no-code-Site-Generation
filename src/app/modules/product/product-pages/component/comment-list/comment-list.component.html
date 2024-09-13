@@ -1,0 +1,79 @@
+<div fxLayout="column" fxLayoutAlign="start stretch"
+     *ngIf="modulesService.productComments" class="customer-say mt-4">
+
+  <h2 class="title" *ngIf="comments.COMMENTS.length > 0"> {{"نظرات کاربران" | translate }} </h2>
+
+  <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="space-between stretch">
+
+    <div class="add-comment" fxLayout="column" fxLayoutAlign="start stretch" fxFlex="30%">
+      <span class="add-comment-hint mb-3">{{"شما هم درباره این کالا دیدگاه ثبت کنید" | translate}}</span>
+      <button mat-stroked-button color="accent"
+              (click)="this.credentialService.isGuest ? goToAuth() : addComments()">
+        <span>
+          {{this.credentialService.isGuest ? ('برای ثبت دیدگاه وارد حساب کاربری شوید' | translate) : ('ثبت دیدگاه' | translate) }}
+        </span>
+      </button>
+    </div>
+
+    <div *ngIf="comments?.COMMENTS?.length else noComment"
+         class="user-comments" fxLayout="column"
+         fxLayoutAlign="start stretch" fxLayoutGap="20px" fxFlex="70%">
+      <div fxLayout="column" fxLayoutAlign="start stretch" class="each-comment"
+           *ngFor="let comment of comments.COMMENTS ">
+
+        <div fxLayout="row" fxLayoutAlign="space-between center">
+          <div fxLayoutAlign="start center" fxLayoutGap="30px">
+            <p class="name">{{comment.NAME}}</p>
+            <span class="comment-date">{{comment.CREATE_DATE | jalaliDate: 'date'}}</span>
+          </div>
+          <rate [inputRate]="comment.RATE" [disabled]="true"></rate>
+        </div>
+        <mat-divider></mat-divider>
+        <div fxLayout="column" fxLayoutAlign="start stretch">
+          <p class="say">{{comment.COMMENTS}}</p>
+          <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1rem"
+               *ngFor="let good of comment.STRENGTHS.split(',')">
+            <mat-icon>add</mat-icon>
+            {{good}}
+          </div>
+          <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1rem"
+               *ngFor="let bad of comment.STRENGTHS.split(',')">
+            <mat-icon>remove</mat-icon>
+            {{bad}}
+          </div>
+          <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="1rem">
+            <span>{{comment.LIKES}}</span>
+            <button mat-icon-button>
+              <mat-icon (click)="setAction(comment ,1)" #likeBtn>
+                thumb_up
+              </mat-icon>
+            </button>
+
+            <span>{{comment.DISLIKE}}</span>
+            <button mat-icon-button>
+              <mat-icon (click)="setAction(comment ,-1)" #DislikeBtn>
+                thumb_down
+              </mat-icon>
+            </button>
+
+          </div>
+        </div>
+
+      </div>
+
+      <mat-paginator [pageSizeOptions]="[2, 5, 15, 25, 50, 100]"
+                     (page)="paginatorEvent($event)"
+                     showFirstLastButtons
+                     [pageSize]="paginatorConfig.PAGE_SIZE"
+                     [length]="paginatorConfig.TOTAL_COUNT"></mat-paginator>
+    </div>
+
+    <ng-template #noComment>
+      <p fxFlex class="text-center">
+        {{'تاکنون هیچ دیدگاهی ثبت نشده' | translate}}
+      </p>
+    </ng-template>
+
+  </div>
+
+</div>

@@ -1,0 +1,109 @@
+<app-header></app-header>
+
+<main fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="30px"
+      ngClass.gt-sm="mt-4" class="about-us container mb-5">
+
+  <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="1.5rem"
+       fxLayoutAlign.lt-md="start stretch" fxLayout.lt-md="column-reverse" fxFlex="45%">
+
+    <div fxLayout="column" fxLayoutAlign="start stretch" class="about-us-description"  fxFlex="45%"
+         cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+         [cdkDragFreeDragPosition]="dragDropService.findPosition('about-us-text')"
+         (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'about-us-text')">
+
+      <h2 editElement editType="about-us-title" class="text-center">
+        {{ dragDropService.fieldText('about-us-title') || 'درباره ی ما' | translate}}
+      </h2>
+
+      <!--      <p ngClass.gt-sm="text-justify" class="text-preWrap"-->
+      <!--         [innerHTML]="storeSettingService.store.aboutUs">-->
+      <!--      </p>-->
+
+
+      <p editElement editType="about-us-text" class="text-preWrap text-justify">
+        {{ dragDropService.fieldText('about-us-text') || storeSettingService.store.aboutUs}}
+      </p>
+
+    </div>
+
+    <div cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+         [cdkDragFreeDragPosition]="dragDropService.findPosition('about-us-img')"
+         (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'about-us-img')">
+      <img [src]="dynamicMediaService.getMedia('about-us-img') || aboutUsImage"
+           editElement editType="about-us-img"
+           alt="about_us" class="img-fluid">
+    </div>
+
+  </div>
+
+  <feature-slider style="color: black" [showAsSlider]="false"
+                  *ngIf="modulesService.ourServices else defaultServices"></feature-slider>
+
+  <ng-template #defaultServices>
+    <div fxLayout="row wrap" fxLayoutAlign="center stretch" fxLayoutAlign.lt-md="start stretch"
+         fxLayoutGap="1%" fxLayoutGap.lt-md="4%" class="feature-boxes">
+
+      <ng-container *ngFor="let feature of productFeatures">
+        <div fxLayout="row wrap" class="feature" *ngIf="feature.enable" fxFlex="15%"
+             fxFlex.lt-md="45%" fxLayoutAlign="space-around center">
+          <img [src]="'../../../../../assets/img/products/' + feature.img" class="img-fluid" fxFlex="25%"
+               [alt]="feature.desc">
+          <mat-hint fxLayout="column" fxLayoutAlign="center center" fxFlex="60%">
+            {{ feature.desc | translate}}
+          </mat-hint>
+        </div>
+      </ng-container>
+
+    </div>
+  </ng-template>
+
+  <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap.lt-md="10px"
+       fxLayoutAlign="space-evenly stretch" class="contact-us-section">
+
+    <div *ngIf="storeSettingService.store.phone" fxFlex="30%" class="each-contact"
+         fxLayout="column" fxLayoutAlign="start center">
+
+      <div class="icon" fxLayout="row" fxLayoutAlign="center center">
+        <mat-icon>phone</mat-icon>
+      </div>
+
+      <p class="text-center">
+        <a [href]="'tel:' + storeSettingService.store.phone">
+          {{storeSettingService.store.phone}}
+        </a>
+      </p>
+
+    </div>
+
+    <div *ngIf="storeSettingService.store.email" fxFlex="30%" class="each-contact"
+         fxLayout="column" fxLayoutAlign="start center">
+
+      <div class="icon" fxLayout="row" fxLayoutAlign="center center">
+        <mat-icon>mail</mat-icon>
+      </div>
+
+      <p class="text-center">
+        <a [href]="'mailto:' + storeSettingService.store.email">
+          {{storeSettingService.store.email}}
+        </a>
+      </p>
+
+    </div>
+
+    <div *ngIf="storeSettingService.store.address" fxFlex="30%" class="each-contact"
+         fxLayout="column" fxLayoutAlign="start center">
+
+      <div class="icon" fxLayout="row" fxLayoutAlign="center center">
+        <mat-icon>location_on</mat-icon>
+      </div>
+
+      <p class="text-center">
+        {{storeSettingService.store.address}}
+      </p>
+
+    </div>
+  </div>
+
+</main>
+
+<app-footer></app-footer>

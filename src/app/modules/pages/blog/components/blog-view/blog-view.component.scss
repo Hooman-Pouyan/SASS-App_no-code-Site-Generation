@@ -1,0 +1,12 @@
+.blog {
+
+}
+
+.recent-blogs {
+  mat-divider {
+    border-color: var(--custom-primary-color);
+  }
+  span {
+    font-size: 12px;
+  }
+}

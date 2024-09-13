@@ -1,0 +1,16 @@
+<div class="store-categories-list"
+     fxLayout="column" fxLayoutAlign="start start">
+
+  <b>
+    {{mainCategory}}
+  </b>
+
+  <mat-list role="list">
+    <mat-list-item *ngFor="let category of categories"
+                   (click)="scroll(category.NAME)" role="listitem">
+      <mat-icon mat-list-icon>square</mat-icon>
+      {{category.NAME}}
+    </mat-list-item>
+  </mat-list>
+
+</div>

@@ -1,0 +1,9 @@
+<img
+  [class]="class + ' img-fluid ' + addClass"
+  [lazyLoad]="src"
+  [defaultImage]="isShahrema ? defaultImage : ''"
+  (load)="onLoad()"
+  [height]="height ? height : 0"
+  [width]="width ? width : 0"
+  #img
+>

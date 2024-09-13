@@ -1,0 +1,11 @@
+.factor-courier-send {
+  background-color: white;
+  padding: 1rem;
+  border-radius: 10px;
+
+  ::ng-deep .mat-form-field-suffix {
+    margin: 0 5px;
+    align-self: center;
+  }
+
+}

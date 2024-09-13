@@ -1,0 +1,78 @@
+<div class="wrapper">
+  <div class="bg-overlay"></div>
+  <div class="header">
+
+    <div class="logo-container">
+      <a [routerLink]="''" class="logo-link" title="">
+        <img class="logo" [src]="imageUrlDevelop + '/assets/img/settings/' + storeLogo">
+      </a>
+    </div>
+
+  </div>
+  <div class="body" fxLayout="column" fxLayoutAlign="center center">
+
+    <div class="form-container" *ngIf="form" fxLayout="row" fxLayoutAlign="center center">
+      <form [formGroup]="form" autocomplete="off">
+
+        <ng-container *ngIf="step === 'dataStep'">
+
+          <div class="form-group-container">
+            <div class="form-group">
+              <mat-icon class="icon">email</mat-icon>
+              <input type="text" formControlName="EMAIL" class="form-control" placeholder="Email" autocomplete="off">
+            </div>
+
+            <div class="form-group">
+              <mat-icon class="icon">person</mat-icon>
+              <input type="text" formControlName="NAME" value="" class="form-control" placeholder="Full Name"
+                autocomplete="new-name">
+            </div>
+
+            <div class="form-group">
+              <mat-icon class="icon">lock</mat-icon>
+              <input type="text" formControlName="PASSWORD" class="form-control" placeholder="Password"
+                autocomplete="new-password">
+            </div>
+
+            <div class="form-group">
+              <mat-icon class="icon">lock</mat-icon>
+              <input type="text" formControlName="passwordConfirm" class="form-control" placeholder="Confirm Password"
+                autocomplete="off">
+            </div>
+          </div>
+
+          <div class="btn-container">
+            <button type="submit" (click)="$event.preventDefault();confirmData()" class="btn">Verify</button>
+          </div>
+          <div class="link-container">
+            <div class="link">
+              <mat-checkbox (change)="termCondition = $event.checked" class="example-margin"></mat-checkbox>
+              <a (click)="openLawsDialog()" class="link-rules">
+                I Read Rules
+              </a>
+            </div>
+
+            <a [routerLink]="'/auth'" class="link">Login</a>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="step === 'otpStep'">
+          <div class="form-group-container">
+            <div class="form-group">
+              <mat-icon class="icon">verified_user</mat-icon>
+              <input type="text" formControlName="OTP" class="form-control" placeholder="Confirm Code"
+                autocomplete="off">
+            </div>
+          </div>
+          <div class="btn-container">
+            <button type="button" (click)="verifyOtp()" class="btn">Confirm Code</button>
+            <button type="button" (click)="getOtpCode()" class="btn">reSubmit Code</button>
+          </div>
+
+        </ng-container>
+
+      </form>
+    </div>
+
+
+  </div>
+</div>

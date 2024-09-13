@@ -1,0 +1,16 @@
+.button-whatsapp {
+  width: auto;
+  height: auto;
+  position: fixed;
+  z-index: 10000;
+  right: 20px;
+  bottom: 15px;
+  background-color: green !important;
+  img {
+    width: 60px;
+  }
+}
+
+::ng-deep .mat-fab .mat-button-wrapper {
+  padding: 0 !important;
+}

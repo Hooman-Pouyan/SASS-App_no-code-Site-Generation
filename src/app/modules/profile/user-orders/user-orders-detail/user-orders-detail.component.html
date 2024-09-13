@@ -1,0 +1,398 @@
+<div class="order-detail" *ngIf="orderDetail" fxLayout="column" fxLayoutAlign="start stretch">
+
+  <div fxLayout="row" fxLayoutAlign="space-between center">
+    <h2>
+      {{'جزئیات سفارش' | translate }} {{orderDetail.ORDER_ID ? orderDetail.ORDER_ID : '-'}}
+    </h2>
+    <div></div>
+  </div>
+
+  <div class="info-header">
+    <div class="title">{{'اطلاعات سفارش' | translate }}</div>
+    <mat-divider fxFlex></mat-divider>
+  </div>
+  <div class="info-body">
+    <div class="item" *ngIf="orderDetail.COMMENTS">
+      <div class="label">
+        {{'توضیحات سفارش' | translate }} :
+      </div>
+      <div>
+        {{orderDetail.COMMENTS}}
+      </div>
+    </div>
+    <div class="item" *ngIf="orderDetail.ORDER_STATUS_NAME">
+      <div class="label">
+        {{'وضعیت سفارش' | translate }} :
+      </div>
+      <div>
+        {{orderDetail.ORDER_STATUS_NAME}}
+      </div>
+    </div>
+    <div class="item" *ngIf="orderDetail.PAYMENT_STATUS_NAME">
+      <div class="label">
+        {{'نوع پرداخت' | translate }} :
+      </div>
+      <div>
+        {{orderDetail.PAYMENT_STATUS_NAME}}
+      </div>
+    </div>
+  </div>
+
+  <div class="info-header">
+    <div class="title">{{'اطلاعات فروشگاه' | translate }}</div>
+    <mat-divider fxFlex></mat-divider>
+  </div>
+  <div class="info-body">
+    <div class="item">
+      <div class="label">
+        {{'نام فروشگاه' | translate }} :
+      </div>
+      <div>
+        {{orderDetail.STORE_NAME ? orderDetail.STORE_NAME : '-'}}
+      </div>
+    </div>
+    <div class="item">
+      <div class="label">
+        {{'شماره تماس فروشگاه' | translate }} :
+      </div>
+      <div>
+        {{orderDetail.STORE_PHONE ? orderDetail.STORE_PHONE : '-'}}
+      </div>
+    </div>
+    <div class="item" *ngIf="orderDetail.STORE_EMAIL">
+      <div class="label">
+        {{'ایمیل فروشگاه' | translate }} :
+      </div>
+      <div>
+        {{orderDetail.STORE_EMAIL ? orderDetail.STORE_EMAIL : '-'}}
+      </div>
+    </div>
+    <div class="item">
+      <div class="label">
+        {{'آدرس فروشگاه' | translate }} :
+      </div>
+      <div>
+        {{orderDetail.STORE_ADDRESS ? orderDetail.STORE_ADDRESS : '-'}}
+      </div>
+    </div>
+  </div>
+
+  <ng-container *ngIf="!modulesService.isRenovation && (
+  orderDetail.ORDER_STATUS_ID == OrderStatus.courierOnWay ||
+  orderDetail.ORDER_STATUS_ID == OrderStatus.courierAccepted ||
+  orderDetail.ORDER_STATUS_ID == OrderStatus.courierInStore ||
+  orderDetail.ORDER_STATUS_ID == OrderStatus.courierArrived
+  )">
+    <div class="info-header">
+      <div class="title">{{'اطلاعات راننده' | translate }}</div>
+      <mat-divider fxFlex></mat-divider>
+    </div>
+    <div class="info-body">
+      <div class="item" *ngIf="orderDetail.COURIER_NAME">
+        <div class="label">
+          {{'نام راننده' | translate }} :
+        </div>
+        <div>
+          {{orderDetail.COURIER_NAME}}
+        </div>
+      </div>
+      <div class="item" *ngIf="orderDetail.COURIER_PHONE">
+        <div class="label">
+          {{'شماره تماس راننده' | translate }} :
+        </div>
+        <div>
+          {{orderDetail.COURIER_PHONE}}
+        </div>
+      </div>
+      <div class="item" *ngIf="orderDetail.COURIER_PELAK">
+        <div class="label">
+          {{'شماره پلاک' | translate }} :
+        </div>
+        <div>
+          {{orderDetail.COURIER_PELAK}}
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <div class="info-header">
+    <div class="title">{{'جزئیات سفارش' | translate }}</div>
+    <mat-divider fxFlex></mat-divider>
+  </div>
+  <div class="info-body">
+    <div class="item ">
+      <div class="label">
+        {{'زمان ثبت سفارش' | translate }} :
+      </div>
+      <div>
+        {{orderDetail.ORDER_DATE}} - {{orderDetail.ORDER_TIME}}
+      </div>
+    </div>
+
+    <div class="item" *ngIf="!(modulesService.hideFactorOrderDate) && !modulesService.isRenovation">
+
+      <div class="label">
+        {{'زمان ارسال' | translate }} :
+      </div>
+
+      <div>
+        {{orderDetail.ORDER_DELIVERY_DATE ? orderDetail.ORDER_DELIVERY_DATE : '-'}}
+        <br>
+        {{orderDetail.ORDER_DELIVERY_TIME}} - {{orderDetail.ORDER_DELIVERY_TIME_2}}
+      </div>
+
+    </div>
+
+    <div class="item">
+      <div class="label">
+        {{'آدرس گیرنده' | translate }} :
+      </div>
+      <div>
+        {{orderDetail.CUSTOMER_ADDRESS}}
+      </div>
+    </div>
+
+    <div class="item" *ngIf="!modulesService.customDelivery && !modulesService.isRenovation">
+      <div class="label">
+        {{'مبلغ پیک' | translate }}:
+      </div>
+      <div>
+        {{orderDetail.CORIER_VALUE | number}}
+      </div>
+    </div>
+
+    <div class="item" *ngIf="!modulesService.customDelivery && !modulesService.isRenovation">
+      <div class="label">
+        {{'مبلغ سفارش با احتساب پیک' | translate }}:
+      </div>
+      <ng-container>
+        <div>
+          {{(orderDetail.ORDER_VALUE_WITH_COURIER ? totalPriceAfterCourier : '0') | number}}
+        </div>
+      </ng-container>
+    </div>
+
+  </div>
+  <div class="info-body">
+    <div *ngIf="orderDetail.OFFER_PRODUCT_SUM && orderDetail.OFFER_PRODUCT_SUM !=0" class="item">
+      <div class="label">
+        {{'تخفیف روی فاکتور' | translate }} :
+      </div>
+      <div>
+        {{(orderDetail.OFFER_PRODUCT_SUM)| number}}
+      </div>
+    </div>
+
+    <div *ngIf="orderDetail.TRANSPORT && modulesService.customDelivery" class="item">
+      <div class="label">
+        {{'نحوه ارسال' | translate }} :
+      </div>
+      <div class="dir-ltr max-width">
+        {{orderDetail.TRANSPORT}}
+      </div>
+    </div>
+
+    <div *ngIf="orderDetail.TRANSPORT_DESCRIPTION && modulesService.customDelivery" class="item">
+      <div class="label">
+        {{'توضیحات ارسال' | translate }} :
+      </div>
+      <div>
+        {{orderDetail.TRANSPORT_DESCRIPTION}}
+      </div>
+    </div>
+
+
+    <div *ngIf="orderDetail.OFFER_COURIER_SUM &&
+           orderDetail.OFFER_COURIER_SUM !=0 &&
+           !(modulesService.customDelivery)" class="item text-right">
+      <div class="label">
+        {{'تخفیف ارسال' | translate }} :
+      </div>
+      <ng-container>
+        <div class="dir-ltr">
+          {{(orderDetail.OFFER_COURIER_SUM)| number}}
+        </div>
+      </ng-container>
+    </div>
+
+    <div *ngIf="orderDetail.OFFER_INVOICE_SUM && orderDetail.OFFER_INVOICE_SUM !=0" class="item">
+      <div class="label">
+        {{'تخفیف روی فاکتور' | translate }} :
+      </div>
+      <ng-container>
+        <div>
+          {{(orderDetail.OFFER_INVOICE_SUM)| number}}
+        </div>
+      </ng-container>
+    </div>
+
+    <div *ngIf="(+orderDetail.OFFER_INVOICE_SUM + +orderDetail.OFFER_COURIER_SUM + +orderDetail.OFFER_PRODUCT_SUM)!=0"
+         class="item">
+      <div class="label">
+        {{'سود شما از خرید' | translate }} :
+      </div>
+      <ng-container>
+        <div>
+          {{(+orderDetail.OFFER_INVOICE_SUM + +orderDetail.OFFER_COURIER_SUM + +orderDetail.OFFER_PRODUCT_SUM)
+          | number}}
+        </div>
+      </ng-container>
+    </div>
+
+    <div class="item">
+      <div class="label">
+        {{'هزینه ارسال' | translate }} :
+      </div>
+      <ng-container
+        *ngIf="(orderDetail.CORIER_VALUE == 0 && orderDetail.OFFER_COURIER_SUM == 0 && modulesService.customDelivery) else courier">
+        <div>
+          {{"بر عهده مشتری" | translate }}
+        </div>
+      </ng-container>
+      <ng-template #courier>
+        {{ orderDetail.CORIER_VALUE }}
+      </ng-template>
+
+    </div>
+
+
+    <div class="item" *ngIf="+orderDetail.OFFER_COURIER_SUM > 0 && modulesService.customDelivery">
+      <div class="label">
+        {{'تخفیف ارسال' | translate }} :
+      </div>
+      <ng-container>
+        <div>
+          {{+orderDetail.OFFER_COURIER_SUM | number}}
+        </div>
+      </ng-container>
+    </div>
+
+    <div class="item">
+      <div class="label">
+        {{'مبلغ کل سفارش (بدون احتساب پیک)' | translate }} :
+      </div>
+      <ng-container>
+        <div>
+          {{+orderDetail.ORDER_VALUE_WITHOUT_COURIER   | number}}
+        </div>
+      </ng-container>
+    </div>
+
+
+  </div>
+  <div class="info-body">
+    <div *ngIf="orderDetail.OFFER_PRODUCT_SUM && orderDetail.OFFER_PRODUCT_SUM !=0" class="item text-right">
+      <div class="label">
+        {{'مبلغ کل' | translate }} :
+      </div>
+      <div>
+        {{(orderDetail.ORDER_VALUE_WITHOUT_COURIER)| number}}
+      </div>
+    </div>
+    <div *ngIf="hasTaxValue" class="item text-right">
+      <div class="label">
+        {{'مبلغ کل بعد از مالیات' | translate }} :
+      </div>
+      <div>
+        {{totalFactorWithCourier | number }}
+      </div>
+    </div>
+  </div>
+
+  <div class="info-header">
+    <div class="title">{{'محصولات سفارش' | translate }}</div>
+    <mat-divider fxFlex></mat-divider>
+  </div>
+
+  <div class="info-table" fxLayout="column" fxLayoutAlign="start stretch">
+    <table mat-table [dataSource]="orderProducts" matSort>
+
+      <ng-container matColumnDef="number">
+        <th mat-header-cell *matHeaderCellDef> {{'ردیف' | translate }}</th>
+        <td mat-cell *matCellDef="let element; let i = index"> {{ i + 1 }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> {{'محصول' | translate }}</th>
+        <td mat-cell *matCellDef="let element">
+          <span fxLayout="row" fxLayoutAlign="center center">
+          <mat-icon style="color:blue;"
+                    *ngIf="element.ORDER_PRODUCT_HAS_GUARANTEE == 1 || element.ORDER_PRODUCT_DETAIL_HAS_GUARANTEE == 1">verified</mat-icon>
+            {{ element.PRODUCT_NAME }}
+          </span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="count">
+        <th mat-header-cell *matHeaderCellDef> {{'تعداد' | translate }}</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.COUNT_DETAIL || element.PRODUCT_COUNT | number}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="unit">
+        <th mat-header-cell *matHeaderCellDef> {{'واحد' | translate }}</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.PRODUCT_UNIT_NAME | number }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="color">
+        <th mat-header-cell *matHeaderCellDef> {{'رنگ' | translate }}</th>
+        <td mat-cell *matCellDef="let element" [ngStyle]="{'background-color': element.VALUE1}">
+          -
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="size">
+        <th mat-header-cell *matHeaderCellDef> {{'سایز' | translate }}</th>
+        <td mat-cell *matCellDef="let element; let i = index"> {{element.VALUE2 ? element.VALUE2 : '-'}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="fee">
+        <th mat-header-cell *matHeaderCellDef> {{'قیمت واحد' | translate }}</th>
+        <td mat-cell *matCellDef="let element">
+          {{ afterGuaranteePrice(element) | number }}
+          {{storeSettingService.storeCurrency | translate}}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="discount">
+        <th mat-header-cell *matHeaderCellDef> {{'تخفیف' | translate }}</th>
+        <td mat-cell *matCellDef="let element"> {{ (element.PRICE - element.PRICE_AFTER_OFFER) | number
+          }} {{storeSettingService.storeCurrency | translate}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="total_price">
+        <th mat-header-cell *matHeaderCellDef> {{'قیمت کل' | translate }}</th>
+        <td mat-cell *matCellDef="let element">
+          <del *ngIf="element.PRICE != element.PRICE_AFTER_OFFER">
+            {{ totalProductPrice(element) | number}}
+            {{storeSettingService.storeCurrency | translate}}
+            <br>
+          </del>
+          <span>
+            {{ element.PRICE_AFTER_OFFER * element.PRODUCT_COUNT | number}}
+          </span>
+
+
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+          [ngClass]="{'deletedRow':row.ORDER_PRODUCT_DELETED === 1 || row.DELETED_DETAIL == 1}"></tr>
+    </table>
+  </div>
+
+  <div fxLayout="row" fxLayoutAlign="end center" class="mt-3"
+       *ngIf="orderDetail.ORDER_STATUS_ID == OrderStatus.returned">
+    <button mat-raised-button color="primary" (click)="deleteSeveralProduct()">
+      {{'تایید سفارش' | translate }}
+    </button>
+    <button mat-stroked-button color="warn"
+            (click)="deleteOrder(orderDetail.ORDER_ID)">
+      {{'حذف سفارش' | translate }}
+    </button>
+  </div>
+
+</div>

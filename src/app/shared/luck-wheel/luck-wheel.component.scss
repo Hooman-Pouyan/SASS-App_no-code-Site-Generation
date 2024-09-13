@@ -1,0 +1,101 @@
+#canvasContainer {
+  position: relative;
+  max-width: 503px;
+  width: 100%;
+  height: 656px;
+  align-self: center;
+
+  @media screen and (max-width: 600px) {
+    height: 450px;
+  }
+
+  background-image: url("../../../assets/img/wheel/wheel.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+#canvas {
+  z-index: 500;
+  position: absolute;
+  left: 28px;
+  top: 50%;
+  transform: translateY(-289px);
+  -webkit-transform: translateY(-289px);
+  -moz-transform: translateY(-289px);
+  -ms-transform: translateY(-289px);
+  -o-transform: translateY(-289px);
+
+  @media screen and (max-width: 300px) {
+    left: 22px;
+    top: 319px;
+  }
+  @media screen and (min-width: 300px) and (max-width: 350px) {
+    left: 16px;
+    top: 347px;
+  }
+  @media screen and (min-width: 350px) and (max-width: 375px) {
+    left: 16px;
+    top: 320px;
+  }
+  @media screen and (min-width: 375px) and (max-width: 400px) {
+    left: 22px;
+    top: 320px;
+  }
+  @media screen and (min-width: 400px) and (max-width: 500px) {
+    left: 47px;
+    top: 320px;
+  }
+  @media screen and (min-width: 500px) and (max-width: 600px) {
+    left: 22px;
+    top: 319px;
+  }
+  @media screen and (min-width: 600px) and (max-width: 700px) {
+    left: 22px;
+    top: 319px;
+  }
+  @media screen and (min-width: 700px) and (max-width: 800px) {
+    left: 22px;
+    top: 319px;
+  }
+}
+
+#prizePointer {
+  @media screen and (min-width: 300px) and (max-width: 350px) {
+    width: 45px;
+    left: 55%;
+    top: 61%;
+  }
+  @media screen and (min-width: 350px) and (max-width: 400px) {
+    width: 45px;
+    left: 54%;
+    top: 60%;
+  }
+  @media screen and (min-width: 400px) and (max-width: 500px) {
+    width: 50px;
+    left: 53%;
+    top: 60%;
+  }
+  @media screen and (min-width: 500px) and (max-width: 600px) {
+    left: 22px;
+    top: 319px;
+  }
+  @media screen and (min-width: 600px) and (max-width: 700px) {
+    left: 22px;
+    top: 319px;
+  }
+  @media screen and (min-width: 700px) and (max-width: 800px) {
+    left: 22px;
+    top: 319px;
+  }
+  position: absolute;
+  z-index: 990;
+  width: 75px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-36px, -126px);
+  -webkit-transform: translate(-36px, -126px);
+  -moz-transform: translate(-36px, -126px);
+  -ms-transform: translate(-36px, -126px);
+  -o-transform: translate(-36px, -126px);
+}

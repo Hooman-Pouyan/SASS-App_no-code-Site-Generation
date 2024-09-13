@@ -1,0 +1,5 @@
+<a [href]="'tel:' + storeSettingService.store.phone" *ngIf="showBtn"
+   [matTooltip]="'با ما در ارتباط باشید' | translate"
+   fxLayoutAlign="center center" class="button-contact-us" color="primary" mat-fab>
+  <mat-icon>call</mat-icon>
+</a>

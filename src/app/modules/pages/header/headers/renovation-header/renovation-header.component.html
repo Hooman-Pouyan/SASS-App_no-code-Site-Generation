@@ -1,0 +1,52 @@
+<header fxLayoutAlign="center center" class="renovation-header">
+
+  <div class="inner-header" fxLayout="row" fxLayoutAlign="space-between center">
+    <ul fxLayout="row" fxLayoutAlign="space-between center" class="link-lists" fxFlex>
+      <li>
+        <a [routerLink]="'/factor'" class="myOrder">My Order</a>
+      </li>
+      <li>
+        <a [routerLink]="'/'">Home</a>
+      </li>
+      <li>
+        <a [routerLink]="'/about-us'">About Us</a>
+      </li>
+      <li>
+        <a [routerLink]="'/store/renovation'">Our Services</a>
+      </li>
+      <li>
+        <a [routerLink]="'/questions'">FAQ</a>
+      </li>
+      <li>
+        <a [routerLink]="'/projects'">Recent Projects</a>
+      </li>
+      <li>
+        <a [routerLink]="'/help'">Help</a>
+      </li>
+      <li>
+        <a routerLink="/contact-us">Contact Us</a>
+      </li>
+    </ul>
+
+    <div class="login-action">
+
+      <a routerLink="/auth" *ngIf="credentialsService.isGuest else loggedIn">
+        <button mat-flat-button>Login/ SignUp</button>
+      </a>
+
+      <ng-template #loggedIn>
+        <button [matMenuTriggerFor]="profileMenu" mat-button>
+          <span>{{userService.user.NAME}}</span>
+          <mat-icon>expand_more</mat-icon>
+          <mat-menu #profileMenu="matMenu">
+            <button mat-menu-item [routerLink]="['/profile']">{{"پروفایل" | translate }}</button>
+            <button mat-menu-item (click)="logOut()">{{"خروج" | translate }}</button>
+          </mat-menu>
+        </button>
+      </ng-template>
+
+    </div>
+
+  </div>
+
+</header>

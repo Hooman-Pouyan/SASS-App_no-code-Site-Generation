@@ -1,0 +1,69 @@
+<div fxLayout="column" fxLayoutAlign="start stretch"
+     class="upload-image" fxLayoutGap="10px">
+
+  <input type="file" (change)="fileUploadEvent($event)"
+         class="d-none" #mediaInput>
+
+  <ngx-photo-editor
+    [imageChangedEvent]="base64Output"
+    (imageCropped)="compressImage($event.base64)"
+    [aspectRatio]="bestAspect"></ngx-photo-editor>
+
+  <div class="image-section" fxFill
+       [ngStyle]="{'height': componentHeight ? (componentHeight + 'px') : 'auto'}"
+       fxLayout="column" fxLayoutAlign="start stretch">
+
+    <div *ngIf="mediaToShow || inputMedia" class="imageToShow"
+         fxLayout="column" fxLayoutAlign="center center">
+      <button mat-mini-fab color="accent" (click)="mediaInput.click();" class="change-image-btn">
+        <mat-icon>party_mode</mat-icon>
+      </button>
+      <button *ngIf="hasDelete" mat-mini-fab color="warn"
+              class="delete-image-btn" (click)="deleted.emit(true);mediaToShow = null;inputMedia= null">
+        <mat-icon>delete</mat-icon>
+      </button>
+      <ng-container *ngIf="fileType != 'video' else videoPreview">
+        <img *ngIf="inputMedia && !mediaToShow" [src]="inputMedia" alt="inputImage" class="img-fluid">
+        <img *ngIf="!inputMedia && mediaToShow" [src]="mediaToShow" alt="newPic" class="img-fluid">
+      </ng-container>
+      <ng-template #videoPreview>
+
+        <video autoplay controls loop class="mw-100 mh-100">
+          <source *ngIf="inputMedia && !mediaToShow" [src]="inputMedia" type="video/mp4" />
+          <source *ngIf="!inputMedia && mediaToShow" [src]="mediaToShow" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      </ng-template>
+    </div>
+
+    <div *ngIf="!inputMedia && !mediaToShow" class="imageToShow"
+         fxFill fxLayoutAlign="center center">
+      <button mat-mini-fab color="accent"
+              class="change-image-btn" (click)="mediaInput.click();">
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+
+  </div>
+
+  <b class="text-center" *ngIf="title">
+    {{title | translate}}
+  </b>
+
+  <div class="image-hint" fxLayoutGap="5px"
+       fxLayout="column" fxLayoutAlign="start stretch">
+    <span *ngIf="bestAspect">
+      {{'بهترین ابعاد مناسب (نسبت عرض به ارتفاع):' | translate}}
+      <b>{{bestAspect}}</b>
+    </span>
+    <span *ngIf="bestHeight">
+      {{'بهترین ارتفاع مناسب:' | translate}}
+      <b>{{bestHeight}}px</b>
+    </span>
+    <span *ngIf="bestWidth">
+      {{'بهترین عرض مناسب:' | translate}}
+      <b>{{bestWidth}}px</b>
+    </span>
+  </div>
+
+</div>

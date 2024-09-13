@@ -1,0 +1,73 @@
+<app-header></app-header>
+
+<div fxLayout="column" fxLayoutAlign="start stretch" class="mb-5">
+  <table class="compare-table container">
+
+    <tr class="images-row">
+      <td [fxFlex]="rowFlex">
+        مشخصات
+      </td>
+      <td *ngFor="let product of products" [fxFlex]="rowFlex">
+        <button *ngIf="products.length > 1"
+          mat-icon-button color="warn" class="remove-product-btn"
+                (click)="removeProduct(product.PRODUCT_STORE_ID)">
+          <mat-icon>close</mat-icon>
+        </button>
+        <a [routerLink]="'/product/' + product.PRODUCT_STORE_ID + '/' + product.NAME.replace('/', '').split(' ').join('-')"
+           target="_blank">
+          <img *ngIf="product.IMAGE && !product.IMAGE.includes('null') else noImage"
+               [src]="imageUrl + '/assets/img/products/' + product.IMAGE"
+               [alt]="product.NAME" [title]="product.NAME" class="img-fluid">
+          <ng-template #noImage>
+            <img src="../../../../assets/img/default/product.png"
+                 class="img-fluid" [alt]="product.NAME">
+          </ng-template>
+        </a>
+      </td>
+      <td *ngIf="canAddCompareProduct()" [fxFlex]="rowFlex">
+        <button mat-stroked-button color="primary" (click)="addProductToCompare()">
+          محصول دیگر
+          <mat-icon>add</mat-icon>
+        </button>
+      </td>
+    </tr>
+
+    <tr class="name-row" #nameRow>
+      <th [fxFlex]="rowFlex">
+        نام محصول
+      </th>
+      <th *ngFor="let product of products" [fxFlex]="rowFlex">
+        <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px">
+          {{product.NAME}}
+        </div>
+      </th>
+    </tr>
+
+    <tr class="price-row" [ngStyle]="{'top': nameRow.offsetHeight + (appService.windowWidth < 959 ? 113 : 59) + 'px'}">
+      <th [fxFlex]="rowFlex">
+        قیمت
+      </th>
+      <th *ngFor="let product of products" [fxFlex]="rowFlex">
+        <div fxLayout="column" fxLayoutGap="10px"
+             fxLayoutAlign="center center">
+          {{product.PRICE_AFTER_OFFER | number}}
+        </div>
+      </th>
+    </tr>
+
+    <tr *ngFor="let i of [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]">
+      <td [fxFlex]="rowFlex">
+        قیمت
+      </td>
+      <td *ngFor="let product of products" [fxFlex]="rowFlex">
+        <div fxLayout="column" fxLayoutGap="10px"
+             fxLayoutAlign="center center">
+          {{product.PRICE_AFTER_OFFER | number}}
+        </div>
+      </td>
+    </tr>
+
+  </table>
+</div>
+
+<app-footer></app-footer>

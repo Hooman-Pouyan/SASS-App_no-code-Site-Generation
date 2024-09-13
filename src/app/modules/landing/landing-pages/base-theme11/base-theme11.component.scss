@@ -1,0 +1,160 @@
+.base-theme11-landing {
+
+  .base-theme11-header {
+    top: 0;
+    left: 0;
+    right: 0;
+    position: fixed;
+    z-index: 10;
+    background: transparent;
+    transition: all 0.3s ease;
+
+    a {
+      color: var(--custom-primary-color);
+      padding: 1rem 1.5rem;
+      transition: all 0.3s ease;
+
+      &:hover {
+        border-bottom: 3px solid var(--custom-primary-color);
+      }
+    }
+
+  }
+
+  .base-theme11-header-solid {
+    background-color: rgba(0, 0, 0, 0.7);
+    position: sticky;
+    z-index: 1001;
+  }
+
+  .first-card {
+    margin-top: 10rem;
+  }
+
+  .banner-img {
+    position: absolute;
+    object-fit: cover;
+    top: 0;
+    width: 100%;
+    height: 120%;
+    z-index: -1;
+  }
+
+  .base-theme11-intro {
+    position: relative;
+    min-height: 110vh;
+    overflow: hidden;
+
+    .base-theme11-intro-card {
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 3rem;
+      color: white;
+      border-radius: 5px;
+      width: 420px;
+      max-width: 100%;
+    }
+
+    .route-link {
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 1rem 3rem;
+      border-radius: 10px;
+      color: white;
+      transition: 0.5s all ease-in-out;
+      margin-bottom: 6rem;
+
+      &:hover {
+        color: var(--custom-primary-color);
+      }
+    }
+  }
+
+  .base-theme11-products {
+    position: relative;
+
+    .title {
+      background: white;
+      padding: 1rem 3rem;
+      border-radius: 10px;
+      width: 330px;
+      align-self: center;
+      max-width: 100%;
+      margin-top: 5rem;
+      box-sizing: border-box;
+    }
+
+    .products-card {
+      border-radius: 10px;
+      padding: 2.5rem;
+      color: white;
+
+      .price-section {
+        height: 60px;
+
+        .discount-section {
+          height: 17px;
+
+          .before-price {
+            color: #909090;
+            text-decoration-color: #909090 !important;
+            font-size: 14px;
+          }
+        }
+
+        .discount-percentage {
+          background-color: #B91646;
+          color: white;
+          border-radius: 15px;
+          padding: 1px 10px;
+        }
+      }
+
+      img, image-lazy {
+        aspect-ratio: 1/1;
+        object-fit: contain;
+        max-height: 100px;
+      }
+    }
+  }
+
+  .base-theme11-about-us {
+    min-height: 110vh;
+
+    .about-us-card {
+      border-radius: 10px;
+      padding: 3rem;
+      background-color: rgba(255, 255, 255, 0.8);
+    }
+
+  }
+
+  .base-theme11-contact-us {
+    min-height: 110vh;
+
+    .contact-us-info-card {
+      border-radius: 10px;
+      padding: 3rem;
+      background-color: rgba(255, 255, 255, 0.8);
+    }
+
+    .contact-us-form-card {
+      border-radius: 10px;
+      padding: 3rem;
+      background-color: rgba(0, 0, 0, 0.8);
+      color: var(--custom-primary-color) !important;
+
+      ::ng-deep {
+        .mat-form-field-appearance-outline .mat-form-field-outline {
+          color: var(--custom-primary-color) !important;
+        }
+
+        mat-form-field {
+          .mat-hint, input, ::placeholder, .mat-form-field-label {
+            color: var(--custom-primary-color) !important;
+          }
+        }
+      }
+    }
+
+  }
+
+}

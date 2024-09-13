@@ -1,0 +1,50 @@
+<app-header *ngIf="!asComponent"></app-header>
+
+<main fxLayout="row" fxLayoutAlign="space-between center" class="container my-4"
+      fxLayout.lt-md="column" fxLayoutAlign.lt-md="start stretch" fxLayoutGap.lt-md="20px">
+
+  <div fxLayout="column" fxLayoutAlign="start stretch" fxFlex.gt-sm="40%">
+
+    <form [formGroup]="ticketForm" fxLayoutGap.gt-sm="15px"
+          fxLayout.lt-md="row wrap" fxLayoutAlign.lt-md="space-between center"
+          fxLayout="column" fxLayoutAlign="start stretch">
+
+      <b fxFlex.lt-md="100%">{{'با ما در ارتباط باشید' | translate }}</b>
+
+      <mat-form-field appearance="outline" fxFlex.lt-md="48%">
+        <mat-label>{{'دسته بندی پیام' | translate }}</mat-label>
+        <mat-select formControlName="CATALOG_ID">
+          <mat-option *ngFor="let item of catalogs" [value]="item.ID">
+            {{item.NAME}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" fxFlex.lt-md="48%">
+        <input formControlName="PHONE_NUMBER" [placeholder]="'شماره تلفن' | translate" matInput autocomplete="off">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" fxFlex.lt-md="100%">
+        <input formControlName="SUBJECT" type="text" [placeholder]="'عنوان' | translate" matInput autocomplete="off">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" fxFlex.lt-md="100%">
+      <textarea formControlName="CONTENT" rows="8" cols="40" matInput
+                [placeholder]="'متن پیام را اینجا وارد کنید' | translate"></textarea>
+      </mat-form-field>
+
+    </form>
+
+    <button mat-raised-button color="primary" (click)="saveChange()"
+            [disabled]="ticketForm.invalid">
+      {{'ارسال' | translate}}
+    </button>
+
+  </div>
+
+
+  <div id="mapSection" fxFlex.gt-sm="450px"></div>
+
+</main>
+
+<app-footer *ngIf="!asComponent"></app-footer>

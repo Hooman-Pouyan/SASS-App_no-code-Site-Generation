@@ -1,0 +1,240 @@
+$first-gradient: var(--first-gradient);
+$second-gradient: var(--second-gradient);
+$third-gradient: var(--third-gradient);
+$fourth-gradient: var(--fourth-gradient);
+
+.base-theme26 {
+  .bg-color {
+    padding: 1rem;
+    background-image: linear-gradient(var(--second-gradient), #fff, #fff, #fff);
+  }
+
+  .base26-header {
+    top: 0;
+    height: 8vh !important;
+    background-color: #FFFFFF;
+
+  }
+
+  .base26-main-banner {
+    background-color: $second-gradient;
+    width: 100%;
+    height: 85vh;
+
+    .base26-banner {
+      .base26-banner-img {
+        img {
+          transition: 0.5s;
+          @media screen and (max-width: 559px) {
+            max-width: 80%;
+          }
+          
+          &:hover {
+            margin-top: -50px;
+            transition: 0.5s;
+          }
+        }
+      }
+
+      .base26-banner-desc {
+        text-align: center;
+
+        h1 {
+          @media screen and (max-width: 559px) {
+            font-size: 16px;
+          }
+        }
+
+        p {
+          @media screen and (max-width: 559px) {
+            font-size: 12px;
+          }
+        }
+      }
+    }
+
+  }
+
+  .base-theme26-about-us {
+    margin-top: 5rem;
+    margin-bottom: 5rem;
+
+    .base-theme26-about-us-tiles {
+
+      .first-img {
+        img {
+          width: 100%;
+        }
+      }
+
+      .second-img {
+        margin-right: -20%;
+
+        img {
+          width: 100%;
+        }
+      }
+
+    }
+
+    .about-us-text-tile {
+      a {
+        color: white;
+        background-color: var(--custom-primary-color);
+        border-color: var(--custom-primary-color);
+      }
+
+      .about-us-list {
+        padding: 0;
+        list-style-type: "✔";
+
+        li {
+          margin: 1rem 0;
+        }
+      }
+    }
+  }
+
+  .category-section {
+    margin: 6rem 0;
+    .category-title{
+      margin: 10px 0;
+    }
+    .base26-category {
+      margin: 20px 0;
+      align-self: center;
+
+      .category {
+        position: relative;
+        max-width: 200px;
+        aspect-ratio: 1/1;
+        border-radius: 0 10px 0 10px;
+
+        .overlay-cat {
+          position: absolute;
+          background-color: var(--fourth-gradient);
+          height: 35%;
+          bottom: 0;
+          width: 50%;
+          left: 0;
+          border-radius: 0 10px 0 10px;
+          transition: 0.5s;
+
+          .cat-name {
+            color: #fff;
+            font-weight: bold;
+            background-color: var(--fourth-gradient);
+          }
+        }
+
+        img {
+          border-radius: 0 10px 0 10px;
+          width: 100%;
+          height: 100%;
+        }
+
+        &:hover {
+          max-width: 100%;
+          transition: 0.5s;
+
+          .overlay-cat {
+            position: absolute;
+            background-color: var(--fourth-gradient);
+            opacity: 0.8;
+            z-index: 1;
+            width: 100%;
+            height: 100%;
+          }
+        }
+      }
+    }
+  }
+
+  .align-center {
+    .base-theme26-how-work {
+      margin: 4rem 0;
+
+      .how-work {
+        text-align: center;
+
+        h4 {
+          font-size: 16px;
+          @media screen and (max-width: 559px) {
+            font-size: 14px;
+          }
+        }
+
+        p {
+          font-size: 14px;
+          @media screen and (max-width: 559px) {
+            font-size: 12px;
+          }
+        }
+      }
+    }
+
+    .base26-most-visited {
+      margin: 4rem 0;
+    }
+  }
+
+  .categories-section {
+    .category {
+      stroke-dasharray: 1, 200;
+      stroke-dashoffset: 0;
+      -webkit-animation: loader-dash 1.5s ease-in-out infinite;
+      animation: loader-dash 1.5s ease-in-out infinite;
+      stroke-linecap: round;
+
+      .img {
+        width: 135px;
+        height: 135px;
+
+        img {
+          width: 135px;
+          height: 135px;
+          border-radius: 50%;
+
+          @media screen and (max-width: 559px) {
+            width: 105px;
+            height: 105px;
+          }
+        }
+
+        .img-overlay {
+          position: absolute;
+          z-index: 10;
+          width: 150px;
+          height: 150px;
+          border: 1px solid var(--custom-primary-color);
+          border-radius: 50%;
+          transition: all 0.5s ease-in;
+
+          @media screen and (max-width: 559px) {
+            width: 125px;
+            height: 125px;
+          }
+
+          &:hover {
+            background-color: #fdfdfd;
+            opacity: 0.5;
+            width: 105px;
+            height: 105px;
+            border: 1px solid var(--custom-primary-color);
+            border-radius: 50%;
+            transition: all 0.3s ease-in-out;
+
+            @media screen and (max-width: 559px) {
+              width: 75px;
+              height: 75px;
+            }
+          }
+        }
+      }
+    }
+
+  }
+
+}
+
+

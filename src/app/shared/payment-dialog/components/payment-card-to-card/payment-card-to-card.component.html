@@ -1,0 +1,52 @@
+<form [formGroup]="form" class="p-2" fxLayout="column" fxLayoutAlign="center stretch">
+
+  <div fxLayoutAlign="end center">
+    <button mat-button mat-icon-button color="warn" (click)="close()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <div fxLayoutAlign="center center">
+    <h3 style="margin: 1rem 0">{{'مشخصات تراکنش' | translate }}</h3>
+  </div>
+
+  <div fxLayout="row" fxLayoutAlign="space-around center" *ngIf="!isPOS">
+    <mat-form-field appearance="outline" fxFlex>
+      <mat-label>{{'شماره کارت' | translate }}</mat-label>
+      <input fxFill matInput formControlName="CardMaskPan" [minLength]="16" [maxlength]="16">
+      <mat-error>
+        {{'لطفا شماره کارت خود را وارد کنید' | translate }}
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+  <div fxLayout="row" fxLayoutAlign="space-around center">
+    <mat-form-field appearance="outline" fxFlex>
+      <mat-label>{{'شماره پیگیری' | translate }}</mat-label>
+      <input fxFill matInput formControlName="TraceNo">
+      <mat-error>
+        {{'لطفا شماره پیگیری خود را وارد کنید' | translate }}
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+  <div fxLayout="row" fxLayoutAlign="space-around center" style="margin: 1rem 0;">
+    <mat-form-field appearance="outline" fxFlex>
+      <mat-label *ngIf="!isPOS">{{'تاریخ کارت به کارت' | translate }}</mat-label>
+      <mat-label *ngIf="isPOS">{{'تاریخ تراکنش' | translate }}</mat-label>
+      <input fxFill matInput [matDatepicker]="picker"
+             (focus)="picker.open()" (click)="picker.open()"
+             formControlName="DATE" readonly>
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker touchUi #picker></mat-datepicker>
+    </mat-form-field>
+  </div>
+
+  <div fxLayoutAlign="end center" style="margin: 0.75rem 0 0">
+    <button mat-raised-button color="warn" (click)="close()">{{'لغو' | translate }}</button>
+    <button mat-raised-button [disabled]="!form.valid" color="primary" (click)="submit()">
+      {{'ثبت' | translate}}
+    </button>
+  </div>
+
+</form>

@@ -1,0 +1,29 @@
+header {
+    background: #000000;
+    color: white;
+    font-size: 13px;
+    height: 52px;
+    padding: 0.15rem 0px;
+    search{
+        color:#000000
+    }
+    @media screen and (max-width: 559px) {
+        padding: 0.65rem 0px;
+    }
+    button {
+        mat-icon {
+            width: 24px;
+        }
+    }
+
+    .header-logo {
+        max-width: 50px;
+        max-height: 30px;
+    }
+
+    .login-action{
+        button{
+            padding: 1px !important;
+        }
+    }
+}

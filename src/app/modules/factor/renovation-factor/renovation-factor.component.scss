@@ -1,0 +1,95 @@
+.factor-header {
+    height: 70px;
+  }
+  
+  .renovation-factor {
+    background-image: url("../../../../assets/img/renovation/factor.png");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: calc(100vh - 70px);
+  
+    .factor-sidebar {
+      background-color: rgba(255, 255, 255, 90%);
+      padding: 38px 20px 20px;
+      border-radius: 5px;
+      .sidebar-content {
+        ::ng-deep.mat-radio-container {
+          margin: 0 5px !important;
+        }
+      }
+    }
+  
+    .factor-products {
+      max-height: 90vh;
+      overflow-y: auto;
+      -ms-overflow-style: none; /* Internet Explorer 10+ */
+      scrollbar-width: none; /* Firefox */
+      &::-webkit-scrollbar {
+        display: none; /* Safari and Chrome */
+      }
+  
+      .categories {
+        background-color: rgba(255, 255, 255, 90%);
+        padding: 38px 20px 20px;
+        border-radius: 5px;
+  
+        .products {
+          border-bottom: 1px #B1B1B1 solid;
+  
+          &:last-child {
+            border: none;
+          }
+  
+          .prices {
+            .value {
+              color: #105652;
+              font-size: 16px;
+              font-weight: bold;
+              margin-left: 10px;
+            }
+          }
+  
+          .attributes {
+            .value {
+              color: #105652;
+              font-size: 16px;
+              font-weight: bold;
+              margin-left: 10px;
+            }
+          }
+  
+          .product-image {
+            max-width: 120px !important;
+          }
+        }
+      }
+    }
+  
+  }
+  
+  .empty-product-container {
+    background-color: #fff;
+    position: absolute;
+    width: 100%;
+    max-width: 300px;
+    padding: 40px 15px 45px;
+    border-radius: 5px;
+  }
+  
+  .back-btn {
+    position: fixed;
+    right: 30px;
+    bottom: 30px;
+    color: #fff;
+    border-radius: 25px;
+    -webkit-border-radius: 25px;
+    -moz-border-radius: 25px;
+  }
+  
+  .warn-btn {
+    border-color: #B91646 !important;
+    color: #B91646 !important;
+    border-radius: 5px;
+  }
+  

@@ -1,0 +1,118 @@
+<div class="user-customer container" fxLayout="column" fxLayoutAlign="start stretch">
+
+  <div class="user-customer-title" fxLayout="row" fxLayoutAlign="start center">
+    <h2 class="title">
+      {{'باشگاه مشتریان' | translate }}
+    </h2>
+
+  </div>
+
+  <div fxLayout="column" fxLayoutAlign="start stretch"
+       class="pb-3" fxLayoutGap="25px">
+    <img [src]="clubBanner" class="img-fluid rounded-boneh"
+         alt="customers-club" title="customers-club">
+
+    <div fxLayout="row" fxLayoutAlign="space-evenly stretch"
+         fxLayout.lt-md="column" fxLayoutAlign.lt-md="start stretch" fxLayoutGap.lt-md="15px">
+
+      <div [formGroup]="clubForm" fxFlex="60%" fxLayoutGap="20px"
+           fxLayout="column" fxLayoutAlign="start center">
+        <b ngClass.lt-md="text-center">
+          {{'برای عضویت در باشگاه مشتریان و استفاده از جوایز و جشنواره ها، فرم زیر رو پر کن!' | translate}}
+        </b>
+
+        <form [formGroup]="clubForm" ngClass.gt-sm="w-50" fxLayoutGap="10px"
+              fxLayout="column" fxLayoutAlign="start stretch">
+
+          <mat-form-field appearance="outline">
+            <mat-label>{{'شماره تلفن' | translate}}</mat-label>
+            <input formControlName="phoneNumber" readonly disabled
+                   [placeholder]="'شماره تلفن' | translate" matInput autocomplete="off">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>{{'نام و نام خانوادگی' | translate}}</mat-label>
+            <input formControlName="NAME"
+                   [placeholder]="'نام و نام خانوادگی' | translate" matInput autocomplete="off">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>{{'جنسیت' | translate}}</mat-label>
+            <mat-select formControlName="GENDER">
+              <mat-option *ngFor="let gender of genders" [value]="gender">
+                {{gender | translate}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <div fxLayout="row" fxLayoutAlign="space-between center" fxLayout.lt-md="column"
+               fxLayoutAlign.lt-md="start stretch" fxLayoutGap.lt-md="10px">
+
+            <mat-form-field appearance="outline" fxFlex.gt-sm="49%">
+              <mat-label>{{'استان' | translate }}</mat-label>
+              <mat-select formControlName="PROVINCE" (ngModelChange)="getCities($event)"
+                          [disabled]="provinces.length < 1">
+                <mat-option *ngFor="let province of provinces" [value]="province.PROVINCE_NAME">
+                  {{province.PROVINCE_NAME}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" fxFlex.gt-sm="49%">
+              <mat-label>{{'شهر' | translate }}</mat-label>
+              <mat-select formControlName="CITY">
+                <mat-option *ngFor="let city of cities" [value]="city.TOWNSHIP_NAME">
+                  {{city.TOWNSHIP_NAME}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+          </div>
+
+          <mat-form-field appearance="outline">
+            <mat-label>{{'تحصیلات' | translate}}</mat-label>
+            <mat-select formControlName="EDUCATION">
+              <mat-option *ngFor="let education of educations" [value]="education">
+                {{education}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" *ngIf="modulesService.pastime">
+            <mat-label>{{'تفریح' | translate}}</mat-label>
+            <input formControlName="PASTIME"
+                   [placeholder]="'تفریح' | translate" matInput autocomplete="off">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>
+              {{"تاریخ تولد" | translate }}
+            </mat-label>
+            <input matInput (click)="picker.open()" [matDatepicker]="picker" formControlName="BIRTH_DATE">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker touchUi #picker></mat-datepicker>
+          </mat-form-field>
+
+          <button class="submit-btn" (click)="submitForm()" [disabled]="clubForm.invalid"
+                  mat-raised-button color="primary">
+            {{'ثبت' | translate}}
+          </button>
+        </form>
+
+      </div>
+
+      <div fxLayout="column" fxFlex="30%"
+           fxLayoutAlign="start stretch" fxLayoutGap="10px">
+        <img src="../../../../assets/img/profile/club_rating.png" fxHide.lt-md class="img-fluid"
+             alt="club_rating" title="club_rating">
+        <img src="../../../../assets/img/profile/club_user.png" class="img-fluid"
+             alt="club_user" title="club_user">
+      </div>
+
+    </div>
+
+  </div>
+
+
+</div>
+

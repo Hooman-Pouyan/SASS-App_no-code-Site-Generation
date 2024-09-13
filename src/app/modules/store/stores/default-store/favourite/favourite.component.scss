@@ -1,0 +1,71 @@
+.favorite-product {
+  border: 2px solid #EEEEEE;
+  border-radius: 10px;
+  font-size: 14px;
+
+  @media screen and (max-width: 959px) {
+    font-size: 12px;
+  }
+
+  .price-section {
+    height: 50px;
+
+    .discount-section {
+      height: 17px;
+
+      .before-price {
+        color: #909090;
+        text-decoration-color: #909090 !important;
+        font-size: 14px;
+      }
+    }
+
+    .discount-percentage {
+      background-color: #B91646;
+      color: white;
+      border-radius: 15px;
+      padding: 1px 10px;
+    }
+  }
+
+  .add-to-cart {
+    border-radius: 20px;
+    font-size: 12px;
+    @media screen and (max-width: 559px) {
+      font-size: 11px;
+      padding: 5px;
+    }
+  }
+
+}
+
+.favourite-lost {
+  padding-bottom: 3rem;
+
+  .favourite-icon {
+    svg {
+      width: 150px !important;
+      height: 150px !important;
+      color: var(--custom-primary-color);
+      cursor: pointer;
+      animation: myMove 1.5s infinite;
+    }
+  }
+
+  .title {
+    color: #444;
+  }
+
+}
+
+@keyframes myMove {
+  0% {
+    color: #fff;
+  }
+  50% {
+    color: #FF4136;
+  }
+  100% {
+    color: #fff;
+  }
+}

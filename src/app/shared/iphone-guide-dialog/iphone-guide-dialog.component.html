@@ -1,0 +1,50 @@
+<div fxLayout="column" fxLayoutAlign="start stretch" class="iPhone-guide">
+
+  <b fxLayout="row" fxLayoutAlign="start center">
+    <img *ngIf="storeSettingService.store?.logo" fxFlex="35px"
+         [src]="storeSettingService.store.logo" [alt]="storeSettingService.store.name">
+    <span>
+      {{"وب اپلیکشن" | translate }}
+      {{storeSettingService.store.name}}
+      {{"را به صفحه اصلی موبایل خود اضافه کنید" | translate }}.
+    </span>
+  </b>
+
+  <ol fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="10px">
+
+    <li>
+      <span>
+      {{ "در نوار پایین دکمه ی" | translate }}
+      </span>
+      <mat-icon color="primary">ios_share</mat-icon>
+      <span>
+        "share"
+        {{"را انتخاب کنید" | translate }}.
+      </span>
+    </li>
+
+    <li>
+      <span>
+      {{"منوی باز شده را به چپ بکشید و گزینه" | translate }}
+      </span>
+      <mat-icon color="primary">add_box</mat-icon>
+      <span>
+        Add to home screen
+        {{"را انتخاب کنید" | translate }}.
+      </span>
+    </li>
+
+    <li>
+      {{"در مرحله بعد در قسمت بالا روی" | translate }}
+      Add
+      {{"کلیک کنید" | translate }}.
+    </li>
+
+  </ol>
+
+  <button mat-raised-button (click)="closeDialog()" color="primary">
+    {{"متوجه شدم" | translate}}
+  </button>
+
+
+</div>

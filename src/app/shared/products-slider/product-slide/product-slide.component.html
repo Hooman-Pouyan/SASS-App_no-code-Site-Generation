@@ -1,0 +1,103 @@
+<div fxLayout="column" class="product"
+     [ngClass]="{'product-border': hasBorder, 'fix-width': fixWidth, 'dark-class': theme == 'dark'}"
+     fxLayoutAlign="space-between stretch" *ngIf="product">
+
+  <a [routerLink]="'/product/' + (product.PRODUCT_STORE_ID || product.PRODUCT_ID) + '/' + product.NAME?.replace('/', '').split(' ').join('-')" class="p-relative"
+     target="_blank" style="align-self:center;">
+    <image-lazy *ngIf="product.IMAGE && !product.IMAGE.includes('null') else noImage"
+                [src]="imageUrl + '/assets/img/products/' + product.IMAGE" addClass="product-slide-img"
+                [alt]="product.NAME" [title]="product.NAME" (load)="imgProductLoaded = true"></image-lazy>
+    <ng-template #noImage>
+      <img src="../../../../assets/img/default/product.png"
+           class="img-fluid" [alt]="product.NAME" (load)="imgProductLoaded = true">
+    </ng-template>
+
+    <div class="non-available-product-watermark" fxLayout="column" fxLayoutAlign="center center"
+         *ngIf="!checkProductStatus(product.PRODUCT_STATUS_ID) && imgProductLoaded">
+      <div fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="10px"
+           class="text-block">
+        <b>{{productStatusName(product.PRODUCT_STATUS_ID)}}</b>
+      </div>
+    </div>
+
+    <div class="product-offer-watermark" fxLayout="column" fxLayoutAlign="start end"
+         *ngIf="product.PRICE != product.PRICE_AFTER_OFFER && modulesService.isMezon8 &&
+         checkProductStatus(product.PRODUCT_STATUS_ID) && imgProductLoaded">
+      <div fxLayout="column" fxLayoutAlign="start center"
+           class="text-block">
+        <span>{{'حراج' | translate}}</span>
+      </div>
+    </div>
+
+  </a>
+
+  <div class="product-description" fxLayout="column" fxLayoutGap="5px" fxLayoutAlign="start start">
+    <mat-hint [ngClass]="{'dark-font': theme == 'dark','text-right': true}">{{product.PRODUCT_PARENT_NAME | translate }}</mat-hint>
+    <a [routerLink]="'/product/' + (product.PRODUCT_STORE_ID || product.PRODUCT_ID) + '/' + product.NAME?.replace('/', '').split(' ').join('-')"
+       target="_blank">
+      {{product.NAME | translate }}
+    </a>
+    <mat-hint [ngClass]="{'dark-font': theme == 'dark' }">{{product.PRODUCT_BRAND_NAME | translate }}</mat-hint>
+  </div>
+
+  <div class="price-section text-left"
+       fxLayout="column" fxLayoutGap="5px" [ngClass]="{'dark-font': theme == 'dark' }">
+
+    <ng-container *ngIf="product.PRICE != 1">
+      <div fxLayout="row" fxLayoutAlign="end center" class="discount-section text-left">
+        <ng-container *ngIf="product.PRICE != product.PRICE_AFTER_OFFER">
+          <del class="before-price">
+            {{product.PRICE | number}}
+            {{storeSettingService.storeCurrency | translate}}
+          </del>
+        </ng-container>
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="7px">
+      <span class="discount-percentage" *ngIf="product.PRICE != product.PRICE_AFTER_OFFER">
+        {{calculateDiscount(product.PRICE, product.PRICE_AFTER_OFFER)}}%
+      </span>
+        <b>
+          {{product.PRICE_AFTER_OFFER | number}}
+          {{storeSettingService.storeCurrency | translate}}
+        </b>
+      </div>
+    </ng-container>
+
+  </div>
+
+  <ng-container *ngIf="product.PRICE != 1 else specialProduct">
+    <button mat-raised-button color="primary" (click)="addToCart(product)"
+            [ngClass]="{'dark-font': theme == 'dark' }" *ngIf="theme == 'alternative'"
+            [disabled]="!checkProductStatus(product.PRODUCT_STATUS_ID)" class="m-2 mb-1 add-to-cart">
+      <ng-container *ngIf="checkProductStatus(product.PRODUCT_STATUS_ID) else disabledAddCart">
+        {{'افزودن به سبد خرید' | translate}}
+      </ng-container>
+      <ng-template #disabledAddCart>
+        {{ productStatusName(product.PRODUCT_STATUS_ID) | translate}}
+      </ng-template>
+    </button>
+
+    <button mat-stroked-button color="primary" (click)="addToCart(product)"
+            [ngClass]="{'dark-font': theme == 'dark' }" *ngIf="theme != 'alternative'"
+            [disabled]="!checkProductStatus(product.PRODUCT_STATUS_ID)" class="m-2 mb-1 add-to-cart">
+      <ng-container *ngIf="checkProductStatus(product.PRODUCT_STATUS_ID) else disabledAddCart">
+        {{'افزودن به سبد خرید' | translate}}
+      </ng-container>
+      <ng-template #disabledAddCart>
+        {{ productStatusName(product.PRODUCT_STATUS_ID) | translate}}
+      </ng-template>
+    </button>
+  </ng-container>
+
+  <ng-template #specialProduct>
+    <a mat-stroked-button (click)="callToBuyDialog()"
+       class="m-2 mb-1 add-to-cart" color="primary">
+      <mat-icon>phone</mat-icon>
+      {{'تماس بگیرید' | translate }}
+    </a>
+  </ng-template>
+
+</div>
+
+

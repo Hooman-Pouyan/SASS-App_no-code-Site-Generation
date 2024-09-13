@@ -1,0 +1,106 @@
+<div fxLayout="column" fxLayoutAlign="start stretch">
+
+  <div fxLayout="row" fxLayoutAlign="space-between center">
+    <h2>
+      {{address ? ('ویرایش آدرس' | translate) : ('آدرس جدید' | translate) }}
+    </h2>
+
+    <button mat-icon-button color="warn" (click)="closeDialog()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <form fxLayout="row" fxLayoutAlign="space-between start" [formGroup]="addressForm" class="my-3"
+    fxLayout.lt-md="column" fxLayoutAlign.lt-md="start stretch">
+
+    <div fxLayout="column" fxLayoutAlign="start stretch" fxFlex="48%">
+
+      <mat-form-field appearance="outline">
+        <mat-label>{{'نام آدرس' | translate}}</mat-label>
+        <input formControlName="NAME" matInput autocomplete="off" type="text">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>{{'آدرس دقیق' | translate}}</mat-label>
+        <input formControlName="ADDRESS" matInput autocomplete="off" type="text">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>{{'استان' | translate }}</mat-label>
+        <mat-select formControlName="PROVINCE_ID" (ngModelChange)="getCities($event)" [disabled]="provinces.length < 1">
+          <mat-option *ngFor="let province of provinces" [value]="province.ID">
+            {{province.PROVINCE_NAME}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>{{'شهر' | translate }}</mat-label>
+        <mat-select formControlName="COUNTRY_DIVISION_ID">
+          <mat-option *ngFor="let city of cities" [value]="city.ID">
+            {{city.TOWNSHIP_NAME}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>
+          <span *ngIf="modulesService.postalCode else optionalPostalCode">
+            {{'کد پستی' | translate}}
+          </span>
+          <ng-template #optionalPostalCode>
+            {{'کد پستی (اختیاری)' | translate}}
+          </ng-template>
+        </mat-label>
+
+        <input formControlName="POSTAL_CODE" matInput autocomplete="off" type="text">
+      </mat-form-field>
+
+    </div>
+
+    <div *ngIf="!modulesService.isRenovation && !modulesService.disableMapLocation" fxLayout="column"
+      fxLayoutAlign="start stretch" fxFlex="48%">
+
+      <mat-form-field appearance="outline">
+
+        <input matInput [matAutocomplete]="auto" formControlName="searchString" autocomplete="off"
+          placeholder="{{'جستجوی آدرس ...' | translate }}">
+        <mat-icon matSuffix>search</mat-icon>
+
+        <mat-autocomplete #auto="matAutocomplete">
+
+          <mat-optgroup *ngIf="searchedAddresses.length > 0; else noAddresses" [label]="'آدرس ها' | translate">
+            <mat-option (click)="selectAddress(address)" *ngFor="let address of searchedAddresses"
+              [value]="address.title">
+              <span>{{address.title}}</span>
+            </mat-option>
+          </mat-optgroup>
+
+          <ng-template #noAddresses>
+            <b>{{'موردی یافت نشد!' | translate }}</b>
+          </ng-template>
+
+        </mat-autocomplete>
+
+      </mat-form-field>
+
+      <button mat-raised-button (click)="getLocation();$event.preventDefault()" color="primary">
+        <span>موقعیت فعلی</span>
+      </button>
+
+      <div id="mapSection"></div>
+
+    </div>
+
+  </form>
+
+  <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="10px">
+    <button mat-raised-button [disabled]="addressForm.invalid" color="primary" (click)="submit()">
+      {{ 'ثبت' | translate}}
+    </button>
+    <button mat-stroked-button color="warn" (click)="closeDialog()">
+      {{ 'لغو' | translate}}
+    </button>
+  </div>
+
+</div>

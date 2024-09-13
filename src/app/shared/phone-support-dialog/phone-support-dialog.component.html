@@ -1,0 +1,10 @@
+<div class="dialog-container">
+    <ul class="support-list" *ngIf="data.phoneSupport?.length">
+        <li class="support-item" *ngFor="let item of data.phoneSupport; let i = index;">
+            <p class="support-container">
+                <span class="support-name">{{item.NAME_FA}}: </span>
+                <a href="tel:{{item.VALUE}}" class="support-phone">{{item.VALUE}}</a>
+            </p>
+        </li>
+    </ul>
+</div>

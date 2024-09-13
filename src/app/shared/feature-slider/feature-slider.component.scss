@@ -1,0 +1,43 @@
+.feature-slider {
+  width: 100%;
+  height: 100%;
+
+  .swiper-pagination-bullet-active {
+    background-color: var(--custom-primary-color);
+  }
+
+}
+
+
+.feature {
+  padding: 0.5rem;
+  height: 165px;
+  background: rgba($color: #fff, $alpha: 0.1);
+  border: 1px solid rgba($color: #fafafa, $alpha: 0.15);
+  border-radius: 5px;
+  cursor: pointer;
+
+  @media screen and (max-width: 559px) {
+    height: 115px !important;
+
+  }
+
+  img {
+    max-height: 75px;
+    max-width: 75px;
+    @media screen and (max-width: 559px) {
+      max-height: 60px;
+      max-width: 60px;
+    }
+  }
+
+  p {
+    text-align: center;
+    color: inherit;
+    font-size: 13px;
+
+    @media screen and (max-width: 559px) {
+      font-size: 10px;
+    }
+  }
+}

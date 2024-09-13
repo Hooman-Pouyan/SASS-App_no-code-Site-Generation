@@ -1,0 +1,153 @@
+<app-header></app-header>
+
+<section fxLayout="column" fxLayoutAlign="start stretch" class="base-theme1-landing">
+
+  <div fxLayout="column" fxLayoutAlign="start stretch"
+       cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+       [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme1-swiper')"
+       (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme1-swiper')">
+
+    <swiper [config]="mainSliderConfig" class="base-theme1-slider">
+      <ng-container *ngFor="let sliderIdx of dynamicMediaService.mediaSliderLoop">
+        <ng-template swiperSlide *ngIf="dynamicMediaService.getMedia('slider' + sliderIdx)">
+          <div fxFill fxLayout="column" fxLayoutAlign="start stretch">
+            <a *ngIf="dynamicMediaService.getMediaLink('slider' + sliderIdx) else noLink"
+               [href]="dynamicMediaService.getMediaLink('slider' + sliderIdx)" target="_blank">
+              <image-lazy [src]="dynamicMediaService.getMedia('slider' + sliderIdx)"
+                          fxLayout="row" fxLayoutAlign="center center"
+                          [alt]="'slider' + sliderIdx" class="text-center img-fluid" editElement
+                          [editType]="'slider' + sliderIdx"></image-lazy>
+            </a>
+            <ng-template #noLink>
+              <image-lazy [src]="dynamicMediaService.getMedia('slider' + sliderIdx)"
+                          fxLayout="row" fxLayoutAlign="center center"
+                          [alt]="'slider' + sliderIdx" class="text-center img-fluid" editElement
+                          [editType]="'slider' + sliderIdx"></image-lazy>
+            </ng-template>
+          </div>
+        </ng-template>
+      </ng-container>
+    </swiper>
+
+  </div>
+
+  <div class="container mt-5" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="2rem">
+
+    <div class="base-theme1-decoration-up" fxLayout="row" fxLayoutAlign="space-between" fxLayout.lt-md="column-reverse">
+      <div fxLayout="column" fxLayoutAlign="start center" fxFlex="45%" cdkDrag
+           [cdkDragDisabled]="dragDropService.disabled"
+           [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme1-decoration-up-text')"
+           (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme1-decoration-up-text')">
+
+        <h2 ngClass.lt-md="m-0" cdkDrag
+            [cdkDragDisabled]="dragDropService.disabled"
+            [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme1-decoration-up-text-title')"
+            (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme1-decoration-up-text-title')"
+            editElement editType="base-theme1-decoration-up-text-title" class="text-preWrap">
+          {{(dragDropService.fieldText('base-theme1-decoration-up-text-title') || 'درباره ما') | translate}}
+        </h2>
+        <p editElement editType="base-theme1-decoration-up-text" class="text-preWrap">
+          {{(dragDropService.fieldText('base-theme1-decoration-up-text') || dynamicMediaService.getMedia('desc1')) | translate}}
+        </p>
+      </div>
+      <div fxFlex="45%" fxLayoutAlign="center center" cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+           [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme1-decoration-up-img')"
+           (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme1-decoration-up-img')">
+
+        <a *ngIf="dynamicMediaService.getMediaLink('decorationUp1') else noLink"
+           [href]="dynamicMediaService.getMediaLink('decorationUp1')" target="_blank">
+          <image-lazy class="img-fluid" fxFlex.lt-md="150px" [src]="dynamicMediaService.getMedia('decorationUp1')"
+                      alt="" editElement editType="decorationUp1"></image-lazy>
+        </a>
+        <ng-template #noLink>
+          <image-lazy class="img-fluid" fxFlex.lt-md="150px" [src]="dynamicMediaService.getMedia('decorationUp1')"
+                      alt="" editElement editType="decorationUp1"></image-lazy>
+        </ng-template>
+      </div>
+    </div>
+
+    <products-packs-slider></products-packs-slider>
+
+    <div class="base-theme1-category-products" fxLayoutGap="50px" fxLayout="column" fxLayoutAlign="start stretch">
+
+      <div *ngFor="let category of categories | slice: -4; let i = index" fxLayout="row"
+           fxLayoutAlign="space-between stretch" class="category-slide" fxLayout.lt-md="column"
+           fxLayoutAlign.lt-md="start stretch" cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+           [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme1-category-products' + i)"
+           (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme1-category-products' + i)">
+        <ng-container *ngIf="category.products?.length">
+          <div fxFlex="25%" class="category-info" fxLayoutAlign="center center">
+            <ng-container *ngIf="category.PRODUCT_NAME && category.PRODUCT_NAME != 'null' else defaultCategory">
+              <image-lazy [src]="imageUrl + '/assets/img/categories/category_logo/' + category.PRODUCT_NAME"
+                          [alt]="category.NAME" class="img-fluid"></image-lazy>
+            </ng-container>
+            <ng-template #defaultCategory>
+              <img src="../../../../../assets/img/default/category.png" [alt]="category.NAME" class="img-fluid">
+            </ng-template>
+            <div class="color-overlay"></div>
+            <p class="category-desc text-center">
+              {{category.NAME}}
+            </p>
+          </div>
+
+          <products-slider fxFlex="70%" [products]="category.products" [perSlide]="3"></products-slider>
+        </ng-container>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="base-theme1-downer-decorative my-5" fxLayout="column" fxLayoutAlign="start stretch">
+    <div fxLayout="column" fxLayoutAlign="center center" class="mb-3">
+      <h2 cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+          [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme1-downer-decorative-title')"
+          (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme1-downer-decorative-title')"
+          editElement editType="base-theme1-downer-decorative-title" class="text-preWrap">
+        {{(dragDropService.fieldText('base-theme1-downer-decorative-title') || storeSettingService.store.name) | translate}}
+      </h2>
+      <p cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+         [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme1-downer-decorative-desc')"
+         (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme1-downer-decorative-desc')"
+         editElement editType="base-theme1-downer-decorative-desc" class="text-preWrap">
+        {{(
+        dragDropService.fieldText('base-theme1-downer-decorative-desc') ||
+        dynamicMediaService.getMedia('desc2')
+      ) | translate}}
+      </p>
+    </div>
+    <div fxLayout="column" fxLayoutAlign="start stretch"
+         cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+         [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme1-downer-decorative-images')"
+         (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme1-downer-decorative-images')">
+
+      <div fxLayout="row" fxLayout.lt-md="row wrap"
+           fxLayoutAlign="space-around center">
+        <ng-container *ngFor="let idx of [1, 2, 3, 4]">
+          <div class="base1-decorationDown" fxFlex.gt-sm="25%" fxFlex.lt-md="50%">
+            <a *ngIf="dynamicMediaService.getMediaLink('decorationDown' + idx) else noLink"
+               [href]="dynamicMediaService.getMediaLink('decorationDown' + idx)" target="_blank">
+              <image-lazy [src]="dynamicMediaService.getMedia('decorationDown' + idx)" alt="decorative"
+                          editElement [editType]="'decorationDown' + idx"></image-lazy>
+            </a>
+          </div>
+
+          <ng-template #noLink>
+            <image-lazy [src]="dynamicMediaService.getMedia('decorationDown' + idx)" alt="decorative"
+                        fxFlex.gt-sm="25%" fxFlex.lt-md="50%"
+                        editElement [editType]="'decorationDown' + idx"></image-lazy>
+          </ng-template>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<luck-wheel></luck-wheel>
+
+<app-section></app-section>
+
+<app-brands-slider></app-brands-slider>
+
+<app-footer></app-footer>

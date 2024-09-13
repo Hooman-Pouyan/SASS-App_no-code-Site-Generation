@@ -1,0 +1,38 @@
+.register-user {
+  background-color: white;
+
+  .register {
+    margin: 20px;
+    background-color: #EEEEEE;
+    border: 1px solid #acaaaa;
+    border-radius: 5px;
+    width: 30%;
+
+    @media only screen and (max-width: 580px) {
+      width: 100%;
+    }
+
+    .check-box {
+      text-align: left;
+      width: 100%;
+    }
+
+    .submit-btn {
+      width: 100%;
+      margin: 10px 0;
+
+      button {
+        width: 100%;
+      }
+    }
+
+    .otp-step {
+      .form-group {
+        .otp-timer {
+          margin: 5px 0;;
+        }
+      }
+    }
+
+  }
+}

@@ -1,0 +1,130 @@
+<header fxHide.lt-md>
+  <div fxLayout="row" fxLayoutAlign="space-between center" class="container py-1">
+    <div fxLayout="row" fxLayoutAlign="center center" class="routes-links" fxLayoutGap="25px"
+         [dir]="modulesService.lang == 'fa' ? 'rtl' : 'ltr' " fxFlex="80%">
+      <a routerLink="/">
+        <img [src]="storeSettingService.store.logo" class="img-fluid header-logo"
+             [alt]="storeSettingService.store.name">
+      </a>
+      <search [circleShape]="true" [useButton]="false" [searchColor]="'primary'"
+              style="width: 20%; align-self: center;"
+              [ngStyle]="{'direction': modulesService.lang == 'fa' ? 'ltr' : 'rtl' }">
+      </search>
+      <a routerLink="/">
+        {{'صفحه اصلی' | translate}}
+      </a>
+      <a routerLink="/store/category">
+        {{'دسته‌بندی' | translate}}
+      </a>
+      <a routerLink="/store">
+        {{'محصولات' | translate}}
+      </a>
+      <a routerLink="/about-us">
+        {{'درباره ما' | translate}}
+      </a>
+      <a routerLink="/blogs" *ngIf="modulesService.hasBlog">
+        {{'بلاگ' | translate}}
+      </a>
+      <a routerLink="/help">
+        {{'راهنما' | translate}}
+      </a>
+      <a routerLink="/contact-us">
+        {{'تماس با ما' | translate}}
+      </a>
+
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px"
+         [dir]="modulesService.lang == 'fa' ? 'rtl' : 'ltr'">
+      <div fxLayout="row" fxLayoutAlign="end center" class="login-action">
+        <ng-container *ngIf="credentialsService.isGuest else loggedIn">
+          <a routerLink="/auth">
+            {{'ثبت نام' | translate}}
+            /
+            {{'ورود' | translate}}
+          </a>
+        </ng-container>
+        <ng-template #loggedIn>
+          <button [dir]="modulesService.lang == 'fa' ? 'rtl' : 'ltr' " mat-button
+                  [matMenuTriggerFor]="profileAction">
+            <mat-icon class="mx-1">expand_more</mat-icon>
+            <mat-icon>person_outline</mat-icon>
+          </button>
+          <mat-menu #profileAction="matMenu">
+            <a mat-menu-item routerLink="/profile">
+              <mat-icon>account_circle</mat-icon>
+              <span>{{'پروفایل' | translate}}</span>
+            </a>
+            <a mat-menu-item (click)="credentialsService.logout()">
+              <mat-icon>logout</mat-icon>
+              <span>{{'خروج' | translate}}</span>
+            </a>
+          </mat-menu>
+        </ng-template>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="center center" class="text-left" fxLayoutAlign.lt-md="end center"
+           fxLayoutGap="15px">
+        <button mat-mini-fab color="primary" [matBadge]="cartCount" matBadgeColor="warn"
+                (click)="cartService.cartSidenav = sidenavStatus.open">
+          <mat-icon>shopping_cart</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<header fxHide.gt-sm fxLayout="column" fxLayoutAlign="start stretch" class="header">
+
+  <div fxLayout="row" fxLayoutAlign="space-between center" class="container">
+    <div>
+      <button mat-icon-button (click)="appService.headerSidenav = sidenavStatus.open">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <button mat-icon-button (click)="openSearchDg()">
+        <mat-icon>search</mat-icon>
+      </button>
+    </div>
+
+    <a routerLink="/">
+      <img [src]="storeSettingService.store.logo" class="img-fluid header-logo"
+           [alt]="storeSettingService.store.name">
+    </a>
+
+
+    <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="5px">
+
+      <button mat-icon-button [matBadge]="cartCount" matBadgeColor="warn"
+              (click)="cartService.cartSidenav = sidenavStatus.open">
+        <mat-icon>shopping_cart</mat-icon>
+      </button>
+
+      <div fxLayout="row" fxLayoutAlign="end center" class="login-action">
+        <ng-container *ngIf="credentialsService.isGuest else loggedIn">
+          <a mat-icon-button  routerLink="/auth">
+            <mat-icon>person_outline</mat-icon>
+          </a>
+        </ng-container>
+        <ng-template #loggedIn>
+          <button [dir]="modulesService.lang == 'fa' ? 'rtl' : 'ltr' " mat-button
+                  [matMenuTriggerFor]="profileAction">
+            <mat-icon class="mx-1">expand_more</mat-icon>
+            <mat-icon>person_outline</mat-icon>
+          </button>
+          <mat-menu #profileAction="matMenu">
+            <a mat-menu-item routerLink="/profile">
+              <mat-icon>account_circle</mat-icon>
+              <span>{{'پروفایل' | translate}}</span>
+            </a>
+            <a mat-menu-item (click)="credentialsService.logout()">
+              <mat-icon>logout</mat-icon>
+              <span>{{'خروج' | translate}}</span>
+            </a>
+          </mat-menu>
+        </ng-template>
+      </div>
+
+    </div>
+
+  </div>
+
+</header>

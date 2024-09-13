@@ -1,0 +1,70 @@
+<form [formGroup]="form" class="p-2" fxLayout="column" fxLayoutAlign="center stretch">
+
+  <div fxLayoutAlign="end center">
+    <button mat-button mat-icon-button color="warn" (click)="close()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <div fxLayoutAlign="center center">
+    <h3 style="margin: 0">{{ 'شماره چک' | translate}}</h3>
+  </div>
+
+  <div fxLayout="row" fxLayoutAlign="space-around center" style="margin: 1rem 0;">
+    <mat-form-field appearance="outline" fxFlex="48%">
+      <mat-label>{{ 'شماره چک' | translate}}</mat-label>
+      <input fxFill matInput formControlName="NUMBER">
+      <mat-error>
+        {{ 'شماره چک خود را دقیق وارد کنید.' | translate}}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" fxFlex="48%">
+      <mat-label>{{'تاریخ چک' | translate }}</mat-label>
+      <input fxFill matInput [matDatepicker]="picker" (focus)="picker.open()" (click)="picker.open()"
+             formControlName="DATE" readonly>
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker touchUi #picker></mat-datepicker>
+    </mat-form-field>
+  </div>
+
+  <div fxLayout="row" fxLayoutAlign="space-around center">
+    <mat-form-field appearance="outline" fxFlex="48%">
+      <mat-label>{{'نام بانک' | translate }}</mat-label>
+      <mat-select formControlName="BANK">
+        <mat-option *ngFor="let bank of banks" [value]="bank">
+          {{bank}}
+        </mat-option>
+      </mat-select>
+      <mat-error>
+        {{'لطفا نام بانک خود را وارد کنید' | translate }}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" fxFlex="48%">
+      <mat-label>{{'نام صاحب حساب' | translate }}</mat-label>
+      <input fxFill matInput formControlName="OWNER">
+      <mat-error>
+        {{'لطفا نام صاحب حساب را فارسی وارد کنید' | translate }}
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+  <div fxLayout="row" fxLayoutAlign="space-around center">
+    <mat-form-field appearance="outline" fxFlex>
+      <mat-label>{{'شناسه صیاد' | translate }}</mat-label>
+      <input fxFill matInput formControlName="SAYAD_ID">
+      <mat-error>
+        {{'لطفا شناسه صیاد خود را وارد کنید' | translate }}
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+
+  <div fxLayoutAlign="end center" style="margin: 0.75rem 0 0">
+    <button mat-raised-button color="warn" (click)="close()">{{'لغو' | translate }}</button>
+    <button mat-raised-button [disabled]="!form.valid" color="primary" (click)="submit()">{{'ثبت' | translate
+      }}</button>
+  </div>
+
+</form>

@@ -1,0 +1,20 @@
+<div fxLayout="column" fxLayoutAlign="start stretch" class="cart-sidenav">
+
+  <div fxLayout="row" fxLayoutAlign="space-between center" class="notebook-title">
+    <nav mat-tab-nav-bar>
+      <a mat-tab-link *ngFor="let link of links"
+         (click)="activeLink = link.type"
+         [active]="activeLink == link.type">
+        <span [matBadge]="link.badge" matBadgeColor="warn" class="px-2">{{link.name | translate }} </span>
+      </a>
+    </nav>
+    <button mat-button color="warn" (click)="cartService.cartSidenav = CartSidenavStatus.close">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <cart *ngIf="activeLink == 'cart'"></cart>
+
+  <notebook *ngIf="activeLink == 'noteBook' && modulesService.secondCart"></notebook>
+
+</div>

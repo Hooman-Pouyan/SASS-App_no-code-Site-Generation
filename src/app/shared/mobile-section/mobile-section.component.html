@@ -1,0 +1,103 @@
+<div class="mobile-section" fxLayout="column" fxLayoutAlign="start stretch"
+     [style]="{'--first-app-gradient':adjustColor(0),'--second-app-gradient':adjustColor(140)}">
+
+  <div class="overlay1">
+    <div class="overlay2"> </div>
+  </div>
+
+
+  <div fxLayout="row" fxLayoutAlign="space-around center" fxLayout.lt-md="column" style="height: 100%">
+    <div fxLayout="column" fxLayoutAlign="center center"
+         class="app-texts" fxFlex="40%"
+         [ngStyle]="{'color': dynamicMediaService.getMedia('app') ? 'white': 'black'}">
+
+      <h2 cdkDrag [cdkDragDisabled]="dragDropService.disabled" class="display-8"
+          [cdkDragFreeDragPosition]="dragDropService.findPosition('app-title')"
+          (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'app-title')"
+          editElement editType="app-title">
+        {{
+        dragDropService.fieldText('app-title') ||
+        (storeSettingService.store.name + ' رو توی جیبت داشته باش ')
+        }}
+      </h2>
+
+      <p cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+         [cdkDragFreeDragPosition]="dragDropService.findPosition('app-desc')"
+         (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'app-desc')"
+         editElement editType="app-desc">
+        {{
+        dragDropService.fieldText('app-desc') ||
+        'خرید آسان و راحت با تخفیف های جذاب لحظه ای دانلود برای سیستم عاملهای اندروید و آیفون' | translate
+        }}
+      </p>
+
+      <a target="_blank" [href]="storeSettingService.store.appLink"
+         class="btn-app-download" download mat-button
+         cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+         [cdkDragFreeDragPosition]="dragDropService.findPosition('app-download-btn')"
+         (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'app-download-btn')">
+        <mat-icon>
+          download
+        </mat-icon>
+        {{'دانلود اپلیکیشن' | translate }}
+      </a>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="center center" class="phone" fxFlex="40%">
+      <div class="phone1">
+        <span> </span>
+        <div class="mobile-content" fxLayout="column" fxLayoutAlign="start stretch">
+          <div fxLayout="row" fxLayoutAlign="space-around center" class="title">
+            <h6 class="store-name" fxFlex="60%">
+              جستجو محصولات فروشگاه
+              {{ storeSettingService.store.name }}
+            </h6>
+            <button class="order-cart" fxFlex="20%">
+              <mat-icon>shopping_cart</mat-icon>
+            </button>
+          </div>
+          <div class="search-container" fxLayout="row" fxLayoutAlign="center center">
+            <input class="search" type="text" id="search-bar" [placeholder]="'محصولات '+  storeSettingService.store.name">
+            <mat-icon class="search-icon">search</mat-icon>
+          </div>
+          <div class="category-section" fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="5%">
+            <div class="category" fxLayout="column" fxLayoutAlign="center center" fxFlex="45%"
+                 *ngFor="let category of categories | slice: -4;let idx = index">
+              <a class="overlay-cat" [href]="'/store/category/' + category.PRODUCT_ID" fxLayout="column"
+                 fxLayoutAlign="center center">
+                <p class="cat-name">
+                  {{ category.NAME }}
+                </p>
+              </a>
+              <img [src]="imageUrl + '/assets/img/categories/category_logo/' + category.PRODUCT_NAME" alt=""
+                   class="img-fluid">
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+<!--      <div class="phone2" fxHide.lt-md>-->
+<!--        <span> </span>-->
+<!--        <div class="mobile-content2" fxLayout="column" fxLayoutAlign="start stretch">-->
+<!--          <div fxLayout="row" fxLayoutAlign="space-around center" class="title2">-->
+<!--            <h6 class="store-name2" fxFlex="60%">-->
+<!--              جستجو محصولات فروشگاه-->
+<!--              {{ storeSettingService.store.name }}-->
+<!--            </h6>-->
+<!--            <button class="order-cart" fxFlex="20%">-->
+<!--              <mat-icon>shopping_cart</mat-icon>-->
+<!--            </button>-->
+<!--          </div>-->
+<!--          <img src="../../../assets/img/app/finger-app.png"  alt="app" >-->
+<!--        </div>-->
+<!--      </div>-->
+
+    </div>
+
+  </div>
+
+</div>
+
+

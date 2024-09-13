@@ -1,0 +1,28 @@
+.drawer-container {
+  background-color: #fff !important;
+  //display: unset !important;
+  overflow: unset !important;
+  z-index: 100;
+
+  #cart,
+  #notebook,
+  #headerDrawer {
+    min-width: 400px;
+    max-height: 100vh;
+    position: fixed;
+    z-index: 1000000;
+
+    @media screen and (max-width: 959px) {
+      max-width: 100%;
+      min-width: 100%;
+    }
+  }
+
+  .drawer-content {
+    overflow-x: hidden;
+    overflow-y: auto;
+    display: unset !important;
+    z-index: 10000;
+    position: unset !important;
+  }
+}

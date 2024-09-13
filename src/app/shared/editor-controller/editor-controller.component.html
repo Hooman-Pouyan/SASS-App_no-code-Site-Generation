@@ -1,0 +1,8 @@
+<div class="save-drag-drop-btns"
+     [ngClass]="{'activated-btns': dragDropService.editedDragDrop}"
+     fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="5px">
+  <button mat-fab color="warn" (click)="saveDragDropChanges()"
+          [matTooltip]="'ذخیره تغییرات' | translate">
+    <mat-icon>save</mat-icon>
+  </button>
+</div>

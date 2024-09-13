@@ -1,0 +1,8 @@
+<div class="rate" [ngClass]="{'hovering': disabled}"
+     fxLayout="row" fxLayoutAlign="space-around center">
+  <mat-icon *ngFor="let rateNumber of rateList"
+            [ngClass]="{'selected': rateNumber <= inputRate}"
+            (click)="rate.emit(rateNumber)" (mouseover)="inputRate = rateNumber">
+    {{rateNumber <= inputRate ? 'star' : 'star_border'}}
+  </mat-icon>
+</div>

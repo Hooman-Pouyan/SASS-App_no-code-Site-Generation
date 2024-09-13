@@ -1,0 +1,16 @@
+.cart-sidenav {
+
+  height: 100%;
+  position: relative;
+
+  cart, notebook {
+    max-height: calc(100vh - 50px);
+    height: 100%;
+  }
+
+  .mat-tab-link {
+    min-width: 80px;
+    font-family: IRANSans, "Helvetica Neue", sans-serif !important;
+    padding: 0 15px;
+  }
+}

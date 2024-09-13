@@ -1,0 +1,90 @@
+@import '~swiper/swiper';
+@import '~swiper/components/pagination/pagination';
+
+.landing-base-theme5 {
+
+  .base-theme5-slider {
+    position: relative;
+
+    .overlay {
+      z-index: 1;
+      width: 38%;
+      height: 405px;
+      align-self: center;
+      background-color: var(--custom-primary-color);
+      opacity: .35 !important;
+
+      @media screen and (max-width: 600px) {
+        width: 50%;
+        height: 200px;
+      }
+    }
+
+    .base-theme5-swiper {
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      z-index: 2;
+      margin: 48px 0;
+
+      .swiper-pagination-bullet-active {
+        background-color: var(--custom-primary-color);
+      }
+
+      .swiper-slide {
+        text-align: center;
+      }
+
+      img, image-lazy {
+        object-fit: contain;
+        width: 100%;
+        max-height: 100%;
+      }
+
+    }
+  }
+
+  .base-theme5-categories-list {
+    img {
+      max-width: 110px;
+      aspect-ratio: 1;
+    }
+  }
+
+  .base-theme5-upper-decoratives {
+
+    .images {
+      z-index: 100;
+
+      .upperImage, .downerImage {
+        max-width: 80%;
+      }
+
+      .downerImage {
+        @media screen and (min-width: 959px) {
+          margin-top: -10rem;
+          margin-right: -6rem;
+          z-index: 3;
+        }
+      }
+    }
+
+  }
+
+  .base-theme5-latest-products {
+    background-color: #fff6f6;
+  }
+
+  .base-theme5-most-sell-products {
+    .base-theme5-downer-decoratives {
+      img, image-lazy {
+        aspect-ratio: 1;
+        object-fit: cover;
+        width: 50%;
+      }
+    }
+  }
+
+}

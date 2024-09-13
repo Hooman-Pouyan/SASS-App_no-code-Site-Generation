@@ -1,0 +1,15 @@
+<div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="1rem" dir="ltr" class="count-down">
+  <div *ngFor="let time of display; let i = index" class="measure">
+    <p class="measurements-number">
+      {{ (showZero && displayNumbers[i+1] < 10) ? '0' + displayNumbers[i+1].trim() : displayNumbers[i+1]}}
+    </p>
+<!--    <span *ngIf="display[i+1]" class="divider"> {{divider}} </span>-->
+<!--    <p class="measurements-text">-->
+<!--      {{time}}-->
+<!--    </p>-->
+  </div>
+  <p>
+    تا انقضا
+  </p>
+</div>
+<ng-content></ng-content>

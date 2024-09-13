@@ -1,0 +1,136 @@
+.base-theme15-landing {
+
+  .base-theme15-intro {
+    min-height: 65vh;
+    color: white !important;
+
+    .intro-actions {
+      backdrop-filter: blur(5px);
+
+      a {
+        font-size: 14px;
+      }
+
+      @media screen and (max-width: 959px) {
+        a {
+          font-size: 14px;
+        }
+      }
+    }
+
+    .img-overlay {
+      position: absolute;
+      width: inherit;
+      max-height: 100vh;
+      z-index: -2;
+      object-fit: cover;
+    }
+  }
+
+  .base-theme15-products {
+    .categories-toggle {
+      border: none !important;
+
+      mat-button-toggle {
+        margin: 1rem;
+        border: 1px solid var(--custom-primary-color) !important;
+        color: var(--custom-primary-color) !important;
+      }
+
+      .mat-button-toggle-checked {
+        background-color: var(--custom-primary-color) !important;
+        color: white !important;
+      }
+    }
+
+    .products {
+      min-height: 300px;
+
+      .product {
+        height: 100%;
+        border-radius: 5px;
+        padding: 20px;
+        background-color: white;
+        transition: all 0.5s ease-in-out;
+
+        &:hover {
+          transition: all .35s ease-in-out;
+          -webkit-box-shadow: 0 0 12px -3px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 0 12px -3px rgba(0, 0, 0, 0.2);
+        }
+
+        img, image-lazy {
+          aspect-ratio: 1/1;
+          object-fit: contain;
+          max-height: 180px;
+        }
+
+        mat-hint {
+          font-size: 12px;
+        }
+
+        .product-name {
+          a {
+            font-size: 14px;
+            font-weight: bold;
+            word-break: break-word;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            height: 45px;
+            //line-height: 16px; /* fallback */
+            //max-height: 32px; /* fallback */
+            -webkit-line-clamp: 2; /* number of lines to show */
+            -webkit-box-orient: vertical;
+          }
+        }
+
+        .price-section {
+          height: 60px;
+
+          .discount-section {
+            height: 17px;
+
+            .before-price {
+              color: #909090;
+              text-decoration-color: #909090 !important;
+              font-size: 14px;
+            }
+          }
+
+          .discount-percentage {
+            background-color: #B91646;
+            color: white;
+            border-radius: 15px;
+            padding: 1px 10px;
+          }
+        }
+
+        .add-to-cart {
+          border-radius: 20px;
+          font-size: 12px;
+          @media screen and (max-width: 559px) {
+            font-size: 11px;
+            padding: 5px;
+          }
+        }
+
+      }
+    }
+  }
+
+  .manufacturer-section {
+    background-color: #292929;
+    font-size: 12px;
+    color: white;
+
+    a {
+      color: #ff6100;
+    }
+
+    @media screen and (max-width: 559px) {
+      font-size: 10px;
+    }
+  }
+
+}

@@ -1,0 +1,36 @@
+<div class="container invite-store" style="background-color: #fff;" fxLayout="row" fxLayoutAlign="space-around center">
+  <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="center center" class="invite container">
+
+    <div fxLayout="column" fxLayoutAlign="space-between start" fxFlex="45%" class="invite-text">
+      <p class="invite-title">
+        {{'دوستان و آشنایان خودت رو به فروشگاه ما دعوت کن و تخفیف بگیر' | translate}}!
+      </p>
+      <p class="invite-desc">
+        {{'دوستات می‌تونن از کد معرفیت به عنوان کد تخفیف اولین خریدشون استفاده کنن' | translate}}
+        {{'و بعد از اولین خریدشون، یه کد تخفیف هم برای تو ارسال میشه' | translate}}
+      </p>
+      <p class="invite-inputDesc">
+        {{'لطفا شماره تلفن همراه مورد نظر رو برای ارسال پیامک کد تخفیف خرید اول وارد کن' | translate}}
+      </p>
+
+      <div fxLayout="row" fxLayoutAlign="space-around center">
+        <input class="phone-input" [(ngModel)]="phoneNumber" matInput placeholder="09xxx..">
+
+        <button mat-button class="submit-Code" (click)="sendRefCode()">{{"ارسال" | translate }}</button>
+
+      </div>
+    </div>
+
+    <div fxLayout="column" fxLayoutAlign="space-around center" class="invite-image" fxFlex="100%">
+      <img src="../../../../../../assets/img/invite-friends.png" alt="invite-friend">
+
+      <div fxLayout="column" fxLayoutAlign="space-around center" class="invite-text-image">
+        <p class="codeText"> {{referralCode}} </p>
+        <button mat-button class="code" (click)="copy()">
+          {{'کپی کد معرفی' | translate}}
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>

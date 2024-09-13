@@ -1,0 +1,85 @@
+<div fxLayout="column" fxLayoutAlign="start stretch" class="base-theme17-landing">
+
+  <header fxLayout="column" fxLayoutAlign="start stretch" class="base-theme17-header">
+    <nav fxLayout="row" fxLayoutAlign="space-between center" class="container navbar py-2">
+
+      <a href="/" fxFlex="60px">
+        <img [src]="storeSettingService.store.logo" class="img-fluid"
+             [alt]="storeSettingService.store.name">
+      </a>
+
+      <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1rem" [ngStyle.lt-md]="{'align-self': 'end'}">
+        <a [href]="dragDropService.fieldLink('base-theme13-header-products') || '/store'" cdkDrag
+           [cdkDragDisabled]="dragDropService.disabled"
+           [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme13-header-products')"
+           (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme13-header-products')"
+           editElement editType="base-theme13-header-products">
+          {{(dragDropService.fieldText('base-theme13-header-products') || 'محصولات') | translate}}
+        </a>
+        <a [href]="dragDropService.fieldLink('base-theme13-header-about') || '/about-us'" cdkDrag
+           [cdkDragDisabled]="dragDropService.disabled"
+           [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme13-header-about')"
+           (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme13-header-about')"
+           editElement editType="base-theme13-header-about">
+          {{(dragDropService.fieldText('base-theme13-header-about') || 'درباره ما') | translate}}
+        </a>
+        <a *ngIf="modulesService.hasBlog" [href]="dragDropService.fieldLink('base-theme13-header-blog') || '/blogs'"
+           cdkDrag
+           [cdkDragDisabled]="dragDropService.disabled"
+           [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme13-header-blog')"
+           (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme13-header-blog')"
+           editElement editType="base-theme13-header-blog">
+          {{(dragDropService.fieldText('base-theme13-header-blog') || 'بلاگ') | translate}}
+        </a>
+        <a [href]="dragDropService.fieldLink('base-theme13-header-contact-us') || '/contact-us'" cdkDrag
+           [cdkDragDisabled]="dragDropService.disabled"
+           [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme13-header-contact-us')"
+           (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme13-header-contact-us')"
+           editElement editType="base-theme13-header-contact-us">
+          {{(dragDropService.fieldText('base-theme13-header-contact-us') || 'تماس با ما') | translate}}
+        </a>
+        <ng-container *ngIf="appService.windowWidth > 959">
+          <ng-container *ngIf="credentialsService.isGuest else loggedIn">
+            <a [href]="dragDropService.fieldLink('base-theme13-header-sign-up') || '/auth'" cdkDrag
+               [cdkDragDisabled]="dragDropService.disabled"
+               [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme13-header-sign-up')"
+               (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme13-header-sign-up')">
+              {{'ثبت نام' | translate}}
+              /
+              {{'ورود' | translate}}
+            </a>
+          </ng-container>
+          <ng-template #loggedIn>
+            <button [dir]="modulesService.lang == 'fa' ? 'rtl' : 'ltr' "
+                    mat-button [matMenuTriggerFor]="profileAction"
+                    cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+                    [cdkDragFreeDragPosition]="dragDropService.findPosition('header-login')"
+                    (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'header-login')">
+              <mat-icon class="mx-1">expand_more</mat-icon>
+              <span>{{credentialsService.credentials?.NAME}}</span>
+            </button>
+            <mat-menu #profileAction="matMenu">
+              <a mat-menu-item routerLink="/profile">
+                <mat-icon>account_circle</mat-icon>
+                <span>{{'پروفایل' | translate}}</span>
+              </a>
+              <a mat-menu-item (click)="credentialsService.logout()">
+                <mat-icon>logout</mat-icon>
+                <span>{{'خروج' | translate}}</span>
+              </a>
+            </mat-menu>
+          </ng-template>
+          <button mat-mini-fab color="primary" [matBadge]="cartCount" matBadgeColor="warn"
+                  (click)="cartService.cartSidenav = sidenavStatus.open"
+                  cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+                  [cdkDragFreeDragPosition]="dragDropService.findPosition('header-cart')"
+                  (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'header-cart')">
+            <mat-icon>shopping_cart</mat-icon>
+          </button>
+        </ng-container>
+      </div>
+
+    </nav>
+  </header>
+
+</div>

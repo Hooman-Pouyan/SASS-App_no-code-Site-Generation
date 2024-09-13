@@ -1,0 +1,101 @@
+<div class="container my-4" ngClass.lt-md="px-2">
+
+  <div fxLayout="row wrap" fxLayoutAlign="start stretch" fxLayoutGap="1%">
+    <div fxFlex="32%" fxFlex.lt-md *ngFor="let product of favouriteProducts"
+         class="mb-2 p-2 favorite-product" fxLayout="row" fxLayoutAlign="space-between center">
+
+      <img *ngIf="product.IMAGE && !product.IMAGE.includes('null') else noImage"
+           [src]="imageUrl + '/assets/img/products/' + product.IMAGE" class="product-slide-img"
+           [alt]="product.NAME" [title]="product.NAME">
+      <ng-template #noImage>
+        <img src="../../../../../../assets/img/default/product.png"
+             class="img-fluid" [alt]="product.NAME">
+      </ng-template>
+
+      <div fxLayout="column" fxLayoutAlign="space-between stretch" fxLayoutGap="10px"
+           class="mx-2" fxFlex>
+
+        <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="10px">
+          <div fxLayout="row" fxLayoutAlign="space-between center">
+            <a [routerLink]="'/store/category/' +
+          product.category_genealogy[product.category_genealogy.length-1].ID +
+           '/' +
+           product.category_genealogy[product.category_genealogy.length-1].NAME.split(' ').join('-')"
+               target="_self">
+              {{product.category_genealogy[product.category_genealogy.length - 1].NAME}}
+            </a>
+            <button mat-icon-button (click)="toggleFavorite(product)"
+                    [ngStyle]="{'color':product.IS_FAVORIT? 'red' : 'lightpink'}">
+              <mat-icon>{{product.IS_FAVORIT ? 'favorite' : 'favorite_border'}}</mat-icon>
+            </button>
+          </div>
+          <a
+            [href]="'/product/' + (product.PRODUCT_STORE_ID || product.PRODUCT_ID) + '/' + product.NAME.replace('/', '').split(' ').join('-')"
+            limitCharacter [limit]="50">{{product.NAME}}</a>
+        </div>
+
+        <div fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="10px">
+          <div class="price-section w-100 text-left" *ngIf="product.PRICE != 1"
+               fxLayout="column" fxLayoutGap="5px">
+
+            <div fxLayout="row" fxLayoutAlign="end center" class="discount-section text-left">
+              <ng-container *ngIf="product.PRICE != product.PRICE_AFTER_OFFER">
+                <del class="before-price">
+                  {{product.PRICE | number}}
+                  {{storeSettingService.storeCurrency | translate}}
+                </del>
+              </ng-container>
+            </div>
+
+            <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="7px">
+              <span class="discount-percentage" *ngIf="product.PRICE != product.PRICE_AFTER_OFFER">
+                {{calculateDiscount(product.PRICE, product.PRICE_AFTER_OFFER)}}%
+              </span>
+              <b>
+                {{product.PRICE_AFTER_OFFER | number}}
+                {{storeSettingService.storeCurrency | translate}}
+              </b>
+            </div>
+
+          </div>
+          <button mat-stroked-button color="primary" (click)="addToCart(product)"
+                  *ngIf="product.PRICE != 1 else noPriceProduct" class="m-2 mb-1 add-to-cart">
+            <!--                  [disabled]="!checkProductStatus(product.PRODUCT_STATUS_ID)" class="m-2 mb-1 add-to-cart">-->
+            <!--            <ng-container *ngIf="checkProductStatus(product.PRODUCT_STATUS_ID) else disabledAddCart">-->
+            <!--              {{'افزودن به سبد خرید' | translate}}-->
+            <!--            </ng-container>-->
+            <!--            <ng-template #disabledAddCart>-->
+            <!--              {{ product.product_status.NAME | translate}}-->
+            <!--            </ng-template>-->
+            {{'افزودن به سبد خرید' | translate}}
+          </button>
+          <ng-template #noPriceProduct>
+            <a mat-stroked-button [href]="'tel:' + storeSettingService.store.phone" color="primary">
+              <mat-icon>phone</mat-icon>
+              {{'تماس بگیرید' | translate }}
+            </a>
+          </ng-template>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <div class="favourite-lost" *ngIf="!favouriteProducts.length"
+       fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="10px">
+    <div class="favourite-icon">
+      <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+        <path fill="currentColor"
+              d="M12 18C12 19 12.25 19.92 12.67 20.74L12 21.35L10.55 20.03C5.4 15.36 2 12.27 2 8.5C2 5.41 4.42 3 7.5 3C9.24 3 10.91 3.81 12 5.08C13.09 3.81 14.76 3 16.5 3C19.58 3 22 5.41 22 8.5C22 9.93 21.5 11.26 20.62 12.61C19.83 12.23 18.94 12 18 12C14.69 12 12 14.69 12 18M19 14H17V17H14V19H17V22H19V19H22V17H19V14Z"/>
+      </svg>
+    </div>
+    <h3 class="title">
+      {{"هیچ محصولی را به علاقه‌مندی‌ها اضافه نکردید" | translate }}
+    </h3>
+    <a mat-stroked-button [routerLink]="(modulesService.isBazargardon || modulesService.isMotolead) ? '/store/category/1':'/store'">
+      {{'صفحه محصولات' | translate}}
+    </a>
+  </div>
+
+</div>

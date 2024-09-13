@@ -1,0 +1,633 @@
+<div fxLayout="column" fxLayoutAlign="start stretch" *ngIf="product">
+
+  <app-header></app-header>
+
+  <div fxLayout="row" fxLayoutAlign="space-around stretch" class="product-container">
+
+    <div fxLayout="column" fxLayoutAlign="start stretch" class="default-product" fxFlex="70%" fxFlex.lt-md="100%">
+
+      <div class="bread-crumb" fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="start center"
+           *ngIf="product.category_genealogy?.length" fxHide.gt-sm>
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="3px"
+             *ngFor="let breadCrumb of product.category_genealogy; let i = index">
+          <mat-hint *ngIf="i != 0">/</mat-hint>
+          <a [routerLink]="'/store/category/' + breadCrumb.ID + '/' + breadCrumb.NAME.split(' ').join('-')"
+             target="_self">
+            {{breadCrumb.NAME}}
+          </a>
+        </div>
+      </div>
+
+      <div class="my-3" fxLayout="row wrap" fxLayoutGap="5px" fxLayoutAlign="start stretch" fxHide.gt-sm>
+
+        <div fxLayout="row" fxLayoutAlign="start center" class="product-actions-detail">
+          <button mat-icon-button (click)="favourite()" [ngStyle]="{'color':product.IS_FAVORIT? 'red' : 'lightpink'}">
+            <mat-icon>{{product.IS_FAVORIT ? 'favorite' : 'favorite_border'}}</mat-icon>
+          </button>
+        </div>
+
+        <div fxLayout="row" fxLayoutAlign="start center" class="product-actions-detail">
+          <button mat-icon-button (click)="copyToClipboard()">
+            <mat-icon fxHide.gt-sm>share</mat-icon>
+            <mat-icon fxHide.lt-md>content_copy</mat-icon>
+          </button>
+        </div>
+
+        <div fxLayout="row" fxLayoutAlign="start center" class="product-actions-detail"
+             *ngIf="modulesService.secondCart && !credentialService.isGuest">
+          <button mat-icon-button (click)="addToNotebook()">
+            <mat-icon>bookmark_border</mat-icon>
+          </button>
+        </div>
+
+        <a fxLayout="row" fxLayoutAlign="start center" class="product-actions-detail" *ngIf="product.LINK && !modulesService.isMelinamadah"
+           [href]="product.LINK" target="_blank">
+          <button mat-icon-button class="btn-icon">
+            <mat-icon>link</mat-icon>
+          </button>
+          <span>{{'اطلاعات بیشتر' | translate}}</span>
+        </a>
+
+        <div fxLayout="row" fxLayoutAlign="start center" class="product-actions-detail">
+          <button mat-icon-button class="btn-icon">
+            <mat-icon style="color: #F8B400">star</mat-icon>
+          </button>
+          <span>
+            {{commentAvg}}
+            (
+            {{'از' | translate}}
+            {{'رای' | translate}}
+            )
+          </span>
+        </div>
+
+        <div fxLayout="row" fxLayoutAlign="start center" class="product-actions-detail"
+             *ngIf="product.POINT > 0 && modulesService.rankPoint">
+          <button mat-icon-button class="btn-icon" [matTooltip]="'امتیاز محصول' | translate">
+            <mat-icon>verified</mat-icon>
+          </button>
+          <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="5px">
+            <b>{{product.POINT}}</b>
+            <span>{{'امتیاز خرید' | translate}}</span>
+          </div>
+        </div>
+
+        <div fxLayout="row" fxLayoutAlign="start center" class="product-actions-detail"
+             *ngIf="product.AVAILABILITY">
+          <button mat-icon-button class="btn-icon" [matTooltip]="'موجودی محصول' | translate">
+            <mat-icon>inventory_2</mat-icon>
+          </button>
+          <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="5px">
+            <b>{{product.AVAILABILITY}}</b>
+            <span>{{'موجودی محصول' | translate}}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="product" fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign.lt-md="space-between stretch"
+           fxLayoutAlign="space-between start">
+
+        <div class="image-product" fxFlex.gt-sm="42%" fxLayout="column" fxLayoutAlign.lt-md="start stretch"
+             fxLayoutAlign="end stretch">
+          <ng-container *ngIf="mediaToShow && !mediaToShow.includes('null') else noImage">
+            <lib-ngx-image-zoom *ngIf="playAparat == false && playVideo == false && mediaToShow"
+                                [thumbImage]="mediaToShow"
+                                [fullImage]="mediaToShow" [zoomMode]="appService.windowWidth > 959 ? 'hover' : 'toggle'"
+                                [magnification]="image_magnification" [enableScrollZoom]="true" class="image-preview">
+            </lib-ngx-image-zoom>
+            <iframe *ngIf="playAparat == true" [src]="product.APARAT_LINK | safe" allow referrerpolicy="strict-origin"
+                    class="aparat" allowFullScreen>
+            </iframe>
+            <ng-container *ngIf="playVideo">
+              <video autoplay [poster]="storeSettingService.store.logo"
+                     class="mw-100" controls loop [preload]="false">
+                <source [src]="mediaToShow" type="video/mp4"/>
+                Your browser does not support the video tag.
+              </video>
+            </ng-container>
+          </ng-container>
+          <ng-template #noImage>
+            <img src="../../../../../assets/img/default/product.png"
+                 class="img-fluid">
+          </ng-template>
+
+          <div fxLayout="row" fxLayoutAlign="center center" class="gallery-slider"
+               [ngClass.lt-md]="{'d-none': images.length <= 1}">
+            <swiper [config]="imageSliderConfig">
+              <ng-template swiperSlide *ngFor="let image of images">
+                <img [src]="image" [alt]="" (click)="changeImage(image)" imgError>
+              </ng-template>
+            </swiper>
+          </div>
+
+        </div>
+
+        <div class="product-detail" fxFlex.gt-sm="54%" fxLayout="column" fxLayoutAlign="start stretch">
+
+          <div class="bread-crumb" fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="start center"
+               *ngIf="product.category_genealogy?.length" fxHide.lt-md>
+            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="3px"
+                 *ngFor="let breadCrumb of product.category_genealogy; let i = index">
+              <mat-hint *ngIf="i != 0">/</mat-hint>
+              <a [routerLink]="'/store/category/' + breadCrumb.ID + '/' + breadCrumb.NAME.split(' ').join('-')"
+                 target="_self">
+                {{breadCrumb.NAME}}
+              </a>
+            </div>
+          </div>
+
+          <div fxLayout="row" class="title-row" fxLayoutAlign="start center">
+            <b class="title" fxFlex>
+              {{product.NAME}}
+            </b>
+          </div>
+
+          <mat-divider class="my-3"></mat-divider>
+
+          <div fxLayout="row" class="rate" fxLayoutAlign="start center">
+            <span>
+              {{commentAvg}}
+              {{"امتیاز" | translate }}
+            </span>
+            <rate [inputRate]="commentAvg" [disabled]="true"></rate>
+          </div>
+
+          <div fxLayout="row" fxLayoutAlign="start stretch" class="price-row"
+               *ngIf="product.PRICE != 1">
+            <b class="price-without-offer" *ngIf="product.PRICE == product.PRICE_AFTER_OFFER else hasDiscount">
+              {{ product.PRICE_AFTER_OFFER | number}}
+              {{storeSettingService.storeCurrency | translate}}
+            </b>
+            <ng-template #hasDiscount>
+              <del class="price-with-offer">
+                {{ product.PRICE | number}}
+                {{storeSettingService.storeCurrency | translate}}
+              </del>
+              <b class="price-after-offer">
+                {{ product.PRICE_AFTER_OFFER | number}}
+                {{storeSettingService.storeCurrency | translate}}
+              </b>
+              <span class="discount">
+                {{calculateDiscount(product.PRICE, product.PRICE_AFTER_OFFER)}}%
+              </span>
+            </ng-template>
+          </div>
+
+          <div fxLayout="row" class="brand-row" *ngIf="product.product_brand">
+            <span class="title">
+              {{ "برند" | translate }}:
+            </span>
+            <span>{{product.product_brand?.NAME}}</span>
+          </div>
+
+          <div fxLayout="row" class="brand-row" *ngIf="product.BARCODE">
+            <span class="title">
+              {{ "بارکد" | translate }}:
+            </span>
+            <span>{{product.BARCODE}}</span>
+          </div>
+
+          <div *ngIf="product.DIGIKALA_LINK" class="digikala-row">
+            <a [href]="product.DIGIKALA_LINK" target="_blank">
+              <span>{{'قیمت در دیجی کالا' | translate }}:</span>
+              <span class="price-section" *ngIf="product.DIGI_PRICE">
+                {{product.DIGI_PRICE / 10 | number}}
+                <span>{{storeSettingService.storeCurrency | translate }}</span>
+              </span>
+              <span *ngIf="!product.DIGI_PRICE">
+                {{'ناموجود' | translate }}
+              </span>
+              <mat-icon color="warn">link</mat-icon>
+            </a>
+          </div>
+
+          <div *ngIf="product.POINT > 0 && modulesService.rankPoint" class="point-row">
+            {{'امتیاز محصول' | translate }}:&nbsp;
+            {{product.POINT}}
+          </div>
+
+          <div *ngIf="product.productAdditional" fxLayoutGap="7px" class="features-session" fxLayout="column">
+            <div class="feature"
+                 *ngIf="product.productAdditional.WIDTH || product.productAdditional.HEIGHT || product.productAdditional.DEPTH">
+              {{'ابعاد' | translate }}:&nbsp;
+              <span dir="ltr">
+                <span *ngIf="product.productAdditional.WIDTH">
+                  {{product.productAdditional.WIDTH}}
+                </span>
+                <span *ngIf="product.productAdditional.HEIGHT">
+                  * {{product.productAdditional.HEIGHT}}
+                </span>
+
+                <span *ngIf="product.productAdditional.DEPTH">
+                  * {{product.productAdditional.DEPTH}}
+                </span>
+
+              </span>
+            </div>
+
+            <div class="feature" *ngIf="product.productAdditional.WEIGHT">
+              {{'وزن' | translate }}:&nbsp;
+              {{product.productAdditional.WEIGHT}} {{'گرم' | translate }}
+            </div>
+          </div>
+
+          <div *ngIf="product.product_features?.length" fxLayoutGap="7px" class="features-session" fxLayout="column">
+            <div class="feature" *ngFor="let feature of product.product_features">
+              {{feature.feature?.NAME}}:&nbsp;
+              {{feature.VALUE}}
+            </div>
+
+          </div>
+
+          <div *ngIf="product.product_colors?.length" class="color-row"
+               fxLayoutGap="5px" fxLayout="row" fxLayoutAlign="start center">
+            <span>
+              {{'رنگ ها' | translate }}:
+            </span>
+            <div fxLayout="row wrap" fxLayoutGap="5px" [dir]="modulesService.lang == 'fa' ? 'rtl' : 'ltr'"
+                 fxLayoutAlign="start center">
+              <div class="circle" (click)="selectColor(color)" [ngStyle]="{'background': color.VALUE,
+               'border-color': color.selected? 'black' : '#dadada'}" *ngFor="let color of product.product_colors">
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="product.product_sizes?.length" class="sizes-row"
+               fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="5px">
+            <span>
+              {{'سایز' | translate }}:
+            </span>
+            <mat-chip-list>
+              <mat-chip *ngFor="let chip of product.product_sizes" (click)="selectedSize_id = chip.ID"
+                        [selected]="selectedSize_id == chip.ID">
+                {{chip.VALUE}}
+              </mat-chip>
+            </mat-chip-list>
+          </div>
+
+          <p class="desc-row" *ngIf="product.productAdditional?.SHORT_DESCRIPTION && !modulesService.isWegal"
+             [innerHTML]="product.productAdditional.SHORT_DESCRIPTION">
+          </p>
+
+          <feature-slider style="color: black" class="my-3" [showAsSlider]="false"
+                          *ngIf="modulesService.ourServices else defaultServices"></feature-slider>
+
+          <ng-template #defaultServices>
+            <div fxLayout="row wrap" fxLayoutAlign="start stretch" fxLayoutAlign.lt-md="center stretch" fxLayoutGap="2%"
+                 class="feature-boxes w-100">
+
+              <ng-container *ngFor="let feature of productFeatures">
+                <div fxLayout="row" class="feature" *ngIf="feature.enable" fxFlex="31%"
+                     fxLayoutAlign="space-around center">
+                  <img [src]="'../../../../../assets/img/products/' + feature.img" class="img-fluid" fxFlex="25%"
+                       [alt]="feature.desc">
+                  <mat-hint fxLayout="column" fxLayoutAlign="center center" fxFlex="60%">
+                    {{ feature.desc | translate}}
+                  </mat-hint>
+                </div>
+              </ng-container>
+
+            </div>
+          </ng-template>
+
+
+          <count-down *ngIf="product.AMAZING_END_DATE" units="Days|Hours|Minutes|Seconds"
+                      [end]="product.AMAZING_END_DATE"></count-down>
+
+        </div>
+
+      </div>
+
+      <ng-container *ngIf="modulesService.isWegal">
+        <h3>
+          {{'توضیحات' | translate}}
+        </h3>
+
+        <mat-divider></mat-divider>
+
+        <p class="desc-row" *ngIf="product.productAdditional?.SHORT_DESCRIPTION"
+           [innerHTML]="product.productAdditional.SHORT_DESCRIPTION">
+        </p>
+      </ng-container>
+
+      <comment-list [product]="productInfo" (commentAverage)="commentAvg = $event"></comment-list>
+      <!--      <question-list [product_id]="product.PRODUCT_STORE_ID" ></question-list>-->
+
+    </div>
+
+    <div class="product-actions" fxFlex="25%" fxHide.lt-md fxLayout="column" fxLayoutAlign="start stretch">
+
+      <div fxLayout="column" fxLayoutAlign="start stretch" class="inner-actions" fxLayoutGap="10px">
+
+        <div fxLayout="row" class="action-buttons" fxLayoutAlign="center center">
+          <a
+            [routerLink]="'/store/category/' + product.PRODUCT_PARENT?.ID + '/' + product.PRODUCT_PARENT?.NAME.split(' ').join('-')"
+            fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="5px" class="sub-category-name">
+            <b>
+              {{"بازگشت به" | translate }}
+
+              {{product.PRODUCT_PARENT?.NAME}}
+            </b>
+            <mat-icon>west</mat-icon>
+          </a>
+
+        </div>
+
+        <div class="product-short-desc" fxLayout="column" fxLayoutGap="5px" fxLayoutAlign="start stretch">
+
+          <div fxLayout="row" fxLayoutAlign="start center" class="product-detail-thumbnail">
+            <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="5px">
+              <img *ngIf="product.IMAGE && !product.IMAGE.includes('null') else noImage" imgError
+                   [src]="adminImageUrlDevelop + '/assets/img/products/' + product.IMAGE" alt
+                   [title]="product.NAME" class="img-fluid">
+              <ng-template #noImage>
+                <img src="../../../../../assets/img/default/product.png"
+                     class="img-fluid" alt="">
+              </ng-template>
+
+              <div class="product-description my-2" fxLayout="column" fxLayoutGap="8px">
+                <b>{{product.NAME | translate }}</b>
+                <mat-hint>{{product.PRODUCT_PARENT.NAME | translate }}</mat-hint>
+              </div>
+            </div>
+          </div>
+
+          <div fxLayout="row" fxLayoutAlign="start center" class="product-actions-detail">
+            <button mat-icon-button class="btn-icon">
+              <mat-icon style="color: #F8B400">star</mat-icon>
+            </button>
+            <span>
+              {{commentAvg}}
+              {{"امتیاز" | translate }}
+            </span>
+          </div>
+
+          <div fxLayout="row" fxLayoutAlign="start center" class="product-actions-detail">
+            <button mat-icon-button (click)="favourite()" [ngStyle]="{'color':product.IS_FAVORIT? 'red' : 'lightpink'}">
+              <mat-icon>{{product.IS_FAVORIT ? 'favorite' : 'favorite_border'}}</mat-icon>
+            </button>
+            <span>{{'افزودن به علاقه مندی' | translate}}</span>
+          </div>
+
+          <!--          <div fxLayout="row" fxLayoutAlign="start center" class="product-actions-detail">-->
+          <!--            <button mat-icon-button (click)="openChart()">-->
+          <!--              <mat-icon>insights</mat-icon>-->
+          <!--            </button>-->
+          <!--            <span>{{'نمودار قیمت' | translate}}</span>-->
+          <!--          </div>-->
+
+          <!---   adak--->
+
+          <!--          <div fxLayout="row" fxLayoutAlign="start center" class="product-actions-detail">-->
+          <!--            <button mat-icon-button (click)="copyToClipboard()">-->
+          <!--              <mat-icon fxHide.gt-sm>share</mat-icon>-->
+          <!--              <mat-icon fxHide.lt-md>content_copy</mat-icon>-->
+          <!--            </button>-->
+          <!--            <span>{{"اشتراک‌‌گذاری محصول" | translate }}</span>-->
+          <!--          </div>-->
+
+          <social-links></social-links>
+
+
+          <div fxLayout="row" fxLayoutAlign="start center"
+               *ngIf="product.AVAILABILITY" class="product-actions-detail">
+            <a mat-icon-button>
+              <mat-icon>inventory_2</mat-icon>
+            </a>
+            <span>
+              {{"موجودی محصول" | translate }}
+              :
+              {{product.AVAILABILITY}}
+            </span>
+          </div>
+
+          <div fxLayout="row" fxLayoutAlign="start center" class="product-actions-detail"
+               *ngIf="modulesService.secondCart && !credentialService.isGuest && product.PRICE != 1">
+            <button mat-icon-button (click)="addToNotebook()">
+              <mat-icon>bookmark_border</mat-icon>
+            </button>
+            <span>{{'افزودن به سبد خرید بعدی' | translate}}</span>
+          </div>
+
+          <div fxLayout="row" fxLayoutAlign="start center" class="product-actions-detail"
+               *ngIf="product.POINT > 0 && modulesService.rankPoint">
+            <button mat-icon-button class="btn-icon">
+              <mat-icon>verified</mat-icon>
+            </button>
+            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="5px">
+              <b>{{product.POINT}}</b>
+              <span>{{'امتیاز برای خرید این محصول' | translate}}</span>
+            </div>
+          </div>
+
+          <a fxLayout="row" fxLayoutAlign="start center" class="product-actions-detail"
+             *ngIf="product.LINK && !modulesService.isMelinamadah"
+             [href]="product.LINK" target="_blank">
+            <button mat-icon-button class="btn-icon">
+              <mat-icon>link</mat-icon>
+            </button>
+            <span>{{'اطلاعات بیشتر محصول' | translate}}</span>
+          </a>
+
+
+          <div fxLayout="row" fxLayoutAlign="space-between end" class="price-row"
+               *ngIf="product.PRICE != 1">
+            <span>{{"قیمت" | translate }}:</span>
+            <b class="price-without-offer" fxFlex fxLayout="row" fxLayoutAlign="end end"
+               *ngIf="product.PRICE == product.PRICE_AFTER_OFFER else descHasDiscount">
+              {{ product.PRICE_AFTER_OFFER | number}}
+              {{storeSettingService.storeCurrency | translate}}
+            </b>
+            <ng-template #descHasDiscount>
+              <div fxLayout="column" fxLayoutAlign="start end" fxLayoutGap="5px" fxFlex>
+                <del class="price-with-offer">
+                  {{ product.PRICE | number}}
+                  {{storeSettingService.storeCurrency | translate}}
+                </del>
+                <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="5px">
+                  <span class="discount">
+                    {{calculateDiscount(product.PRICE, product.PRICE_AFTER_OFFER)}}%
+                  </span>
+                  <b class="price-after-offer">
+                    {{ product.PRICE_AFTER_OFFER | number}}
+                    {{storeSettingService.storeCurrency | translate}}
+                  </b>
+                </div>
+              </div>
+            </ng-template>
+          </div>
+
+          <div fxLayout="row" fxLayoutAlign="space-between center" class="action-buttons mt-2">
+            <mat-form-field appearance="outline" fxFlex="50px"
+                            *ngIf="modulesService.productInputCounter">
+              <mat-label> {{'مقدار' | translate }} </mat-label>
+              <input [(ngModel)]="product.COUNTER" noDecimal
+                     [numValue]="product.COUNTER"
+                     (newValue)="product.PRODUCT_UNIT_ID != 1 ? product.COUNTER = $event : ''"
+                     matInput autocomplete="off" type="number">
+            </mat-form-field>
+
+            <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="5px"
+                 [fxFlex]="modulesService.productInputCounter ? '75%' : '100%'">
+
+              <ng-container
+                *ngIf="modulesService.isMelinamadah && product.LINK && !credentialService.isGuest else default">
+                <a fxLayout="column" fxLayoutAlign="start stretch" class="product-actions-detail"
+                   [href]="product.LINK" target="_blank">
+                  <button mat-stroked-button color="primary">
+                    <mat-icon>link</mat-icon>
+                    <span>{{'دانلود دوره' | translate}}</span>
+                  </button>
+                </a>
+              </ng-container>
+              <ng-template #default>
+                <ng-container *ngIf="product.PRICE != 1 else specialProduct">
+                  <button mat-stroked-button color="primary"
+                          *ngIf="checkProductStatus(product.PRODUCT_STATUS_ID) && product.HAS_GUARANTEE == 1"
+                          (click)="addProductToCart(true)">
+                                <span class="text-preWrap">
+                                  {{'افزودن به سبد خرید به همراه گارانتی' | translate }}
+                                  +
+                                  {{storeSettingService.store.guaranteePrice | number}}
+                                  {{storeSettingService.storeCurrency | translate}}
+                                </span>
+                    <mat-icon style="color:blue;">verified</mat-icon>
+                  </button>
+
+                  <button mat-stroked-button [disabled]="!checkProductStatus(product.PRODUCT_STATUS_ID)" color="primary"
+                          (click)="addProductToCart()">
+                    <ng-container *ngIf="checkProductStatus(product.PRODUCT_STATUS_ID) else nonAvailable">
+                      {{'افزودن به سبد خرید' | translate }}
+                    </ng-container>
+                    <ng-template #nonAvailable>
+                      {{productStatusName(product.PRODUCT_STATUS_ID)}}
+                    </ng-template>
+                  </button>
+                </ng-container>
+
+                <ng-template #specialProduct>
+                  <button mat-stroked-button color="primary"
+                          (click)="callToBuyDialog()">
+                    <mat-icon>phone</mat-icon>
+                    {{'تماس بگیرید' | translate }}
+                  </button>
+                </ng-template>
+              </ng-template>
+
+
+            </div>
+
+          </div>
+
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div fxLayout="column" fxLayoutGap="30px" class="additional-products container">
+
+    <div *ngIf="similarProduct.length">
+      <products-slider [products]="similarProduct" title="محصولات مشابه"></products-slider>
+    </div>
+
+    <div *ngIf="boughtWith.length">
+      <products-slider [products]="boughtWith" title="خریداری شده با این محصول"></products-slider>
+    </div>
+
+    <!--    <div *ngIf="SimiliarWith.length">-->
+    <!--      <products-slider [products]="SimiliarWith" title="خریداری شده با این محصول"></products-slider>-->
+    <!--    </div>-->
+
+  </div>
+
+  <div class="add-to-cart-mobile container" fxHide.gt-sm fxLayoutGap="8px"
+       fxLayout="row" fxLayoutAlign="space-between center">
+
+    <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="5px">
+
+      <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="5px">
+        <ng-container *ngIf="modulesService.isMelinamadah && product.LINK && !credentialService.isGuest else default">
+          <a fxLayout="column" fxLayoutAlign="start stretch" class="product-actions-detail"
+             [href]="product.LINK" target="_blank">
+            <button mat-stroked-button color="primary">
+              <mat-icon>link</mat-icon>
+              <span>{{'دانلود دوره' | translate}}</span>
+            </button>
+          </a>
+        </ng-container>
+        <ng-template #default>
+          <ng-container *ngIf="product.PRICE != 1 else specialProduct">
+            <button mat-stroked-button color="primary"
+                    *ngIf="checkProductStatus(product.PRODUCT_STATUS_ID) && product.HAS_GUARANTEE == 1"
+                    (click)="addProductToCart(true)">
+                <span class="text-preWrap">
+                  {{'افزودن به سبد خرید به همراه گارانتی' | translate }}
+                  +
+                  {{storeSettingService.store.guaranteePrice | number}}
+                  {{storeSettingService.storeCurrency | translate}}
+                </span>
+              <mat-icon style="color:blue;">verified</mat-icon>
+            </button>
+            <button mat-stroked-button [disabled]="!checkProductStatus(product.PRODUCT_STATUS_ID)" color="primary"
+                    (click)="addProductToCart()" [fxFlex]="modulesService.productInputCounter ? '75%' : '100%'">
+              <ng-container *ngIf="checkProductStatus(product.PRODUCT_STATUS_ID) else nonAvailable">
+                {{'افزودن به سبد خرید' | translate }}
+              </ng-container>
+              <ng-template #nonAvailable>
+                {{productStatusName(product.PRODUCT_STATUS_ID)}}
+              </ng-template>
+            </button>
+          </ng-container>
+          <ng-template #specialProduct>
+            <button mat-stroked-button color="primary"
+                    (click)="callToBuyDialog()">
+              <mat-icon>phone</mat-icon>
+              {{'تماس بگیرید' | translate }}
+            </button>
+          </ng-template>
+        </ng-template>
+      </div>
+
+      <mat-form-field appearance="outline" fxFlex="50px"
+                      *ngIf="modulesService.productInputCounter && product.PRICE != 1">
+        <mat-label> {{'مقدار' | translate }} </mat-label>
+        <input [(ngModel)]="product.COUNTER" noDecimal
+               [numValue]="product.COUNTER" (newValue)="product.PRODUCT_UNIT_ID != 1 ? product.COUNTER = $event : ''"
+               matInput autocomplete="off" type="number">
+      </mat-form-field>
+    </div>
+
+    <div fxLayout="column" fxLayoutAlign="start end" class="price-row" *ngIf="product.PRICE != 1">
+      <b class="price-without-offer" fxLayout="row" fxLayoutAlign="start end"
+         *ngIf="product.PRICE == product.PRICE_AFTER_OFFER else descHasDiscount">
+        {{ product.PRICE_AFTER_OFFER | number}}
+        {{storeSettingService.storeCurrency | translate}}
+      </b>
+      <ng-template #descHasDiscount>
+        <div fxLayout="column" fxLayoutAlign="start end" fxLayoutGap="5px" fxFlex>
+          <del class="price-with-offer">
+            {{ product.PRICE | number}}
+            {{storeSettingService.storeCurrency | translate}}
+          </del>
+          <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="5px">
+            <span class="discount">
+              {{calculateDiscount(product.PRICE, product.PRICE_AFTER_OFFER)}}%
+            </span>
+            <b class="price-after-offer">
+              {{ product.PRICE_AFTER_OFFER | number}}
+              {{storeSettingService.storeCurrency | translate}}
+            </b>
+          </div>
+        </div>
+      </ng-template>
+    </div>
+
+  </div>
+
+  <app-footer></app-footer>
+
+</div>

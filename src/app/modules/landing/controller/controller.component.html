@@ -1,0 +1,133 @@
+<ng-container [ngSwitch]="modulesService.theme">
+
+  <landing-default *ngSwitchDefault></landing-default>
+
+  <landing-iSee
+    *ngSwitchCase="[2] | customSwitch: modulesService.theme">
+  </landing-iSee>
+
+  <landing-bazargardon
+    *ngSwitchCase="[6] | customSwitch: modulesService.theme">
+  </landing-bazargardon>
+
+  <landing-felor
+    *ngSwitchCase="[528] | customSwitch: modulesService.theme">
+  </landing-felor>
+
+  <landing-motolead
+    *ngSwitchCase="[629] | customSwitch: modulesService.theme">
+  </landing-motolead>
+
+  <landing-zini
+    *ngSwitchCase="[630] | customSwitch: modulesService.theme">
+  </landing-zini>
+
+  <landing-adak
+    *ngSwitchCase="[631] | customSwitch: modulesService.theme">
+  </landing-adak>
+
+  <base-theme1
+    *ngSwitchCase="[1111, 9 , 74 , 76 , 78 , 79 , 81 , 82 , 85, 207, 214, 212, 502, 506, 508, 510, 518, 519, 527, 523] | customSwitch: modulesService.theme">
+  </base-theme1>
+
+  <base-theme2
+    *ngSwitchCase="[141, 161, 162, 163, 164, 165, 166, 201, 203, 513, 517, 526] | customSwitch: modulesService.theme">
+  </base-theme2>
+
+  <base-theme3
+    *ngSwitchCase="[7 , 75 , 77 , 80 , 83 , 84 , 86, 121, 204, 211, 208, 209, 504, 505, 509, 516, 521, 525] | customSwitch: modulesService.theme">
+  </base-theme3>
+
+  <base-theme4
+    *ngSwitchCase="[8, 174, 175, 176, 177, 178, 179, 180, 181, 205, 213 , 501, 514, 515, 520] | customSwitch: modulesService.theme">
+  </base-theme4>
+
+  <base-theme5
+    *ngSwitchCase="[5, 167, 168, 169, 170, 171, 172, 173, 202, 206, 210, 503, 507, 511, 512, 522, 524] | customSwitch: modulesService.theme">
+  </base-theme5>
+
+  <base-theme6
+    *ngSwitchCase="[529, 530, 531, 532, 533, 534, 535, 549, 550] | customSwitch: modulesService.theme">
+  </base-theme6>
+
+  <base-theme7
+    *ngSwitchCase="[536] | customSwitch: modulesService.theme">
+  </base-theme7>
+
+  <base-theme8
+    *ngSwitchCase="[537] | customSwitch: modulesService.theme">
+  </base-theme8>
+
+  <base-theme9
+    *ngSwitchCase="[538] | customSwitch: modulesService.theme">
+  </base-theme9>
+
+  <base-theme10
+    *ngSwitchCase="[539] | customSwitch: modulesService.theme">
+  </base-theme10>
+
+  <base-theme11
+    *ngSwitchCase="[540] | customSwitch: modulesService.theme">
+  </base-theme11>
+
+  <base-theme12
+    *ngSwitchCase="[541] | customSwitch: modulesService.theme">
+  </base-theme12>
+
+  <base-theme13
+    *ngSwitchCase="[542] | customSwitch: modulesService.theme">
+  </base-theme13>
+
+  <base-theme14
+    *ngSwitchCase="[544] | customSwitch: modulesService.theme">
+  </base-theme14>
+
+  <base-theme15
+    *ngSwitchCase="[543] | customSwitch: modulesService.theme">
+  </base-theme15>
+
+  <base-theme16
+    *ngSwitchCase="[545] | customSwitch: modulesService.theme">
+  </base-theme16>
+
+  <base-theme17
+    *ngSwitchCase="[546] | customSwitch: modulesService.theme">
+  </base-theme17>
+
+  <base-theme18
+    *ngSwitchCase="[547, 619, 620] | customSwitch: modulesService.theme">
+  </base-theme18>
+
+  <base-theme19
+    *ngSwitchCase="[621] | customSwitch: modulesService.theme">
+  </base-theme19>
+
+  <base-theme20
+    *ngSwitchCase="[622] | customSwitch: modulesService.theme">
+  </base-theme20>
+
+  <base-theme21
+    *ngSwitchCase="[623] | customSwitch: modulesService.theme">
+  </base-theme21>
+
+  <base-theme22
+    *ngSwitchCase="[624] | customSwitch: modulesService.theme">
+  </base-theme22>
+
+  <base-theme23
+    *ngSwitchCase="[625] | customSwitch: modulesService.theme">
+  </base-theme23>
+
+  <base-theme24
+    *ngSwitchCase="[626] | customSwitch: modulesService.theme">
+  </base-theme24>
+
+  <base-theme26
+    *ngSwitchCase="[628] | customSwitch: modulesService.theme">
+  </base-theme26>
+
+</ng-container>
+
+<app-pop-up *ngIf="expire_pop_up == true && modulesService.popUp"
+            (closeDialog)="expire_pop_up = false">
+</app-pop-up>

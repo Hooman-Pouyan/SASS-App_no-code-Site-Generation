@@ -1,0 +1,63 @@
+.products-to-compare {
+
+  .product {
+    border-bottom: #f1f1f1 1px solid;
+    padding: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+
+    &:hover {
+      border-bottom: #B1B1B1 2px solid !important;
+    }
+
+    &:nth-child(2n+1) {
+      border-left: #f1f1f1 1px solid;
+
+      &:hover {
+        border-left: #B1B1B1 2px solid !important;
+      }
+    }
+
+    &:nth-child(2n) {
+      border-right: #f1f1f1 1px solid;
+
+      &:hover {
+        border-right: #B1B1B1 2px solid !important;
+      }
+    }
+
+    img {
+      max-width: 90%;
+      max-height: 200px;
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: contain;
+      align-self: center;
+    }
+
+    .price-name {
+      font-size: 14px;
+    }
+
+    .price-section {
+      height: 50px;
+
+      .discount-section {
+        height: 17px;
+
+        .before-price {
+          color: #909090;
+          text-decoration-color: #909090 !important;
+          font-size: 14px;
+        }
+      }
+
+      .discount-percentage {
+        background-color: #B91646;
+        color: white;
+        border-radius: 15px;
+        padding: 1px 10px;
+      }
+    }
+  }
+}

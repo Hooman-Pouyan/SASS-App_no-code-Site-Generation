@@ -1,0 +1,21 @@
+<div fxLayout="column" fxLayoutAlign="start center"
+     fxLayoutGap="15px" *ngIf="prize">
+  <ng-container *ngIf="prize == 'پوچ' else hasPrize">
+    <b>{{"پوچ" | translate }} !!</b>
+    <span>{{"متاسفانه امروز برنده نشدید، دوباره منتظرتان هستیم" | translate }}</span>
+  </ng-container>
+  <ng-template #hasPrize>
+    <h1 class="normal-title">{{"تبریک" | translate }} !!</h1>
+    <b>
+      {{"شما برنده" | translate }}
+      {{prize}}
+      {{"شدید" | translate }}
+    </b>
+    <span>{{"همکاران ما در اسرع وقت با شما تماس خواهند گرفت" | translate }}</span>
+  </ng-template>
+</div>
+<div fxLayout="row" fxLayoutAlign="center center" class="mt-3">
+  <button color="primary" mat-raised-button (click)="close(false)">
+    {{"بازگشت به صفحه اصلی" | translate}}
+  </button>
+</div>

@@ -1,0 +1,14 @@
+<div fxLayout="column" fxLayoutAlign="start stretch"
+     [formGroup]="contactUs" [ngClass]="{'all-white': white}">
+  <p editElement editType="contact-us-form-title" class="mt-0 text-center text-preWrap">
+    {{dragDropService.fieldText('contact-us-form-title') || 'برای اطلاع از آخرین تخفیف ها و اخبار فروشگاه شماره موبایل خود را وارد کنید.'}}
+  </p>
+  <mat-form-field appearance="outline">
+    <mat-label> {{'شماره موبایل' | translate }}</mat-label>
+    <input formControlName="phoneNumber" placeholder="09*********"
+           autocomplete="off" matInput dir="ltr" type="tel">
+    <button mat-mini-fab color="primary" matSuffix (click)="submit()">
+      <mat-icon>done</mat-icon>
+    </button>
+  </mat-form-field>
+</div>

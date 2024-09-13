@@ -1,0 +1,63 @@
+<header fxLayout="column" fxLayoutAlign="center center" class="store-renovation-header">
+
+  <div class="inner-header" fxLayout="row" fxLayoutAlign="space-between center">
+
+    <div fxFlex="15%">
+      <button mat-stroked-button color="primary" matBadgeColor="warn"
+              [matBadge]="cartCount"
+              (click)="!showProducts ? getProductCart() : ''; showProducts = !showProducts">
+        My Order
+      </button>
+    </div>
+
+    <div class="login-action" fxFlex="15%" fxLayout="row">
+      <button [matMenuTriggerFor]="profileMenu"
+              mat-button *ngIf="!credentialsService.isGuest else loginBtn">
+        <span class="header-renovation-username">{{credentialsService.credentials.USER_NAME}}</span>
+        <mat-icon>expand_more</mat-icon>
+        <mat-menu #profileMenu="matMenu">
+          <button mat-menu-item [routerLink]="['/profile']">{{"پروفایل" | translate }}</button>
+          <button mat-menu-item (click)="logOut()">{{"خروج" | translate }}</button>
+        </mat-menu>
+      </button>
+
+      <ng-template #loginBtn>
+        <a routerLink="/auth">
+          <button mat-flat-button>Login/ SignUp</button>
+        </a>
+      </ng-template>
+
+      <a routerLink="/">
+        <button mat-flat-button>Home</button>
+      </a>
+
+    </div>
+
+  </div>
+
+  <div class="products" *ngIf="showProducts && cartProducts.order_products?.length" fxLayoutGap="15px"
+       dir="ltr" fxLayout="row" fxLayoutAlign="start stretch">
+
+    <div fxLayout="row" fxLayoutAlign="start stretch"
+         class="product" *ngFor="let product of cartProducts.order_products">
+
+      <div class="delete-action">
+        <button mat-icon-button color="warn" (click)="deleteProduct(product)">
+          <mat-icon>highlight_off</mat-icon>
+        </button>
+      </div>
+
+      <div fxLayout="column" class="product-preview">
+        <img
+          [src]="adminImageUrlDevelop + '/assets/img/products/' + product?.product_store?.product.IMAGE"
+          [alt]="product?.product_store?.product.NAME">
+        <b>{{ ((product.PRICE_AFTER_OFFER - product?.product_store.product.ADDITIONAL_COST) | number) + ' $/' + product.product_store?.product?.PRODUCT_UNIT_NAME}}</b>
+        <mat-hint>Service included:</mat-hint>
+        <span>{{ (product.PRICE_AFTER_OFFER | number) + ' $/' + product.product_store?.product?.PRODUCT_UNIT_NAME}}</span>
+      </div>
+
+    </div>
+
+  </div>
+
+</header>

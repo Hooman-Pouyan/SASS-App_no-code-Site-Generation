@@ -1,0 +1,48 @@
+<div fxLayout="column" fxLayoutAlign="start stretch">
+
+  <div class="body-header py-2" fxLayout="row" fxLayoutAlign="space-between center">
+    <h2>{{parentTicket.name}}</h2>
+    <a mat-stroked-button color="primary" routerLink="../../">
+      لیست تیکت ها
+    </a>
+  </div>
+
+  <div class="timeline py-4" fxLayout="column"
+       fxLayoutAlign="start stretch" fxLayoutGap="1rem">
+
+    <div class="each-ticket" fxLayout="row"
+         [ngClass]="ticket.RESPONSE == 1 ? 'admin-ticket' : 'customer-ticket'"
+         [fxLayoutAlign.gt-sm]="ticket.RESPONSE == 1 ? 'start stretch' : 'end stretch'"
+         *ngFor="let ticket of tickets">
+      <mat-card fxLayout="column" fxLayoutAlign="start stretch" fxFlex.gt-sm="48%">
+        <div class="ticket-header" fxLayout="row" fxLayoutAlign="space-between center">
+          <b fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="5px">
+            <mat-icon [color]="ticket.RESPONSE == 1 ? 'primary' : 'accent'">
+              {{ticket.RESPONSE == 1 ? 'support_agent' : 'person_outline'}}
+            </mat-icon>
+            {{ticket.RESPONSE == 1 ? storeSettingService.store.name : ticket.USER_NAME}}
+          </b>
+          <span fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="5px">
+            <mat-icon [color]="ticket.RESPONSE == 1 ? 'primary' : 'accent'">
+              event
+            </mat-icon>
+            {{ticket.CREATE_DATETIME | jalaliDate}}
+          </span>
+        </div>
+        <p style="white-space: pre-wrap">
+          {{ticket.CONTENT}}
+        </p>
+        <a mat-stroked-button color="accent" *ngIf="ticket.FILE_NAME"
+           [href]="ticketFileUrl + ticket.FILE_NAME" target="_blank">
+          فایل پیوست
+        </a>
+      </mat-card>
+    </div>
+
+  </div>
+
+  <app-new-ticket [ticketParentID]="parentTicket.id"
+                  [ticketCatalogID]="parentTicket.catalogID"
+                  (fromSubmitted)="getTickets()"></app-new-ticket>
+
+</div>

@@ -1,0 +1,28 @@
+.products-filter {
+  @media screen and (min-width: 959px) {
+    max-height: calc(100vh - 60px);
+    overflow-y: auto;
+  }
+
+  .categories-expansion {
+    box-shadow: none !important;
+    background-color: transparent;
+
+    .mat-expansion-panel-header {
+      padding: 5px !important;
+
+    }
+  }
+
+  .all-product-link {
+    padding: 10px 5px;
+  }
+
+  .price-range {
+
+    #min-price-slider {
+      margin-top: -58px;
+    }
+
+  }
+}

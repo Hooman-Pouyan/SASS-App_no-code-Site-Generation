@@ -1,0 +1,49 @@
+<div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="10px">
+
+  <div fxLayout="row" fxLayoutAlign="space-between center">
+    <b>
+      {{'ویرایش المنت' | translate}}
+    </b>
+    <button mat-icon-button color="warn" (click)="closeDialog()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <div>
+    <mat-divider></mat-divider>
+  </div>
+
+  <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="10px">
+
+    <upload-media [componentHeight]="250" [inputMedia]="data.media"
+                  (outputImage)="mediaToUpload = $event" [hasDelete]="true"
+                  (deleted)="isDeleted = true;" [compressRate]="70"></upload-media>
+
+    <div fxLayout="column" fxLayoutAlign="start stretch" *ngIf="data.bestWidth || data.bestHeight " class="hint">
+      <span>
+        بهترین ارتفاع مناسب:
+        {{data.bestHeight}}
+      </span>
+      <span>
+        بهترین عرض مناسب:
+        {{data.bestWidth}}
+      </span>
+
+    </div>
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{'لینک المنت' | translate }} </mat-label>
+      <input [(ngModel)]="data.link" matInput autocomplete="off" type="text" dir="ltr">
+    </mat-form-field>
+  </div>
+
+  <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="10px">
+    <button mat-raised-button color="warn" (click)="closeDialog()">
+      <span>{{'لغو' | translate}}</span>
+    </button>
+    <button mat-raised-button color="primary" (click)="submit()">
+      <span>{{'ثبت' | translate}}</span>
+    </button>
+  </div>
+
+</div>

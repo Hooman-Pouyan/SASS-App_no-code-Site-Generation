@@ -1,0 +1,51 @@
+.spiliter {
+  width: 0.25px;
+  height: 24px;
+  background: #98989b;
+  align-self: center;
+}
+
+.mega-menu-icon {
+  font-size: 28px;
+}
+
+.list-icon {
+  font-size: 24px;
+  color: #999;
+}
+
+.header-desktop {
+  background-color: #fff;
+  padding: 1.5rem;
+  box-shadow: 0 0 12px -3px rgb(0 0 0 / 20%);
+
+  .header-up {
+    .search {
+      img {
+        max-width: 80px;
+      }
+    }
+
+    .acc-info {
+      .order-cart-btn {
+
+      }
+    }
+  }
+
+  .header-down {
+    .header-item {
+      font-size: 14px;
+      background: linear-gradient(currentColor 0 0) bottom /var(--d, 0) 2px no-repeat;
+      transition: 0.5s;
+      padding: 5px 0;
+      &:hover {
+        --d: 100%;
+
+      }
+    }
+
+
+  }
+
+}

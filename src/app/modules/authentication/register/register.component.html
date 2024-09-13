@@ -1,0 +1,23 @@
+<app-header></app-header>
+
+<ng-container [ngSwitch]="modulesService.lang">
+
+  <ng-container [ngSwitch]="modulesService.theme" *ngSwitchCase="['fa'] | customSwitch: modulesService.lang">
+
+    <register-phone *ngSwitchDefault></register-phone>
+
+  </ng-container>
+
+  <ng-container [ngSwitch]="modulesService.theme" *ngSwitchCase="['en'] | customSwitch: modulesService.lang">
+
+    <register-renovation *ngSwitchCase="[500] | customSwitch: modulesService.theme">
+    </register-renovation>
+
+    <register-email *ngSwitchDefault></register-email>
+
+  </ng-container>
+
+  <register-phone *ngSwitchDefault></register-phone>
+</ng-container>
+
+<app-footer></app-footer>

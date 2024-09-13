@@ -1,0 +1,139 @@
+<div class="factor-header container" fxLayout="row" fxLayoutAlign="space-between center">
+
+  <a mat-button [routerLink]="'/'">Home</a>
+
+  <div *ngIf="checkLogin()">
+    <button mat-button class="btn-menu" [routerLink]="'/auth'">{{'کاربر مهمان' | translate }}</button>
+  </div>
+
+  <div *ngIf="!checkLogin()">
+    <button mat-button class="btn-menu" [matMenuTriggerFor]="menu">{{ userName }}</button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item [routerLink]="'/profile'">{{'حساب کاربری' | translate }}</button>
+      <button mat-menu-item (click)="logOut()">{{'خروج' | translate }}</button>
+    </mat-menu>
+  </div>
+
+</div>
+
+<div class="renovation-factor" *ngIf="products.length else noProducts" fxLayout="row" fxLayout.lt-md="column"
+  fxLayoutAlign="space-evenly start">
+
+  <div class="factor-products" fxFlex="70%" fxLayoutGap="30px" fxLayout="column" fxLayoutAlign="start stretch">
+
+    <div fxLayout="column" fxLayoutAlign="start stretch" class="categories mb-3 mt-5"
+      *ngFor="let items of products; let i = index">
+
+      <div fxLayout="row" fxLayoutAlign="space-between center">
+        <h2>
+          <a target="_blank"
+            [routerLink]="'/store/renovation/' + items[0]?.GENEALOGY">{{items[0]?.store_category?.NAME}}</a>
+        </h2>
+        <button (click)="openDialogUploadImage(items[0], orderId, userRoleId)" class="warn-btn" mat-stroked-button
+          color="warn">
+          Upload your
+          {{items[0]?.store_category?.NAME}}
+          photos
+        </button>
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="space-between start" class="py-4 products" *ngFor="let product of items;">
+
+        <div fxLayout="column" class="attributes" fxLayoutAlign="space-around start" fxLayoutGap="25px">
+
+          <h4 fxLayout="row" fxLayoutAlign="start center">
+            <a [routerLink]="'/product/' + product?.product_prop?.product_store?.productStoreId"
+              [queryParams]="{'name': product.NAME}" target="_blank" class="product-title-link">
+              {{product?.NAME}}
+            </a>
+          </h4>
+
+          <div fxLayout="row" fxLayoutAlign="start center">
+            <span class="title">Brand: </span>
+            <span class="value">{{product?.product_brand?.NAME}}</span>
+          </div>
+
+          <div fxLayout="row" fxLayoutAlign="start center" *ngIf="width * depth">
+            <span class="title">per unit Dimension: </span>
+            <span class="value">{{ width }} * {{ depth }} </span>
+          </div>
+
+        </div>
+
+        <div fxLayout="column" class="prices" fxLayoutAlign="space-around start" fxLayoutGap="25px">
+
+          <div fxLayout="row" fxLayoutAlign="start center">
+            <span class="title">How much?</span>
+            <mat-form-field class="mat-form-field" appearance="outline">
+              <input matInput [value]="product?.product_prop?.COUNT" [(ngModel)]="product.product_prop.COUNT"
+                placeholder="Example: 28 (square meters)">
+              <button mat-button matPrefix mat-raised-button color="primary"
+                (click)="changeCount(product.product_prop.COUNT, product.product_prop.orderProductsId)">
+                Update
+              </button>
+            </mat-form-field>
+          </div>
+
+          <div fxLayout="row" fxLayoutAlign="start center">
+            <span class="title">Price: </span>
+            <span class="value"> ${{product?.product_prop?.PRICE_AFTER_OFFER | number}}</span>
+          </div>
+
+          <div fxLayout="row" fxLayoutAlign="start center">
+            <span class="title">Sum Price: </span>
+            <span class="value">
+              ${{ (product?.product_prop?.COUNT * product?.product_prop?.PRICE_AFTER_OFFER)| number}}
+            </span>
+          </div>
+
+        </div>
+
+        <img [src]="adminUrl + '/assets/img/products/' + product?.IMAGE" class="img-fluid product-image"
+          alt="product name">
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="factor-sidebar mt-5" fxFlex="20%" fxLayout="column" fxLayoutAlign="center center">
+
+    <h4 class="sidebar-title">Approximate cost</h4>
+
+    <p class="sidebar-price">
+      <span class="currency">$</span>
+      <span class="value">{{totalPrice | number}}</span>
+    </p>
+
+    <div class="sidebar-content">
+      <p class="desc">Do you need an expert to check and measure the required items?</p>
+      <mat-radio-group [(ngModel)]="expertStatus" dir="ltr">
+        <mat-radio-button value="enable">Yes</mat-radio-button>
+        <mat-radio-button value="disable">No, I Don’t need</mat-radio-button>
+      </mat-radio-group>
+    </div>
+
+    <div>
+      <button (click)="openExpertDialog()" class="warn-btn mt-4" mat-stroked-button color="warn">
+        Submit request
+      </button>
+    </div>
+
+  </div>
+
+</div>
+
+<ng-template #noProducts>
+  <div class="renovation-factor" fxLayout="column" fxLayoutAlign="center center">
+    <div class="empty-product-container" fxLayout="column" fxLayoutAlign="center center">
+      <p>Your cart is empty, please go to <a [routerLink]="'/store/renovation'" class="text-primary"> store </a>
+      </p>
+      <button mat-raised-button [routerLink]="'/store/renovation'" color="primary">Back to store</button>
+    </div>
+  </div>
+</ng-template>
+
+<button mat-raised-button color="primary" type="button" class="back-btn" (click)="backClicked()">
+  <span class="title">Back</span>
+  <mat-icon class="icon">arrow_right_alt</mat-icon>
+</button>

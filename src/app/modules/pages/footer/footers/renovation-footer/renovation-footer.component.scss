@@ -1,0 +1,69 @@
+footer {
+  position: relative;
+  box-shadow: 0 10px 20px rgba(22, 94, 112, 0.1) inset;
+  background-color: #333333;
+  color: #fff;
+
+  .bold {
+    font-weight: bold;
+  }
+
+  .fot{
+    padding-top: 15px;
+  }
+
+  .links-list {
+    @media screen and (min-width: 960px) {
+      max-height: 10rem;
+    }
+
+    li {
+      cursor: pointer;
+      list-style: none;
+    }
+  }
+
+  .widget-footer-social {
+    flex-direction: row;
+    display: flex;
+    direction: ltr;
+    flex-wrap: wrap;
+    list-style: none;
+    padding: 0 10px;
+    justify-content: space-around;
+
+    li {
+      margin: 5px 10px;
+
+      a {
+        text-decoration: none;
+        color: #fff;
+
+        img {
+          max-width: 100%;
+          filter: invert(1);
+        }
+      }
+    }
+  }
+
+  .register-section {
+    border-bottom: 1px solid #3f3f3f;
+    border-top: 1px solid #3f3f3f;
+    padding: 10px 0px;
+
+    .btn-sign {
+      border: 1px solid #fff;
+    }
+
+    .btn-sign:hover {
+      border: 1px solid #105652;
+      color: #105652;
+    }
+  }
+
+  .created-by {
+    background-color: #000;
+    color: #fff;
+  }
+}

@@ -1,0 +1,15 @@
+<div class="landing-video" fxLayout="column" fxLayoutAlign="start stretch"
+     *ngIf=" modulesService.video &&  dynamicMediaService.getMedia('video') && showVideo"
+     cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+     [cdkDragFreeDragPosition]="dragDropService.findPosition('landing-video')"
+     (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'landing-video')">
+  <div>
+    <video [src]="dynamicMediaService.getMedia('video')" #videoPlayer class="video" (error)="handleVideoErr($event)"
+           editElement editType="video" width="100%" [muted]="true" autoplay loop>
+    </video>
+  </div>
+  <button color="warn" mat-icon-button (click)="videoPlayer.muted = !videoPlayer.muted">
+    <mat-icon *ngIf="!videoPlayer.muted">volume_up</mat-icon>
+    <mat-icon *ngIf="videoPlayer.muted">volume_off</mat-icon>
+  </button>
+</div>

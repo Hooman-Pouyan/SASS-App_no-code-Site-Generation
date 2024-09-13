@@ -1,0 +1,184 @@
+<div class="landing-base-theme14" fxLayout="column" fxLayoutAlign="start stretch">
+
+  <div class="header-section" fxLayout="column" fxLayoutAlign="start stretch">
+
+    <div class="menu container w-92 my-1" fxLayout="row" fxLayoutAlign="space-between center" fxHide.lt-md>
+      <div class="list-item" fxLayout="row" fxLayoutAlign="space-around center" fxLayoutGap="15px"
+           fxLayout.lt-md="column" fxLayoutAlign.lt-md="start center" fxFlex="60%">
+        <button mat-icon-button (click)="searchDialog()">
+          <mat-icon>
+            search
+          </mat-icon>
+        </button>
+        <a href="/">
+          {{'صفحه اصلی' | translate}}
+        </a>
+        <a href="/store">
+          {{'محصولات' | translate}}
+        </a>
+        <a href="/about-us">
+          {{ 'راهنما' | translate}}
+        </a>
+        <ng-container *ngIf="credentialsService.isGuest else loggedIn">
+          <a href="/auth">
+            {{'ثبت نام' | translate}}
+            /
+            {{'ورود' | translate}}
+          </a>
+        </ng-container>
+        <ng-template #loggedIn>
+          <button [dir]="modulesService.lang == 'fa' ? 'rtl' : 'ltr' "
+                  [matMenuTriggerFor]="profileAction" mat-button>
+            <mat-icon class="mx-1">expand_more</mat-icon>
+            <span>{{credentialsService.credentials?.NAME}}</span>
+          </button>
+          <mat-menu #profileAction="matMenu">
+            <a mat-menu-item routerLink="/profile">
+              <mat-icon>account_circle</mat-icon>
+              <span>{{'پروفایل' | translate}}</span>
+            </a>
+            <a mat-menu-item (click)="credentialsService.logout()">
+              <mat-icon>logout</mat-icon>
+              <span>{{'خروج' | translate}}</span>
+            </a>
+          </mat-menu>
+        </ng-template>
+
+
+      </div>
+      <div class="logo">
+        <img [src]="storeSettingService.store.logo" class="img-fluid header-logo"
+             [alt]="storeSettingService.store.name">
+      </div>
+    </div>
+
+    <app-header fxHide.gt-sm></app-header>
+
+  </div>
+
+  <section class="slider">
+    <swiper [config]="mainSliderConfig">
+      <ng-container *ngFor="let sliderIdx of dynamicMediaService.mediaSliderLoop">
+        <ng-template swiperSlide *ngIf="dynamicMediaService.getMedia('base-theme14-slider' + sliderIdx)">
+          <a *ngIf="dynamicMediaService.getMediaLink('base-theme14-slider' + sliderIdx) else noLink"
+             [href]="dynamicMediaService.getMediaLink('base-theme14-slider' + sliderIdx)" target="_blank">
+            <img [src]="dynamicMediaService.getMedia('base-theme14-slider' + sliderIdx)"
+                 [alt]="'base-theme14-slider' + sliderIdx" class="text-center img-fluid"
+                 editElement [editType]="'base-theme14-slider' + sliderIdx">
+          </a>
+          <ng-template #noLink>
+            <img [src]="dynamicMediaService.getMedia('base-theme14-slider' + sliderIdx)"
+                 [alt]="'base-theme14-slider' + sliderIdx" class="text-center img-fluid"
+                 editElement [editType]="'base-theme14-slider' + sliderIdx"
+                 >
+          </ng-template>
+        </ng-template>
+      </ng-container>
+    </swiper>
+  </section>
+
+  <section class="base-theme14-about-us container" fxLayout="row" fxLayoutAlign="space-between center"
+           fxLayout.lt-md="column" fxLayoutAlign.lt-md="start stretch">
+
+    <div class="base-theme14-about-us-desc" fxLayout="column"
+         fxLayoutAlign="start stretch" fxFlex.gt-sm="50%">
+      <h2 cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+          [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme14-about-us-title')"
+          (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme14-about-us-title')"
+          editElement [editType]="'base-theme14-about-us-title'">
+        {{dragDropService.fieldText('base-theme14-about-us-title') || 'درباره ما'}}
+      </h2>
+      <p cdkDrag [cdkDragDisabled]="dragDropService.disabled" class="text-justify"
+         [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme14-about-us-desc')"
+         (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme14-about-us-desc')"
+         editElement [editType]="'base-theme14-about-us-desc'">
+        {{dragDropService.fieldText('base-theme14-about-us-desc') || 'لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد کتابهای زیادی در شصت و سه درصد گذشته حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی'}}
+      </p>
+    </div>
+
+    <div fxFlex="45%">
+      <img [src]="dynamicMediaService.getMedia('base-theme14-about-us')"
+           [alt]="'base-theme14-about-us'" class="img-fluid"
+           editElement [editType]="'base-theme14-about-us'"
+           >
+    </div>
+  </section>
+
+  <div>
+    <mat-divider></mat-divider>
+  </div>
+
+  <div class="base-theme14-our-product my-5" fxLayout="column" fxLayoutAlign="start center">
+
+    <h2 cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+        [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme14-products-title')"
+        (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme14-products-title')"
+        editElement [editType]="'base-theme14-about-us-title'">
+      {{dragDropService.fieldText('base-theme14-about-us-title') || 'محصولات ما'}}
+    </h2>
+
+    <p cdkDrag [cdkDragDisabled]="dragDropService.disabled" class="text-justify"
+       ngClass.gt-sm="w-50"
+       [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme14-products-desc')"
+       (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme14-products-desc')"
+       editElement [editType]="'base-theme14-products-desc'">
+      {{dragDropService.fieldText('base-theme14-products-desc') || 'لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد کتابهای زیادی در شصت و سه درصد گذشته حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی'}}
+    </p>
+
+    <div cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+         [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme14-products')"
+         (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme14-products')"
+         fxLayout="row wrap" fxLayoutAlign="space-around stretch">
+      <ng-container *ngFor="let product of productsSummary?.products">
+        <product-slide [product]="product" fxFlex="23%" class="mb-3" fxHide.lt-md>
+        </product-slide>
+        <product-slide-mobile [product]="product" fxFlex="45%" class="mb-3" fxHide.gt-sm>
+        </product-slide-mobile>
+      </ng-container>
+    </div>
+
+    <a [href]="dynamicMediaService.getMediaLink('base-theme14-more-products-btn')" target="_blank"
+       cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+       class="more-products-btn"
+       [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme14-more-products-btn')"
+       (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme14-more-products-btn')"
+       editElement editType='base-theme14-more-products-btn'>
+      {{ dragDropService.fieldText('base-theme14-more-products-btn') || 'بیشتر'}}
+    </a>
+
+  </div>
+
+  <div class="base-theme14-introduction" fxLayout="row"
+       fxLayout.lt-md="column" fxLayoutAlign="space-around stretch">
+
+    <div class="base-theme14-intro" fxFlex="60%" fxLayout="column" fxLayoutAlign="start stretch">
+      <h2 cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+          [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme14-more-title')"
+          (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme14-more-title')"
+          editElement [editType]="'base-theme14-more-title'">
+        {{dragDropService.fieldText('base-theme14-more-title') || 'بهترین ها در فروشگاه ما'}}
+      </h2>
+      <p cdkDrag [cdkDragDisabled]="dragDropService.disabled" class="text-justify"
+         [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme14-more-desc')"
+         (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme14-more-desc')"
+         editElement [editType]="'base-theme14-more-desc'">
+        {{dragDropService.fieldText('base-theme14-more-desc') || 'لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد کتابهای زیادی در شصت و سه درصد گذشته حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی'}}
+      </p>
+    </div>
+
+    <img [src]="dynamicMediaService.getMedia('base-theme14-introduction')"
+         [alt]="'base-theme14-introduction'" class="img-fluid"
+         editElement [editType]="'base-theme14-introduction'" fxFlex="40%"
+         >
+
+  </div>
+
+  <app-brands-slider></app-brands-slider>
+
+  <app-section></app-section>
+
+  <default-contact-us [asComponent]="true"></default-contact-us>
+
+  <app-footer></app-footer>
+
+</div>

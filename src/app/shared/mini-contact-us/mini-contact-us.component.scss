@@ -1,0 +1,17 @@
+.button-contact-us {
+  position: fixed;
+  z-index: 10000;
+  left: 20px;
+  bottom: 15px;
+  background-color: black !important;
+  mat-icon {
+    $size: 37px;
+    width: $size;
+    height: $size;
+    font-size: $size;
+  }
+}
+
+::ng-deep .mat-fab .mat-button-wrapper {
+  padding: 0 !important;
+}

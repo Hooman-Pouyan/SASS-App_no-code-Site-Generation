@@ -1,0 +1,112 @@
+<header fxLayout="column" fxLayoutAlign="start stretch" class="header-desktop py-1" fxHide.lt-md>
+
+  <img src="" alt="">
+
+  <div class="header-up" fxLayout="row" fxLayoutAlign="space-between center">
+
+    <div class="search" fxLayout="row" fxLayoutAlign="space-between center" fxFlex="35%" fxLayoutGap="1rem">
+      <a href="/" cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+         [cdkDragFreeDragPosition]="dragDropService.findPosition('header-logo')"
+         (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'header-logo')">
+        <img [src]="storeSettingService.store.logo" class="img-fluid header-logo"
+             [alt]="storeSettingService.store.name">
+      </a>
+
+      <search [circleShape]="true" [useButton]="false" [searchColor]="'primary'" fxFlex
+              [ngStyle]="{'direction': modulesService.lang == 'fa' ? 'ltr' : 'rtl' }">
+      </search>
+    </div>
+
+    <div class="acc-info" fxLayout="row" fxLayoutAlign="center end" fxFlex="15%" fxLayoutGap="1rem">
+      <ng-container *ngIf="credentialsService.isGuest else loggedIn">
+        <a [href]="dragDropService.fieldLink('header-sign-up') || '/auth'" cdkDrag
+           [cdkDragDisabled]="dragDropService.disabled"
+           [cdkDragFreeDragPosition]="dragDropService.findPosition('header-sign-up')"
+           (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'header-sign-up')">
+          <ng-container *ngIf="!modulesService.isInfoBase else infoBaseAuth">
+            <mat-icon class="mega-menu-icon">
+              person_add
+            </mat-icon>
+          </ng-container>
+          <ng-template #infoBaseAuth>
+            {{'ورود به باشگاه مشتریان' | translate}}
+          </ng-template>
+        </a>
+      </ng-container>
+      <ng-template #loggedIn>
+        <button [dir]="modulesService.lang == 'fa' ? 'rtl' : 'ltr' "
+                mat-button [matMenuTriggerFor]="profileAction"
+                cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+                [cdkDragFreeDragPosition]="dragDropService.findPosition('header-login')"
+                (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'header-login')">
+          <mat-icon class="mx-1">expand_more</mat-icon>
+          <span>{{credentialsService.credentials?.NAME}}</span>
+        </button>
+        <mat-menu #profileAction="matMenu">
+          <a mat-menu-item routerLink="/profile">
+            <mat-icon>account_circle</mat-icon>
+            <span>{{credentialsService.credentials?.NAME}}</span>
+          </a>
+          <a mat-menu-item (click)="credentialsService.logout()">
+            <mat-icon>logout</mat-icon>
+            <span>{{'خروج' | translate}}</span>
+          </a>
+        </mat-menu>
+      </ng-template>
+      <span class="spiliter" fxLayout="column" fxLayoutAlign="center center"></span>
+      <button mat-icon-button class="order-cart-btn" *ngIf="!modulesService.isInfoBase"
+              [matBadge]="cartCount" matBadgeColor="warn"
+              (click)="cartService.cartSidenav = sidenavStatus.open"
+              cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+              [cdkDragFreeDragPosition]="dragDropService.findPosition('header-cart')"
+              (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'header-cart')">
+        <mat-icon class="mega-menu-icon">shopping_cart</mat-icon>
+      </button>
+    </div>
+
+  </div>
+
+  <div class="header-down" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1.5rem">
+    <mega-menu></mega-menu>
+    <span class="spiliter"></span>
+
+    <a fxLayout="row" fxLayoutAlign="center center" fxFlex="8%" class="header-item"
+       [href]="dragDropService.fieldLink('header-about') || '/store'" cdkDrag
+       [cdkDragDisabled]="dragDropService.disabled"
+       [cdkDragFreeDragPosition]="dragDropService.findPosition('header-about')"
+       (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'header-about')"
+       editElement editType="header-about">
+      <mat-icon class="list-icon">store</mat-icon>
+      {{(dragDropService.fieldText('header-about') || 'محصولات') | translate}}
+    </a>
+
+
+    <a fxLayout="row" fxLayoutAlign="center center" fxFlex="8%" class="header-item" *ngIf="modulesService.hasBlog"
+       [href]="dragDropService.fieldLink('header-most-sell') || '/store/category/1'" cdkDrag
+       [cdkDragDisabled]="dragDropService.disabled"
+       [cdkDragFreeDragPosition]="dragDropService.findPosition('header-blog')"
+       (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'header-blog')"
+       editElement editType="header-blog">
+      <mat-icon class="list-icon">local_fire_department</mat-icon>
+      {{(dragDropService.fieldText('header-blog') || 'پرفروش ترین ها') | translate}}
+    </a>
+
+
+    <a fxLayout="row" fxLayoutAlign="center center" fxFlex="8%" class="header-item" *ngIf="modulesService.hasBlog"
+       [href]="dragDropService.fieldLink('header-blog') || '/'" cdkDrag
+       [cdkDragDisabled]="dragDropService.disabled"
+       [cdkDragFreeDragPosition]="dragDropService.findPosition('header-blog')"
+       (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'header-blog')"
+       editElement editType="header-blog">
+      <mat-icon class="list-icon">compare_arrows</mat-icon>
+      {{(dragDropService.fieldText('header-blog') || 'مقایسه') | translate}}
+    </a>
+
+
+  </div>
+
+</header>
+
+<header fxLayout="column" fxLayoutAlign="start stretch" class="header" fxHide.gt-sm>
+  mobhile
+</header>

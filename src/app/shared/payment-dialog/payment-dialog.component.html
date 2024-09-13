@@ -1,0 +1,68 @@
+<div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="20px">
+
+  <div fxLayout="row" fxLayoutAlign="space-between center">
+
+    <b>
+      {{'پرداخت' | translate}}
+    </b>
+
+    <button mat-icon-button color="warn" (click)="closeDialog()">
+      <mat-icon>close</mat-icon>
+    </button>
+
+  </div>
+
+  <mat-radio-group fxLayout="column" fxLayoutGap="30px"
+                   [(ngModel)]="selectedPayment">
+    <mat-radio-button *ngFor="let payment of paymentTypes"
+                       [disabled]="!payment.active" [value]="payment">
+
+      <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="5px">
+        <span>{{payment.name | translate}}</span>
+
+        <ng-container *ngIf="selectedPayment.type == payment.type">
+
+          <ng-container *ngIf="selectedPayment.type == PayType.gateway && payment.name == selectedPayment.name">
+            <img [src]=" '../../../../assets/img/' + payment.gatewayName + '.png' "
+                 class="img-fluid" alt="gateway" style="max-width: 100px">
+          </ng-container>
+
+          <ng-container *ngIf="payment.type == PayType.wallet">
+            <div fxLayout="row" fxLayout.lt-md="row wrap" fxLayoutAlign="start center" fxLayoutGap="3px">
+              <span>{{'موجودی حساب شما' | translate }}</span>
+              <b>{{walletBalance | number}}</b>
+              <span>{{storeSettingService.storeCurrency | translate }}</span>
+            </div>
+          </ng-container>
+
+          <ng-container *ngIf="payment.type == PayType.cardToCart">
+            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="5px">
+              <span dir="ltr">{{cardInfo.CARD_NUMBER | number: 'card'}}</span>
+              <button mat-icon-button color="primary" (click)="copyText(cardInfo.CARD_NUMBER)">
+                <mat-icon>content_copy</mat-icon>
+              </button>
+            </div>
+            <div>{{cardInfo.CARD_NAME}}</div>
+          </ng-container>
+
+          <ng-container *ngIf="payment.type == PayType.cheque">
+          </ng-container>
+        </ng-container>
+
+      </div>
+
+    </mat-radio-button>
+  </mat-radio-group>
+
+  <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
+    <button mat-raised-button [disabled]="!selectedPayment"
+            color="primary" (click)="submit()">
+      {{'ثبت' | translate}}
+    </button>
+    <button mat-stroked-button color="warn" (click)="closeDialog()">
+      {{'بستن' | translate}}
+    </button>
+  </div>
+
+
+</div>

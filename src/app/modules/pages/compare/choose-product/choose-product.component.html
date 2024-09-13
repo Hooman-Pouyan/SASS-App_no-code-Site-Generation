@@ -1,0 +1,8 @@
+<ng-container *ngFor="let product of products">
+  <div class="per-product" fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="1rem" (click)="addCompare(product.PRODUCT_ID)">
+                    <span class="product-name">
+                        {{product.NAME}}
+                    </span>
+    <img [src]="imageUrl + '/assets/img/products/' + product.IMAGE" fxFlex="70%">
+  </div>
+</ng-container>

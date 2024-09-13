@@ -1,0 +1,218 @@
+<div class="base-theme26" fxLayout="column" fxLayoutAlign="start stretch"
+     [style]="{'--first-gradient':adjustColor(140), '--second-gradient': adjustColor(100) , '--third-gradient':adjustColor(-180), '--fourth-gradient':adjustColor(-80)}">
+
+  <section class="base26-header container" fxLayout="row" fxLayoutAlign="space-between center"
+           *ngIf="appService.windowWidth > 959 else appHeader">
+
+    <div class="header-item" fxLayout="row" fxLayoutAlign="center center" fxFlex="50%" fxLayoutGap="5px">
+
+      <div class="base26-login-header">
+        <ng-container *ngIf="credentialsService.isGuest else loggedIn">
+          <button color="primary" [dir]="modulesService.lang == 'fa' ? 'rtl' : 'ltr' " mat-stroked-button>
+            <a [href]="dragDropService.fieldLink('header-sign-up') || '/auth'" cdkDrag
+               [cdkDragDisabled]="dragDropService.disabled"
+               [cdkDragFreeDragPosition]="dragDropService.findPosition('header-sign-up')"
+               (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'header-sign-up')">
+              {{'ورود' | translate}}
+            </a>
+          </button>
+
+        </ng-container>
+        <ng-template #loggedIn>
+          <button color="primary" [dir]="modulesService.lang == 'fa' ? 'rtl' : 'ltr' " mat-raised-button
+                  [matMenuTriggerFor]="profileAction" cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+                  [cdkDragFreeDragPosition]="dragDropService.findPosition('header-login')"
+                  (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'header-login')">
+            <mat-icon class="mx-1">expand_more</mat-icon>
+            <span>{{credentialsService.credentials?.NAME}}</span>
+          </button>
+          <mat-menu #profileAction="matMenu">
+            <a mat-menu-item routerLink="/profile">
+              <mat-icon>account_circle</mat-icon>
+              <span>{{'پروفایل' | translate}}</span>
+            </a>
+            <a mat-menu-item (click)="credentialsService.logout()">
+              <mat-icon>logout</mat-icon>
+              <span>{{'خروج' | translate}}</span>
+            </a>
+          </mat-menu>
+        </ng-template>
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap.lt-md="3px" class="info-detail"
+           cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+           [cdkDragFreeDragPosition]="dragDropService.findPosition('footer-address')"
+           (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'footer-address')">
+        <mat-icon>location_on</mat-icon>
+        <span>{{storeSettingService.store.address}}</span>
+      </div>
+
+
+    </div>
+
+    <div class="header-logo" fxFlex="10%">
+      <img [src]="storeSettingService.store.logo" class="img-fluid"
+           [alt]="storeSettingService.store.name" style="max-height: 50px">
+    </div>
+  </section>
+  <ng-template #appHeader>
+    <app-header style="width: 100%;"></app-header>
+  </ng-template>
+
+  <div class="base-theme26-body" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="4rem">
+
+    <section class="base26-main-banner" fxLayout="column" fxLayoutAlign="center center">
+      <div class="base26-banner" fxLayout="row" fxLayoutAlign="space-around center" fxLayout.lt-md="column">
+        <div class="base26-banner-img" fxLayout="column" fxLayoutAlign="center center" fxFlex="45%">
+          <img editElement [editType]="'base-theme26-banner'" class="img-fluid"
+               [src]="dynamicMediaService.getMedia('base-theme26-banner')" alt="">
+        </div>
+        <div class="base26-banner-desc" fxLayout="column" fxLayoutAlign="center center" fxFlex="45%">
+          <h1>
+            {{dragDropService.fieldText('base-them26-banner-title') || 'عنوان مناسب اینجا'}}
+          </h1>
+          <p>
+            {{dragDropService.fieldText('base-theme26-banner-sub-p') || 'لورم ایپسوم متن ساختگی اینجا کلیک کنید و متن را ادیت کنید'}}
+
+          </p>
+        </div>
+      </div>
+
+
+    </section>
+
+    <section class="base-theme26-about-us container" fxLayout="row" fxLayoutAlign="space-between stretch"
+             fxLayout.lt-md="column" fxLayoutAlign.lt-md="start stretch" fxLayoutGap.lt-md="5.5rem">
+
+      <div fxFlex="48%" class="about-us-text-tile wow fadeInUp"
+           fxLayout="column" fxLayoutAlign="space-around start">
+
+        <h2 cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+            [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme26-about-us-title')"
+            (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme26-about-us-title')"
+            editElement [editType]="'base-theme26-about-us-title'">
+          {{dragDropService.fieldText('base-theme26-about-us-title') || 'درباره ما'}}
+        </h2>
+
+        <p cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+           [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme26-about-us-title')"
+           (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme26-about-us-title')"
+           editElement [editType]="'base-theme26-about-us-title'">
+          {{dragDropService.fieldText('base-theme26-about-us-title') || 'لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز'}}
+        </p>
+
+        <a editElement [editType]="'base-theme26-slider-btn'"
+           [href]="dragDropService.fieldLink('base-theme26-slider-btn') || '/about-us'"
+           class="rounded-pill py-3 px-5">
+          {{ dragDropService.fieldText('base-theme26-slider-btn') || 'درباره ما' | translate}}
+        </a>
+      </div>
+
+      <div fxFlex="48%" fxLayout="row" fxLayoutAlign="center center"
+           class="base-theme26-about-us-tiles wow fadeInUp">
+        <div fxLayout="row" fxLayoutAlign="center center" fxFlex="50%" class="first-img mb-n5">
+          <img editElement editType='base-theme26-about-us1' class="img-fluid"
+               [src]="dynamicMediaService.getMedia('base-theme26-about-us1')" alt="">
+        </div>
+        <div fxLayout="row" fxLayoutAlign="center center" fxFlex="50%" class="second-img mt-n5">
+          <img editElement editType='base-theme26-about-us2' class="img-fluid"
+               [src]="dynamicMediaService.getMedia('base-theme26-about-us2')" alt="">
+        </div>
+      </div>
+
+    </section>
+
+
+    <section fxLayout="column" fxLayoutAlign="center center" class="category-section">
+      <h2 class="category-title">
+        {{dragDropService.fieldText('base-them26-banner-title') || 'دسته بندی های جدید'}}
+      </h2>
+      <div class="base26-category container" fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="1%"
+           cdkDrag
+           [cdkDragDisabled]="dragDropService.disabled"
+           [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme26-category')"
+           (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme26-category')"
+           editElement editType="base-theme26-category">
+        <div class="category" fxLayout="column" fxLayoutAlign="center center" fxFlex="20%" fxFlex.lt-md="48.5%"
+             *ngFor="let category of categories | slice: -4;let idx = index">
+          <a class="overlay-cat" [href]="'/store/category/' + category.PRODUCT_ID" fxLayout="column"
+             fxLayoutAlign="center center">
+            <p class="cat-name">
+              {{ category.NAME }}
+            </p>
+          </a>
+          <img [src]="imageUrl + '/assets/img/categories/category_logo/' + category.PRODUCT_NAME" alt=""
+               class="img-fluid">
+        </div>
+
+      </div>
+    </section>
+
+    <div class="bg-color">
+      <div class="align-center" fxLayout="column" fxLayoutAlign="center center">
+        <section class="base-theme26-how-work container"
+                 fxLayout="column" fxLayoutAlign="center center">
+          <h2>
+            {{dragDropService.fieldText('base-theme26-how-work-title') || 'ما چگونه کار می کنیم'}}
+          </h2>
+          <div fxLayout.lt-md="row wrap"
+               fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="3%">
+            <div *ngFor="let idx of [1,2,3,4]" fxFlex="18%" fxFlex.lt-md="40%"
+                 class="how-work wow fadeIn py-3" ngClass.lt-md="mb-3"
+                 fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="0.25rem">
+              <img editElement [editType]="'base-theme26-how-work' + idx" class="img-fluid"
+                   [src]="dynamicMediaService.getMedia('base-theme26-how-work' + idx)" alt="">
+              <h4 editElement [editType]="'base-theme26-how-work-title' + idx">
+                {{dragDropService.fieldText('base-theme26-how-work-title' + idx) || 'لورم ایپسوم'}}
+              </h4>
+              <p editElement [editType]="'base-theme26-how-work-p' + idx">
+                {{dragDropService.fieldText('base-theme26-how-work-p' + idx) || 'لورم ایپسوم متن ساختگی اینجا کلیک کنید و متن را ادیت کنید'}}
+              </p>
+            </div>
+          </div>
+
+        </section>
+
+        <section fxLayout="column" fxLayoutAlign="center center" class="base26-most-visited">
+          <h2 class="most-visited-title">
+            {{dragDropService.fieldText('base-them26-most-visited-title') || 'پربازدیدترین محصولات'}}
+          </h2>
+<!--          <products-slider-2 class="container p-0" [products]="products">-->
+<!--          </products-slider-2>-->
+        </section>
+      </div>
+
+    </div>
+
+    <section class="categories-section container my-2" fxLayout="row wrap" fxLayoutAlign="space-around center" cdkDrag
+             [cdkDragDisabled]="dragDropService.disabled"
+             [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme8-categories')"
+             (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme8-categories')">
+      <div class="category " fxLayout="column" fxLayoutAlign="start center"
+           *ngFor="let category of categories | slice: -6; let i = index" fxFlex="15%" fxFlex.lt-md="42%">
+        <a [href]="'/store/category/' + category.PRODUCT_ID" class="img" fxLayout="column"
+           fxLayoutAlign="center center">
+          <div class="img-overlay"></div>
+          <ng-container *ngIf="category.PRODUCT_NAME && category.PRODUCT_NAME != 'null' else defaultCategory">
+            <img [src]="imageUrl + '/assets/img/categories/category_logo/' + category.PRODUCT_NAME"
+                 [alt]="category.NAME"
+                 class="img-fluid">
+          </ng-container>
+          <ng-template #defaultCategory>
+            <img src="../../../../../assets/img/default/category.png" [alt]="category.NAME" class="img-fluid">
+          </ng-template>
+        </a>
+        <h5 fxLayout="column" fxLayoutAlign="center center" style="height: 50px;">{{category.NAME}}</h5>
+      </div>
+    </section>
+
+  </div>
+
+  <mobile-section></mobile-section>
+
+  <app-brands-slider></app-brands-slider>
+
+  <app-footer></app-footer>
+</div>
+
+

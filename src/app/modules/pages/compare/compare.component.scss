@@ -1,0 +1,80 @@
+.compare-table {
+  border-collapse: collapse;
+
+  @media screen and (max-width: 959px) {
+    tr {
+      font-size: 10px;
+      min-height: 30px !important;
+    }
+    button {
+      font-size: 10px;
+    }
+    .name-row {
+      top: 113px !important;
+    }
+  }
+
+  tr {
+    border-top: 1px solid #cccccc;
+    border-bottom: 1px solid #cccccc;
+    justify-content: start;
+    padding: 10px;
+    min-height: 50px;
+
+    td, th {
+      margin-left: auto;
+    }
+
+    &:first-child {
+      border-top: none !important;
+    }
+
+    &:last-child {
+      border-bottom: none !important;
+    }
+
+    &:nth-child(2n+1) {
+      background-color: #F9FAFC;
+    }
+
+    &:nth-child(2n) {
+      background-color: white;
+    }
+
+  }
+
+  .images-row {
+    height: unset !important;
+
+    td {
+      text-align: center;
+      align-self: center;
+    }
+
+    .remove-product-btn {
+      float: left;
+    }
+
+  }
+
+  .name-row {
+    position: sticky;
+    z-index: 3;
+    top: 59px;
+    background-color: white;
+  }
+
+  .price-row {
+    position: sticky;
+    z-index: 2;
+    background-color: white;
+  }
+
+  .price-row, .name-row {
+    th {
+      align-self: center;
+      text-align: center;
+    }
+  }
+
+}

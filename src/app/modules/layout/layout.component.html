@@ -1,0 +1,17 @@
+<mat-drawer-container autosize class="drawer-container">
+
+  <mat-drawer #headerDrawer mode="over" position="start" id="headerDrawer"
+    (closed)="appService.headerSidenav = SidenavStatus.close">
+    <header-drawer></header-drawer>
+  </mat-drawer>
+
+  <mat-drawer #cart mode="over" position="end" id="cart"
+    (closed)="cartService.cartSidenav = SidenavStatus.close">
+    <cart-sidenav></cart-sidenav>
+  </mat-drawer>
+
+  <mat-drawer-content class="drawer-content">
+    <router-outlet></router-outlet>
+  </mat-drawer-content>
+
+</mat-drawer-container>

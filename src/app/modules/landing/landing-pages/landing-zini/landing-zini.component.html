@@ -1,0 +1,157 @@
+<app-header></app-header>
+
+<main fxLayout="column" fxLayoutAlign="start stretch" class="landing-zini" fxLayoutGap="50px">
+
+  <div fxLayout="column" fxLayoutAlign="start stretch" class="container" fxLayoutGap="50px">
+
+    <section fxLayout="row" fxLayoutAlign="space-between stretch" class="zini-slider mt-3"
+             fxLayout.lt-md="column" fxLayoutAlign.lt-md="start stretch">
+
+      <ul *ngIf="appService.windowWidth > 959"
+          fxFlex="15%" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="10px" class="p-0">
+        <li *ngFor="let shortcut of shortcutLinks" fxLayout="row" fxLayoutAlign="start center"
+            fxLayoutGap="5px" [routerLink]="shortcut.link" [queryParams]="shortcut.query">
+          <mat-icon>{{shortcut.icon}}</mat-icon>
+          <span>{{shortcut.name}}</span>
+        </li>
+      </ul>
+
+      <div fxFlex.gt-sm="81%">
+        <swiper [config]="mainSliderConfig">
+          <ng-container *ngFor="let sliderIdx of dynamicMediaService.mediaSliderLoop">
+            <ng-template swiperSlide *ngIf="dynamicMediaService.getMedia('zini-slider' + sliderIdx)">
+              <a *ngIf="dynamicMediaService.getMediaLink('zini-slider' + sliderIdx) else noLink"
+                 [href]="dynamicMediaService.getMediaLink('zini-slider' + sliderIdx)" target="_blank">
+                <img [src]="dynamicMediaService.getMedia('zini-slider' + sliderIdx)"
+                     [alt]="'zini-slider' + sliderIdx" class="text-center img-fluid"
+                     editElement [editType]="'zini-slider' + sliderIdx">
+              </a>
+              <ng-template #noLink>
+                <img [src]="dynamicMediaService.getMedia('zini-slider' + sliderIdx)"
+                     [alt]="'zini-slider' + sliderIdx" class="text-center img-fluid"
+                     editElement [editType]="'zini-slider' + sliderIdx">
+              </ng-template>
+            </ng-template>
+          </ng-container>
+        </swiper>
+      </div>
+
+    </section>
+
+
+    <ng-container *ngFor="let landingSlider of landingSliders">
+      <products-slider [products]="landingSlider.products"
+                       [title]="landingSlider.title" theme="alternative">
+      </products-slider>
+    </ng-container>
+
+    <products-slider [products]="mostSellSlider.products" [queryParams]="mostSellSlider.query"
+                     [title]="mostSellSlider.name" [link]="mostSellSlider.link" theme="alternative">
+    </products-slider>
+
+    <section class="zini-categories">
+      <h3 class="text-center mb-3">دسته‌بندی محصولات</h3>
+      <div fxLayout="row wrap" fxLayoutAlign="start stretch" fxLayoutGap="1%">
+        <div *ngFor="let category of categories" fxFlex.gt-sm="24%" fxFlex.lt-md="49%"
+             class="mb-5" fxLayout="column" fxLayoutAlign="space-between center" fxLayoutGap="1.5rem">
+          <ng-container *ngIf="category.PRODUCT_NAME && category.PRODUCT_NAME != 'null' else defaultCategory">
+            <img [src]="imageUrl + '/assets/img/categories/category_logo/' + category.PRODUCT_NAME"
+                 [alt]="category.NAME" class="img-fluid">
+          </ng-container>
+          <ng-template #defaultCategory>
+            <img src="../../../../../assets/img/default/category.png"
+                 [alt]="category.NAME" class="img-fluid">
+          </ng-template>
+          <a [routerLink]="'/store/category/' + category.PRODUCT_ID + '/' + category.NAME.split(' ').join('-')">
+            {{category.NAME}}
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <app-brands-slider style="background: var(--custom-accent-color)"></app-brands-slider>
+
+  <div fxLayout="column" fxLayoutAlign="start stretch" class="container" fxLayoutGap="50px">
+
+    <products-slider [products]="mostVisitedSlider.products" [queryParams]="mostVisitedSlider.query"
+                     [title]="mostVisitedSlider.name" [link]="mostVisitedSlider.link" theme="alternative">
+    </products-slider>
+
+    <div fxLayout="column" fxLayoutAlign="start stretch"
+         cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+         [cdkDragFreeDragPosition]="dragDropService.findPosition('zini-upper-decoratives')"
+         (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'zini-upper-decoratives')">
+
+      <div fxLayout="row" fxLayoutAlign="space-between center" class="zini-upper-decoratives">
+        <div *ngFor="let idx of [1, 2]" fxFlex="47%"
+             cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+             [cdkDragFreeDragPosition]="dragDropService.findPosition('zini-upper-decoratives' + idx)"
+             (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'zini-upper-decoratives' + idx)">
+
+          <ng-container *ngIf="dynamicMediaService.getMediaLink('zini-decorationUp' + idx) else noLink">
+            <a [href]="dynamicMediaService.getMediaLink('zini-decorationUp' + idx)" target="_blank">
+              <image-lazy [src]="dynamicMediaService.getMedia('zini-decorationUp' + idx)"
+                          alt="" class="img-fluid"
+                          editElement [editType]="'zini-decorationUp' + idx"></image-lazy>
+            </a>
+          </ng-container>
+          <ng-template #noLink>
+            <image-lazy [src]="dynamicMediaService.getMedia('zini-decorationUp' + idx)"
+                        alt="" class="img-fluid"
+                        editElement [editType]="'zini-decorationUp' + idx"></image-lazy>
+          </ng-template>
+
+        </div>
+      </div>
+    </div>
+
+    <ng-container *ngFor="let category of categories">
+      <products-slider *ngIf="category.showByScroll && category.products?.length"
+                       class="container p-0" [products]="category.products"
+                       [ngClass]="'category_' + category.PRODUCT_ID"
+                       [title]="category.NAME"
+                       [link]="'/store/category/' + category.PRODUCT_ID + '/' + category.NAME.split(' ').join('-')"></products-slider>
+    </ng-container>
+
+    <div fxLayout="row" fxLayoutAlign="space-between stretch" fxLayoutGap.lt-md="20px"
+         fxLayout.lt-md="column" fxLayoutAlign.lt-md="start stretch">
+
+      <div class="zini-desc-card" fxLayout="column" fxFlex="48%"
+           fxLayoutAlign="start center" fxLayoutGap="2rem">
+        <b editElement [editType]="'zini-downer-decorative-title'">
+          {{dragDropService.fieldText('zini-downer-decorative-title') || 'فروشگاه مواد غذایی زینی'}}
+        </b>
+        <p editElement [editType]="'zini-downer-decorative-desc'" class="text-justify">
+          {{dragDropService.fieldText('zini-downer-decorative-desc') || 'لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است، و برای شرایط فعلی تکنولوژی مورد نیاز، و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد، کتابهای زیادی در شصت و سه درصد گذشته حال و آینده، شناخت فراوان جامعه و متخصصان را می طلبد، تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی، و فرهنگ پیشرو در زبان فارسی ایجاد کرد، در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها، و شرایط سخت تایپ به پایان رسد و زمان مورد نیاز شامل حروفچینی دستاوردهای اصلی، و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.'}}
+        </p>
+      </div>
+
+      <div fxFlex="48%" cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+           [cdkDragFreeDragPosition]="dragDropService.findPosition('zini-downer-decoratives')"
+           (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'zini-downer-decoratives')">
+
+        <ng-container *ngIf="dynamicMediaService.getMediaLink('zini-decorationDown') else noLink">
+          <a [href]="dynamicMediaService.getMediaLink('zini-decorationDown')" target="_blank">
+            <image-lazy [src]="dynamicMediaService.getMedia('zini-decorationDown')"
+                        alt="" class="img-fluid"
+                        editElement [editType]="'zini-decorationDown'"></image-lazy>
+          </a>
+        </ng-container>
+        <ng-template #noLink>
+          <image-lazy [src]="dynamicMediaService.getMedia('zini-decorationDown')"
+                      alt="" class="img-fluid"
+                      editElement [editType]="'zini-decorationDown'"></image-lazy>
+        </ng-template>
+
+      </div>
+    </div>
+
+  </div>
+
+  <app-section></app-section>
+
+</main>
+
+<app-footer backgroundColor="#2B3467"></app-footer>

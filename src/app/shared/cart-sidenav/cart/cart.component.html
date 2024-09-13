@@ -1,0 +1,250 @@
+<div fxLayout="column" fxLayoutAlign="start stretch" class="cart">
+
+  <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="5px" class="cart-products">
+
+    <ng-container *ngIf="sourceCart.order_products?.length else emptyCart">
+      <ng-container *ngFor="let product of sourceCart.order_products">
+
+        <div fxLayout="row" fxLayoutAlign="space-between center" fxHide.lt-md
+             class="product" fxLayoutGap="10px" *ngIf="windowWidth > 959">
+
+          <div class="nonAvailable-product m-0 px-3" fxLayout="row" fxLayoutAlign="space-between center"
+               *ngIf="checkLessAvailable(product)" fxLayoutGap="10px">
+            <a [routerLink]="'/product/' + product.product_store.ID + '/' + product.product_store.product.NAME.replace('/', '').split(' ').join('-')"
+               class="cart-product-title" target="_blank">
+              {{product.product_store.product.NAME}}
+            </a>
+            <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="5px" class="action-part">
+              <b>{{'ناموجود' | translate}}</b>
+              <button mat-stroked-button color="warn" (click)="deleteProduct(product)">
+                <span>{{'حذف محصول' | translate}}</span>
+              </button>
+            </div>
+          </div>
+
+          <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutAlign.lt-md="start center" fxLayoutGap="10px">
+
+            <button mat-icon-button color="warn" fxFlex="20px" (click)="deleteProduct(product)">
+              <mat-icon class="mat-icon-size" style="--mat-size: 20px">close</mat-icon>
+            </button>
+
+            <div fxFlex="50px" fxLayout="column" fxLayoutAlign="center center">
+              <image-lazy *ngIf="product.product_store.product.IMAGE && !product.product_store.product.IMAGE.includes('null') else noImage"
+                          [src]="imageUrl + '/assets/img/products/' + product.product_store.product.IMAGE"
+                          [alt]="product.product_store.product.NAME" [title]="product.product_store.product.NAME" class="img-fluid product-image"></image-lazy>
+              <ng-template #noImage>
+                <img src="../../../../assets/img/default/product.png"
+                     class="img-fluid product-image" [alt]="product.product_store.product.NAME">
+              </ng-template>
+            </div>
+
+            <div fxLayout="column" fxLayoutAlign="start stretch" class="h-100 product-detail" fxLayoutGap="7px">
+
+              <a [routerLink]="'/product/' + product.product_store.ID + '/' + product.product_store.product.NAME.replace('/', '').split(' ').join('-')"
+                 fxLayout="row" fxLayoutAlign="start center" class="cart-product-title" target="_blank">
+                <mat-icon style="color:blue;" *ngIf="checkHasGuarantee(product)">verified</mat-icon>
+                {{product.product_store.product.NAME}}
+              </a>
+
+              <div fxLayout="row" fxLayoutAlign="start center"
+                   *ngIf="product?.order_product_details?.length && product?.order_product_details[0]?.ProductFeature1?.VALUE">
+                <span>{{'رنگ' | translate}}</span>
+                <span>:</span>
+                <div class="product-detail-color"
+                     [style]="{'background-color': product?.order_product_details[0]?.ProductFeature1?.VALUE}"></div>
+              </div>
+
+              <div fxLayout="row" fxLayoutAlign="start center"
+                   *ngIf="product?.order_product_details?.length && product?.order_product_details[0]?.ProductFeature2?.VALUE">
+                <span>{{product?.order_product_details[0]?.ProductFeature2?.feature?.NAME}}</span>
+                <span>:</span>
+                <span>{{product?.order_product_details[0]?.ProductFeature2?.VALUE}}</span>
+              </div>
+
+            </div>
+          </div>
+
+          <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="10px">
+
+            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="5px" class="action-buttons">
+
+              <ng-container *ngIf="modulesService.productInputCounter else defaultCounter">
+                <mat-form-field appearance="outline" fxFlex="90px">
+                  <mat-label> {{'مقدار' | translate }} </mat-label>
+                  <input [(ngModel)]="product.LOCAL_COUNT" matInput autocomplete="off" type="number">
+                  <button mat-icon-button matSuffix color="accent" (click)="editProductInCart(product, true)">
+                    <mat-icon>done</mat-icon>
+                  </button>
+                </mat-form-field>
+              </ng-container>
+
+              <ng-template #defaultCounter>
+                <button mat-stroked-button color="accent" (click)="addToCart(product)" fxFlex="30px"
+                        fxLayoutAlign="center center">
+                  <mat-icon class="mat-icon-size" style="--mat-size: 16px">add</mat-icon>
+                </button>
+                <span class="px-2">{{product.COUNT}}</span>
+                <button mat-stroked-button color="accent" (click)="subFromCart(product)" fxFlex="30px"
+                        fxLayoutAlign="center center">
+                  <mat-icon class="mat-icon-size" style="--mat-size: 16px">remove</mat-icon>
+                </button>
+              </ng-template>
+            </div>
+
+            <div fxLayout="column" fxLayoutAlign="center center" class="product-price">
+              <del *ngIf="product.PRICE_AFTER_OFFER != product.PRICE">
+                {{(product.PRICE * product.COUNT) | number}}
+                {{storeSettingService.storeCurrency | translate}}
+              </del>
+              <b>
+                {{(product.PRICE_AFTER_OFFER * product.COUNT) | number}}
+                {{storeSettingService.storeCurrency | translate}}
+              </b>
+            </div>
+
+          </div>
+
+        </div>
+
+        <div fxLayout="column" fxLayoutAlign="start stretch" fxHide.gt-sm
+             class="product" *ngIf="windowWidth <= 959">
+
+          <div class="nonAvailable-product m-0 px-3" fxLayout="row" fxLayoutAlign="space-between center"
+               *ngIf="checkLessAvailable(product)" fxLayoutGap="10px">
+            <a [routerLink]="'/product/' + product.product_store.ID + '/' + product.product_store.product.NAME.replace('/', '').split(' ').join('-')" class="cart-product-title" target="_blank">
+              {{product.product_store.product.NAME}}
+            </a>
+            <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="5px" class="action-part">
+              <b>{{'ناموجود' | translate}}</b>
+              <button mat-stroked-button color="warn" (click)="deleteProduct(product)">
+                <span>{{'حذف محصول' | translate}}</span>
+              </button>
+            </div>
+          </div>
+
+          <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
+
+            <button mat-icon-button color="warn" fxFlex="20px" (click)="deleteProduct(product)">
+              <mat-icon class="mat-icon-size" style="--mat-size: 20px">close</mat-icon>
+            </button>
+
+            <div fxFlex="50px" fxLayout="column" fxLayoutAlign="center center">
+              <image-lazy *ngIf="product.product_store.product.IMAGE && !product.product_store.product.IMAGE.includes('null') else noImage"
+                          [src]="imageUrl + '/assets/img/products/' + product.product_store.product.IMAGE"
+                          [alt]="product.product_store.product.NAME" [title]="product.product_store.product.NAME" class="img-fluid product-image"></image-lazy>
+              <ng-template #noImage>
+                <img src="../../../../assets/img/default/product.png"
+                     class="img-fluid product-image" [alt]="product.product_store.product.NAME">
+              </ng-template>
+            </div>
+
+            <div fxLayout="column" fxLayoutAlign="start stretch" fxFlex
+                 class="product-detail" fxLayoutGap="7px">
+
+              <a [routerLink]="'/product/' + product.product_store.ID + '/' + product.product_store.product.NAME.replace('/', '').split(' ').join('-')"
+                 fxLayout="row" fxLayoutAlign="start center" class="cart-product-title" target="_blank">
+                <mat-icon style="color:blue;" *ngIf="checkHasGuarantee(product)">verified</mat-icon>
+                {{product.product_store.product.NAME}}
+              </a>
+
+              <div fxLayout="row" fxLayoutAlign="start center"
+                   *ngIf="product?.order_product_details?.length && product?.order_product_details[0]?.ProductFeature1?.VALUE">
+                <span>{{'رنگ' | translate}}</span>
+                <span>:</span>
+                <div class="product-detail-color"
+                     [style]="{'background-color': product?.order_product_details[0]?.ProductFeature1?.VALUE}"></div>
+              </div>
+
+              <div fxLayout="row" fxLayoutAlign="start center"
+                   *ngIf="product?.order_product_details?.length && product?.order_product_details[0]?.ProductFeature2?.VALUE">
+                <span>{{product?.order_product_details[0]?.ProductFeature2?.feature?.NAME}}</span>
+                <span>:</span>
+                <span>{{product?.order_product_details[0]?.ProductFeature2?.VALUE}}</span>
+              </div>
+
+              <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="10px">
+
+                <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="5px" class="action-buttons">
+
+                  <ng-container *ngIf="modulesService.productInputCounter else defaultCounter">
+                    <mat-form-field appearance="outline" fxFlex="90px">
+                      <mat-label> {{'مقدار' | translate }} </mat-label>
+                      <input [(ngModel)]="product.LOCAL_COUNT" matInput autocomplete="off" type="number">
+                      <button mat-icon-button matSuffix color="accent" (click)="editProductInCart(product, true)">
+                        <mat-icon>done</mat-icon>
+                      </button>
+                    </mat-form-field>
+                  </ng-container>
+
+                  <ng-template #defaultCounter>
+                    <button mat-stroked-button color="accent" (click)="addToCart(product)" fxFlex="30px"
+                            fxLayoutAlign="center center">
+                      <mat-icon class="mat-icon-size" style="--mat-size: 16px">add</mat-icon>
+                    </button>
+                    <span class="px-2">{{product.COUNT}}</span>
+                    <button mat-stroked-button color="accent" (click)="subFromCart(product)" fxFlex="30px"
+                            fxLayoutAlign="center center">
+                      <mat-icon class="mat-icon-size" style="--mat-size: 16px">remove</mat-icon>
+                    </button>
+                  </ng-template>
+                </div>
+
+                <div fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="center center" class="product-price">
+                  <del *ngIf="product.PRICE_AFTER_OFFER != product.PRICE">
+                    {{(product.PRICE * product.COUNT) | number}}
+                    {{storeSettingService.storeCurrency | translate}}
+                  </del>
+                  <b>
+                    {{(product.PRICE_AFTER_OFFER * product.COUNT) | number}}
+                    {{storeSettingService.storeCurrency | translate}}
+                  </b>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+      </ng-container>
+    </ng-container>
+
+    <ng-template #emptyCart>
+      <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px" fxFill>
+        <b fxLayout="row" fxLayoutAlign="center center" class="text-center">
+          <mat-icon color="warn">production_quantity_limits</mat-icon>
+          {{'سبد خرید شما خالی است' | translate}}
+        </b>
+        <a mat-stroked-button color="primary"
+           [routerLink]="(modulesService.isBazargardon || modulesService.isMotolead) ? '/store/category/1':'/store'"
+           (click)="cartService.cartSidenav = CartSidenavStatus.close">
+          {{'صفحه محصولات' | translate}}
+        </a>
+      </div>
+    </ng-template>
+
+  </div>
+
+  <div fxLayout="row" fxLayoutAlign="start center"
+       fxLayoutGap="10px" class="submit-action">
+    <a mat-raised-button color="primary" class="p-2"
+       fxLayoutAlign="center center" fxFlex
+       (click)="routeToFactor()"
+       [disabled]="checkCart()">
+      <span>{{'تأیید نهایی' | translate}}</span>
+      <b>
+        {{sourceCart?.PRODUCTS_SUM | number}}
+        {{storeSettingService.storeCurrency | translate}}
+      </b>
+      &nbsp;
+      <span *ngIf="checkLessAvailable()">({{'عدم موجودی' | translate}})</span>
+
+    </a>
+    <button mat-raised-button color="warn" class="p-2" (click)="deleteCart()"
+            [disabled]="sourceCart?.order_products?.length < 1">
+      <mat-icon>delete</mat-icon>
+    </button>
+  </div>
+
+</div>

@@ -1,0 +1,38 @@
+<div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="10px">
+
+  <div fxLayout="row" fxLayoutAlign="space-between center">
+    <b>{{'نظر شما' | translate}}</b>
+    <button (click)="closeDialog()" mat-icon-button color="warn">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <div>
+    <mat-divider></mat-divider>
+  </div>
+
+  <mat-form-field appearance="outline" fxFlex>
+    <mat-label>
+      {{ "کاراکتر مجاز" | translate }}:
+      {{commentMaxChar}}
+      /
+      {{comment.length}}
+    </mat-label>
+
+    <textarea matInput rows="5" [placeholder]="'دیدگاه شما' | translate"
+              [maxlength]="commentMaxChar" [(ngModel)]="comment" [readonly]="readOnly"></textarea>
+  </mat-form-field>
+
+  <rate [inputRate]="rate" (rate)="rate = $event" [disabled]="readOnly"></rate>
+
+  <div fxLayout="end center" fxLayoutAlign="end center" fxLayoutGap="5px">
+    <button mat-stroked-button color="warn" (click)="closeDialog()">
+      {{'بستن' | translate}}
+    </button>
+    <button mat-raised-button [disabled]="!comment || readOnly"
+            color="primary" (click)="submit()">
+      {{'ثبت' | translate}}
+    </button>
+  </div>
+
+</div>

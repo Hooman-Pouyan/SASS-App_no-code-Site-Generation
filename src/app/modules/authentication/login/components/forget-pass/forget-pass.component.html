@@ -1,0 +1,67 @@
+<div *ngIf="firstStep" fxLayout="column" fxLayoutAlign="start stretch">
+  <p>
+    {{'بازیابی رمز عبور' | translate }}
+  </p>
+  <p *ngIf="modulesService.lang === 'fa'">
+    {{'لطفا شماره موبایل خود را وارد کنید' | translate }}:
+  </p>
+  <p *ngIf="modulesService.lang !== 'fa'">
+    {{'لطفا ایمیل خود را وارد کنید' | translate }}:
+  </p>
+
+  <mat-form-field appearance="outline">
+    <mat-label *ngIf="modulesService.lang === 'fa'">{{'شماره همراه' | translate }} </mat-label>
+    <mat-label *ngIf="modulesService.lang !== 'fa'">{{'ایمیل' | translate }} </mat-label>
+    <input [(ngModel)]="username" matInput autocomplete="off" type="text">
+  </mat-form-field>
+
+  <button (click)="getVerifyCode()" [disabled]="!username" mat-raised-button color="primary">
+    {{'تأیید' | translate }}
+  </button>
+</div>
+
+<div *ngIf="!firstStep" fxLayout="column" fxLayoutAlign="start stretch">
+
+  <p>
+    {{'کد تأیید' | translate }}
+  </p>
+
+  <p>
+    {{'کد ارسال شده را وارد کنید' | translate }}
+    ({{"زمان باقی مانده" | translate }} : {{otp_timer}})
+  </p>
+
+  <mat-form-field appearance="outline">
+    <mat-label> {{'کد تأیید' | translate }} </mat-label>
+    <input [(ngModel)]="otp_code" matInput autocomplete="off" type="text">
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label> {{'رمز عبور' | translate }}</mat-label>
+    <input [(ngModel)]="password" [type]="hidePassword ? 'password' : 'text'" autocomplete="off" matInput>
+    <mat-icon style="cursor: pointer" matSuffix (click)="hidePassword = !hidePassword">
+      {{ hidePassword ? 'visibility' : 'visibility_off' }}
+    </mat-icon>
+    <mat-hint>{{'رمز عبور حداقل باید 6 کاراکتر باشد' | translate }}</mat-hint>
+    <mat-error>
+      {{'رمز عبور حداقل باید 6 کاراکتر باشد' | translate }}
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label> {{'تکرار رمز عبور' | translate }} </mat-label>
+    <input [(ngModel)]="passwordConfirm" [type]="hidePassword ? 'password' : 'text'" autocomplete="off" matInput>
+    <mat-icon style="cursor: pointer" matSuffix (click)="hidePassword = !hidePassword">
+      {{ hidePassword ? 'visibility' : 'visibility_off' }}
+    </mat-icon>
+    <mat-error>
+      {{'تکرار رمز عبور صحیح نیست' | translate }}
+    </mat-error>
+  </mat-form-field>
+
+  <button (click)="resetPassword()" mat-raised-button [disabled]="password != passwordConfirm && !otp_code"
+    color="primary" mat-dialog-close>
+    {{'تأیید' | translate }}
+  </button>
+
+</div>

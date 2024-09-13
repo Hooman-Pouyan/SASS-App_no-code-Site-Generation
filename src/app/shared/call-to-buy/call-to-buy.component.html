@@ -1,0 +1,65 @@
+<div fxLayout="column" fxLayoutAlign="start stretch">
+
+  <div fxLayout="row" fxLayoutAlign="space-between center">
+    <b>
+      {{'ارتباط بگیرید' | translate}}
+    </b>
+    <button mat-icon-button color="warn"
+            (click)="dialogRef.close()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <div>
+    <mat-divider></mat-divider>
+  </div>
+
+  <p>
+    برای اطلاع از آخرین قیمت محصول از راه های ارتباطی زیر با ما در ارتباط باشید
+  </p>
+
+  <div fxLayout="row wrap" fxLayoutAlign="space-between stretch" class="call-options">
+
+    <a fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="10px" fxFlex="49%"
+       mat-stroked-button color="primary"
+       *ngIf="!modulesService.quiz"
+       [href]="'tel:' + storeSettingService.store.phone">
+      <mat-icon>phone</mat-icon>
+      {{'تماس تلفنی' | translate }}
+    </a>
+
+    <a fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="10px" fxFlex="49%"
+       *ngIf="instagram" [href]="instagram"
+       mat-stroked-button color="primary">
+      <img src="../../../assets/icons/socials/instagram.svg" class="img-fluid"
+           title="instagram" alt="instagram">
+      اینستاگرام
+    </a>
+
+    <a fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="10px" fxFlex="49%"
+       *ngIf="telegram" [href]="telegram"
+       mat-stroked-button color="primary">
+      <img src="../../../assets/icons/socials/telegram.svg" class="img-fluid"
+           title="telegram" alt="telegram">
+      تلگرام
+    </a>
+
+    <a fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="10px" fxFlex="49%"
+       *ngIf="whatsapp" [href]="whatsapp"
+       mat-stroked-button color="primary">
+      <img src="../../../assets/icons/socials/whatsapp.svg" class="img-fluid"
+           title="whatsapp" alt="whatsapp">
+      واتس اپ
+    </a>
+
+  </div>
+
+  <a fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="10px" fxFlex="33%"
+     *ngIf="storeSettingService.store.email"
+     mat-stroked-button color="primary"
+     [href]="'mailto:' + storeSettingService.store.email">
+    <mat-icon>mail</mat-icon>
+    {{storeSettingService.store.email}}
+  </a>
+
+</div>

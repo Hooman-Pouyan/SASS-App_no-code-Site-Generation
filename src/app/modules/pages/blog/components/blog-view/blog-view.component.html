@@ -1,0 +1,45 @@
+<app-header></app-header>
+
+<div fxLayout="row" fxLayoutAlign="center center">
+
+  <div class="container mt-4"
+       fxLayout="row" fxLayoutAlign="start start" fxLayoutGap.gt-sm="1.5rem"
+       fxLayout.lt-md="column-reverse" fxLayoutAlign.lt-md="start stretch">
+
+    <div class="blog" fxFlex="75%" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="0.5rem">
+      <h2 class="mt-0">{{blog.TITLE}}</h2>
+      <mat-hint fxLayout="row" *ngIf="blog.CREATE_DATE"
+                fxLayoutAlign="start center" fxLayoutGap="5px">
+        <mat-icon>calendar_month</mat-icon>
+        <span>{{blog.CREATE_DATE | jalaliDate: 'dateTime'}}</span>
+      </mat-hint>
+      <mat-hint fxLayout="row" *ngIf="blog.TAGS"
+                fxLayoutAlign="start center" fxLayoutGap="5px">
+        <mat-icon>tag</mat-icon>
+        <span>{{blog.TAGS}}</span>
+      </mat-hint>
+      <img [src]="blog.FILES" [alt]="blog.TITLE" class="img-fluid">
+      <p class="text-justify text-preWrap" [innerHTML]="blog.DESCRIPTION"></p>
+    </div>
+
+    <div fxLayout="column" fxLayoutAlign="start stretch" fxFlex
+         class="recent-blogs" fxLayoutGap="15px" *ngIf="blogs.length">
+      <b>{{"نوشته های اخیر" | translate }}</b>
+      <mat-divider></mat-divider>
+      <ng-container *ngFor="let recentBlog of blogs | slice: -3">
+        <a [routerLink]="'../../' + recentBlog.ID + '/' + recentBlog.TITLE.split(' ')?.join('-')"
+           fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="5px">
+          <img [src]="recentBlog.FILES" [alt]="recentBlog.TITLE" class="img-fluid" fxFlex="30%">
+          <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="5px">
+            <span>{{recentBlog.TITLE}}</span>
+            <span>{{recentBlog.CREATE_DATE | jalaliDate}}</span>
+          </div>
+        </a>
+      </ng-container>
+    </div>
+
+  </div>
+
+</div>
+
+<app-footer></app-footer>

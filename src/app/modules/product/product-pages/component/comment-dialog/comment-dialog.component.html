@@ -1,0 +1,97 @@
+<div class="comment-dialog" fxLayout="column" fxLayoutAlign="start stretch">
+
+  <div class="" fxLayout="row" fxLayoutAlign="end stretch">
+    <mat-icon (click)="dialogRef.close()" style="cursor:pointer">
+      close
+    </mat-icon>
+  </div>
+
+  <h2 class="title"> {{"دیدگاه شما" | translate }}
+  </h2>
+  <span class="product-title"> درباره {{ data.product_name }} </span>
+
+  <div fxLayout="row" fxLayoutAlign="space-between center">
+    <p>{{"امتیاز شما به کالا:" | translate}}</p>
+    <rate [inputRate]="newCommentRate" (rate)="newCommentRate = $event"></rate>
+  </div>
+
+  <div class="input" fxLayout="row" fxLayoutAlign="space-between center">
+    <mat-form-field class="example-full-width" appearance="outline" fxFlex>
+      <mat-label>
+                <span class="badge blueBg">
+                  {{ "کاراکتر مجاز" | translate }}:
+                  {{commentMaxChar}}
+                  /
+                  {{newComment.length}}
+                </span>
+      </mat-label>
+
+      <textarea matInput rows="5" [placeholder]="'دیدگاه شما' | translate" [maxlength]="commentMaxChar"
+                [(ngModel)]="newComment"></textarea>
+    </mat-form-field>
+  </div>
+
+  <mat-form-field appearance="outline">
+    <mat-chip-list #chipListGood>
+      <input placeholder="نکات مثبت"
+             [matChipInputFor]="chipListGood"
+             [matChipInputAddOnBlur]="true"
+             (matChipInputTokenEnd)="chipListGood.value = $event">
+    </mat-chip-list>
+    <button matSuffix mat-icon-button aria-label="Clear" (click)="addOnGood(chipListGood.value)">
+      <mat-icon>add</mat-icon>
+    </button>
+  </mat-form-field>
+
+
+  <div fxLayout="row weap" fxLayoutAlign="start center" fxLayoutGap="8px">
+    <button mat-raised-button color="primary" *ngFor="let good of goodAdvise" fxFlex="18%"
+            style="border-radius: 25px">
+      <span> {{good}}</span>
+      <mat-icon (click)="removeOnGood(good)">delete</mat-icon>
+    </button>
+  </div>
+
+  <mat-form-field appearance="outline">
+    <mat-chip-list #chipListBad>
+      <input placeholder="نکات منفی"
+             [matChipInputFor]="chipListBad"
+             [matChipInputAddOnBlur]="true"
+             (matChipInputTokenEnd)="chipListBad.value = $event">
+    </mat-chip-list>
+    <button matSuffix mat-icon-button aria-label="Clear" (click)="addOnBad(chipListBad.value)">
+      <mat-icon>add</mat-icon>
+    </button>
+  </mat-form-field>
+  <div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="8px">
+    <button mat-raised-button color="primary" (click)="removeOnBad(bad)" *ngFor="let bad of badAdvise" fxFlex="18%"
+            style="border-radius: 25px">
+      <span>
+              {{bad}}
+      </span>
+      <mat-icon>delete</mat-icon>
+    </button>
+  </div>
+
+  <ng-container *ngIf="Quality.length>0">
+    <mat-form-field appearance="outline" >
+      <mat-label>دسته بندی کامنت</mat-label>
+      <mat-select [(ngModel)]="selectQuality">
+        <mat-option *ngFor="let item of Quality" [value]="item.QUALITY_CLASSIFY_ID">{{item.NAME}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-checkbox [(ngModel)]="suggestion" [checked]="suggestion === true">
+      این محصول را پیشنهاد میکنم
+    </mat-checkbox>
+  </ng-container>
+
+
+  <div class="" fxLayout="row" fxLayoutAlign="end stretch">
+    <button mat-stroked-button color="primary" fxFlex="20%" (click)="submit()" [disabled]="newComment == ''">
+      ثبت
+    </button>
+  </div>
+
+
+</div>

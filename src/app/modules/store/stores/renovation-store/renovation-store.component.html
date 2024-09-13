@@ -1,0 +1,28 @@
+<app-header></app-header>
+
+<div fxLayout="column" class="renovation-store" fxLayoutAlign="center center">
+
+  <div fxLayoutAlign="center center" class="img-info">
+    <div class="color-overlay"></div>
+    <p>Renovate your house</p>
+  </div>
+
+  <mat-card class="store-info">
+    <p>Please select the part of the house that you want to renovate</p>
+  </mat-card>
+
+  <div class="categories" fxLayout="row wrap" fxLayoutAlign="space-around center">
+    <div class="category" fxFlex="21%" *ngFor="let category of categories"
+         fxLayout="column" fxLayoutAlign="space-between center">
+      <img [src]="adminImageUrlDevelop + '/assets/img/categories/category_logo/' + category.PRODUCT_NAME"
+           class="img-fluid" [alt]="category.NAME" fxFlex="40%">
+      <h2 class="title">{{category.NAME}}</h2>
+      <a [routerLink]=" './' + category.PRODUCT_ID" target="_blank">
+        <button mat-flat-button class="action">PLACE AN ORDER</button>
+      </a>
+    </div>
+  </div>
+
+</div>
+
+<app-footer></app-footer>

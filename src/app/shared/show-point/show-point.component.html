@@ -1,0 +1,16 @@
+<div class="score-badge" *ngIf="!credentialsService.isGuest && modulesService.rankPoint &&
+      userService.user?.POINT && userService.user?.RANK ">
+  <img src="../../../assets/icons/badge.png" style="width: 50px; height: auto" alt="badge">
+  <span class="rank">
+    {{userService.user.RANK}}
+  </span>
+  <div class="rank-information">
+    <span> {{'رتبه شما' | translate }} :
+      {{userService.user.RANK}}
+    </span>
+    <span>
+      {{'امتیاز شما' | translate }} :
+      {{userService.user.POINT}}
+    </span>
+  </div>
+</div>

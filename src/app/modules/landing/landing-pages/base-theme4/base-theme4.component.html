@@ -1,0 +1,221 @@
+<app-header></app-header>
+
+<div fxLayout="column" fxLayoutAlign="start stretch" class="landing-base-theme4">
+
+  <div class="base-theme4-slider"
+       cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+       [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme4-slider')"
+       (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme4-slider')">
+
+    <swiper [config]="mainSliderConfig" class="mySwiper">
+      <ng-container *ngFor="let sliderIdx of dynamicMediaService.mediaSliderLoop">
+        <ng-template swiperSlide *ngIf="dynamicMediaService.getMedia('slider' + sliderIdx)">
+          <div fxFill fxLayout="column" fxLayoutAlign="start stretch">
+            <a *ngIf="dynamicMediaService.getMediaLink('slider' + sliderIdx) else noLink"
+               [href]="dynamicMediaService.getMediaLink('slider' + sliderIdx)" target="_blank">
+              <image-lazy [src]="dynamicMediaService.getMedia('slider' + sliderIdx)"
+                          fxLayout="row" fxLayoutAlign="center center"
+                          [alt]="'slider' + sliderIdx" class="text-center img-fluid" editElement
+                          [editType]="'slider' + sliderIdx"></image-lazy>
+            </a>
+            <ng-template #noLink>
+              <image-lazy [src]="dynamicMediaService.getMedia('slider' + sliderIdx)"
+                          fxLayout="row" fxLayoutAlign="center center"
+                          [alt]="'slider' + sliderIdx" class="text-center img-fluid" editElement
+                          [editType]="'slider' + sliderIdx"></image-lazy>
+            </ng-template>
+          </div>
+        </ng-template>
+      </ng-container>
+    </swiper>
+  </div>
+<!--  <counter-section *ngIf="modulesService.customerCounter"></counter-section>-->
+  <div fxLayout="row" fxLayoutAlign="center center" *ngIf="productsSummary.products?.length" class="my-5">
+    <div class="container" fxLayout="column" fxLayoutAlign="start stretch"
+         cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+         [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme4-upper-products')"
+         (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme4-upper-products')">
+
+      <products-slider [products]="productsSummary.products" [queryParams]="productsSummary.query"
+                       [title]="productsSummary.name" [link]="productsSummary.link">
+      </products-slider>
+    </div>
+  </div>
+
+  <div fxLayout="column" fxLayoutAlign="start stretch" class="base-theme4-upper-decoratives my-4">
+    <svg xmlns="http://www.w3.org/2000/svg" class="svg-bottom mb-n5" width="2400" height="134.863"
+         viewBox="0 0 2400 134.863">
+      <path id="Path_48" data-name="Path 48"
+            d="M0,3.531S160.64-39.841,408.9-50.608C622.178-59.858,819.23-9.89,1074.483-16.367c154.085-3.91,466.9-63.265,597.78-63.265,183.644,0,291.42,43.537,462.365,49.342S2400-44.8,2400-44.8V55.231H0Z"
+            transform="translate(0 79.632)" style="fill: var(--custom-primary-color)"/>
+    </svg>
+
+    <div fxLayout="row" fxLayoutAlign="center center" class="decoratives-content">
+      <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="space-between center"
+           fxLayoutAlign.lt-md="start stretch" class="container">
+
+        <div fxLayout="column" fxLayoutAlign="start stretch" fxFlex="45%"
+             cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+             [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme4-upper-decorative-image')"
+             (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme4-upper-decorative-image')">
+          <a *ngIf="dynamicMediaService.getMediaLink('decorationUp1') else noLink"
+             [href]="dynamicMediaService.getMediaLink('decorationUp1')" target="_blank">
+            <image-lazy [src]="dynamicMediaService.getMedia('decorationUp1')" class="img-fluid"
+                        alt="" editElement editType="decorationUp1"></image-lazy>
+          </a>
+          <ng-template #noLink>
+            <image-lazy [src]="dynamicMediaService.getMedia('decorationUp1')" class="img-fluid"
+                        alt="" editElement editType="decorationUp1"></image-lazy>
+          </ng-template>
+        </div>
+
+        <span cdkDrag [cdkDragDisabled]="dragDropService.disabled" fxFlex="45%"
+              [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme4-upper-decorative-text')"
+              (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme4-upper-decorative-text')"
+              editElement editType="base-theme4-upper-decorative-text" class="text-preWrap text-justify">
+            {{ dragDropService.fieldText('base-theme4-upper-decorative-text') || dynamicMediaService.getMedia('desc1')}}
+          </span>
+      </div>
+    </div>
+
+    <svg xmlns="http://www.w3.org/2000/svg" class="svg-top mt-n5" width="2400" height="160.766"
+         viewBox="0 0 2400 160.766">
+      <path id="Path_49" data-name="Path 49" class="cls-1"
+            d="M0,571.656H2400v97.186s-174.16-87.216-767.133,0c-155.918,17.055-339.05,40.648-518.333,35.78-226.407-6.3-285.948-54.987-456.132-53.631-153.387,1.223-279.169,73.852-435.4,81.43C36.867,732.5,0,668.842,0,668.842Z"
+            transform="translate(0 -571.656)" style="fill: var(--custom-primary-color)"/>
+    </svg>
+  </div>
+
+  <div class="base-theme4-banner"
+       cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+       [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme4-banner')"
+       (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme4-banner')">
+    <a *ngIf="dynamicMediaService.getMediaLink('banner') else noLinkBanner"
+       [href]="dynamicMediaService.getMediaLink('banner')" target="_blank">
+      <image-lazy [src]="dynamicMediaService.getMedia('banner')" alt="banner"
+                  editElement editType="banner"></image-lazy>
+    </a>
+    <ng-template #noLinkBanner>
+      <image-lazy [src]="dynamicMediaService.getMedia('banner')" alt="banner"
+                  editElement editType="banner"></image-lazy>
+    </ng-template>
+  </div>
+
+  <div fxLayout="row" fxLayoutAlign="center center" *ngIf="productsSlider.products?.length" class="my-5">
+    <div class="container" fxLayout="column" fxLayoutAlign="start stretch"
+         cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+         [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme4-downer-products')"
+         (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme4-downer-products')">
+
+      <products-slider [products]="productsSlider.products" [title]="productsSlider.name"
+                       [link]="productsSlider.link" [queryParams]="productsSlider.query">
+      </products-slider>
+    </div>
+  </div>
+
+  <div class="base-theme4-category my-3" fxLayout="column">
+
+    <svg xmlns="http://www.w3.org/2000/svg" class="svg-bottom mb-n5" width="2400" height="134.863"
+         viewBox="0 0 2400 134.863">
+      <path id="Path_48" data-name="Path 48"
+            d="M0,3.531S160.64-39.841,408.9-50.608C622.178-59.858,819.23-9.89,1074.483-16.367c154.085-3.91,466.9-63.265,597.78-63.265,183.644,0,291.42,43.537,462.365,49.342S2400-44.8,2400-44.8V55.231H0Z"
+            transform="translate(0 79.632)" style="fill: var(--custom-primary-color)"/>
+    </svg>
+
+    <div fxLayout="row" fxLayoutAlign="center center" class="categories-list" *ngIf="categories.length">
+      <div fxLayout="column" class="container" fxLayoutAlign="start stretch"
+           cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+           [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme4-categories-list')"
+           (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme4-categories-list')">
+
+        <h2 cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+            [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme4-categories-title')"
+            (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme4-categories-title')"
+            editElement editType="base-theme4-categories-title">
+          {{ dragDropService.fieldText('base-theme4-categories-title') || 'دسته بندی محصولات' | translate}}
+        </h2>
+
+        <div class="my-5" fxLayout="row" fxLayout.lt-md="row wrap" fxLayoutAlign="space-evenly center">
+          <a class="each-category" ngClass.lt-md="mb-2" *ngFor="let category of categories| slice: -4"
+             [href]="'/store/category/' + category.PRODUCT_ID + '/' + category.NAME.split(' ').join('-')"
+             fxLayout="column" fxLayoutAlign="space-evenly center" fxFlex="22%" fxFlex.lt-md="42%">
+
+            <ng-container *ngIf="category.PRODUCT_NAME && category.PRODUCT_NAME != 'null' else defaultCategory">
+              <img [src]="imageUrl + '/assets/img/categories/category_logo/' + category.PRODUCT_NAME"
+                   [alt]="category.NAME" class="img-fluid">
+            </ng-container>
+            <ng-template #defaultCategory>
+              <img src="../../../../../assets/img/default/category.png" [alt]="category.NAME" class="img-fluid">
+            </ng-template>
+
+            <p class="category-desc text-center">
+              {{category.NAME}}
+            </p>
+
+          </a>
+        </div>
+
+        <a mat-raised-button color="accent"
+           [href]="dragDropService.fieldLink('base-theme4-categories-btn') || '/store'"
+           style="place-self: center" class="title"
+           cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+           [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme4-categories-btn')"
+           (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme4-categories-btn')"
+           editElement editType="base-theme4-categories-btn">
+          {{ dragDropService.fieldText('base-theme4-categories-btn') || 'محصولات' | translate}}
+        </a>
+      </div>
+    </div>
+
+    <svg xmlns="http://www.w3.org/2000/svg" class="svg-top mt-n5" width="2400" height="160.766"
+         viewBox="0 0 2400 160.766">
+      <path id="Path_49" data-name="Path 49" class="cls-1"
+            d="M0,571.656H2400v97.186s-174.16-87.216-767.133,0c-155.918,17.055-339.05,40.648-518.333,35.78-226.407-6.3-285.948-54.987-456.132-53.631-153.387,1.223-279.169,73.852-435.4,81.43C36.867,732.5,0,668.842,0,668.842Z"
+            transform="translate(0 -571.656)" style="fill: var(--custom-primary-color)"/>
+    </svg>
+
+  </div>
+
+  <div fxLayout="row" fxLayoutAlign="center center" class="base-theme4-downer-decoratives">
+    <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="space-between center"
+         fxLayoutAlign.lt-md="start stretch" class="container">
+      <div fxLayout="column" fxLayoutAlign="start center" fxFlex="45%">
+        <h2 cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+            [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme4-downer-decorative-text-title')"
+            (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme4-downer-decorative-text-title')"
+            editElement editType="base-theme4-downer-decorative-text-title">
+          {{dragDropService.fieldText('base-theme4-downer-decorative-text-title') || storeSettingService.store.name}}
+        </h2>
+        <div cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+             [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme4-downer-decorative-text-desc')"
+             (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme4-downer-decorative-text-desc')"
+             editElement editType="base-theme4-downer-decorative-text-desc" class="text-preWrap text-justify">
+          {{dragDropService.fieldText('base-theme4-downer-decorative-text-desc') || dynamicMediaService.getMedia('desc5')}}
+        </div>
+      </div>
+      <div fxLayout="column" fxLayoutAlign="start stretch" fxFlex="35%"
+           cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+           [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme4-downer-decorative-image')"
+           (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme4-downer-decorative-image')">
+        <a *ngIf="dynamicMediaService.getMediaLink('aboutStore1') else noDownerLink"
+           [href]="dynamicMediaService.getMediaLink('aboutStore1')" target="_blank">
+          <image-lazy [src]="dynamicMediaService.getMedia('aboutStore1')" class="img-fluid" alt=""
+                      editElement editType="aboutStore1"></image-lazy>
+        </a>
+        <ng-template #noDownerLink>
+          <image-lazy [src]="dynamicMediaService.getMedia('aboutStore1')" class="img-fluid" alt=""
+                      editElement editType="aboutStore1"></image-lazy>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<luck-wheel></luck-wheel>
+
+<app-section></app-section>
+
+<app-brands-slider></app-brands-slider>
+
+<app-footer></app-footer>

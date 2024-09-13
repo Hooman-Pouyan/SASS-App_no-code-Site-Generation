@@ -1,0 +1,65 @@
+<div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="1rem">
+
+  <div fxLayout="row" fxLayoutAlign="space-between center">
+    <b>انتخاب کالا برای مقایسه</b>
+    <button mat-icon-button color="warn" (click)="dialogRef.close()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <div>
+    <mat-divider></mat-divider>
+  </div>
+
+  <mat-form-field appearance="outline">
+    <mat-icon matPrefix>search</mat-icon>
+    <input type="text" matInput>
+  </mat-form-field>
+
+  <div fxLayout="row wrap" class="products-to-compare"
+       fxLayoutAlign="space-between stretch" *ngIf="products?.length">
+    <div fxLayout="column" fxFlex="50%" *ngFor="let product of products"
+         (click)="dialogRef.close(product.PRODUCT_STORE_ID)"
+         fxLayoutAlign="space-between stretch" fxLayoutGap="1rem" class="product">
+      <img *ngIf="product.IMAGE && !product.IMAGE.includes('null') else noImage"
+                  [src]="imageUrl + '/assets/img/products/' + product.IMAGE"
+                  [alt]="product.NAME" [title]="product.NAME">
+      <ng-template #noImage>
+        <img src="../../../../../assets/img/default/product.png"
+             class="img-fluid" [alt]="product.NAME">
+      </ng-template>
+      <span class="price-name" limitCharacter limit="50">{{product.NAME}}</span>
+      <div class="price-section text-left" *ngIf="product.PRICE != 1"
+           fxLayout="column" fxLayoutGap="5px">
+
+        <div fxLayout="row" fxLayoutAlign="end center" class="discount-section text-left">
+          <ng-container *ngIf="product.PRICE != product.PRICE_AFTER_OFFER">
+            <del class="before-price">
+              {{product.PRICE | number}}
+              {{storeSettingService.storeCurrency | translate}}
+            </del>
+          </ng-container>
+        </div>
+
+        <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="7px">
+          <span class="discount-percentage" *ngIf="product.PRICE != product.PRICE_AFTER_OFFER">
+            {{calculateDiscount(product.PRICE, product.PRICE_AFTER_OFFER)}}%
+          </span>
+          <b>
+            {{product.PRICE_AFTER_OFFER | number}}
+            {{storeSettingService.storeCurrency | translate}}
+          </b>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div fxLayout="row" fxLayoutAlign="end center" *ngIf="products?.length">
+    <mat-paginator [pageSizeOptions]="[5, 10, 15, 25, 50, 100]"
+                   (page)="paginatorEvent($event)"
+                   showFirstLastButtons
+                   [pageSize]="paginatorConfig.PAGE_SIZE"
+                   [length]="paginatorConfig.TOTAL_COUNT"></mat-paginator>
+  </div>
+
+</div>

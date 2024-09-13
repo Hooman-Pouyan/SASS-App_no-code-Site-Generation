@@ -1,0 +1,89 @@
+<app-header></app-header>
+
+<div fxLayout="column" fxLayoutAlign="start stretch" class="my-3">
+
+  <div class="desc jarallax" fxLayoutAlign="center center">
+    <div class="decs-text" fxLayout="column" fxLayoutAlign="center center">
+      <h2 cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+          [cdkDragFreeDragPosition]="dragDropService.findPosition('blogs-title')"
+          (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'blogs-title')"
+          editElement editType="blogs-title" class="text-center">
+        {{dragDropService.fieldText('blogs-title') || ('بلاگ' | translate)}}
+      </h2>
+      <h3 cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+          [cdkDragFreeDragPosition]="dragDropService.findPosition('blogs-sub-title')"
+          (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'blogs-sub-title')"
+          editElement editType="blogs-sub-title" class="text-center">
+        {{dragDropService.fieldText('blogs-sub-title') || ('آخرین مقالات را میتوانید در این صفحه مشاهده کنید' | translate)}}
+      </h3>
+    </div>
+    <img [src]="dynamicMediaService.getMedia('blogs-img') || defaultImage"
+         [alt]="" class="jarallax-img"
+         editElement [editType]="'blogs-img'">
+  </div>
+
+  <div class="search-bar container mt-5" fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="start center" fxLayoutGap="15px">
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{"جستجو" | translate }}</mat-label>
+      <input type="text" (keyup)="searchProducts(search.value)"
+             #search matInput autocomplete="off">
+      <mat-icon color="primary" matSuffix>search</mat-icon>
+    </mat-form-field>
+
+<!--    <mat-form-field appearance="outline" *ngIf="blogCategories.length">-->
+<!--      <mat-label>{{'انتخاب دسته بندی' | translate}}</mat-label>-->
+<!--      <mat-select [(ngModel)]="selectedCategory" (ngModelChange)="updateListCategory($event)">-->
+<!--        <mat-option *ngFor="let category of blogCategories" [value]="category.CATEGORY_NAME">-->
+<!--          {{category.CATEGORY_NAME }}-->
+<!--        </mat-option>-->
+<!--      </mat-select>-->
+<!--    </mat-form-field>-->
+
+  </div>
+
+  <div class="container mt-5" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="25px"
+       *ngIf="blogs.length else noBlog">
+    <mat-card *ngFor="let blog of blogs" fxLayout="column" fxLayoutAlign="space-between stretch">
+
+      <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="space-between start" fxLayoutGap="2rem">
+
+        <div fxLayout="column" fxLayoutAlign="space-between stretch" fxFlex="45%">
+          <div fxLayout="column" fxLayoutAlign="start stretch">
+            <h3>{{blog.TITLE}}</h3>
+            <mat-hint fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="5px">
+              <mat-icon>calendar_month</mat-icon>
+              <span>{{blog.CREATE_DATE | jalaliDate: 'dateTime'}}</span>
+            </mat-hint>
+
+            <!--          <p class="text-justify text-preWrap blog-preview">-->
+            <!--            {{blog.DESCRIPTION}}-->
+            <!--          </p>-->
+
+            <div [innerHTML]="blog.DESCRIPTION.substr(0,1500)"
+                 style="overflow-wrap: anywhere"
+            ></div>
+          </div>
+
+          <a [routerLink]="blog.ID.toString() + '/' + blog.TITLE.split(' ')?.join('-')" class="my-4 w-100"
+             mat-stroked-button color="warn">
+            {{'ادامه مطلب' | translate}}
+          </a>
+        </div>
+
+        <img [src]="blog.FILES" [alt]="blog.TITLE" class="img-fluid" fxFlex="40%">
+
+      </div>
+
+
+    </mat-card>
+
+
+  </div>
+  <ng-template #noBlog>
+    <span class="noBlog">{{'موردی یافت نشد!' | translate }}</span>
+  </ng-template>
+
+</div>
+
+<app-footer></app-footer>

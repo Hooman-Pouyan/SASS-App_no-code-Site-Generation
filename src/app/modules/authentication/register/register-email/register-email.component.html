@@ -1,0 +1,106 @@
+<div fxLayout="column" fxLayoutAlign="space-around center" class="register-user"
+     [ngStyle]="{'direction': modulesService.lang == 'fa' ? 'rtl' : 'ltr' }">
+
+  <div class="register" fxLayout="row" fxLayoutAlign="center center">
+
+    <form [formGroup]="form" class="form-body" *ngIf="step === 'dataStep'">
+
+      <div class="register-title">
+        <h4>{{'لطفا اطلاعات خود را وارد کنید' | translate }}</h4>
+      </div>
+
+      <div class="form-group" fxLayout="column" fxLayoutAlign="center center">
+
+        <mat-form-field appearance="outline">
+          <mat-label class="input-label">{{'ایمیل' | translate }}</mat-label>
+          <input formControlName="EMAIL" type="email" placeholder="{{'ایمیل' | translate }}" matInput
+                 autocomplete="off">
+          <mat-error>
+            {{'ایمیل وارد شده صحیح نیست' | translate }}!
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label class="input-label">{{'نام و نام خانوادگی' | translate }}</mat-label>
+          <input formControlName="NAME" placeholder="{{'نام و نام خانوادگی' | translate }}" matInput autocomplete="off">
+          <mat-error>
+            {{'نام و نام خانوادگی اجباری است' | translate }}
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label class="input-label">{{'پسورد' | translate }}</mat-label>
+          <input formControlName="PASSWORD" type="password" placeholder="{{'پسورد' | translate }}" matInput
+                 autocomplete="off">
+          <mat-error>
+            {{'پسورد اجباری است' | translate }}
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label class="input-label">{{'تایید پسورد' | translate }}</mat-label>
+          <input formControlName="passwordConfirm" placeholder="{{'تایید پسورد' | translate }}" type="password" matInput
+                 autocomplete="off">
+          <mat-error>
+            {{'تایید پسورد وارد شده صحیح نیست' | translate }}
+          </mat-error>
+        </mat-form-field>
+
+        <div class="check-box">
+          <mat-checkbox (click)="openLawsDialog()"
+                        (change)="termCondition = $event.checked">
+            {{'تمام قوانین را مطالعه کردم' | translate}}
+          </mat-checkbox>
+        </div>
+
+        <div class="submit-btn">
+          <button type="submit" mat-stroked-button color="primary" [disabled]="!termCondition"
+                  (click)="$event.preventDefault();confirmData()" class="confirm-phone">
+            {{'تأیید اطلاعات' | translate }}
+          </button>
+        </div>
+
+        <a routerLink="/auth" class="text-center">
+          <b>
+            {{'قبلا ثبت‌نام کرده‌ام' | translate}}
+          </b>
+        </a>
+
+      </div>
+
+    </form>
+
+    <div fxLayoutGap="10px" *ngIf="step === 'otpStep'" class="p-4" fxLayout="column" fxLayoutAlign="start stretch">
+
+      <mat-form-field appearance="outline">
+        <mat-label>{{'کد تأیید' | translate }}</mat-label>
+        <input type="number" min="1000" max="9999" matInput [(ngModel)]="otpCode">
+        <mat-error>
+          {{'لطفا کد تأیید را وارد کنید!' | translate }}
+        </mat-error>
+      </mat-form-field>
+
+      <div fxLayout="row" fxLayoutAlign="space-between center">
+        <button mat-stroked-button (click)="getOtpCode()" [disabled]="otpTimer > 0" color="primary">
+          <span>
+            {{'ارسال مجدد' | translate }}
+            {{'کد' | translate }}
+          </span>
+          <span *ngIf="otpTimer > 0">
+            (
+            {{otpTimer}}
+            {{'ثانیه' | translate}}
+            )
+          </span>
+        </button>
+        <button mat-raised-button (click)="verifyOtp()" [disabled]="!otpCode || otpCode > 9999 || otpCode < 1000"
+                color="primary">
+          <span>{{'تأیید کد' | translate }}</span>
+        </button>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

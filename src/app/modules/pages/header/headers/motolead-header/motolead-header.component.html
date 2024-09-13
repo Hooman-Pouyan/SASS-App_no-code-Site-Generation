@@ -1,0 +1,147 @@
+<header fxLayout="row" fxLayoutAlign="center center" class="motolead-header" fxHide.lt-md>
+  <div fxLayout="row" fxLayoutAlign="space-between center"
+       class="container py-1">
+
+    <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1rem">
+      <a routerLink="/">
+        <img [src]="storeSettingService.store.logo" class="img-fluid header-logo"
+             [alt]="storeSettingService.store.name">
+      </a>
+      <button mat-button [matMenuTriggerFor]="menu.childMenu">
+        {{'محصولات' | translate}}
+        <mat-icon>expand_more</mat-icon>
+        <dynamic-nested-menu #menu  [items]="categoryMenu.children"></dynamic-nested-menu>
+      </button>
+      <a routerLink="/store/category/1" [queryParams]="{'sort': 5}">
+        {{"پرفروش‌ترین کالاها" | translate}}
+      </a>
+      <a routerLink="/questions">
+        {{"سوالات پرتکرار" | translate}}
+      </a>
+      <a routerLink="/about-us">
+        {{"درباره ما" | translate}}
+      </a>
+      <a routerLink="/contact-us">
+        {{"تماس با ما" | translate}}
+      </a>
+      <a routerLink="/cooperation">
+        {{"همکاری با ما" | translate}}
+      </a>
+      <a routerLink="/blogs">
+        {{"مقالات" | translate}}
+      </a>
+      <div style="align-self: stretch;" class="py-2">
+        <mat-divider vertical class="w-100 h-100"></mat-divider>
+      </div>
+      <ng-container *ngIf="credentialsService.isGuest else loggedIn">
+        <a routerLink="/auth" class="login-btn">{{'ورود' | translate}}</a>
+        <a routerLink="/auth/register-user">{{'ثبت نام' | translate}}</a>
+      </ng-container>
+      <ng-template #loggedIn>
+        <button [dir]="modulesService.lang == 'fa' ? 'rtl' : 'ltr' "
+                [matMenuTriggerFor]="profileAction" mat-button>
+          <mat-icon class="mx-1">expand_more</mat-icon>
+          <span>{{credentialsService.credentials?.NAME}}</span>
+        </button>
+        <mat-menu #profileAction="matMenu">
+          <a mat-menu-item routerLink="/profile">
+            <mat-icon>account_circle</mat-icon>
+            <span>{{'پروفایل' | translate}}</span>
+          </a>
+          <a mat-menu-item (click)="credentialsService.logout()">
+            <mat-icon>logout</mat-icon>
+            <span>{{'خروج' | translate}}</span>
+          </a>
+        </mat-menu>
+      </ng-template>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="1rem">
+      <button mat-button ngClass.lt-md="p-0" *ngIf="modulesService.isMultipleLang"
+              [matMenuTriggerFor]="languageMenu">
+        <mat-icon class="mx-1">language</mat-icon>
+        <span>{{modulesService.lang}}</span>
+      </button>
+      <mat-menu #languageMenu="matMenu">
+        <button *ngFor="let lang of modulesService.allLanguages"
+                mat-menu-item (click)="modulesService.lang = lang">
+          <span>{{lang}}</span>
+        </button>
+      </mat-menu>
+      <button mat-button (click)="openSearchDg()">
+        <mat-icon>search</mat-icon>
+        {{'جستجو' | translate}}
+      </button>
+      <button mat-icon-button [matBadge]="cartCount" matBadgeColor="warn"
+              (click)="cartService.cartSidenav = sidenavStatus.open">
+        <mat-icon>shopping_cart</mat-icon>
+      </button>
+    </div>
+
+  </div>
+</header>
+
+<header fxHide.gt-sm fxLayout="column" fxLayoutAlign="start stretch" class="motolead-header">
+
+  <div fxLayout="row" fxLayoutAlign="space-between center" class="container">
+    <button mat-icon-button (click)="appService.headerSidenav = sidenavStatus.open"
+            cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+            [cdkDragFreeDragPosition]="dragDropService.findPosition('header-menu-drawer')"
+            (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'header-menu-drawer')">
+      <mat-icon>menu</mat-icon>
+    </button>
+
+    <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="5px">
+      <div fxLayout="row" fxLayoutAlign="end center" class="login-action">
+        <ng-container *ngIf="credentialsService.isGuest else loggedIn">
+          <a mat-stroked-button color="accent"
+             [href]="dragDropService.fieldLink('header-sign-up') || '/auth'" cdkDrag
+             [cdkDragDisabled]="dragDropService.disabled"
+             [cdkDragFreeDragPosition]="dragDropService.findPosition('header-sign-up')"
+             (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'header-sign-up')">
+            {{'ورود به حساب' | translate}}
+          </a>
+        </ng-container>
+        <ng-template #loggedIn>
+          <button [dir]="modulesService.lang == 'fa' ? 'rtl' : 'ltr' "
+                  mat-button [matMenuTriggerFor]="profileAction">
+            <mat-icon class="mx-1">expand_more</mat-icon>
+            <span>{{credentialsService.credentials?.NAME}}</span>
+          </button>
+          <mat-menu #profileAction="matMenu">
+            <a mat-menu-item routerLink="/profile">
+              <mat-icon>account_circle</mat-icon>
+              <span>{{'پروفایل' | translate}}</span>
+            </a>
+            <a mat-menu-item (click)="credentialsService.logout()">
+              <mat-icon>logout</mat-icon>
+              <span>{{'خروج' | translate}}</span>
+            </a>
+          </mat-menu>
+        </ng-template>
+      </div>
+      <button mat-icon-button (click)="appService.goBack()">
+        <mat-icon>
+          west
+        </mat-icon>
+      </button>
+    </div>
+
+  </div>
+
+  <mat-divider *ngIf="!modulesService.isInfoBase"></mat-divider>
+
+  <div *ngIf="!modulesService.isInfoBase"
+       fxLayout="row" fxLayoutAlign="space-between center" class="container pt-2" fxLayoutGap="20px">
+    <search [circleShape]="true" [useButton]="false" [searchColor]="'primary'" fxFlex
+            [ngStyle]="{'direction': modulesService.lang == 'fa' ? 'ltr' : 'rtl' }">
+    </search>
+
+    <button mat-mini-fab color="primary" [matBadge]="cartCount" matBadgeColor="warn" class="Nbox-shadow"
+            (click)="cartService.cartSidenav = sidenavStatus.open">
+      <mat-icon>shopping_cart</mat-icon>
+    </button>
+
+  </div>
+
+</header>

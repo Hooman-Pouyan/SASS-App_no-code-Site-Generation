@@ -1,0 +1,323 @@
+<div fxLayout="column" fxLayoutAlign="start stretch" class="landing-bazargardon">
+
+  <header class="bazargardon-header" fxLayout="row" fxLayoutAlign="center center">
+    <div class="container py-2" fxLayout="row" fxLayoutAlign="space-between center">
+
+      <div fxLayout="row" fxLayoutAlign="center center">
+        <div fxLayout="row" fxLayoutAlign="end center" fxHide.lt-md class="login-action">
+          <a href="/auth"
+            *ngIf="credentialsService.isGuest else loggedIn">
+            {{'ثبت نام' | translate}}
+            /
+            {{'ورود' | translate}}
+          </a>
+          <ng-template #loggedIn>
+            <button mat-button [matMenuTriggerFor]="profileAction">
+              <mat-icon class="mx-1">expand_more</mat-icon>
+              <span>{{credentialsService.credentials?.NAME}}</span>
+            </button>
+            <mat-menu #profileAction="matMenu">
+              <a mat-menu-item href="/profile">
+                <mat-icon>account_circle</mat-icon>
+                <span>{{'پروفایل' | translate}}</span>
+              </a>
+              <a mat-menu-item (click)="credentialsService.logout()">
+                <mat-icon>logout</mat-icon>
+                <span>{{'خروج' | translate}}</span>
+              </a>
+            </mat-menu>
+          </ng-template>
+        </div>
+      </div>
+
+      <div fxLayout="row" fxHide.gt-sm fxLayoutAlign="end center" class="login-action">
+        <ng-container *ngIf="credentialsService.isGuest else loggedIn">
+          <a href="/auth">
+            {{'ثبت نام' | translate}}
+            /
+            {{'ورود' | translate}}
+          </a>
+        </ng-container>
+        <ng-template #loggedIn>
+          <button mat-button [matMenuTriggerFor]="profileAction">
+            <mat-icon class="mx-1">expand_more</mat-icon>
+            <span>{{credentialsService.credentials?.NAME}}</span>
+          </button>
+          <mat-menu #profileAction="matMenu">
+            <a mat-menu-item href="/profile">
+              <mat-icon>account_circle</mat-icon>
+              <span>{{'پروفایل' | translate}}</span>
+            </a>
+            <a mat-menu-item (click)="credentialsService.logout()">
+              <mat-icon>logout</mat-icon>
+              <span>{{'خروج' | translate}}</span>
+            </a>
+          </mat-menu>
+        </ng-template>
+      </div>
+
+      <a [href]="'tel:' + storeSettingService.store.phone" fxHide.lt-md fxLayoutAlign="center center">
+        <mat-icon>phone</mat-icon>
+        {{storeSettingService.store.phone}}
+      </a>
+    </div>
+  </header>
+
+  <div class="bazargardon-slider">
+
+    <div class="slider-header" [ngStyle]="{'left': credentialsService.isAdmin ? '50px' : '0'}"
+         fxLayout="row" fxLayoutAlign="center center">
+      <div fxLayout="row" fxLayoutAlign="space-between center" class="container">
+
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="30px" fxHide.lt-md>
+
+          <a href="/about-us">
+            {{'درباره ما' | translate}}
+          </a>
+
+          <a href="/help">
+            {{'راهنما' | translate}}
+          </a>
+
+          <a [href]="(modulesService.isBazargardon || modulesService.isMotolead) ? '/store/category/1':'/store'">
+            {{'محصولات' | translate}}
+          </a>
+
+          <!--          <a href="/store/category">-->
+          <!--            {{'دسته بندی محصولات' | translate}}-->
+          <!--          </a>-->
+          <a mat-button class="categories-drawer"
+             *ngIf="categories?.length" [matMenuTriggerFor]="categoriesMenu">
+            <span>
+              {{ 'دسته بندی محصولات' | translate}}
+            </span>
+            <mat-icon>expand_more</mat-icon>
+            <mat-menu #categoriesMenu="matMenu">
+              <a mat-menu-item [routerLink]="'/store/category/' + category.PRODUCT_ID + '/' + category.NAME.split(' ').join('-')"
+                 *ngFor="let category of categories">
+                {{category.NAME}}
+              </a>
+            </mat-menu>
+          </a>
+        </div>
+
+        <a [href]="(modulesService.isBazargardon || modulesService.isMotolead) ? '/store/category/1':'/store'" fxHide.gt-sm
+           fxLayoutAlign="center center">
+          <mat-icon>store</mat-icon>
+          {{'محصولات' | translate}}
+        </a>
+
+        <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="15px">
+
+          <a target="_blank" *ngIf="modulesService.hasApplication"
+             [href]="storeSettingService.store.appLink" mat-mini-fab download>
+            <mat-icon>android</mat-icon>
+          </a>
+
+          <button mat-mini-fab color="primary" [matBadge]="cartCount" matBadgeColor="warn"
+                  (click)="cartService.cartSidenav = cartSidenavStatus.open">
+            <mat-icon>shopping_cart</mat-icon>
+          </button>
+
+        </div>
+      </div>
+    </div>
+
+    <swiper [config]="mainSliderConfig">
+      <ng-container *ngFor="let sliderIdx of dynamicMediaService.mediaSliderLoop">
+        <ng-template swiperSlide *ngIf="dynamicMediaService.getMedia('slider' + sliderIdx)">
+          <div fxFill fxLayout="column" fxLayoutAlign="start stretch">
+            <a *ngIf="dynamicMediaService.getMediaLink('slider' + sliderIdx) else noLink"
+               [href]="dynamicMediaService.getMediaLink('slider' + sliderIdx)" target="_blank">
+              <image-lazy [src]="dynamicMediaService.getMedia('slider' + sliderIdx)"
+                          fxLayout="row" fxLayoutAlign="center center"
+                          [alt]="'slider' + sliderIdx" class="text-center img-fluid" editElement
+                          [editType]="'slider' + sliderIdx"></image-lazy>
+            </a>
+            <ng-template #noLink>
+              <image-lazy [src]="dynamicMediaService.getMedia('slider' + sliderIdx)"
+                          fxLayout="row" fxLayoutAlign="center center"
+                          [alt]="'slider' + sliderIdx" class="text-center img-fluid" editElement
+                          [editType]="'slider' + sliderIdx"></image-lazy>
+            </ng-template>
+          </div>
+        </ng-template>
+      </ng-container>
+    </swiper>
+  </div>
+
+  <div class="bazargardon-decor" fxLayout="row" fxLayoutAlign="center center">
+    <div class="container py-5" fxLayout="row" fxLayoutAlign="space-between center">
+
+      <div *ngFor="let idx of [1,2,3]" fxFlex="30%" fxLayout="column" fxLayoutAlign="start stretch">
+        <a *ngIf="dynamicMediaService.getMediaLink('latest'+idx+'_img')"
+           [href]="dynamicMediaService.getMediaLink('latest'+idx+'_img')" class="bazargardon-decor-img"
+           target="_blank">
+          <image-lazy [src]="dynamicMediaService.getMedia('latest' + idx + '_img')"
+                      [alt]="'latest'+idx+'_img'" class="img-fluid"
+                      editElement [editType]="'latest'+idx+'_img'"></image-lazy>
+        </a>
+        <image-lazy *ngIf="!dynamicMediaService.getMediaLink('latest'+idx+'_img')"
+                    [src]="dynamicMediaService.getMedia('latest' + idx + '_img')"
+                    [alt]="'latest'+idx+'_img'" class="img-fluid"
+                    editElement [editType]="'latest'+idx+'_img'"></image-lazy>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="bazargardon-decoratives container" fxLayout="row" fxLayoutAlign="space-evenly center"
+       fxLayout.lt-md="column" fxLayoutAlign.lt-md=" stretch">
+
+    <div fxLayout="column" fxLayoutAlign=" stretch" fxFlex="63%" fxLayoutGap="10px">
+
+      <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap.lt-md="10px"
+           cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+           [cdkDragFreeDragPosition]="dragDropService.findPosition('bazargardon-decoratives-upper')"
+           (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'bazargardon-decoratives-upper')">
+
+        <div fxLayout="column" fxLayoutAlign="start stretch" fxFlex="49%">
+          <a *ngIf="dynamicMediaService.getMediaLink('feature1') else noLink"
+             [href]="dynamicMediaService.getMediaLink('feature1')" target="_blank"
+             class="bazargardon-decorative" fxLayoutAlign="center center">
+            <image-lazy [src]="dynamicMediaService.getMedia('feature1_img')" alt="bazargardon-decorative-text-0"
+                        editElement editType="feature1_img"></image-lazy>
+            <div class="decorative-description" fxLayout="column" fxLayoutAlign="start stretch">
+              <span class="text-preWrap" editElement editType="bazargardon-decorative-text-0">
+              {{dragDropService.fieldText('bazargardon-decorative-text-0') || dynamicMediaService.getMedia('feature1Desc')}}
+              </span>
+            </div>
+          </a>
+          <ng-template #noLink>
+            <div class="bazargardon-decorative" fxLayoutAlign="center center">
+              <image-lazy [src]="dynamicMediaService.getMedia('feature1_img')" alt="bazargardon-decorative-text-0"
+                          editElement editType="feature1_img"></image-lazy>
+              <div class="decorative-description" fxLayout="column" fxLayoutAlign="start stretch">
+                <span class="text-preWrap" editElement editType="bazargardon-decorative-text-0">
+              {{dragDropService.fieldText('bazargardon-decorative-text-0') || dynamicMediaService.getMedia('feature1Desc')}}
+                </span>
+              </div>
+            </div>
+          </ng-template>
+        </div>
+
+        <div fxLayout="column" fxLayoutAlign="start stretch" fxFlex="49%">
+          <a *ngIf="dynamicMediaService.getMediaLink('feature2') else noLink2"
+             [href]="dynamicMediaService.getMediaLink('feature2')" target="_blank"
+             class="bazargardon-decorative" fxLayoutAlign="center center">
+            <image-lazy [src]="dynamicMediaService.getMedia('feature2_img')" alt="bazargardon-decorative-text-1"
+                        editElement editType="feature2_img"></image-lazy>
+            <div class="decorative-description" fxLayout="column" fxLayoutAlign="start stretch">
+              <span class="text-preWrap" editElement editType="bazargardon-decorative-text-1">
+              {{dragDropService.fieldText('bazargardon-decorative-text-1') || dynamicMediaService.getMedia('feature2Desc')}}
+              </span>
+            </div>
+          </a>
+          <ng-template #noLink2>
+            <div class="bazargardon-decorative" fxLayoutAlign="center center">
+              <image-lazy [src]="dynamicMediaService.getMedia('feature2_img')" alt="bazargardon-decorative-text-1"
+                          editElement editType="feature2_img"></image-lazy>
+              <div class="decorative-description" fxLayout="column" fxLayoutAlign="start stretch">
+                <span class="text-preWrap" editElement editType="bazargardon-decorative-text-1">
+              {{dragDropService.fieldText('bazargardon-decorative-text-1') || dynamicMediaService.getMedia('feature2Desc')}}
+                </span>
+              </div>
+            </div>
+          </ng-template>
+        </div>
+
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign=" stretch"
+           cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+           [cdkDragFreeDragPosition]="dragDropService.findPosition('bazargardon-decoratives-downer')"
+           (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'bazargardon-decoratives-downer')">
+        <a *ngIf="dynamicMediaService.getMediaLink('feature3') else noLink3"
+           [href]="dynamicMediaService.getMediaLink('feature3')" target="_blank"
+           class="bazargardon-decorative" fxLayoutAlign="center center">
+          <image-lazy [src]="dynamicMediaService.getMedia('feature3_img')" alt="bazargardon-decorative-text-2"
+                      editElement editType="feature3_img"></image-lazy>
+          <div class="decorative-description" fxLayout="column" fxLayoutAlign="start stretch">
+              <span class="text-preWrap" editElement editType="bazargardon-decorative-text-2">
+              {{dragDropService.fieldText('bazargardon-decorative-text-2') || dynamicMediaService.getMedia('feature3Desc')}}
+              </span>
+          </div>
+        </a>
+        <ng-template #noLink3>
+          <div class="bazargardon-decorative" fxLayoutAlign="center center">
+            <image-lazy [src]="dynamicMediaService.getMedia('feature3_img')" alt="bazargardon-decorative-text-2"
+                        editElement editType="feature3_img"></image-lazy>
+            <div class="decorative-description" fxLayout="column" fxLayoutAlign="start stretch">
+                <span class="text-justify" editElement editType="bazargardon-decorative-text-2">
+              {{dragDropService.fieldText('bazargardon-decorative-text-2') || dynamicMediaService.getMedia('feature3Desc')}}
+                </span>
+            </div>
+          </div>
+        </ng-template>
+      </div>
+
+    </div>
+
+    <div fxLayout="column" fxLayoutAlign=" stretch" fxFlex="30%"
+         cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+         [cdkDragFreeDragPosition]="dragDropService.findPosition('bazargardon-decoratives-stretched')"
+         (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'bazargardon-decoratives-stretched')">
+      <a *ngIf="dynamicMediaService.getMediaLink('feature4') else noLink4"
+         [href]="dynamicMediaService.getMediaLink('feature4')" target="_blank"
+         class="bazargardon-decorative" fxLayoutAlign="center center">
+        <image-lazy [src]="dynamicMediaService.getMedia('feature4_img')" alt="bazargardon-decorative-text-3"
+                    editElement editType="feature4_img"></image-lazy>
+        <div class="decorative-description" fxLayout="column" fxLayoutAlign="start stretch">
+            <span class="text-preWrap" editElement editType="bazargardon-decorative-text-3">
+              {{dragDropService.fieldText('bazargardon-decorative-text-3') || dynamicMediaService.getMedia('feature4Desc')}}
+            </span>
+        </div>
+      </a>
+      <ng-template #noLink4>
+        <div class="bazargardon-decorative" fxLayoutAlign="center center">
+          <image-lazy [src]="dynamicMediaService.getMedia('feature4_img')" alt="bazargardon-decorative-text-3"
+                      editElement editType="feature4_img"></image-lazy>
+          <div class="decorative-description" fxLayout="column" fxLayoutAlign="start stretch">
+              <span class="text-preWrap" editElement editType="bazargardon-decorative-text-3">
+              {{dragDropService.fieldText('bazargardon-decorative-text-3') || dynamicMediaService.getMedia('feature4Desc')}}
+              </span>
+          </div>
+        </div>
+      </ng-template>
+    </div>
+
+  </div>
+
+  <div class="bazargardon-banner my-3"
+       cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+       [cdkDragFreeDragPosition]="dragDropService.findPosition('bazargardon-banner')"
+       (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'bazargardon-banner')">
+    <a [href]="dynamicMediaService.getMediaLink('banner')" target="_blank"
+       *ngIf="dynamicMediaService.getMediaLink('banner') else noLinkBanner">
+      <image-lazy [src]="dynamicMediaService.getMedia('banner')"
+                  [alt]="'banner'" class="text-center img-fluid" editElement
+                  editType="banner"></image-lazy>
+    </a>
+    <ng-template #noLinkBanner>
+      <image-lazy [src]="dynamicMediaService.getMedia('banner')"
+                  [alt]="'banner'" class="text-center img-fluid" editElement
+                  editType="banner"></image-lazy>
+    </ng-template>
+  </div>
+
+  <div class="my-3 py-2" fxLayout="row" fxLayout.lt-md="column"
+       fxLayoutAlign="space-around center">
+    <img [src]="dynamicMediaService.getMedia('contactUs')"
+         fxFlex="45%" alt="contact_us" class="img-fluid" editElement editType="contactUs">
+    <div fxLayout="column" dir="rtl" fxFlex="45%" fxLayoutAlign="center center">
+      <contact-us-form></contact-us-form>
+    </div>
+  </div>
+
+</div>
+
+<app-section></app-section>
+
+<app-brands-slider></app-brands-slider>
+
+<app-footer></app-footer>

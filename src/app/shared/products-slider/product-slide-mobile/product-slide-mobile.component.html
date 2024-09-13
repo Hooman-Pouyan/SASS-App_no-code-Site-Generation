@@ -1,0 +1,81 @@
+<div fxLayout="column" fxLayoutAlign="space-between stretch" class="product-mobile product-border"
+  [ngClass]="{'dark-class': theme == 'dark' }">
+
+  <a [routerLink]="'/product/' + (product.PRODUCT_STORE_ID || product.PRODUCT_ID) + '/' + product.NAME.replace('/', '').split(' ').join('-')"
+     fxFlex="55%" target="_blank" class="images-slide-mobile p-relative" style="align-self:center;">
+    <image-lazy *ngIf="product.IMAGE && !product.IMAGE.includes('null') else noImage"
+                [src]="imageUrl + '/assets/img/products/' + product.IMAGE" addClass="product-slide-img"
+                [alt]="product.NAME" [title]="product.NAME" (load)="imgProductLoaded = true"></image-lazy>
+    <ng-template #noImage>
+      <img src="../../../../assets/img/default/product.png"
+           class="img-fluid" [alt]="product.NAME" (load)="imgProductLoaded = true">
+    </ng-template>
+
+    <div class="non-available-product-watermark" fxLayout="column" fxLayoutAlign="center center"
+         *ngIf="!checkProductStatus(product.PRODUCT_STATUS_ID) && imgProductLoaded">
+      <div fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="10px"
+           class="text-block">
+        <b>{{productStatusName(product.PRODUCT_STATUS_ID)}}</b>
+      </div>
+    </div>
+
+    <div class="product-offer-watermark" fxLayout="column" fxLayoutAlign="start end"
+         *ngIf="product.PRICE != product.PRICE_AFTER_OFFER && modulesService.isMezon8 &&
+         checkProductStatus(product.PRODUCT_STATUS_ID) && imgProductLoaded">
+      <div fxLayout="column" fxLayoutAlign="start center"
+           class="text-block">
+        <span>{{'حراج' | translate}}</span>
+      </div>
+    </div>
+  </a>
+
+  <div class="product-description" fxLayout="column" [ngClass]="{'dark-font': theme == 'dark' }">
+    <a [routerLink]="'/product/' + (product.PRODUCT_STORE_ID || product.PRODUCT_ID) + '/' + product.NAME.replace('/', '').split(' ').join('-')"
+       style="font-size:12px;" target="_blank" limitCharacter [limit]="50">{{product.NAME | translate }}</a>
+  </div>
+
+  <div class="price-section" fxLayout="column" fxLayoutGap="2px" [ngClass]="{'dark-font': theme == 'dark' }">
+
+    <div fxLayout="row" fxLayoutAlign="space-between center" class="price text-left">
+
+      <ng-container *ngIf="product.PRICE != product.PRICE_AFTER_OFFER">
+        <del class="before-price">
+          {{product.PRICE | number}}
+          {{storeSettingService.storeCurrency | translate}}
+        </del>
+      </ng-container>
+
+    </div>
+
+  </div>
+
+  <div fxLayout="row" fxLayoutAlign="space-between end" class="discount-section" *ngIf="product.PRICE != 1 else specialProduct">
+
+    <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="2px" class="discount">
+      <span class="discount-percentage"
+        *ngIf="(product.PRICE != product.PRICE_AFTER_OFFER) && calculateDiscount(product.PRICE, product.PRICE_AFTER_OFFER) != 0">
+        {{calculateDiscount(product.PRICE, product.PRICE_AFTER_OFFER)}}%
+      </span>
+
+      <b style="font-size:12px;">
+        {{product.PRICE_AFTER_OFFER | number}}
+        {{storeSettingService.storeCurrency | translate}}
+      </b>
+    </div>
+
+    <button mat-flat-button color="primary" class="button-add" (click)="addToCart(product)"
+      [disabled]="!checkProductStatus(product.PRODUCT_STATUS_ID)" [ngClass]="{'dark-font': theme == 'dark' }"
+      [ngStyle]="{'opacity': checkProductStatus(product.PRODUCT_STATUS_ID) ? '1' : '0.5' }">
+      +
+    </button>
+
+  </div>
+
+  <ng-template #specialProduct>
+    <a mat-stroked-button (click)="callToBuyDialog()" class="call" color="primary">
+      <mat-icon>phone</mat-icon>
+      {{'تماس بگیرید' | translate }}
+    </a>
+  </ng-template>
+
+</div>

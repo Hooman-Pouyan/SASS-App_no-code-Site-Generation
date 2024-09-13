@@ -1,0 +1,56 @@
+#mapSection {
+  height: 300px;
+  width: 100%;
+}
+
+.container {
+  .contact-us-title {
+    font-size: 39px;
+    color: var(--custom-primary-color);
+    text-align: center;
+    margin-top: 4rem;
+    position: relative;
+    margin-bottom: 28px;
+
+    .title-back {
+      position: absolute;
+      color: #f0f0f0;
+      left: 0;
+      right: 0;
+      font-size: 80px;
+      z-index: -1;
+      top: -10px;
+      line-height: 1;
+    }
+  }
+
+  .social-media {
+    a {
+      width: 70px;
+      aspect-ratio: 1;
+      img {
+        transition: 0.2s all ease-in;
+        width: 60px;
+        aspect-ratio: 1;
+        object-fit: contain;
+        &:hover {
+          filter: invert(10%) sepia(90%) saturate(5268%) hue-rotate(245deg) brightness(109%) contrast(155%);
+        }
+      }
+    }
+  }
+}
+
+mat-card {
+  z-index: 1000;
+  background: white;
+  max-width: 75%;
+  margin: -3rem auto 2rem;
+  width: 100%;
+  padding: 40px 50px 35px;
+
+  div {
+    margin-bottom: 1rem;
+  }
+
+}

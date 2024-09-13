@@ -1,0 +1,21 @@
+.container {
+  .cooperation-title {
+    font-size: 39px;
+    color: var(--custom-primary-color);
+    text-align: center;
+    margin-top: 4rem;
+    position: relative;
+    margin-bottom: 28px;
+
+    .title-back {
+      position: absolute;
+      color: #f0f0f0;
+      left: 0;
+      right: 0;
+      font-size: 80px;
+      z-index: -1;
+      top: -10px;
+      line-height: 1;
+    }
+  }
+}

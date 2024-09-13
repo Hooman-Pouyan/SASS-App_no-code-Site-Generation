@@ -1,0 +1,425 @@
+<div class="base-theme20-landing" fxLayout="column" fxLayoutAlign="start stretch">
+
+  <section class="base20-header-top" fxLayout="column" fxLayoutAlign="center stretch">
+    <div class="header" fxLayout="row" fxLayoutAlign="start center"
+         *ngIf="appService.windowWidth > 959 else appHeader">
+
+      <div class="base20-login-action" fxLayout="row" fxLayoutAlign="center center" fxFlex="15%">
+        <button fxFlex="40%" class="base20-sign-up" [dir]="modulesService.lang == 'fa' ? 'rtl' : 'ltr' "
+                [ngStyle]="{'background-color': adjustColor(-200)}" mat-raised-button>
+          <a [href]="dragDropService.fieldLink('header-sign-up') || '/sign-up'" cdkDrag
+             [cdkDragDisabled]="dragDropService.disabled"
+             [cdkDragFreeDragPosition]="dragDropService.findPosition('header-sign-up')"
+             (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'header-sign-up')">
+            {{'ثبت نام' | translate}}
+          </a>
+        </button>
+        <div fxFlex="40%" class="base20-login-header">
+          <ng-container *ngIf="credentialsService.isGuest else loggedIn">
+            <button [dir]="modulesService.lang == 'fa' ? 'rtl' : 'ltr' " mat-button>
+              <a [href]="dragDropService.fieldLink('header-sign-up') || '/auth'" cdkDrag
+                 [cdkDragDisabled]="dragDropService.disabled"
+                 [cdkDragFreeDragPosition]="dragDropService.findPosition('header-sign-up')"
+                 (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'header-sign-up')">
+                {{'ورود' | translate}}
+              </a>
+            </button>
+
+          </ng-container>
+          <ng-template #loggedIn>
+            <button color="primary" [dir]="modulesService.lang == 'fa' ? 'rtl' : 'ltr' " mat-raised-button
+                    [matMenuTriggerFor]="profileAction" cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+                    [cdkDragFreeDragPosition]="dragDropService.findPosition('header-login')"
+                    (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'header-login')">
+              <mat-icon class="mx-1">expand_more</mat-icon>
+              <span>{{credentialsService.credentials?.NAME}}</span>
+            </button>
+            <mat-menu #profileAction="matMenu">
+              <a mat-menu-item routerLink="/profile">
+                <mat-icon>account_circle</mat-icon>
+                <span>{{'پروفایل' | translate}}</span>
+              </a>
+              <a mat-menu-item (click)="credentialsService.logout()">
+                <mat-icon>logout</mat-icon>
+                <span>{{'خروج' | translate}}</span>
+              </a>
+            </mat-menu>
+          </ng-template>
+        </div>
+
+      </div>
+
+      <div class="base20-header-icons" fxLayout="row" fxLayoutAlign="center center" fxFlex="25%">
+        <a href="" fxFlex="45.5%" fxLayout="row" fxLayoutAlign="center center">
+          پرسش های متداول
+          <mat-icon>quiz</mat-icon>
+        </a>
+        <a href="" fxFlex="45.5%" fxLayout="row" fxLayoutAlign="center center">
+          <mat-icon>help</mat-icon>
+          راهنما
+        </a>
+      </div>
+
+      <div class="base20-header-links" fxLayout="row" fxLayoutAlign="center center" fxFlex="15%">
+        <a fxFlex="40%" fxLayout="row" fxLayoutAlign="center center"
+           [href]="dragDropService.fieldLink('base-theme13-header-products') || '/store'" cdkDrag
+           [cdkDragDisabled]="dragDropService.disabled"
+           [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme13-header-products')"
+           (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme13-header-products')"
+           editElement editType="base-theme13-header-products">
+          {{(dragDropService.fieldText('base-theme13-header-products') || 'محصولات') | translate}}
+        </a>
+        <a fxFlex="40%" fxLayout="row" fxLayoutAlign="center center" *ngIf="modulesService.hasBlog"
+           [href]="dragDropService.fieldLink('base-theme13-header-blog') || '/blogs'" cdkDrag
+           [cdkDragDisabled]="dragDropService.disabled"
+           [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme13-header-blog')"
+           (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme13-header-blog')" editElement
+           editType="base-theme13-header-blog">
+          {{(dragDropService.fieldText('base-theme13-header-blog') || 'بلاگ') | translate}}
+        </a>
+      </div>
+
+      <div class="base20-header-search" fxLayout="row" fxLayoutAlign="end center" fxFlex="40%">
+        <search [circleShape]="true" [useButton]="true" [searchColor]="'primary'" style="width: 75%"
+                [ngStyle]="{'direction': modulesService.lang == 'fa' ? 'ltr' : 'rtl' }">
+        </search>
+      </div>
+
+      <div class="base20-logo" fxLayout="row" fxLayoutAlign="center center" fxFlex="10%">
+        <a href="/" cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+           [cdkDragFreeDragPosition]="dragDropService.findPosition('header-logo')"
+           (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'header-logo')">
+          <img [src]="storeSettingService.store.logo" class="img-fluid header-logo"
+               [alt]="storeSettingService.store.name">
+        </a>
+      </div>
+
+    </div>
+    <ng-template #appHeader>
+      <app-header style="width: 100%;"></app-header>
+    </ng-template>
+  </section>
+
+  <section class="base20-products-section" fxLayout="column" fxLayoutAlign="start stretch"
+           [ngStyle]="{'background-color': adjustColor(-180)}" fxLayoutGap="1%">
+
+    <div class="base20-title-section" fxLayout="column" fxLayoutAlign="start center" fxFlex="30%" fxFlex.lt-md="20%">
+      <h1 class="base20-product-title text-center">
+        محصول مورد نظر خود را در
+        {{storeSettingService.store.name}}
+        پیدا کن
+      </h1>
+
+      <p class="base20-store-moto">
+        <i>
+          تفاوت را احساس کنید
+        </i>
+      </p>
+      <search [circleShape]="true" [useButton]="false" [searchColor]="'primary'" class="base20-search-input"
+              [ngStyle]="{'direction': modulesService.lang == 'fa' ? 'ltr' : 'rtl' }">
+      </search>
+    </div>
+
+    <div cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+         [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme20-products')"
+         (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme14-products')" fxLayout="row wrap"
+         fxLayoutAlign="space-around center">
+      <ng-container *ngFor="let product of products">
+        <div class="base20-per-product" fxLayout="column" fxLayoutAlign="start center" fxFlex="22.5%"
+             fxFlex.lt-md="47.5%" [ngStyle]="{'background-color': adjustColor(-200)}" fxLayoutGap="1rem">
+                    <span class="product-name">
+                        {{product.NAME}}
+                    </span>
+          <img [src]="imageUrl + '/assets/img/products/' + product.IMAGE" fxFlex="70%">
+        </div>
+      </ng-container>
+    </div>
+
+  </section>
+
+  <section class="base20-features-section" [ngStyle]="{'background-color': adjustColor(200)}" fxLayout="column"
+           fxLayoutAlign="start stretch">
+    <div class="base20-features-cart container" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="2px"
+         fxLayoutGap.lt-md="35%"
+         fxLayoutAlign="space-around center">
+      <div class="base20-per-feature" fxLayout="column" fxLayoutAlign="start center" fxFlex="27.5%"
+           *ngFor="let feature of features | slice:-3">
+        <img [src]="feature.FILES" [alt]="feature.FILES">
+        <h4 class="feature-title">
+          {{feature.TITLE}}
+        </h4>
+        <p class="feature-desc">
+          {{
+          feature.DESCRIPTION
+          }}
+        </p>
+
+      </div>
+
+    </div>
+
+    <div class="base20-feature-description container" fxLayout="row" fxLayout.lt-md="column"
+         fxLayoutAlign="space-around center">
+
+      <div class="base20-feature-store-1" fxLayout="column" fxLayoutAlign="start center" fxFlex="42.5%">
+        <img [src]="dynamicMediaService.getMedia('base20-feature-store-img-1')" [alt]="'base20-feature-store-1'"
+             class="img-overlay" editElement editType="base20-feature-store-img-1"
+        >
+        <h4 class="base20-feature-store-title-1">
+          {{(dragDropService.fieldText('base20-feature-store-title-1') || 'بهترین کیفیت را بخرید') | translate
+          }}
+        </h4>
+        <p class="base20-feature-store-desc-1">
+          {{(dragDropService.fieldText('base20-feature-store-desc-1') || 'طراحان سایت هنگام طراحی قالب سایت معمولا با این موضوع رو برو هستند که محتوای اصلی صفحات آماده نیست. در نتیجه طرح کلی دید درستی به کار فرما نمیدهد. طراحان سایت هنگام طراحی قالب سایت معمولا با این موضوع رو برو هستند که محتوای اصلی صفحات آماده نیست. در نتیجه طرح کلی دید درستی به کار فرما نمیدهد.') | translate }}
+        </p>
+
+      </div>
+
+      <div class="vl" fxHide.lt-md></div>
+
+      <div class="base20-feature-store-2" fxLayout="column" fxLayoutAlign="start center" fxFlex="42.5%">
+        <img [src]="dynamicMediaService.getMedia('base20-feature-store-img-2')" [alt]="'base20-feature-store-2'"
+             class="img-overlay" editElement editType="base20-feature-store-img-2"
+        >
+        <h4 class="base20-feature-store-title-2">
+          {{(dragDropService.fieldText('base20-feature-store-title-2') || 'یک خرید مقرون به صرفه') | translate
+          }}
+        </h4>
+        <p class="base20-feature-store-desc-2">
+          {{(dragDropService.fieldText('base20-feature-store-desc-2') || 'طراحان سایت هنگام طراحی قالب سایت معمولا با این موضوع رو برو هستند که محتوای اصلی صفحات آماده نیست. در نتیجه طرح کلی دید درستی به کار فرما نمیدهد. طراحان سایت هنگام طراحی قالب سایت معمولا با این موضوع رو برو هستند که محتوای اصلی صفحات آماده نیست. در نتیجه طرح کلی دید درستی به کار فرما نمیدهد.') | translate }}
+        </p>
+
+      </div>
+
+    </div>
+  </section>
+
+  <section class="base20-about-us-section">
+    <div class="base20-about-us-bg">
+      <div class="bg-2"></div>
+    </div>
+    <div class="base20-about-us container" fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="center center"
+         fxLayoutGap="5%">
+      <div class="base20-about-us-desc" fxFlex="38%">
+        <h2>
+          درباره ما
+        </h2>
+        <p>
+          {{(dragDropService.fieldText('base20-feature-store-title-1') || storeSettingService.store.aboutUs)
+          }}
+        </p>
+      </div>
+
+      <div class="base20-about-us-img" fxLayout="column" fxLayoutAlign="center center" fxFlex="38%">
+        <div class="base20-about-us-underlay"></div>
+        <img [src]="dynamicMediaService.getMedia('base20-about-us-img')" [alt]="'base20-about-us-img'"
+             class="img-overlay" editElement editType="base20-about-us-img"
+        >
+      </div>
+
+    </div>
+  </section>
+
+  <section class="base20-categories-section" fxLayout="column" fxLayoutAlign="start stretch">
+    <div class="base20-categories-title" fxLayout="column" fxLayoutAlign="center center"
+         [style]="{'--first-gradient':adjustColor(150), '--second-gradient': adjustColor(0) , '--third-gradient':adjustColor(-150) }">
+      <h2 class="base20-categories-title-h">
+        {{(dragDropService.fieldText('category-desc-name') || 'دسته بندی محصولات') | translate }}
+      </h2>
+    </div>
+    <div class="base20-categories container" fxLayout="row wrap" fxLayoutAlign="space-between center"
+         fxLayoutGap="1%">
+
+      <div class="base20-category" fxLayout="column" fxLayoutAlign="start center" fxFlex="15.5%"
+           fxFlex.lt-md="35.5%" fxLayoutGap="25%" *ngFor="let category of categories | slice: -5;let idx = index">
+        <div class="base20-category-img" fxLayout="column" fxLayoutAlign="center center" fxFlex="38%">
+          <div class="base20-about-us-underlay">
+            <div class="base20-about-us-underlay-2"></div>
+          </div>
+          <img [src]="imageUrl + '/assets/img/categories/category_logo/' + category.PRODUCT_NAME" alt=""
+               class="img-fluid">
+        </div>
+        <a mat-raised-button class="category-desc-btn"
+           [href]="'/store/category/' + category.PRODUCT_ID + '/' + category.NAME.split(' ').join('-')"
+           cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+           [cdkDragFreeDragPosition]="dragDropService.findPosition('category-desc-btn-' + idx )"
+           (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'category-desc-btn-' + idx )" editElement
+           [editType]="'category-desc-btn-' + idx">
+          {{(dragDropService.fieldText('category-desc-name') || category.NAME) | translate }}
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <products-packs-slider class="base20-packSlider-section"></products-packs-slider>
+
+  <app-section></app-section>
+
+  <app-brands-slider></app-brands-slider>
+
+  <footer class="base20-footer-section" fxLayout="column" fxLayoutAlign="center stretch">
+    <div class="color-overlay" [ngStyle]="{'background-color': adjustColor(-250)}"
+         *ngIf="!credentialsService.isAdmin"></div>
+    <img [src]="dynamicMediaService.getMedia('base20-footer-section')" [alt]="'base20-footer-section'"
+         class="img-overlay" editElement editType="base20-footer-section"
+         class="img-fluid">
+
+    <div class="content-overlay" fxLayout="column" fxLayoutAlign="center stretch">
+      <div class="base20-footer-list" fxLayout="row wrap" fxLayoutAlign="space-around centr">
+
+        <div fxFlex="24.5%" fxFlex.lt-md="85.5%" fxLayout="column" fxLayoutAlign="start stretch" class="info-address"
+             fxLayoutGap="15px">
+          <h4 fxLayout="row" fxLayoutAlign="start center">
+            {{(dragDropService.fieldText('footer-address-title') || 'آدرس فروشگاه') |
+            translate}}
+          </h4>
+          <div class="address-location hover-footer" fxLayout="row" fxLayoutAlign="start center"
+               fxLayoutGap="8px">
+            <mat-icon cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+                      [cdkDragFreeDragPosition]="dragDropService.findPosition('footer-address-icon')"
+                      (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'footer-address-location-icon')"
+                      editElement editType="footer-address-location-icon">location_on
+            </mat-icon>
+            <a [href]="dragDropService.fieldLink('footer-address-location') || '/'" cdkDrag
+               [cdkDragDisabled]="dragDropService.disabled"
+               [cdkDragFreeDragPosition]="dragDropService.findPosition('footer-address-location')"
+               (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'footer-address-location')"
+               editElement editType="footer-address">
+              {{(dragDropService.fieldText('footer-address-location') || 'تهران ونک') |
+              translate}}
+            </a>
+          </div>
+          <div class="address-phone hover-footer" fxLayout="row" fxLayoutAlign="start center"
+               fxLayoutGap="8px">
+            <mat-icon cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+                      [cdkDragFreeDragPosition]="dragDropService.findPosition('footer-address-phone-icon')"
+                      (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'footer-address-phone-icon')"
+                      editElement editType="footer-address-icon">phone
+            </mat-icon>
+            <a [href]="dragDropService.fieldLink('footer-main-page') || '/'" cdkDrag
+               [cdkDragDisabled]="dragDropService.disabled"
+               [cdkDragFreeDragPosition]="dragDropService.findPosition('footer-address-phone')"
+               (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'footer-address-phone')"
+               editElement editType="footer-address-phone">
+              {{(dragDropService.fieldText('footer-address-phone') || '00989879877') |
+              translate}}
+            </a>
+          </div>
+          <div class="address-email hover-footer" fxLayout="row" fxLayoutAlign="start center"
+               fxLayoutGap="8px">
+            <mat-icon cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+                      [cdkDragFreeDragPosition]="dragDropService.findPosition('footer-address-email-icon')"
+                      (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'footer-address-email-icon')"
+                      editElement editType="footer-address-icon">email
+            </mat-icon>
+            <a [href]="dragDropService.fieldLink('footer-main-page') || '/'" cdkDrag
+               [cdkDragDisabled]="dragDropService.disabled"
+               [cdkDragFreeDragPosition]="dragDropService.findPosition('footer-address-email')"
+               (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'footer-address-email')"
+               editElement editType="footer-address-email">
+              {{(dragDropService.fieldText('footer-address-email') || 'company@info.com') |
+              translate}}
+            </a>
+          </div>
+          <div class="address-social" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+            <a [href]="socialLink(social)" target="_blank"
+               *ngFor="let social of storeSettingService.store.socials" fxFlex="24px" cdkDrag
+               [cdkDragDisabled]="dragDropService.disabled"
+               [cdkDragFreeDragPosition]="dragDropService.findPosition('base20-footer-social-' + social.type)"
+               (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base20-footer-social-' + social.type)">
+              <img [src]=" '/assets/icons/socials/' + social.type + '.svg' " class="img-fluid"
+                   [title]="social.type" [alt]="social.type">
+            </a>
+          </div>
+        </div>
+
+        <div fxFlex="24.5%" fxFlex.lt-md="30.5%" fxLayout="column" fxLayoutAlign="start stretch" class="info-categories"
+             fxLayoutGap="15px">
+          <h4 fxLayout="column" fxLayoutAlign="start stretch">
+            دسته بندی
+          </h4>
+
+          <a class="hover-footer"
+             [routerLink]="'/store/category/' + category.PRODUCT_ID + '/' + category.NAME.split(' ').join('-')"
+             *ngFor="let category of categories | slice: -4">
+            {{category.NAME}}
+          </a>
+
+        </div>
+
+        <div fxFlex="24.5%" fxFlex.lt-md="30.5%" fxLayout="column" fxLayoutAlign="start stretch" class="info-access"
+             fxLayoutGap="15px">
+          <h4>
+            دسترسی سریع
+          </h4>
+          <a [href]="dragDropService.fieldLink('footer-main-page') || '/'" cdkDrag
+             [cdkDragDisabled]="dragDropService.disabled"
+             [cdkDragFreeDragPosition]="dragDropService.findPosition('footer-main-page')"
+             (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'footer-main-page')" editElement
+             editType="footer-main-page" class="hover-footer">
+            {{(dragDropService.fieldText('footer-main-page') || 'صفحه اصلی') |
+            translate}}
+          </a>
+          <a [href]="dragDropService.fieldLink('footer-about') || '/about-us'" cdkDrag
+             [cdkDragDisabled]="dragDropService.disabled"
+             [cdkDragFreeDragPosition]="dragDropService.findPosition('footer-about')"
+             (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'footer-about')" editElement
+             editType="footer-about" class="hover-footer">
+            {{(dragDropService.fieldText('footer-about') || 'درباره ما') | translate}}
+          </a>
+          <a *ngIf="modulesService.hasBlog" [href]="dragDropService.fieldLink('footer-blog') || '/blogs'"
+             cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+             [cdkDragFreeDragPosition]="dragDropService.findPosition('footer-blog')"
+             (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'footer-blog')" editElement
+             editType="footer-blog" class="hover-footer">
+            {{(dragDropService.fieldText('footer-blog') || 'بلاگ') | translate}}
+          </a>
+          <a [href]="dragDropService.fieldLink('footer-help') || '/help'" cdkDrag
+             [cdkDragDisabled]="dragDropService.disabled"
+             [cdkDragFreeDragPosition]="dragDropService.findPosition('footer-help')"
+             (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'footer-help')" editElement
+             editType="footer-help" class="hover-footer">
+            {{(dragDropService.fieldText('footer-help') || 'راهنما') | translate}}
+          </a>
+
+        </div>
+
+        <div fxFlex="24.5%" fxFlex.lt-md="30.5%" fxLayout="row wrap" *ngIf="modulesService.lang == 'fa'"
+             class="info-namad"
+             fxLayoutAlign="space-around center" fxLayoutAlign.lt-md="center center">
+
+          <div class="enamad" id="enamad" [innerHTML]="storeSettingService.store.etemad_electronic"
+               fxFlex="30%" fxFlex.lt-md="23%"
+               *ngIf="storeSettingService.store.etemad_electronic &&  storeSettingService.store.etemad_electronic != ' '"
+               cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+               [cdkDragFreeDragPosition]="dragDropService.findPosition('footer-e-namad')"
+               (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'footer-e-namad')">
+          </div>
+          <img class="img-fluid" src="../../../../../assets/img/footer/enamad.png"
+               *ngIf="modulesService.isFreeTry" alt="enamad" fxFlex="30%" fxFlex.lt-md="23%" cdkDrag
+               [cdkDragDisabled]="dragDropService.disabled"
+               [cdkDragFreeDragPosition]="dragDropService.findPosition('footer-e-namad')"
+               (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'footer-e-namad')">
+          <div class="samandehi" id="samandehi" fxFlex="43%" fxFlex.lt-md="23%"
+               *ngIf="storeSettingService.store.samandehiId && storeSettingService.store.samandehiImg && storeSettingService.store.samandehiLink"
+               cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+               [cdkDragFreeDragPosition]="dragDropService.findPosition('footer-samandehi')"
+               (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'footer-samandehi')">
+            <img referrerpolicy='origin' [id]='storeSettingService.store.samandehiId' style='cursor:pointer'
+                 (click)='window.open(storeSettingService.store.samandehiLink, "Popup","toolbar=no, scrollbars=no, location=no, statusbar=no, menubar=no, resizable=0, width=450, height=630, top=30")'
+                 alt='logo-samandehi' [src]='storeSettingService.store.samandehiImg'/>
+          </div>
+          <img class="img-fluid" src="../../../../../assets/img/footer/samandehi.png"
+               *ngIf="modulesService.isFreeTry" alt="samandehi" fxFlex="30%" fxFlex.lt-md="23%" cdkDrag
+               [cdkDragDisabled]="dragDropService.disabled"
+               [cdkDragFreeDragPosition]="dragDropService.findPosition('footer-samandehi')"
+               (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'footer-samandehi')">
+
+        </div>
+
+      </div>
+    </div>
+  </footer>
+
+</div>

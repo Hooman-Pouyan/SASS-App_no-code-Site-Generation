@@ -1,0 +1,406 @@
+@charset "UTF-8";
+@import '~@angular/material/theming';
+@import "assets/scss/font";
+@import '../node_modules/swiper/swiper.scss';
+@import '~bootstrap/scss/bootstrap';
+
+html, body {
+  margin: 0;
+  min-height: 100%;
+  scroll-behavior: smooth;
+  box-sizing: border-box;
+}
+
+* {
+  outline: none;
+}
+
+button:focus {
+  outline: unset !important;
+}
+
+a {
+  text-decoration: none !important;
+  cursor: pointer;
+}
+
+a.disabled {
+  cursor: default;
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+del {
+  text-decoration-color: red !important;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 4px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: var(--custom-primary-color);
+}
+
+.mat-form-field-wrapper {
+  padding-bottom: 0 !important;
+}
+
+.mat-form-field-subscript-wrapper {
+  position: relative !important;
+}
+
+.mat-stroked-button.mat-primary:not(.mat-button-disabled) {
+  border-color: var(--custom-primary-color) !important;
+}
+
+.mat-stroked-button.mat-accent:not(.mat-button-disabled) {
+  border-color: var(--accent) !important;
+}
+
+.mat-stroked-button.mat-warn:not(.mat-button-disabled) {
+  border-color: red !important;
+}
+
+.mat-raised-button {
+  box-shadow: none !important;
+}
+
+.material-icons {
+  //font-family: 'Material Icons', serif;
+  font-family: 'Material Icons Outlined', serif;
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+}
+
+.material-icons-outlined {
+  font-family: 'Material Icons Outlined', serif;
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+}
+
+.gradient {
+  $light-color: var(--light-color);
+  $dark-color: var(--dark-color);
+  background: linear-gradient(-45deg, $dark-color, var(--custom-primary-color), $light-color)
+}
+
+.mat-icon-size {
+  $size: var(--mat-size);
+  font-size: $size !important;
+  width: $size !important;
+  height: $size !important;
+}
+
+.cdk-overlay-pane {
+  max-height: 99vh !important;
+}
+
+.cdk-visually-hidden {
+  margin: 0;
+}
+
+.cdk-overlay-container {
+  z-index: 1050 !important;
+}
+
+.cdk-drag-disabled {
+  .cdk-drag-handle {
+    display: none;
+  }
+}
+
+.cdk-drag-dragging {
+  border: 1px dashed blue;
+}
+
+.border-drag {
+  border: red 1px dashed;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+///////////////////////////////////////////////// custom material theme //////////////////////////////
+
+.theme-custom {
+  $custom-primary-color: (
+    50 : var(--custom-primary-color),
+    100 : var(--custom-primary-color),
+    200 : var(--custom-primary-color),
+    300 : var(--custom-primary-color),
+    400 : var(--custom-primary-color),
+    500 : var(--custom-primary-color),
+    600 : var(--custom-primary-color),
+    700 : var(--custom-primary-color),
+    800 : var(--custom-primary-color),
+    900 : var(--custom-primary-color),
+    A100 : var(--custom-primary-color),
+    A200 : var(--custom-primary-color),
+    A400 : var(--custom-primary-color),
+    A700 : var(--custom-primary-color),
+    contrast: (
+      50 : #000000,
+      100 : #000000,
+      200 : #000000,
+      300 : #ffffff,
+      400 : #ffffff,
+      500 : #ffffff,
+      600 : #ffffff,
+      700 : #ffffff,
+      800 : #ffffff,
+      900 : #ffffff,
+      A100 : #000000,
+      A200 : #000000,
+      A400 : #000000,
+      A700 : #000000,
+    )
+  );
+  $custom-accent-color: (
+    50 : var(--custom-accent-color),
+    100 : var(--custom-accent-color),
+    200 : var(--custom-accent-color),
+    300 : var(--custom-accent-color),
+    400 : var(--custom-accent-color),
+    500 : var(--custom-accent-color),
+    600 : var(--custom-accent-color),
+    700 : var(--custom-accent-color),
+    800 : var(--custom-accent-color),
+    900 : var(--custom-accent-color),
+    A100 : var(--custom-accent-color),
+    A200 : var(--custom-accent-color),
+    A400 : var(--custom-accent-color),
+    A700 : var(--custom-accent-color),
+    contrast: (
+      50 : #000000,
+      100 : #000000,
+      200 : #000000,
+      300 : #ffffff,
+      400 : #ffffff,
+      500 : #ffffff,
+      600 : #ffffff,
+      700 : #ffffff,
+      800 : #ffffff,
+      900 : #ffffff,
+      A100 : #000000,
+      A200 : #000000,
+      A400 : #000000,
+      A700 : #000000,
+    )
+  );
+
+  @include mat-core();
+  $market-pimary: mat-palette($custom-primary-color);
+  $market-accent: mat-palette($custom-accent-color);
+  $market-warn: mat-palette($mat-red);
+
+  $primary: mat-color($market-pimary);
+  $accent: mat-color($market-accent);
+  $warn: mat-color($market-warn);
+
+  #{--primary}: $primary;
+  #{--primary-bg}: mat-color($market-pimary, A700);
+  #{--primary-dark}: mat-color($market-pimary, 100);
+  #{--accent}: $accent;
+  #{--snackbar}: mat-color($market-pimary);
+
+  :root {
+    --primary: $primary;
+    --primary-bg: mat-color($market-pimary, A700);
+    --primary-dark: mat-color($market-pimary, 100);
+  }
+
+  body {
+    --primary: $primary;
+    --primary-bg: mat-color($market-pimary, A700);
+    --primary-dark: mat-color($market-pimary, 100);
+  }
+
+  $market-theme: mat-light-theme($market-pimary, $market-accent, $market-warn);
+  @include angular-material-theme($market-theme);
+}
+
+///////////////////////////////////////////////// custom material theme //////////////////////////////
+
+app-header {
+  position: -webkit-sticky;
+  position: sticky;
+  top: -1px;
+  z-index: 1000;
+}
+
+.text-primary {
+  color: var(--custom-primary-color) !important;
+}
+
+.text-accent {
+  color: var(--custom-accent-color) !important;
+}
+
+.validSnackBar {
+  background-color: darkgreen !important;
+  color: white !important;
+}
+
+.errorSnackBar {
+  background-color: darkred !important;
+  color: white !important;
+}
+
+.warningSnackBar {
+  background-color: yellow !important;
+  color: black !important;
+}
+
+.circle {
+  height: 35px;
+  width: 35px;
+  box-sizing: border-box;
+  border-radius: 100%;
+  border: 3px solid #dadada;
+  box-shadow: 0 0 0 2px #fff inset;
+  margin: 0 5px;
+}
+
+.rank-information {
+  display: none;
+}
+
+.score-badge:hover .rank-information {
+  display: flex;
+  color: white;
+  position: absolute;
+  bottom: -40%;
+  right: -93%;
+  z-index: 10;
+  align-items: center;
+  width: 150px;
+  background-color: darkgrey;
+  font-size: 14px;
+  flex-direction: column;
+  border-radius: 20px;
+}
+
+.btn-app-download {
+  background-color: #000 !important;
+  color: #fff !important;
+  margin: 0 5px;
+  padding: 0 15px;
+  min-width: auto !important;
+  @media screen and (max-width: 959px) {
+    font-size: 10px;
+  }
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.factor-container {
+  width: 100%;
+  max-width: 90%;
+  @media screen and (min-width: 959px) {
+    margin: 2rem auto;
+  }
+}
+
+.active-link {
+  color: var(--custom-primary-color) !important;
+  font-weight: bold;
+}
+
+.active-header-link {
+  background-color: var(--custom-primary-color) !important;
+  font-weight: bold;
+  color: white !important;
+}
+
+.product-slide-img {
+  aspect-ratio: 1;
+  object-fit: contain;
+  height: auto !important;
+  max-height: 200px;
+  @media screen and (max-width: 959px) {
+    max-height: 150px !important;
+  }
+}
+
+.jarallax {
+  position: relative;
+  z-index: 0;
+}
+
+.jarallax > .jarallax-img {
+  position: absolute;
+  object-fit: cover;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+.non-available-product-watermark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.45);
+  z-index: 2;
+
+  .text-block {
+    border: red 1px dashed;
+    color: red;
+    padding: .5rem 2rem;
+    font-size: 12px;
+    transform: rotate(-15deg);
+  }
+}
+
+.product-offer-watermark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+
+  .text-block {
+    background-color: red;
+    color: white;
+    padding: .25rem 1rem;
+    font-size: 12px;
+  }
+}

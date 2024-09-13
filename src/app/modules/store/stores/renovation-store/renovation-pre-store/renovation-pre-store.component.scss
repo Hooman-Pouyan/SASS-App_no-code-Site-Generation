@@ -1,0 +1,186 @@
+* {
+    -webkit-transition: all 0.5s ease-in-out;
+    -moz-transition: all 0.5s ease-in-out;
+    -o-transition: all 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
+  }
+
+  ::ng-deep {
+    .mat-horizontal-stepper-header .mat-step-icon {
+      @media screen and (min-width: 959px) {
+        padding: 5px !important;
+        margin-right: 10px !important;
+        margin-left: 0 !important;
+      }
+      margin-right: 5px !important;
+      margin-left: 0 !important;
+      @media screen and (max-width: 959px) {
+        font-size: 12px !important;
+      }
+    }
+
+    .mat-horizontal-stepper-header {
+      pointer-events: none !important;
+    }
+
+    .mat-step-text-label {
+      @media screen and (max-width: 959px) {
+        font-size: 12px !important;
+      }
+    }
+
+    .mat-stepper-horizontal-line {
+      border-top-color: rgba(#105652, 0.5) !important;
+    }
+
+    .theme-renovation .mat-step-header .mat-step-icon-selected,
+    .theme-renovation .mat-step-header .mat-step-icon-state-done,
+    .theme-renovation .mat-step-header .mat-step-icon-state-edit {
+      background-color: rgba(#105652, 0.5) !important;
+      border: 1px solid rgba(#105652, 1) !important;
+    }
+  }
+
+  .stepper {
+    @media screen and (min-width: 959px) {
+      padding: 0 8rem;
+    }
+
+    .category {
+      cursor: pointer;
+      padding: 20px;
+      border-radius: 5px;
+
+      &:hover {
+        background-color: rgba(#105652, 0.5) !important;
+        border: 1px solid #105652;
+        //color: white !important;
+        transform: scale(1.05);
+      }
+    }
+
+    .category-checkbox {
+
+      img {
+        border-radius: 5px;
+      }
+
+      position: relative;
+
+      .img-overlay {
+        display: none;
+      }
+
+      .category-checkbox:hover {
+        .img-overlay:hover {
+          display: block;
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background-color: rgba(#105652, 0.35);
+        }
+      }
+
+    }
+
+    .sub-categories {
+
+      ::ng-deep.mat-checkbox-inner-container {
+        display: none !important;
+      }
+
+      .sub-category {
+        padding: 15px 40px 15px 15px;
+        border-radius: 5px;
+        border: 1px solid #B1B1B1;
+        background-color: rgba(#B1B1B1, 0.1);
+        color: #707070;
+
+        img {
+          border-radius: 5px;
+        }
+
+      }
+
+      .checked {
+        border: 1px solid #105652;
+        background-color: rgba(#105652, 0.35);
+        color: black !important;
+      }
+
+    }
+
+    .action-btns {
+      margin-top: 1.5rem;
+      button {
+        color: white;
+        border: 1px solid #105652;
+        background-color: rgba(#105652, 0.5);
+      }
+      .mat-button-disabled {
+        opacity: 0.3 !important;
+      }
+    }
+
+
+    .box{
+      background-color: rgba(204, 204, 204, 0.2);
+      border: 1px solid #B1B1B1;
+      height: auto;
+      padding: 2rem;
+      margin: 10px 0;
+      ::ng-deep {
+        .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb{
+          background-color: #1BEA7A;
+        }
+        .mat-slide-toggle.mat-checked .mat-slide-toggle-bar{
+          background-color: #fff;
+        }
+        .mat-checkbox-inner-container {
+          display: block !important;
+        }
+        .mat-checkbox-checked.mat-accent .mat-checkbox-background {
+          background-color: #1BEA7A !important;
+        }
+        .mat-checkbox-checked.mat-accent .mat-checkbox-background  svg{
+          fill:  #1BEA7A;
+        }
+        .mat-checkbox-label{
+          padding: 1px;
+        }
+       }
+
+
+       .demolition , .addRemove{
+         p{
+           font-size: 16;
+           font-weight: 500;
+         }
+       }
+       .removeWall , .addWall{
+         p{
+          font-size: 16;
+         }
+         .add{
+           padding-right: 30px;
+         }
+       }
+
+       .form{
+        .wire{
+          padding-right: 25px;
+        }
+        .outlet{
+          padding-right: 15px;
+        }
+       }
+
+       .check{
+        mat-checkbox{
+          padding: 3px;
+        }
+       }
+    }
+  }

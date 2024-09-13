@@ -1,0 +1,52 @@
+.factor-products {
+  background-color: white;
+  padding: 1rem;
+  border-radius: 10px;
+
+  .product {
+
+    .product-detail {
+      @media screen and (max-width: 959px) {
+        font-size: 10px;
+      }
+      font-size: 12px;
+
+      .cart-product-title {
+        font-size: 14px;
+        @media screen and (max-width: 959px) {
+          width: 200px;
+          font-size: 12px;
+        }
+
+        width: 180px;
+        white-space: nowrap;
+        overflow: hidden !important;
+        text-overflow: ellipsis;
+      }
+
+      .product-detail-color {
+        aspect-ratio: 2/1;
+        height: 15px;
+      }
+
+    }
+
+    .product-image {
+      //aspect-ratio: 1;
+      object-fit: contain;
+      max-width: 75px;
+      max-height: 75px;
+    }
+
+    .product-price {
+      width: 110px;
+      font-size: 14px;
+      @media screen and (max-width: 959px) {
+        width: unset;
+        font-size: 12px;
+      }
+    }
+
+  }
+
+}

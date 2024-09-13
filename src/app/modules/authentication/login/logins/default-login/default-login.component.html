@@ -1,0 +1,117 @@
+<div fxLayout="column" fxLayoutAlign="center center" class="login"
+     [ngStyle]="{'direction': modulesService.lang == 'fa' ? 'rtl' : 'ltr' }">
+
+  <div *ngIf="!modulesService.isMotolead"
+       fxLayout="row wrap" fxLayoutAlign="start space-between"
+       [ngClass]="{'back-images': !credentialsService.isAdmin}">
+    <div fxLayout="row" fxLayoutAlign="center center" class="p-5" fxFlex="20%" fxFlex.lt-md="49%"
+         *ngFor="let idx of [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]">
+      <img [src]="dynamicMediaService.getMedia('auth-bg'+idx) ||
+       (imageUrlDevelop + '/assets/img/stores/' + modulesService.guild_id + '_' + idx + '.png')"
+           [alt]="" editElement [editType]="'auth-bg'+idx" class="img-fluid">
+    </div>
+  </div>
+
+  <div *ngIf="!credentialsService.isAdmin"
+       class="login-overlay"></div>
+
+  <mat-card *ngIf="!credentialsService.isAdmin"
+            class="login-card" fxLayout="column" fxLayoutAlign="start stretch">
+
+    <div fxLayout="row" fxLayoutAlign="space-between center" class="mb-2">
+      <p class="px-2">
+        {{'به' | translate }}
+        {{storeSettingService.store.name}}
+        {{'خوش آمدید!' | translate }}
+      </p>
+      <img [src]="storeSettingService.store.logo" [alt]="storeSettingService.store.name" class="img-fluid"
+           fxFlex="50px">
+    </div>
+
+
+        <form [formGroup]="loginForm" fxLayout="column" fxLayoutAlign="start stretch" class="my-3">
+
+          <mat-form-field appearance="outline">
+            <mat-label *ngIf="modulesService.loginWithEmailPhone && modulesService.lang === 'fa'">{{'ایمیل یا شماره همراه' | translate }}</mat-label>
+            <mat-label *ngIf="!modulesService.loginWithEmailPhone && modulesService.lang === 'fa'">{{'شماره همراه' | translate }}</mat-label>
+            <mat-label *ngIf="modulesService.lang !== 'fa'">{{'ایمیل' | translate }} </mat-label>
+            <input formControlName="username" matInput dir="ltr"
+                   [placeholder]="modulesService.lang === 'fa' ? '09**-***-****' : 'exp@example.com' "
+                   autocomplete="off"
+                   [type]="modulesService.lang === 'fa' ? 'tel' : 'email' ">
+            <mat-error>
+              {{'وارد کردن نام کاربری به صورت صحیح الزامی است' | translate }}
+            </mat-error>
+          </mat-form-field>
+
+          <mat-checkbox [checked]="pswType === 'otp'" *ngIf="!modulesService.noOTP&& !modulesService.onlyOTP"
+                        class="my-2" (change)="changeOtpCheckbox($event.checked)" color="primary">
+            {{'استفاده از کلمه عبور یکبار مصرف' | translate }}
+          </mat-checkbox>
+
+          <ng-container *ngIf="pswType == 'psw' && !modulesService.onlyOTP">
+            <mat-form-field appearance="outline">
+              <mat-label>{{'رمز عبور' | translate }}</mat-label>
+              <input formControlName="password" autocomplete="off" matInput [type]="hidePassword ? 'password' : 'text'">
+              <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword">
+                <mat-icon>
+                  {{ hidePassword ? 'visibility' : 'visibility_off' }}
+                </mat-icon>
+              </button>
+              <mat-error>
+                {{'وارد کردن رمز عبور الزامی است' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </ng-container>
+
+          <ng-container *ngIf="pswType == 'otp'">
+
+            <button mat-raised-button [disabled]="loginForm.controls['username'].invalid" (click)="getOtpCode()"
+                    color="primary" class="mb-2">
+              {{'دریافت کلمه عبور یکبار مصرف' | translate }}
+            </button>
+
+            <mat-form-field appearance="outline">
+              <mat-label>{{'کلمه عبور یکبار مصرف' | translate }}</mat-label>
+              <input formControlName="otp" [minLength]="4" [maxLength]="4" matInput autocomplete="off">
+              <mat-error>
+                {{'لطفا کلمه ی عبور را وارد کنید' | translate }}
+              </mat-error>
+            </mat-form-field>
+
+          </ng-container>
+
+          <button type="submit" class="submit-btn my-2 py-2" (click)="onSubmit()"
+                  [disabled]="loginForm.invalid && (loginForm.controls['otp'].invalid && pswType === 'otp')"
+                  mat-raised-button color="primary">
+            {{'ورود' | translate }}
+          </button>
+
+          <button mat-raised-button class="py-2 my-2" *ngIf="modulesService.lang != 'fa'" (click)="loginWithGoogle()"
+                  color="primary">
+            <img src="../../../../../../assets/icons/google.svg" alt="google login" width="20px" height="20px">
+            Google
+          </button>
+
+          <a routerLink="./register-user" class="text-center">
+            {{ 'عضویت' | translate}}
+          </a>
+
+          <button mat-button (click)="openForgetPassDg()" class="text-center mt-1">
+            {{ 'فراموشی رمز عبور' | translate}}
+          </button>
+
+          <a href="/" class="text-center mt-4">
+            <b>
+              {{'بازگشت به صفحه اصلی' | translate}}
+            </b>
+          </a>
+
+        </form>
+
+
+
+
+  </mat-card>
+
+</div>

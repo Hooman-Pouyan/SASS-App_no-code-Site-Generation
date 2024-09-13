@@ -1,0 +1,372 @@
+<header class="landing-header" [ngStyle]="{'z-index': sidenav.opened ? '1' : ''}"
+  [ngClass]="{ 'header-top' : classFlag, 'header-below': !classFlag }">
+
+  <div fxHide.lt-md fxFlex class="desktop-header">
+    <ul fxLayout="row" fxLayoutAlign="space-evenly center">
+      <li>
+        <a [href]="'/factor'" class="myOrder">My Order</a>
+      </li>
+      <li>
+        <a [href]="'/'">Home</a>
+      </li>
+      <li>
+        <a [href]="'/about-us'">About Us</a>
+      </li>
+      <li>
+        <a [href]="'/store/renovation'">Our Services</a>
+      </li>
+      <li>
+        <a [href]="'/projects'">Recent Projects</a>
+      </li>
+      <li>
+        <a [href]="'/help'">Help</a>
+      </li>
+      <li class="login-action">
+        <button [matMenuTriggerFor]="profileMenu" mat-button *ngIf="!credentialsService.isGuest else loginBtn">
+          <span>{{name}}</span>
+          <mat-icon>expand_more</mat-icon>
+          <mat-menu #profileMenu="matMenu">
+            <button mat-menu-item [href]="['/profile']">{{"پروفایل" | translate }}</button>
+            <button mat-menu-item (click)="credentialsService.logout()">{{"خروج" | translate }}</button>
+          </mat-menu>
+        </button>
+
+        <ng-template #loginBtn>
+          <a href="/auth">
+            <button mat-flat-button>Login/ SignUp</button>
+          </a>
+        </ng-template>
+      </li>
+      <li>
+        <a href="/">
+          <img [src]="storeSettingService.store.logo" alt="logo" class="logo-img">
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <div fxHide.gt-sm fxFlex class="mobile-header" fxLayout="row" fxLayoutAlign="space-around center">
+
+    <div fxFlex="35%" fxLayout="column" fxLayoutAlign="space-between start">
+      <button mat-icon-button class="menu-button hamber-menu" (click)="sidenav.toggle()">
+        <mat-icon>{{ sidenav.opened ? 'menu_open' : 'menu' }}</mat-icon>
+      </button>
+    </div>
+
+    <a href="/">
+      <img [src]="storeSettingService.store.logo" alt="logo" class="logo-img">
+    </a>
+
+    <a class="login-action" fxFlex='35%' fxLayout="column" fxLayoutAlign="space-between end">
+      <button [matMenuTriggerFor]="profileMenu" mat-button *ngIf="credentialsService.isGuest else loginBtn">
+        <span>{{credentialsService.credentials.NAME}}</span>
+        <mat-icon>expand_more</mat-icon>
+        <mat-menu #profileMenu="matMenu">
+          <button mat-menu-item [href]="['/profile']">{{"پروفایل" | translate }}</button>
+          <button mat-menu-item (click)="credentialsService.logout()">{{"خروج" | translate }}</button>
+        </mat-menu>
+      </button>
+
+      <ng-template #loginBtn>
+        <a href="/auth">
+          <button mat-stroked-button color="primary">Login&nbsp;/&nbsp;SignUp</button>
+        </a>
+      </ng-template>
+    </a>
+  </div>
+
+</header>
+
+<mat-sidenav-container class="mat-sidenav-container" dir="ltr">
+  <mat-sidenav #sidenav position="end" [autoFocus]="false" class="mat-sidenav" mode="over">
+    <div fxLayout="column" class="menu-sidenav" fxFlex>
+      <div class="login" *ngIf="!credentialsService.isGuest else loginElement">
+        <a [href]="'/auth'"> login / register </a>
+      </div>
+
+      <ng-template #loginElement>
+        <img [src]="userService.user.AVATAR" alt="avatar" class="contactImg">
+        <h4 class="NameContact">{{name}}</h4>
+        <p class="EmailContact"> {{ email }} </p>
+      </ng-template>
+
+      <a [href]="'/factor'" class="myOrder-sidnav">
+        <mat-icon>shopping_cart</mat-icon>
+        My Order
+      </a>
+      <a [href]="'/'">
+        <mat-icon>home</mat-icon>
+        Home
+      </a>
+      <a [href]="'/about-us'">
+        <mat-icon> sentiment_satisfied_alt</mat-icon>
+        About Us
+      </a>
+      <a [href]="'/store/renovation'">
+        <mat-icon>work</mat-icon>
+        Our Services
+      </a>
+      <a [href]="'/projects'">
+        <mat-icon>foundation</mat-icon>
+        Recent Projects
+      </a>
+      <a [href]="'/help'">
+        <mat-icon> live_help</mat-icon>
+        Help
+      </a>"
+      <div fxLayout="row" fxLayoutAlign="center end" *ngIf="!credentialsService.isGuest" class="log-out">
+        <a>
+          log out
+        </a>
+      </div>
+
+    </div>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div class="renovation">
+
+      <div class="section-starter" fxLayoutAlign="center center">
+
+        <div class="main-img">
+          <img src="../../../../../assets/img/renovation/starter-section.png">
+        </div>
+
+        <div class="img-overlay">
+        </div>
+
+        <div class="main-content" fxLayout="column" fxLayoutAlign="center center">
+          <h1 class="main-h1">
+            Renovate
+            <br>
+            Your House
+          </h1>
+          <h2 class="main-h2">
+            We carry out work throughout canada, specialising in extensions, refurbishments and renovations.
+          </h2>
+        </div>
+
+      </div>
+
+      <div class="container">
+
+        <div fxLayout="column" fxLayoutAlign="center center" class="section-brands">
+          <h2 class="brands-h">Collaborating brands</h2>
+          <p class="brands-p">We use the best and modern brands to renovate your house </p>
+
+          <div fxLayout="row wrap" fxLayoutAlign="space-evenly center" style="width: 80%;">
+            <div *ngFor="let slides of brands" fxFlex='17%' fxFlex.lt-md="26%" style="position: relative;">
+              <div class="brand-images">
+                <img [src]="adminImageUrlDevelop + '/assets/img/settings/' + slides.IMAGE" [alt]="slides.BRAND_NAME"
+                  [title]="slides.BRAND_NAME" [ngClass]="{top: pointsChanged }">
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div fxLayout="column" dir="ltr" *ngIf="beerSlider.length" fxLayoutAlign="center center"
+          class="section-beerSlider">
+          <beer-slider class="myBeer" [image]="beerImage"></beer-slider>
+          <swiper class="mySwiper" [config]="config_beer">
+            <ng-template swiperSlide *ngFor='let slide of beerSlider'>
+              <div class="swiper-image">
+                <img [src]="slide.AFTER" (click)="beerImage = slide" [alt]="slide.NAME" class="image-swipe">
+              </div>
+            </ng-template>
+          </swiper>
+        </div>
+
+        <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="center center" class="section-introduce">
+
+          <div fxLayout="column" fxLayoutAlign="start start" class="introduce-desc" fxFlex="60">
+            <h2 class="introduce-h">Why choose Canada renovation?</h2>
+            <p class="introduce-p">
+              Our company with professional and scientific support and using world-class design brands to renovate your
+              home with tasteful designers and engineers with experience in renovation and interior decoration,
+              including kitchen, room, living room, parking and all High quality parts of your home or store have
+              entered the field of renovation.
+            </p>
+            <a href="./store/renovation/">
+              <button mat-stroked-button class="place">place an order</button>
+            </a>
+          </div>
+
+          <div fxLayout="column" fxLayoutAlign="center center" class="introduce-logo" fxFlex="40">
+            <img [src]="storeSettingService.store.logo" alt="logo">
+          </div>
+
+        </div>
+
+      </div>
+
+      <div fxLayout="row wrap" fxLayoutAlign="space-around center" class="section-categories">
+        <div class="category" fxFlex="21%" fxFlex.lt-md="45%" *ngFor="let category of categories" fxLayout="column"
+          fxLayoutAlign="space-between center" [ngStyle]="category.NAME == 'Bathroom' && {'margin-top':'16px'}">
+          <img [src]="adminImageUrlDevelop + '/assets/img/categories/category_logo/' + category.PRODUCT_NAME"
+            class="img-fluid" [alt]="category.NAME" fxFlex="40%">
+          <h2 class="title">{{category.NAME}}</h2>
+          <a href="./store/renovation"
+            [ngStyle]="{'pointer-events': category.NAME == 'Bathroom' ? 'unset' : 'none'}"
+            [queryParams]="{ category: category.PRODUCT_ID} " target="_blank">
+            <button mat-flat-button class="action">
+              <span *ngIf="category.NAME == 'Bathroom'">
+                PLACE AN ORDER
+              </span>
+            </button>
+          </a>
+        </div>
+      </div>
+
+      <div fxLayout="column" fxLayoutAlign="center center" class="section-guarantee">
+        <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="space-around start" class="guarantee_root">
+
+          <div fxLayout="column" fxLayoutAlign="end end" class="guarantee-icons" fxFlex="49%">
+
+            <div fxLayout="row" fxLayoutAlign="center center">
+
+              <div fxLayout="column" fxLayoutAlign="center center" class="guarantee" fxFlex="49">
+                <img src="../../../../../assets/img/renovation/like.png" alt="logo-renovation" class="guarantee-logo">
+                <h4>Safe Removal & Disposal</h4>
+                <p class="guarantee-p">No job is too big and our experienced, friendly and professional team are always
+                  happy to help.</p>
+              </div>
+
+              <div fxLayout="column" fxLayoutAlign="center center" class="guarantee" fxFlex="49">
+                <img src="../../../../../assets/img/renovation/badge.png" alt="g-renovation" class="guarantee-logo">
+                <h4>Safe Removal & Disposal</h4>
+                <p class="guarantee-p">No job is too big and our experienced, friendly and professional team are always
+                  happy to help.</p>
+              </div>
+
+            </div>
+
+            <div fxLayout="row" fxLayoutAlign="center center">
+
+              <div fxLayout="column" fxLayoutAlign="center center" class="guarantee" fxFlex="50">
+                <img src="../../../../../assets/img/renovation/24-hours.png" alt="logo-renovation"
+                  class="guarantee-logo">
+                <h4>Safe Removal & Disposal</h4>
+                <p class="guarantee-p">No job is too big and our experienced, friendly and professional team are always
+                  happy to help.</p>
+              </div>
+
+              <div fxLayout="column" fxLayoutAlign="center center" class="guarantee" fxFlex="50%">
+                <img src="../../../../../assets/img/renovation/guaranteed.png" alt="g-renovation"
+                  class="guarantee-logo">
+                <h4>Safe Removal & Disposal</h4>
+                <p class="guarantee-p">No job is too big and our experienced, friendly and professional team are always
+                  happy to help.</p>
+              </div>
+
+            </div>
+          </div>
+
+          <div fxLayout="column" fxLayoutAlign="start start" class="guarantee-desc" fxFlex="49%">
+
+            <h2 class="guarantee-desc-h">Lorem ipsum dolor</h2>
+            <p class="guarantee-desc-p">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+              incididunt ut labore et dolore
+              magna aliqua. Tempor commodo ullamcorper a lacus vestibulum sed. Sapien nec sagittis aliquam malesuada
+              bibendum arcu vitae , incididunt ut labore et dolore
+              magna aliqua. Tempor commodo ullamcorper a lacus vestibulum sed. Sapien nec sagittis aliquam malesuada
+              bibendum arcu vitae , incididunt ut labore et dolore
+              magna aliqua. Tempor commodo ullamcorper a lacus vestibulum sed. Sapien nec sagittis aliquam malesuada
+              bibendum arcu vitae ,incididunt ut labore et dolore
+              magna aliqua. Tempor commodo ullamcorper a lacus vestibulum sed. Sapien nec sagittis aliquam malesuada
+              bibendum arcu vitae.
+            </p>
+          </div>
+
+        </div>
+
+        <div fxLayout="row" fxLayoutAlign="center center" class="placeOrder-button">
+          <a href="./store/renovation/">
+            <button mat-stroked-button class="place">place an order</button>
+          </a>
+        </div>
+
+      </div>
+
+      <div class="personlize-container">
+
+        <div fxLayout="column" fxLayoutAlign="center center" class="section-services" *ngIf="beerImagesServices.length">
+          <h2 class="section-services-h">EXPLORE <br>
+            our range of services</h2>
+
+          <div fxLayout="column" class="service-part" *ngFor="let service of beerImagesServices">
+            <div fxLayout="column" fxLayoutAlign="space-around start">
+              <h3>{{service.NAME}}</h3>
+              <p>
+                {{service.DESCRIPTION}}
+              </p>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="center center">
+              <beer-slider [image]="service"></beer-slider>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="space-around center" class="section-parallax">
+        <a href="./store/renovation/" mat-flat-button>
+          Renovate your house
+        </a>
+      </div>
+
+      <div fxLayout="column" fxLayout.lt-md="column" *ngIf="comments.length" fxLayoutAlign="space-evenly center"
+        class="section-customer-say">
+        <h2>Our customer's say</h2>
+        <div fxLayout="row" fxLayout.lt-md="column" class="content-custome-say" *ngIf="comments.length"
+          fxLayoutAlign="space-evenly center">
+          <swiper class="mySwiper-custome-say" [config]="config_customer_say" fxFlex>
+            <ng-template swiperSlide *ngFor='let comment of comments'>
+
+              <div fxLayout="column" fxLayoutAlign="space-around center">
+
+                <div class="customer-say container">
+                  <div class="arrow-top">
+                    <img src="../../../../../assets/icons/quote.png" alt="quote-renovation">
+                    <p>
+                      {{comment.COMMENTS}}
+                    </p>
+                    <div class="arrow-bottom"></div>
+                  </div>
+                </div>
+                <div class="customer-contact">
+                  <img [src]="adminImageUrlDevelop + comment.AVATAR" alt="">
+                  <h5>
+                    {{comment.NAME}}
+                  </h5>
+                </div>
+
+              </div>
+
+            </ng-template>
+          </swiper>
+        </div>
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="space-around center" class="section-search">
+
+        <div class="search-img">
+          <img src="../../../../../assets/img/renovation/renovation-search.png">
+        </div>
+
+        <div class="img-overlay">
+        </div>
+
+        <div class="search-content" fxLayout="column" fxLayoutAlign="center center">
+
+          <h3 class="main-h1">
+            Looking for what?
+          </h3>
+
+          <search [circleShape]="true" [useButton]="true"></search>
+        </div>
+
+      </div>
+      <app-footer></app-footer>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

@@ -1,0 +1,84 @@
+<app-header></app-header>
+
+<section fxLayout="column" fxLayoutAlign="start stretch"
+         class="my-4" fxLayoutGap="2rem">
+
+  <div class="container" fxLayout="column" fxLayoutAlign="start stretch">
+    <h1 class="cooperation-title">
+      <span class="title-back">COOPERATION</span>
+      <span>{{'همکاری با ما' | translate}}</span>
+    </h1>
+    <p class="text-center" editElement editType="motolead-cooperation">
+      {{dragDropService.fieldText('motolead-cooperation') ||
+    'لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است، و برای شرایط فعلی تکنولوژی مورد نیاز، و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد، کتابهای زیادی در شصت و سه درصد گذشته حال و آینده، شناخت فراوان جامعه و متخصصان را می طلبد، تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی، و فرهنگ پیشرو در زبان فارسی ایجاد کرد، در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها، و شرایط سخت تایپ به پایان رسد و زمان مورد نیاز شامل حروفچینی دستاوردهای اصلی، و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.'
+      }}
+    </p>
+  </div>
+
+  <div fxLayout="column" fxLayoutAlign="start center" class="container">
+
+    <form [formGroup]="cooperationForm" fxLayout="row wrap"
+          fxLayoutAlign="space-between center" class="w-100">
+
+      <mat-form-field appearance="outline" fxFlex="48%">
+        <mat-label>{{'نام و نام خانوادگی' | translate }}</mat-label>
+        <input formControlName="NAME" [placeholder]="'نام و نام خانوادگی خود را وارد کنید' | translate"
+               matInput autocomplete="off">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" fxFlex="48%">
+        <mat-label>{{'شماره تلفن' | translate }}</mat-label>
+        <input formControlName="PHONE" placeholder="09129876543"
+               matInput autocomplete="off">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" fxFlex="48%">
+        <mat-label>{{'نام شرکت' | translate }}</mat-label>
+        <input formControlName="COMPANY_NAME" [placeholder]="storeSettingService.store.name"
+               matInput autocomplete="off">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" fxFlex="48%">
+        <mat-label>{{'عنوان شغلی' | translate }}</mat-label>
+        <input formControlName="JOB" [placeholder]="'کارشناس فروش' | translate"
+               matInput autocomplete="off">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" fxFlex="48%">
+        <mat-label>{{'ایمیل' | translate }}</mat-label>
+        <input formControlName="EMAIL" placeholder="example@domain.com"
+               matInput autocomplete="off">
+      </mat-form-field>
+
+      <div fxFlex="48%" fxLayoutAlign="start stretch" fxLayout="column">
+        <label id="COOPERATION">
+          {{'آیا تا به‌ حال با مجموعه ما همکاری داشته‌اید؟' | translate}}
+        </label>
+        <mat-radio-group
+          aria-labelledby="COOPERATION"
+          formControlName="COOPERATION">
+          <mat-radio-button class="ml-3"
+            *ngFor="let cooperation of [true, false]" [value]="cooperation">
+            {{cooperation ? ('بله' | translate) : ('خیر' | translate) }}
+          </mat-radio-button>
+        </mat-radio-group>
+      </div>
+
+      <mat-form-field appearance="outline" fxFlex="100%">
+        <mat-label>{{'متن پیام' | translate }}</mat-label>
+        <textarea formControlName="TEXT" [placeholder]="'متن پیام خود را وارد کنید' | translate"
+                  matInput autocomplete="off" rows="8"></textarea>
+      </mat-form-field>
+
+    </form>
+
+    <button mat-raised-button color="primary" (click)="saveChange()"
+            [disabled]="cooperationForm.invalid">
+      {{'ارسال' | translate}}
+    </button>
+
+  </div>
+
+</section>
+
+<app-footer></app-footer>

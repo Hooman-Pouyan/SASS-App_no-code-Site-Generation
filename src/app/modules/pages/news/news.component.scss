@@ -1,0 +1,31 @@
+.desc {
+  min-height: 300px;
+  box-shadow: 0 10px 13px -7px #aaa, 0px 0px 34px 4px rgb(0 0 0 / 0%);
+
+  .decs-text {
+    //backdrop-filter: blur(5px);
+    color: white;
+    background-color: rgba(0, 0, 0, 0.3);
+    padding: 1rem;
+
+    * {
+      text-align: center;
+    }
+
+    @media screen and (max-width: 959px) {
+      font-size: 12px !important;
+    }
+  }
+
+}
+
+.news-preview {
+  -webkit-box-orient: vertical;
+  white-space: pre-wrap;
+  font-size: 14px;
+  word-break: break-word;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 8; /* number of lines to show */
+}

@@ -1,0 +1,21 @@
+.user-customer {
+  box-shadow: inset 0 0 6px rgb(0 0 0 / 30%);
+  background-color: #fff;
+
+
+  .user-customer-title {
+    border-bottom: 1px solid #c5bcbc;
+    margin-bottom: 20px;
+  }
+
+  form {
+    padding: 1rem;
+    border: 1px dashed var(--custom-primary-color);
+    border-radius: 10px;
+    .submit-btn {
+      border-radius: 10px;
+      padding: 0 1rem;
+    }
+  }
+
+}

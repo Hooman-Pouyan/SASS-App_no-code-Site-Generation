@@ -1,0 +1,48 @@
+<div class="user-address" fxLayout="column" fxLayoutAlign="start stretch">
+
+  <div class="container" fxLayout="row" fxLayoutAlign="space-between center">
+    <h2>{{'آدرس' | translate}}</h2>
+    <button mat-raised-button (click)="openAddressDialog()" color="primary" fxLayoutGap="5px">
+      <span>{{'آدرس جدید' | translate}}</span>
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
+
+  <mat-divider class="my-2"></mat-divider>
+
+  <mat-radio-group fxLayout="column" *ngIf="addresses.length else noAddresses" fxLayoutGap="10px"
+    (ngModelChange)="changeOrderAddress($event)" [(ngModel)]="selectedAddress">
+    <div class="container" fxLayout="row" fxLayoutAlign="space-between center" fxLayout.md="column"
+      fxLayoutAlign.md="center " *ngFor="let address of addresses">
+
+      <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="5px">
+        <img src="../../../../assets/icons/location.png" fxFlex="35px" alt="location">
+        <mat-radio-button [value]="address" class="address-radio-btn" fxLayout="column" fxLayoutAlign="center stretch">
+          <b>{{address.NAME}}</b>
+          <mat-hint [matTooltip]="address.ADDRESS">{{address.ADDRESS}}</mat-hint>
+        </mat-radio-button>
+      </div>
+
+
+      <div fxLayout="row" fxLayoutAlign="space-around center" fxLayoutGap="3px">
+        <button mat-stroked-button color="warn" (click)="deleteAddress(address)">
+          <span>{{'حذف آدرس' | translate}}</span>
+          <mat-icon>delete</mat-icon>
+        </button>
+        <button mat-stroked-button color="primary" (click)="openAddressDialog(address)">
+          <span>{{'ویرایش آدرس' | translate}}</span>
+          <mat-icon>edit</mat-icon>
+        </button>
+      </div>
+
+    </div>
+  </mat-radio-group>
+
+  <ng-template #noAddresses>
+    <h2 class="my-3 text-center">
+      {{'آدرسی ثبت نشده است' | translate}}!
+    </h2>
+  </ng-template>
+
+
+</div>

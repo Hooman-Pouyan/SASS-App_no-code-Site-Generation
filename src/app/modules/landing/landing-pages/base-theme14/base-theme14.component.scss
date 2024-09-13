@@ -1,0 +1,148 @@
+@import '~swiper/swiper';
+@import '~swiper/components/navigation/navigation';
+
+.header-section {
+  background-color: #f5f6f6;
+
+  .w-92 {
+    width: 92% !important;
+  }
+
+  .menu {
+    .list-item {
+      border: 1px solid #fff;
+      color: #000;
+      border-radius: 25px;
+      padding: 0.65rem 3.5rem;
+      background-color: #fff;
+    }
+  }
+
+  .logo {
+    .header-logo {
+      max-width: 55px;
+    }
+  }
+
+}
+
+.slider {
+  swiper {
+    width: 100%;
+    height: 100%;
+
+    .swiper-button-prev, .swiper-button-next {
+      color: black !important;
+      background-color: white !important;
+      border: 1px solid black !important;
+      border-radius: 50%;
+      padding: 5px;
+      width: 35px !important;
+      height: 35px !important;
+      transition: all .3s ease-in-out;
+
+      &:hover {
+        color: var(--custom-primary-color) !important;
+        border-color: var(--custom-primary-color) !important;
+      }
+    }
+
+    .swiper-button-next:after {
+      content: 'west';
+      font-family: "Material Icons Outlined", serif;
+    }
+
+    .swiper-button-prev:after {
+      content: 'east';
+      font-family: "Material Icons Outlined", serif;
+    }
+
+    .swiper-slide {
+      color: white !important;
+      height: 80vh;
+
+      img {
+        object-fit: contain;
+        width: 100%;
+        max-height: 100%;
+      }
+    }
+
+  }
+}
+
+.base-theme14-about-us {
+  padding: 20px 0 90px 0;
+
+  .base-theme14-about-us-desc {
+    border: 1px solid black;
+    padding: 40px;
+    position: relative;
+    background: white;
+
+    @media screen and (min-width: 959px) {
+      &::before {
+        position: absolute;
+        content: "";
+        width: 180px;
+        height: 400px;
+        right: -30px;
+        background: black no-repeat;
+        top: -27px;
+        z-index: -5;
+      }
+    }
+  }
+}
+
+.base-theme14-our-product {
+  .more-products-btn {
+    font-size: 17px;
+    background-color: transparent;
+    border: black solid 2px;
+    color: black;
+    padding: 15px 0;
+    width: 100%;
+    max-width: 222px;
+    text-align: center;
+    display: inline-block;
+    transition: ease-in all 0.5s;
+    font-weight: 500;
+    border-radius: 40px;
+
+    &:hover {
+      border-color: var(--custom-primary-color);
+      color: var(--custom-primary-color);
+      transition: ease-in all 0.5s;
+    }
+  }
+
+  p {
+    @media screen and (max-width: 559px) {
+      width: 90% !important;
+      align-self: center !important;
+    }
+  }
+}
+
+.base-theme14-introduction {
+  .base-theme14-intro {
+    background-color: var(--custom-primary-color);
+    color: white;
+    padding: 5rem;
+    @media screen and (max-width: 559px) {
+      padding: 1rem;
+    }
+    h2 {
+      border-bottom: 1px solid #fff;
+      padding: 0.5rem;
+    }
+    p {
+      @media screen and (max-width: 559px) {
+        width: 90% !important;
+        align-self: center !important;
+      }
+    }
+
+  }
+}

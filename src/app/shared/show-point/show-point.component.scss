@@ -1,0 +1,22 @@
+.score-badge {
+  width: 35px;
+  padding-top: 1px;
+  position: relative;
+
+  img {
+    width: 35px;
+    height: auto;
+  }
+
+  .rank {
+    position: absolute;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: center;
+    left: 0;
+    top: 15%;
+    width: 20px;
+    text-align: center;
+  }
+}

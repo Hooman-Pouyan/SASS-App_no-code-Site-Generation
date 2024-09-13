@@ -1,0 +1,54 @@
+<div fxLayout="column" fxLayoutAlign="start stretch">
+
+  <div fxLayout="row" fxLayoutAlign="space-between center">
+    <b>
+      {{'درخواست محصول کمیاب' | translate}}
+    </b>
+    <button mat-icon-button color="warn" (click)="closeDialog()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <p class="text-justify">
+    شما عزیزان می توانید در این قسمت مشخصات محصولات نایاب و کم یاب و یا کالاهای ایرانی یا خارجی که مد نظرتونه ولی ما نداریم رو برای ما ارسال کنید و در صورتی که اون کالا رو براتون تهیه کردیم به شما اطلاع رسانی می شود و بعد از اینکه پرداخت انجام شد و ثبت سفارش کردید ما براتون ارسال می کنیم،
+  </p>
+
+  <form [formGroup]="form" fxLayout="column" fxLayoutAlign="start stretch">
+    <mat-form-field appearance="outline">
+      <mat-label>{{ "نام و نام خانوادگی" | translate }} </mat-label>
+      <input formControlName="CUSTOMER_NAME" [placeholder]="" matInput autocomplete="off">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{ "شماره تلفن" | translate }} </mat-label>
+      <input formControlName="PHONE" matInput autocomplete="off">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{ "آدرس دقیق" | translate }} </mat-label>
+      <input formControlName="ADDRESS" matInput autocomplete="off">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{ "نام محصول درخواستی" | translate }} </mat-label>
+      <input formControlName="NAME" matInput autocomplete="off">
+    </mat-form-field>
+
+    <upload-media [componentHeight]="200" [compressRate]="75"
+                  (outputImage)="image = $event" [mediaType]="'rare_product'"
+                  title="عکس محصول (اختیاری)"></upload-media>
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{ 'توضیحات درباره محصول' | translate }} </mat-label>
+      <textarea formControlName="DESCRIPTIPN" rows="8" cols="40" matInput
+                [placeholder]="'توضیحات درباره محصول' | translate"></textarea>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary"
+            [disabled]="form.invalid" (click)="submit()">
+      {{"ثبت" | translate }}
+    </button>
+
+  </form>
+
+</div>

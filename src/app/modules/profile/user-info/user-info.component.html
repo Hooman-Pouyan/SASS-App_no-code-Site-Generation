@@ -1,0 +1,70 @@
+<div class="UserInfo container" fxLayout="column" fxLayoutAlign="space-around  ">
+
+  <div class="user-info-title container" fxLayout="row" fxLayoutAlign="start ">
+    <p class="title">
+      {{'اطلاعات کاربری' | translate }}
+    </p>
+
+  </div>
+
+
+  <div fxLayout="column" fxLayoutAlign="space-around  ">
+
+    <div fxLayout="row" fxLayoutAlign="space-around center">
+      <mat-form-field appearance="outline">
+        <input matInput placeholder="name" [(ngModel)]='name'>
+      </mat-form-field>
+      <button mat-raised-button color="primary" (click)="changeInfoUserClicked()">
+        {{"ویرایش" | translate}}
+      </button>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="space-around center">
+      <mat-form-field appearance="outline">
+        <input matInput [placeholder]="'کدملی' | translate  " [(ngModel)]='NationalCode'>
+      </mat-form-field>
+      <button mat-raised-button color="primary" (click)="checkNationalCode(NationalCode)">
+        {{"ثبت" | translate}}
+      </button>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="space-around center">
+      <mat-form-field appearance="outline">
+        <input matInput [placeholder]="'شماره حساب بانکی' | translate "  [(ngModel)]='bankAccount'>
+      </mat-form-field>
+      <button mat-raised-button color="primary" (click)="changeBankCard()">
+        {{"ویرایش" | translate}}
+      </button>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="space-around center">
+      <mat-form-field appearance="outline">
+        <input matInput [placeholder]="'شماره تلفن' | translate" [(ngModel)]='username'>
+      </mat-form-field>
+      <button mat-raised-button color="primary" (click)="changeInfoUserClicked()">
+        {{"ویرایش" | translate}}
+      </button>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="space-around center">
+      <mat-form-field appearance="outline">
+        <mat-label>{{'ایمیل' | translate}}</mat-label>
+        <input matInput [(ngModel)]='email'>
+      </mat-form-field>
+      <button mat-raised-button color="primary" (click)=" changeInfoUserClicked()">
+        {{"ویرایش" | translate}}
+      </button>
+    </div>
+
+    <div fxLayout="row container" fxLayoutAlign="space-around center" class="edit"
+         *ngIf="!modulesService.onlyOTP" (click)="changePasswordClicked()">
+      <p>
+        {{'پسورد' | translate }}
+      </p>
+      <mat-icon>edit</mat-icon>
+    </div>
+
+  </div>
+
+
+</div>

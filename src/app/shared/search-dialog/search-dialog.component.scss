@@ -1,0 +1,30 @@
+.search-dg {
+
+  height: 100%;
+
+  .search-icon {
+    mat-icon {
+      color: linear-gradient(-45deg, #3B3B3B, #000000);
+      width: 50px;
+    }
+  }
+
+  .search-autocomplete {
+    .search-list {
+      .item {
+        border-color: rgba($color: #969494, $alpha: 0.15);
+
+        .name {
+          font-size: 10px;
+        }
+
+        img {
+          border: 1px solid #000;
+          border-color: rgba($color: #fafafa, $alpha: 0.15);
+          border-radius: 5px;
+        }
+      }
+
+    }
+  }
+}

@@ -1,0 +1,76 @@
+
+.mega-menu-moudule {
+  width: 100%;
+
+  .mega-menu-btn {
+    font-size: 14px;
+  }
+
+  .mega-menu-content {
+    font-size: 14px;
+    width: 95%;
+    position: absolute;
+    background-color: #fafafa;
+    z-index: 1;
+    height: 80vh;
+    box-shadow: 0 1px 1px rgb(0 0 0 / 14%), 0 4px 8px rgb(0 0 0 / 30%);
+
+    .menu {
+      height: 100%;
+      overflow-y: auto;
+      border-left:1px solid #ccc ;
+      direction: ltr;
+      text-align: end;
+      .each-item {
+        font-size: 14px;
+        margin: 0;
+        padding: 1.25rem 0.5rem;
+        cursor: pointer;
+
+        &:hover {
+          color: #d33737;
+          background-color: #fff;
+        }
+      }
+      .all-cat{
+        font-size: 14px;
+        margin: 0;
+        padding: 1.25rem 0.5rem;
+        cursor: pointer;
+      }
+    }
+
+    .subCat-menu {
+      height: 100%;
+
+      .subCat {
+        .sub-cat-title {
+          font-size: 14px;
+          padding: 5px 0;
+          color: var(--custom-primary-color);
+          border-bottom: 1px solid var(--custom-primary-color);
+          height: auto;
+          width: 90%;
+        }
+
+        .sub-cat-child {
+          font-size: 12px;
+        }
+
+        margin-bottom: 1rem;
+      }
+
+      .category-image {
+        img {
+          width: 150px;
+          border-radius: 15px;
+        }
+      }
+    }
+
+
+  }
+
+}
+
+

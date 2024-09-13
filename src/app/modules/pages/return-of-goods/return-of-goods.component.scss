@@ -1,0 +1,53 @@
+.return-of-goods {
+  .return-of-goods-description {
+    -webkit-box-shadow: 0 0 12px -3px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 12px -3px rgba(0, 0, 0, 0.2);
+    padding: 1.5rem;
+  }
+
+  .feature-boxes {
+
+    .feature {
+      border: 1px solid #AAAAAA;
+      border-radius: 5px;
+      padding: 10px;
+      margin-bottom: 15px;
+      font-size: 12px;
+
+      img {
+        aspect-ratio: 1;
+        object-fit: contain;
+      }
+    }
+  }
+
+  .contact-us-section {
+
+    .each-contact {
+      border-radius: 10px;
+      border: 1px solid #EEEEEE;
+      padding: 0.5rem;
+      color: #707070;
+
+      p {
+        font-size: 14px;
+        @media screen and (max-width: 959px) {
+          font-size: 12px;
+        }
+      }
+
+      .icon {
+        border-radius: 50%;
+        aspect-ratio: 1;
+        padding: 1rem;
+        border: 1px solid #EEEEEE;
+        background-color: #F1F1F1;
+        mat-icon {
+          color: #AAAAAA;
+        }
+      }
+    }
+
+  }
+
+}

@@ -1,0 +1,80 @@
+<footer>
+  <div class="container top-row">
+
+    <div fxLayout="row" fxLayoutAlign="space-between start"
+         fxLayout.lt-md="column" fxLayoutAlign.lt-md="start stretch">
+
+      <div fxLayout="column" fxFlex="40%">
+        <h4 class="bold">
+          {{storeSettingService.store.name}}
+        </h4>
+        <p>
+          {{storeSettingService.store.address}}
+        </p>
+      </div>
+
+      <div fxLayout="column" fxLayoutAlign="start space-evenly" fxFlex="26%">
+        <h4 class="bold fot"></h4>
+        <ul fxLayout="column wrap" class="mt-3 p-0 links-list" fxLayoutGap="10px">
+          <li [routerLink]="'/store/renovation'">
+            {{'سرویس های ما' | translate }}
+          </li>
+          <li routerLink="/contact-us">
+            {{'تماس با ما' | translate }}
+          </li>
+          <li>
+            <a [routerLink]="['/questions']">{{'پرسش های متداول' | translate }}</a>
+          </li>
+        </ul>
+      </div>
+
+      <div fxLayout="column" fxLayoutAlign="start space-evenly" fxFlex="26%">
+        <h4 class="bold fot"></h4>
+        <ul fxLayout="column wrap" class="mt-3 p-0 links-list" fxLayoutGap="10px">
+          <li (click)="openLawsDialog()">
+            {{'قوانین و مقررات' | translate }}
+          </li>
+          <li>
+            <a [routerLink]="['/help']">{{'راهنما' | translate }}</a>
+          </li>
+          <li>
+            <a [routerLink]="['/about-us']">{{'درباره ی ما' | translate }}</a>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div fxLayout="row" fxLayoutAlign="center center" class="register-section">
+    <a target="_blank" routerLink="/auth" class="app-btn" type="button" mat-button>
+      Login
+    </a>
+    <a target="_blank" routerLink="/auth/register-user" class="app-btn btn-sign" type="button" mat-button>
+      Sign Up
+    </a>
+  </div>
+
+  <div fxLayout="row" fxLayoutAlign="space-evenly center" *ngIf="storeSettingService.store.socials.length">
+    <ul class="widget-footer widget-footer-social">
+      <li *ngFor="let social of storeSettingService.store.socials" fxFlex="25px">
+        <a [href]="social.link" target="_blank">
+          <img [src]=" '/assets/icons/socials/' + social.type + '.svg' "
+               [title]="social.type" [alt]="social.type">
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <div fxLayout="row" class="created-by" fxLayoutAlign="center center">
+    <p class="m-0">@ 2021 Copyright:
+      <a href="" target="_blank">
+        <b>
+          Digi
+        </b>
+      </a>
+    </p>
+  </div>
+
+</footer>

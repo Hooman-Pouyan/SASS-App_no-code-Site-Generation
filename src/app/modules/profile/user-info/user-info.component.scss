@@ -1,0 +1,15 @@
+.UserInfo{
+    box-shadow: inset 0 0 6px rgb(0 0 0 / 30%);
+    background-color: #fff;
+
+
+    .user-info-title{
+        border-bottom: 1px solid #c5bcbc;
+        margin-bottom: 20px;        
+    }
+
+    .edit{
+        cursor: pointer;
+    }
+    
+}

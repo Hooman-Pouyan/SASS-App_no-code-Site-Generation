@@ -1,0 +1,12 @@
+.free-try-alert {
+  transition: .3s linear all;
+  background: red;
+  font-size: 14px;
+  * {
+    color: white;
+  }
+}
+
+.hide-free-try-alert {
+  height: 0 !important;
+}

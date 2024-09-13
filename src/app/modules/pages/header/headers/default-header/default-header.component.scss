@@ -1,0 +1,72 @@
+
+.header {
+  background-color: white;
+  border-bottom: 1px #eee solid;
+
+  @media screen and (min-width: 959px) {
+    height: 60px;
+  }
+
+  .header-styles {
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin: 0 40px;
+
+    .header-logo {
+      aspect-ratio: 1/1;
+      object-fit: contain;
+      max-width: 50px;
+    }
+
+    .routes-links {
+      font-size: 12px;
+
+      search {
+        margin-top: 10px;
+      }
+
+      @media screen and (max-width: 959px) {
+        font-size: 12px;
+      }
+
+      .categories-drawer {
+        font-size: 12px;
+        padding: 0;
+        font-weight: normal;
+      }
+    }
+
+    .login-action {
+      font-size: 12px;
+
+      @media screen and (max-width: 959px) {
+        font-size: 12px;
+      }
+
+    }
+
+    .login-action-mobile {
+      border: 1px solid #000;
+      border-radius: 5px;
+      padding: 5px;
+    }
+
+
+    button {
+      box-shadow: none;
+    }
+
+    .quiz{
+      border: 1px solid var(--custom-primary-color);
+      padding: 0.5rem;
+      border-radius: 12px;
+    }
+  }
+
+  .Nbox-shadow {
+    box-shadow: none;
+  }
+}
+
+

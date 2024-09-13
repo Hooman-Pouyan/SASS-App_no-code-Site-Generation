@@ -1,0 +1,27 @@
+.factor-address {
+  background-color: white;
+  padding: 1rem;
+  border-radius: 10px;
+
+  .address-radio-btn {
+    ::ng-deep.mat-radio-label-content {
+      display: flex;
+      flex-direction: column;
+    }
+
+    mat-hint {
+      white-space: nowrap;
+      overflow: hidden !important;
+      text-overflow: ellipsis;
+      font-size: 14px;
+      max-width: 250px;
+
+      @media screen and (max-width: 959px) {
+        max-width: 100px;
+      }
+
+    }
+
+  }
+
+}

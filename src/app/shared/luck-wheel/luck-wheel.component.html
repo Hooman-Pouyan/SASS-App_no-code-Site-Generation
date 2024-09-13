@@ -1,0 +1,89 @@
+<div class="container my-1" *ngIf="items?.length && modulesService.luckyWheel"
+     fxLayout="row" fxLayoutAlign="space-around center"
+     fxLayout.lt-md="column" fxLayoutAlign.lt-md="start stretch">
+
+  <div id="canvasContainer" class="canvas-container"
+       cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+       [cdkDragFreeDragPosition]="dragDropService.findPosition('lucky-wheel-circle')"
+       (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'lucky-wheel-circle')">
+    <canvas id="canvas"
+            [width]="setWheelAspect()"
+            [height]="setWheelAspect()"
+            (click)="wheelRound()">
+      Canvas not supported, please user another browser.
+    </canvas>
+    <img id="prizePointer" src="../../../assets/img/wheel/wheel-arrow.png" alt="arrow"/>
+  </div>
+
+  <div fxLayout="column" fxLayoutAlign="start stretch">
+
+    <h2
+      cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+      [cdkDragFreeDragPosition]="dragDropService.findPosition('lucky-wheel-title')"
+      (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'lucky-wheel-title')"
+      editElement editType="lucky-wheel-title">
+      {{(dragDropService.fieldText('lucky-wheel-title') || 'شانست رو امتحان کن') | translate}}
+    </h2>
+
+    <p class="text-justify"
+       cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+       [cdkDragFreeDragPosition]="dragDropService.findPosition('lucky-wheel-desc')"
+       (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'lucky-wheel-desc')"
+       editElement editType="lucky-wheel-desc">
+      {{(dragDropService.fieldText('lucky-wheel-desc') || wheelDesc) | translate}}
+    </p>
+
+    <ng-container *ngIf="otpStep == 1">
+      <form [formGroup]="form" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="20px"
+            cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+            [cdkDragFreeDragPosition]="dragDropService.findPosition('lucky-wheel-form1')"
+            (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'lucky-wheel-form1')">
+        <mat-form-field appearance="outline">
+          <mat-label>تلفن همراه</mat-label>
+          <input formControlName="phone" [placeholder]="'برای مثال (09123456789)' | translate" matInput
+                 autocomplete="off">
+          <mat-error>
+            {{"شماره تلفن همراه وارد شده" | translate }}
+            <strong>{{"صحیح" | translate }}</strong>
+            {{"نیست" | translate }}!
+          </mat-error>
+        </mat-form-field>
+
+        <button type="submit" mat-stroked-button color="primary" (click)="confirmPhone()">
+          {{"ثبت" | translate }}
+        </button>
+
+      </form>
+    </ng-container>
+
+    <ng-container *ngIf="otpStep == 2">
+      <form [formGroup]="form" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="20px">
+
+        <p>{{"لطفا کد ارسالی را وارد کنید" | translate }}</p>
+
+        <mat-form-field appearance="outline">
+          <mat-label>{{"کد تائید" | translate }}</mat-label>
+          <input formControlName="otp" [placeholder]="'کد تائید' | translate" matInput
+                 autocomplete="off">
+          <mat-error>
+            {{"لطفا کد تأیید را وارد کنید" | translate }}!
+          </mat-error>
+        </mat-form-field>
+
+        <div fxLayout="row" fxLayoutAlign="space-between center">
+          <button type="button" mat-stroked-button [disabled]="timer > 0" (click)="getOtpCode()"
+                  color="warn">{{"ارسال مجدد کد" | translate }}
+          </button>
+
+          <button type="button" mat-stroked-button (click)="verifyOtp()" color="primary">
+            {{"تأیید کد" | translate }}
+          </button>
+        </div>
+
+      </form>
+    </ng-container>
+
+  </div>
+
+
+</div>

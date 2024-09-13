@@ -1,0 +1,45 @@
+.popUp {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1001 !important;
+  background-color: rgba(0, 0, 0, 0.7);
+
+  .btn-limiter {
+    width: 350px;
+
+    @media screen and (max-width: 300px) {
+      width: 100px !important;
+    }
+    @media screen and (max-width: 400px) and (min-width: 300px) {
+      width: 200px !important;
+    }
+    @media screen and (max-width: 500px) and (min-width: 400px) {
+      width: 300px !important;
+    }
+    @media screen and (max-width: 1024px) and (min-width: 500px) {
+      width: 350px !important;
+    }
+  }
+
+  .img-limiter{
+    max-width: 350px;
+
+    @media screen and (max-width: 300px) {
+      max-width: 100px !important;
+    }
+    @media screen and (max-width: 400px) and (min-width: 300px) {
+      max-width: 200px !important;
+    }
+    @media screen and (max-width: 500px) and (min-width: 400px) {
+      max-width: 300px !important;
+    }
+    @media screen and (max-width: 1024px) and (min-width: 500px) {
+      max-width: 350px !important;
+    }
+  }
+}
+
+

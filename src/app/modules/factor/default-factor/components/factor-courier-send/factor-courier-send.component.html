@@ -1,0 +1,39 @@
+<div class="factor-courier-send" fxLayout="column" fxLayoutAlign="start stretch">
+
+  <div fxLayout="row" fxLayoutAlign="space-between center">
+    <h2>{{'ارسال و تحویل' | translate}}</h2>
+    <div></div>
+  </div>
+
+  <mat-divider class="my-2"></mat-divider>
+
+  <div fxLayout="row wrap" fxLayout.lt-md="column" fxLayoutGap.lt-md="15px"
+       fxLayoutAlign="start stretch" fxLayoutGap="25px">
+
+    <mat-form-field appearance="outline" *ngIf="workDays.length">
+      <mat-label>{{'انتخاب تاریخ' | translate}}</mat-label>
+      <mat-select [(ngModel)]="selectedWorkDay" (ngModelChange)="selectedWorkDay = $event">
+        <mat-option *ngFor="let workDay of workDays" [value]="workDay"
+                    [disabled]="workDay.HOLIDAY ? workDay.HOLIDAY == 1 : false">
+          {{workDay.date | jalaliDate: 'weekDayName'}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" *ngIf="selectedWorkDay">
+      <mat-label>{{'انتخاب بازه زمانی' | translate}}</mat-label>
+      <mat-select [(ngModel)]="selectedWorkHour" (ngModelChange)="selectSendTime($event)">
+        <ng-container *ngFor="let _workHour of selectedWorkDay.workHours">
+          <mat-option [disabled]="checkTimePassed(_workHour.startTime)" [value]="_workHour.startTime">
+            {{'از' | translate}}
+            {{_workHour.startTime | jalaliDate: 'timeHour'}}
+            {{'تا' | translate}}
+            {{_workHour.endTime | jalaliDate: 'timeHour'}}
+          </mat-option>
+        </ng-container>
+      </mat-select>
+    </mat-form-field>
+
+  </div>
+
+</div>

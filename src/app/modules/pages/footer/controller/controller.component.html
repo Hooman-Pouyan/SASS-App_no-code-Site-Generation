@@ -1,0 +1,7 @@
+<ng-container [ngSwitch]="modulesService.theme">
+
+  <renovation-footer *ngSwitchCase="[500] | customSwitch: modulesService.theme">
+  </renovation-footer>
+
+  <default-footer [backgroundColor]="backgroundColor" *ngSwitchDefault></default-footer>
+</ng-container>

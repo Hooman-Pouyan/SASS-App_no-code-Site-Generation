@@ -1,0 +1,9 @@
+<ng-container [ngSwitch]="modulesService.theme">
+
+  <default-contact-us *ngSwitchDefault></default-contact-us>
+
+  <motolead-contact-us
+    *ngSwitchCase="[629] | customSwitch: modulesService.theme">
+  </motolead-contact-us>
+
+</ng-container>

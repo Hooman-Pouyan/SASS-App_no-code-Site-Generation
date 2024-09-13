@@ -1,0 +1,259 @@
+$index-bg-color: #fff;
+$theme-prime-color: #1c6aec;
+$theme-sec-color: #ff7e1d;
+
+.landing-base-theme16 {
+  background-color: $index-bg-color;
+
+  .slider-base-theme16 {
+    //background-image: url(../../../../../assets/img/temp2/banner-bg.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+
+    .content {
+      .description {
+        h1 {
+          font-size: 2rem;
+          color: #fff;
+          font-weight: bolder;
+
+          span {
+            color: $theme-sec-color;
+          }
+        }
+
+        p {
+          color: #fff;
+        }
+
+        .button-container {
+          button {
+            font-size: 1.2rem;
+            font-weight: bolder;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+
+            &:hover {
+              background: transparent !important;
+
+              &:is(.buy) {
+                color: $theme-sec-color;
+              }
+
+              &:is(.contact) {
+                color: #232221;
+              }
+            }
+
+            &:is(.buy) {
+              background-color: $theme-sec-color;
+              border: 2px solid $theme-sec-color;
+            }
+
+            &:is(.contact) {
+              background-color: #232221;
+              border: 2px solid #232221;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .about-us-base-theme16 {
+    margin-top: -1.5rem;
+
+    .content {
+      //background-image: url(../../../../../assets/img/temp2/about-img1.png);
+      background-size: cover;
+      background-repeat: no-repeat;
+
+      h2 {
+        font-size: 1.8rem;
+        font-weight: bolder;
+
+        span {
+          color: $theme-prime-color;
+        }
+      }
+
+      p {
+        background-color: rgba(255, 255, 255, 0.833);
+        margin: 7rem 3rem;
+      }
+
+      .read-more {
+        font-size: 1.2rem;
+        font-weight: bolder;
+        border: 2px solid $theme-prime-color;
+        color: #fff;
+        cursor: pointer;
+        background-color: $theme-prime-color;
+        align-self: center;
+
+        &:hover {
+          background: transparent;
+          color: $theme-prime-color;
+        }
+      }
+    }
+  }
+
+  .our-product-base-theme16 {
+    .content {
+      h2 {
+        font-size: 1.5rem;
+        font-weight: bolder;
+
+        span {
+          color: $theme-prime-color;
+        }
+      }
+
+      img {
+        align-self: center;
+      }
+
+      button {
+        align-self: center;
+        font-size: 1.2rem;
+        font-weight: bolder;
+        border: 2px solid $theme-prime-color;
+        color: #fff;
+        cursor: pointer;
+        background-color: $theme-prime-color;
+
+        &:hover {
+          background: transparent;
+          color: $theme-prime-color;
+        }
+      }
+    }
+  }
+
+  .contact-us-base-theme16 {
+    //background-image: url(../../../../../assets/img/temp2/contact-bg.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+
+    .content {
+      h1 {
+        font-size: 2rem;
+        font-weight: bolder;
+      }
+
+      .contact-form {
+        input {
+          padding: 1rem .5rem;
+          margin: 1rem 0;
+
+          &::placeholder {
+            font-size: 1rem;
+            font-weight: bold;
+          }
+        }
+
+        textarea {
+          padding: 1rem .5rem;
+          margin: 1rem 0;
+
+          &::placeholder {
+            font-size: 1rem;
+            font-weight: bold;
+          }
+        }
+      }
+
+      .send {
+        background-color: $theme-sec-color;
+        color: #fff;
+        font-size: 1.5rem;
+        font-weight: bolder;
+        border: 2px solid $theme-sec-color;
+        cursor: pointer;
+
+        &:hover {
+          background-color: transparent;
+          color: $theme-sec-color;
+        }
+      }
+    }
+  }
+
+  .feedback-base-theme16 {
+    .content {
+      h1 {
+        font-size: 2rem;
+        font-weight: bolder;
+      }
+
+      p {
+        font-size: .9rem;
+      }
+
+      h2 {
+        margin: .5rem 0;
+      }
+
+      h4 {
+        margin: .5rem 0;
+        color: #0a2ba6;
+      }
+    }
+  }
+
+  .social-base-theme16 {
+    background-color: #051148;
+
+    .content {
+      h2 {
+        font-size: 1.5rem;
+        font-weight: bolder;
+        color: #fff;
+      }
+
+      p {
+        color: #fff;
+      }
+
+      .sub {
+        span {
+          cursor: pointer;
+          background-color: $theme-sec-color;
+          color: #fff;
+          border-radius: 0 5px 5px 0;
+          font-size: 1rem;
+          border: none;
+        }
+
+        input {
+          border-radius: 5px 0 0 5px;
+          border: none;
+
+          &::placeholder {
+            font-size: 1rem;
+            font-weight: bolder;
+          }
+        }
+      }
+
+      ul {
+        list-style: none;
+        padding: 0;
+
+        li {
+          a {
+            text-decoration: none;
+            color: #fff;
+            transition: all .3s ease-in-out;
+
+            &:hover {
+              color: $theme-sec-color;
+            }
+          }
+        }
+      }
+    }
+  }
+}

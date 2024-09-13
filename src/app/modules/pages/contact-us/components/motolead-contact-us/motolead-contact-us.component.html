@@ -1,0 +1,116 @@
+<app-header></app-header>
+
+<section fxLayout="column" fxLayoutAlign="start stretch"
+      class="my-4" fxLayoutGap="2rem">
+
+  <div class="container" fxLayout="column" fxLayoutAlign="start stretch">
+    <h1 class="contact-us-title">
+      <span class="title-back">CONTACT US</span>
+      تماس با موتور پمپ یاران
+    </h1>
+    <p class="text-center" editElement editType="motolead-contact-us">
+      {{dragDropService.fieldText('motolead-contact-us') ||
+    'لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است، و برای شرایط فعلی تکنولوژی مورد نیاز، و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد، کتابهای زیادی در شصت و سه درصد گذشته حال و آینده، شناخت فراوان جامعه و متخصصان را می طلبد، تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی، و فرهنگ پیشرو در زبان فارسی ایجاد کرد، در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها، و شرایط سخت تایپ به پایان رسد و زمان مورد نیاز شامل حروفچینی دستاوردهای اصلی، و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.'
+      }}
+    </p>
+  </div>
+
+  <div id="mapSection"></div>
+
+  <mat-card fxLayout="row wrap" fxLayoutAlign="space-between center"
+            fxLayout.lt-md="column" fxLayoutAlign.lt-md="start stretch" fxLayoutGap.lt-md="10px">
+
+    <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap=".5rem" fxFlex="32%">
+      <mat-icon color="primary">phone</mat-icon>
+      <a [href]="'tel:' + storeSettingService.store.phone">
+        {{storeSettingService.store.phone}}
+      </a>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap=".5rem" fxFlex="32%">
+      <mat-icon color="primary">mail</mat-icon>
+      <a [href]="'mailto:' + storeSettingService.store.email">
+        {{storeSettingService.store.email}}
+      </a>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap=".5rem" fxFlex="32%">
+      <mat-icon color="primary">location_on</mat-icon>
+      <span>{{storeSettingService.store.address}}</span>
+    </div>
+
+    <div *ngFor="let spNumbers of storeSettingService.store.supportNumbers;let idx = index"
+         fxLayout="row" fxLayoutAlign="start start" fxLayoutGap=".5rem" fxFlex="32%">
+      <ng-container *ngIf="spNumbers.VALUE == 'null' ">
+        <mat-icon color="primary">phone</mat-icon>
+        <a [href]="'tel:' + spNumbers.VALUE">
+          {{spNumbers.VALUE}}
+        </a>
+      </ng-container>
+    </div>
+
+  </mat-card>
+
+  <div fxLayout="column" fxLayoutAlign="start center" class="container">
+
+    <h2 class="contact-us-title">
+      <span class="title-back">GET IN TOUCH</span>
+      پاسخ‌گوی سوالات شما هستیم، همین امروز با ما در ارتباط باشید.
+    </h2>
+
+    <form [formGroup]="ticketForm" fxLayout="row wrap"
+          fxLayoutAlign="space-between center" class="w-100">
+
+      <mat-form-field appearance="outline" fxFlex="33%" fxFlex.lt-md="48%">
+        <mat-label>{{'دسته بندی پیام' | translate }}</mat-label>
+        <mat-select formControlName="CATALOG_ID">
+          <mat-option *ngFor="let item of catalogs" [value]="item.ID">
+            {{item.NAME}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" fxFlex="33%" fxFlex.lt-md="48%">
+        <input formControlName="PHONE_NUMBER" [placeholder]="'شماره تلفن' | translate" matInput autocomplete="off">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" fxFlex="33%" fxFlex.lt-md="100%">
+        <input formControlName="SUBJECT" type="text" [placeholder]="'عنوان' | translate" matInput autocomplete="off">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" fxFlex fxFlex.lt-md="100%">
+      <textarea formControlName="CONTENT" rows="8" cols="40" matInput
+                [placeholder]="'متن پیام را اینجا وارد کنید' | translate"></textarea>
+      </mat-form-field>
+
+    </form>
+
+    <button mat-raised-button color="primary" (click)="saveChange()"
+            [disabled]="ticketForm.invalid">
+      {{'ارسال' | translate}}
+    </button>
+
+  </div>
+
+  <div fxLayout="column" fxLayoutAlign="start stretch" class="container">
+
+    <h2 class="contact-us-title">
+      <span class="title-back">SOCIAL MEDIA</span>
+      شبکه های اجتماعی
+    </h2>
+
+    <div fxLayout="row wrap" class="social-media"
+         fxLayoutAlign="center center" fxLayoutGap="20px">
+      <ng-container *ngFor="let social of storeSettingService.store.socials">
+        <a [href]="socialLink(social)" target="_blank" *ngIf="social.link != 'null' ">
+          <img [src]=" '/assets/icons/socials/' + social.type + '.svg' " class="img-fluid" [title]="social.type"
+               [alt]="social.type">
+        </a>
+      </ng-container>
+    </div>
+
+  </div>
+
+</section>
+
+<app-footer></app-footer>

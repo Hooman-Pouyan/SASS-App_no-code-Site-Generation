@@ -1,0 +1,89 @@
+<div fxLayout="column" class="product" fxLayoutAlign="space-between stretch" *ngIf="product">
+
+  <div class="each-product-img" fxLayout="column" fxLayoutAlign="center center">
+    <div class="overlay-product" *ngIf="product.PRICE != product.PRICE_AFTER_OFFER"
+         fxLayout="column" fxLayoutAlign="center center">
+      <span class="product-price">
+          {{calculateDiscount(product.PRICE, product.PRICE_AFTER_OFFER)}}%
+      </span>
+    </div>
+
+    <a class="product-img " target="_blank" style="align-self:center;"
+       [routerLink]="'/product/' + (product.PRODUCT_STORE_ID || product.PRODUCT_ID)"
+       [queryParams]="{'name': product.NAME}">
+      <img *ngIf="product.IMAGE && !product.IMAGE.includes('null') else noImage"
+           [src]="imageUrl + '/assets/img/products/' + product.IMAGE" addClass="product-slide-img"
+           [alt]="product.NAME" [title]="product.NAME" (load)="imgProductLoaded = true">
+      <ng-template #noImage>
+        <img src="../../../../assets/img/default/product.png"
+             class="img-fluid" [alt]="product.NAME" (load)="imgProductLoaded = true">
+      </ng-template>
+
+      <!--      <div class="non-available-product-watermark" fxLayout="column" fxLayoutAlign="center center"-->
+      <!--           *ngIf="!checkProductStatus(product.PRODUCT_STATUS_ID) && imgProductLoaded">-->
+      <!--        <div fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="10px"-->
+      <!--             class="text-block">-->
+      <!--          <b>{{productStatusName(product.PRODUCT_STATUS_ID)}}</b>-->
+      <!--        </div>-->
+      <!--      </div>-->
+
+      <!--      <div class="product-offer-watermark" fxLayout="column" fxLayoutAlign="start end"-->
+      <!--           *ngIf="product.PRICE != product.PRICE_AFTER_OFFER && modulesService.isMezon8 &&-->
+      <!--         checkProductStatus(product.PRODUCT_STATUS_ID) && imgProductLoaded">-->
+      <!--        <div fxLayout="column" fxLayoutAlign="start center"-->
+      <!--             class="text-block">-->
+      <!--          <span>{{'حراج' | translate}}</span>-->
+      <!--        </div>-->
+      <!--      </div>-->
+
+    </a>
+
+  </div>
+
+  <div class="each-product-content" fxLayout="column" fxLayoutAlign="start stretch">
+    <div class="product-name" >
+      <span >
+              {{product.NAME }}
+      </span>
+    </div>
+    <div class="product-price" *ngIf="product.PRICE != 1" fxLayout="row" fxLayoutAlign="space-between center">
+      <b>
+        {{product.PRICE_AFTER_OFFER | number}}
+      </b>
+      <b>
+        {{storeSettingService.storeCurrency | translate}}
+      </b>
+    </div>
+
+    <ng-container *ngIf="windowWidth > 959" fxHide.lt-md>
+      <button mat-raised-button class="order-btn" color="primary" (click)="addToCart(product)"
+              [ngClass]="{'dark-font': theme == 'dark' }" *ngIf="product.PRICE != 1 else specialProduct"
+              [disabled]="!checkProductStatus(product.PRODUCT_STATUS_ID)" class="add-to-cart">
+        <ng-container *ngIf="checkProductStatus(product.PRODUCT_STATUS_ID) else disabledAddCart">
+          {{'افزودن به سبد خرید' | translate}}
+        </ng-container>
+        <ng-template #disabledAddCart>
+          {{ productStatusName(product.PRODUCT_STATUS_ID) | translate}}
+        </ng-template>
+      </button>
+    </ng-container>
+    <ng-container *ngIf="windowWidth < 959" fxHide.gt-sm  class="button-add">
+      <button mat-flat-button color="primary" class="button-add" (click)="addToCart(product)"
+              [disabled]="!checkProductStatus(product.PRODUCT_STATUS_ID)" [ngClass]="{'dark-font': theme == 'dark' }"
+              [ngStyle]="{'opacity': checkProductStatus(product.PRODUCT_STATUS_ID) ? '1' : '0.5' }">
+        +
+      </button>
+    </ng-container>
+
+    <ng-template #specialProduct>
+      <a mat-stroked-button [href]="'tel:' + storeSettingService.store.phone" color="primary">
+        <mat-icon>phone</mat-icon>
+        {{'تماس بگیرید' | translate }}
+      </a>
+    </ng-template>
+
+  </div>
+
+</div>
+
+

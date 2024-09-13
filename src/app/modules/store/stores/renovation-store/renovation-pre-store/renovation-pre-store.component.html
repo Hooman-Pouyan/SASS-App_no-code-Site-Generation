@@ -1,0 +1,243 @@
+<app-header></app-header>
+
+<mat-horizontal-stepper linear #stepper class="stepper">
+
+  <mat-step label="Select Category">
+
+    <div fxLayout="row wrap" fxLayoutGap.gt-sm="8%" dir="ltr" class="mt-3" fxLayoutAlign="space-between center">
+      <div class="category my-3" fxFlex="17%" [ngClass]="{'mx-0': (i+1) % 4 == 0}" fxFlex.lt-md="45%"
+        [ngStyle]="{'pointer-events': category.NAME == 'Bathroom' ? 'unset' : 'none'}"
+        *ngFor="let category of categories; let i = index" fxLayout="column" fxLayoutAlign="center center">
+        <div fxLayout="column" fxLayoutAlign="center center" class="category-checkbox" (click)="setCategory(category)">
+          <img [src]="adminImageUrlDevelop + '/assets/img/categories/category_logo/' + category.PRODUCT_NAME"
+            class="img-fluid" [alt]="category.NAME" fxFlex="40%">
+        </div>
+        <b class="title mt-3">{{category.NAME}}</b>
+      </div>
+    </div>
+  </mat-step>
+
+  <mat-step label="Dimensions">
+    <div fxLayout="row" fxLayoutAlign="space-around center">
+      <img src="../../../../../assets/img/renovation/roomDimension.png" class="img-fluid" alt="roomDimension">
+      <div fxLayout="column" fxLayoutAlign="center center">
+        <h2>
+          What is the size of your
+          {{ selectedCategory.NAME }}
+          ?
+        </h2>
+        <mat-form-field appearance="outline">
+          <mat-label>Width</mat-label>
+          <input [(ngModel)]="width" matInput placeholder="Example: 28 (square feet)" type="number">
+          <b matPrefix>
+            ft
+          </b>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Length</mat-label>
+          <input [(ngModel)]="length" matInput placeholder="Example: 28 (square feet)" type="number">
+          <b matPrefix>
+            ft
+          </b>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Height</mat-label>
+          <input [(ngModel)]="height" matInput placeholder="Example: 28 (square feet)" type="number">
+          <b matPrefix>
+            ft
+          </b>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="space-between center" class="action-btns">
+      <button mat-button matStepperPrevious>
+        <mat-icon class="mr-2">west</mat-icon>
+        back
+      </button>
+      <button mat-button (click)="setData()" [disabled]="!height || !length || !width">
+        Submit
+        <mat-icon class="ml-2">east</mat-icon>
+      </button>
+
+    </div>
+  </mat-step>
+
+  <mat-step label="Layout">
+    <div fxLayout="row wrap" fxLayoutGap="0.5%" dir="ltr" class="sub-categories mt-3"
+      fxLayoutAlign="space-around start">
+
+      <div fxFlex.lt-md="45%" fxFlex="44%" class="box" fxLayout="column" fxLayoutAlign="space-between  ">
+
+        <div class="demolition" fxLayout="row" fxLayoutAlign="space-between center">
+          <p>
+            Does your room need demolition?
+          </p>
+          <div class="toggle">
+            Yes
+            <mat-slide-toggle [checked]="useDefault" (change)="toggle($event)">
+            </mat-slide-toggle>
+            No
+          </div>
+        </div>
+
+        <div class="addRemove" fxLayout="row" fxLayoutAlign="space-between center">
+          <p>
+            Do you need to add or remove a wall?
+          </p>
+          <div class="toggle">
+            Yes
+            <mat-slide-toggle [checked]="useDefault" (change)="toggle($event)">
+            </mat-slide-toggle>
+            No
+          </div>
+        </div>
+
+        <div class="removeWall" fxLayout="row" fxLayoutAlign="space-between  ">
+          <p>
+            Number of walls to be removed:
+          </p>
+          <mat-form-field appearance="outline" fxLayoutAlign="space-between  ">
+            <mat-label>Number</mat-label>
+            <input [(ngModel)]="removeWall" matInput placeholder="Number">
+          </mat-form-field>
+        </div>
+
+        <div class="addWall" fxLayout="row" fxLayoutAlign="space-between  ">
+          <p class="add">
+            Number of walls to be add:
+          </p>
+          <mat-form-field appearance="outline" fxLayoutAlign="space-between  ">
+            <mat-label>Number</mat-label>
+            <input [(ngModel)]="addWall" matInput placeholder="Number">
+          </mat-form-field>
+        </div>
+
+      </div>
+
+      <div fxFlex.lt-md="45%" fxFlex="44%" class="box" fxLayout="column" fxLayoutAlign="space-between  ">
+
+        <div class="demolition" fxLayout="row" fxLayoutAlign="space-around center">
+          <p style="width : 65%">
+            Do you need to change the location of any of this items in your room layout?
+          </p>
+
+          <div class="toggle">
+            Yes
+            <mat-slide-toggle [checked]="useDefault" (change)="toggle($event)">
+            </mat-slide-toggle>
+            No
+          </div>
+
+        </div>
+
+        <div fxLayout="column" *ngFor="let subCategory of subCategories; let i = index"
+          (click)="subCategory.checked = !subCategory.checked" class="check">
+          <mat-checkbox class="example-margin">{{subCategory.product.NAME}}</mat-checkbox>
+        </div>
+
+      </div>
+
+      <div fxFlex.lt-md="45%" fxFlex="44%" class="box" fxLayout="column" fxLayoutAlign="space-between center">
+
+        <div class="demolition" fxLayout="row" fxLayoutAlign="space-between center">
+          <p style="width: 70%;">
+            Do you need to change the location of lights or outlets?
+          </p>
+          <div>
+            Yes
+            <mat-slide-toggle [checked]="useDefault" (change)="toggle($event)">
+            </mat-slide-toggle>
+            No
+          </div>
+        </div>
+
+        <div class="demolition" fxLayout="column" fxLayoutAlign="space-between ">
+          <p style="width:70%;">
+            Please select the number of new outlets and wires you need:
+          </p>
+          <div class="form" fxLayout="row" fxLayoutAlign="start">
+            <p fxLayout="row" fxLayoutAlign="space-between start" class="wire">
+              Wires:
+            </p>
+            <mat-form-field appearance="outline" fxLayout="row" fxLayoutAlign="start">
+              <input [(ngModel)]="wires" matInput placeholder="Number" type="number">
+            </mat-form-field>
+          </div>
+          <div class="form" fxLayout="row" fxLayoutAlign="start">
+            <p fxLayout="row" fxLayoutAlign="space-between start" class="outlet">
+              Outlets:
+            </p>
+            <mat-form-field appearance="outline" fxLayout="row" fxLayoutAlign="start">
+              <input [(ngModel)]="outlets" matInput placeholder="Number" type="number">
+            </mat-form-field>
+          </div>
+        </div>
+
+      </div>
+
+      <div fxFlex.lt-md="45%" fxFlex="44%" class="box" fxLayout="column" fxLayoutAlign="space-between  ">
+
+        <div class="demolition" fxLayout="row" fxLayoutAlign="space-between center">
+          <p>
+            Do you want to add heated floors?
+          </p>
+          <div>
+            Yes
+            <mat-slide-toggle [checked]="useDefault" (change)="toggle($event)">
+            </mat-slide-toggle>
+            No
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="space-between center" class="action-btns">
+      <button mat-button matStepperPrevious>
+        <mat-icon class="mr-2">west</mat-icon>
+        back
+      </button>
+      <button mat-button (click)="setMoreData()" [disabled]="!height || !length || !width">
+        Submit
+        <mat-icon class="ml-2">east</mat-icon>
+      </button>
+
+    </div>
+  </mat-step>
+
+  <mat-step label="Select Product">
+
+    <div fxLayout="row wrap" fxLayoutGap.gt-sm="3%" dir="ltr" class="sub-categories mt-3"
+      fxLayoutAlign="space-between center">
+
+      <div *ngFor="let subCategory of subCategories; let i = index" (click)="subCategory.checked = !subCategory.checked"
+        class="sub-category my-3" [ngClass]="{'mx-0': (i+1) % 4 == 0, 'checked': subCategory.checked }"
+        fxFlex.lt-md="45%" fxFlex="30%" fxLayout="row" fxLayoutAlign="space-between center">
+
+        <img [src]="adminImageUrlDevelop + '/assets/img/categories/category_logo/' + subCategory.product.IMAGE"
+          alt="category" class="img-fluid" fxFlex="60%">
+
+        <b fxFlex="15%">{{subCategory.product.NAME}}</b>
+
+      </div>
+
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="space-between center" class="action-btns">
+      <button mat-button matStepperPrevious>
+        <mat-icon class="mr-2">west</mat-icon>
+        back
+      </button>
+      <button mat-button (click)="goToStep3()" [disabled]="checkStep2ButtonDisable()">
+        Submit
+        <mat-icon class="ml-2">east</mat-icon>
+      </button>
+    </div>
+
+  </mat-step>
+
+
+</mat-horizontal-stepper>

@@ -1,0 +1,43 @@
+.products-packs-slider {
+
+  .sliders-header {
+    position: relative;
+    color: white;
+    background-color: var(--custom-primary-color);
+    width: fit-content;
+    padding: 0.5rem 2rem;
+    border-radius: 5px;
+
+    &:before {
+      content: "";
+      width: 0;
+      height: 0;
+      position: absolute;
+      bottom: -30px;
+      right: 0;
+      border-left: 0 solid transparent;
+      border-right: 20px solid transparent;
+      border-top: 35px solid var(--custom-primary-color);
+    }
+  }
+
+  .felor-sliders-header {
+    color: white;
+    background-color: var(--custom-primary-color);
+    padding: 0.5rem 2rem;
+    border-radius: 5px;
+    text-align: center;
+    margin-top: 2px;
+  }
+
+  .dark-slider-pack {
+    border-bottom: 1px solid white !important;
+    .mat-tab-link {
+      color: white !important;
+    }
+    ::ng-deep.mat-tab-header-pagination-chevron {
+      border-color: white !important;
+    }
+  }
+
+}

@@ -1,0 +1,34 @@
+<div fxLayout="column" fxLayoutAlign="start stretch"
+     [ngClass]="{'dark-class': theme == 'dark', 'alternative-slider': theme == 'alternative' }"
+     [ngStyle]="{'direction': modulesService.lang == 'fa' ? 'rtl' : 'ltr' }">
+  <div fxLayout="row" fxLayoutAlign="space-between center" class="mb-2 px-2 mx-1" *ngIf="link || title">
+    <h3 *ngIf="title">{{title | translate}}</h3>
+    <a [routerLink]="link" [queryParams]="queryParams"
+       *ngIf="link" fxLayoutAlign="center center">
+      <span class="more">{{'محصولات بیشتر' | translate}}</span>
+      <mat-icon class="mx-1">
+        <ng-container *ngIf="modulesService.lang == 'fa' else foreign">
+          chevron_left
+        </ng-container>
+        <ng-template #foreign>
+          chevron_right
+        </ng-template>
+      </mat-icon>
+    </a>
+  </div>
+
+  <swiper *ngIf="windowWidth > 959" fxHide.lt-md [config]="productSliderConfig"
+          #swiper fxFill class="product-slider">
+    <ng-template swiperSlide *ngFor="let product of products">
+      <product-slide [product]="product" [fixWidth]="true" [theme]="theme"></product-slide>
+    </ng-template>
+  </swiper>
+
+  <swiper *ngIf="windowWidth <= 959" fxHide.gt-sm [config]="productSliderMobileConfig"
+          fxFill class="product-slider">
+    <ng-template swiperSlide *ngFor="let product of products">
+      <product-slide-mobile [product]="product" [fixWidth]="true" [theme]="theme"></product-slide-mobile>
+    </ng-template>
+  </swiper>
+
+</div>

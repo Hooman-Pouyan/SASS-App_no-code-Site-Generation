@@ -1,0 +1,61 @@
+<div class="payment-status" [ngClass]="{'valid-payment': paymentStatus.statusType == 'valid', 'invalid-payment': paymentStatus.statusType == 'invalid'}"
+     fxLayout="row" fxLayoutAlign="center center">
+  <mat-card fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="1.5rem">
+
+    <img src="../../../../assets/icons/payment/done.png"
+         alt="valid payment" class="img-fluid" *ngIf="paymentStatus.statusType == 'valid' else invalidImg">
+    <ng-template #invalidImg>
+      <img src="../../../../assets/icons/payment/error.png"
+           alt="invalid payment" class="img-fluid">
+    </ng-template>
+
+    <b class="text-center">{{paymentStatus.statusName | translate}}</b>
+
+    <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="10px">
+
+      <div fxLayout="row" fxLayoutAlign="space-between center">
+        <span>{{'نام پذیرنده'}}</span>
+        <span>{{paymentStatus.storeName_Fa}}</span>
+      </div>
+
+      <div>
+        <mat-divider></mat-divider>
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="space-between center">
+        <span>{{'کد پیگیری تراکنش'}}</span>
+        <span>{{paymentStatus.RefNum}}</span>
+      </div>
+
+      <div>
+        <mat-divider></mat-divider>
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="space-between center">
+        <span>{{'مبلغ سفارش'}}</span>
+        <span>
+          {{paymentStatus.amount | number}}
+          {{storeSettingService.storeCurrency | translate}}
+        </span>
+      </div>
+
+      <div>
+        <mat-divider></mat-divider>
+      </div>
+
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="center center">
+      <a [routerLink]="['/profile/orders/' + paymentStatus.orderId]" mat-raised-button color="primary"
+         *ngIf="paymentStatus.PayType == 'web' else appRoute">
+        {{'مشاهده سفارش' | translate}}
+      </a>
+      <ng-template #appRoute>
+        <a [href]="appUrl" target="_blank" mat-raised-button color="primary">
+          {{'بازگشت به اپلیکیشن' | translate}}
+        </a>
+      </ng-template>
+    </div>
+
+  </mat-card>
+</div>

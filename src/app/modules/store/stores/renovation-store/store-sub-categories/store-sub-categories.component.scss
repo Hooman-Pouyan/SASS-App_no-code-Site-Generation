@@ -1,0 +1,130 @@
+.renovation-store-header {
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1;
+  }
+  
+  .renovation-category-list {
+    align-self: flex-start;
+    margin-top: 2.5rem;
+    position: sticky;
+    margin-left: 2rem;
+    top: 80px;
+  }
+  
+  .category-list {
+  
+    width: 95%;
+    margin-top: 2rem;
+    overflow-y: auto;
+  
+  
+    .title {
+      padding: 20px 50px;
+      border-bottom: solid 2px black;
+      margin: 0 0 20px;
+    }
+  
+    .sub-category {
+      width: 100%;
+      margin-bottom: 60px;
+  
+      .category-title {
+        font-size: 24px;
+        color: #707070;
+        margin-bottom: 10px;
+      }
+  
+      .prev-category {
+        margin-bottom: 10px;
+      }
+  
+      .product {
+        padding: 20px 40px;
+        border: 1px solid #B1B1B1;
+        margin-bottom: 20px;
+        border-radius: 5px;
+  
+        .image-product {
+          min-height: 150px;
+          img {
+            max-width: 150px;
+            height: auto;
+            object-fit: contain;
+          }
+        }
+  
+        .product-name {
+          margin: 20px 0;
+          font-weight: bold;
+          font-size: 16px;
+        }
+  
+        .final-price {
+          font-weight: bold;
+          font-size: 16px;
+          margin-top: 10px;
+        }
+  
+        .just-final-price {
+          min-height: 30px;
+        }
+  
+        .discount-price {
+          del {
+            text-decoration-color: red;
+          }
+  
+          span {
+            padding: 5px 7px;
+            border: red 1px solid;
+            border-radius: 10px;
+            color: red;
+            margin-left: 5px;
+          }
+        }
+  
+        .show-product-btn {
+          color: #B91646;
+          border: #B91646 1px solid;
+          margin-top: 10px;
+          min-width: 120px;
+        }
+  
+      }
+  
+      .navigate-category {
+        width: 100%;
+        a {
+          margin-right: 15px;
+          font-weight: bold;
+          font-size: 18px;
+          color: #444444;
+        }
+      }
+  
+    }
+  
+  }
+  
+  .back-button {
+    border-radius: 25px;
+    color: white !important;
+    position: fixed;
+    right: 30px;
+    bottom: 30px;
+    padding: 5px 15px;
+    z-index: 3;
+  }
+  
+  .proceed-button {
+    border-radius: 25px;
+    color: white !important;
+    position: fixed;
+    left: 30px;
+    bottom: 30px;
+    padding: 5px 15px;
+    z-index: 3;
+  }
+  

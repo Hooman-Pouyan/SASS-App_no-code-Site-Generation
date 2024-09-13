@@ -1,0 +1,114 @@
+.drawer-container {
+  //display: unset !important;
+  overflow: unset !important;
+  //z-index: 1001;
+
+  #categories-list {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    max-width: 100%;
+    min-width: 100%;
+  }
+
+  .drawer-content {
+    overflow-x: hidden;
+    overflow-y: auto;
+    display: unset !important;
+
+    .category-list-desktop {
+      background-color: #fff;
+      border-left: 1px solid #EEE;
+
+      products-filter {
+        position: sticky;
+        top: 70px;
+        z-index: 1000;
+        background-color: #fff;
+        padding-bottom: 5rem;
+      }
+    }
+
+    .categories-filter-action {
+      padding: 5px 10px;
+    }
+
+    .categories-products {
+      position: relative;
+      width: 100%;
+      .products-list {
+        border-radius: 5px;
+        margin-bottom: 3rem;
+
+        .products {
+
+          .product {
+            @media screen and (min-width: 959px) and (max-width: 1280px) {
+              max-width: 24% !important;
+            }
+            height: 100%;
+            border-radius: 10px;
+            padding: 20px;
+            background-color: white;
+            margin-bottom: 20px;
+            margin-top: 10px;
+            @media screen and (max-width: 559px) {
+              max-width: 100%;
+              min-width: 100%;
+            }
+            img {
+              aspect-ratio: 1/1;
+              object-fit: contain;
+            }
+
+            mat-hint {
+              font-size: 12px;
+            }
+
+            .product-description {
+              a {
+                font-weight: bold;
+              }
+            }
+
+            .price-section {
+              height: 50px;
+
+              .discount-section {
+
+                height: 25px;
+
+                .discount-percentage {
+                  background-color: #EB6A6A;
+                  color: white;
+                  border-radius: 15px;
+                  padding: 3px 10px;
+                }
+
+                .before-price {
+                  color: #909090;
+                  text-decoration-color: #909090 !important;
+                  font-size: 14px;
+                }
+              }
+            }
+
+            .add-to-cart {
+              border-radius: 20px;
+            }
+
+          }
+
+          .product:hover {
+            transition: all .7s ease-in-out;
+            transform: translateY(-10px);
+          }
+
+        }
+
+      }
+
+    }
+  }
+}

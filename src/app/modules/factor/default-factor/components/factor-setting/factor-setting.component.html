@@ -1,0 +1,19 @@
+<div class="factor-container" fxLayout="row" fxLayoutAlign="space-between stretch"
+  fxLayout.lt-md="column" fxLayoutAlign.lt-md="start stretch">
+
+  <div fxFlex="65%" class="factor-setting" fxLayoutGap="40px" fxLayout="column" fxLayoutAlign="start stretch">
+
+    <factor-address></factor-address>
+
+    <factor-courier-send *ngIf="!modulesService.hideFactorOrderDate"></factor-courier-send>
+
+    <factor-special-courier *ngIf="modulesService.customDelivery"></factor-special-courier>
+
+  </div>
+
+  <mat-divider [vertical]="true" fxHide.lt-md></mat-divider>
+  <mat-divider class="my-4" fxHide.gt-sm></mat-divider>
+
+  <factor-invoice fxFlex="30%"></factor-invoice>
+
+</div>

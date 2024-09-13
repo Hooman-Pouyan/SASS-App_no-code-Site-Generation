@@ -1,0 +1,37 @@
+<div class="factor-address" fxLayout="column" fxLayoutAlign="start stretch">
+
+  <div fxLayout="row" fxLayoutAlign="space-between center">
+    <h2>{{'آدرس' | translate}}</h2>
+    <button mat-raised-button (click)="openAddressDialog()" color="primary" fxLayoutGap="5px">
+      <span>{{'آدرس جدید' | translate}}</span>
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
+
+  <mat-divider class="my-2"></mat-divider>
+
+  <mat-radio-group fxLayout="column" fxLayoutGap="10px" *ngIf="addresses.length else noAddresses"
+    (ngModelChange)="changeOrderAddress($event)" [(ngModel)]="selectedAddress">
+    <div fxLayout="row" fxLayoutAlign="space-between center" *ngFor="let address of addresses">
+
+      <mat-radio-button [value]="address" fxLayoutGap="5px" class="address-radio-btn" fxLayout="column"
+        fxLayoutAlign="start stretch">
+        <b>{{address.NAME}}</b>
+        <mat-hint [matTooltip]="address.ADDRESS">{{address.ADDRESS}}</mat-hint>
+      </mat-radio-button>
+
+      <button mat-stroked-button color="primary" fxLayoutGap="5px" (click)="openAddressDialog(address)">
+        <span>{{'ویرایش آدرس' | translate}}</span>
+        <mat-icon>edit</mat-icon>
+      </button>
+
+    </div>
+  </mat-radio-group>
+
+  <ng-template #noAddresses>
+    <h2 class="my-3 text-center">
+      {{'آدرسی ثبت نشده است' | translate}}!
+    </h2>
+  </ng-template>
+
+</div>

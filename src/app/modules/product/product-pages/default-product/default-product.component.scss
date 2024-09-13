@@ -1,0 +1,592 @@
+@import '~swiper/swiper';
+@import '~swiper/components/navigation/navigation';
+
+.product-container {
+  position: relative;
+  background-color: white;
+
+  .default-product {
+    max-width: 95%;
+    margin: 2rem 0;
+    width: 100%;
+    padding: 0 10px;
+
+    @media screen and (max-width: 959px) {
+      margin: 1rem 0;
+    }
+
+    .dialog-action {
+      margin-bottom: 15px;
+    }
+
+    .product {
+      position: relative;
+
+      .image-product {
+        margin-bottom: 15px;
+
+        @media screen and (max-width: 959px) {
+          max-width: 100%;
+        }
+
+        .image-preview {
+          max-width: 100%;
+          max-height: 400px;
+
+          .ngxImageZoomThumbnail {
+            @media screen and (max-width: 959px) {
+              max-width: 400px !important;
+            }
+
+            @media screen and (max-width: 700px) {
+              max-width: 500px !important;
+            }
+
+            @media screen and (max-width: 500px) {
+              max-width: 450px !important;
+            }
+
+            @media screen and (max-width: 450px) {
+              max-width: 400px !important;
+            }
+
+            @media screen and (max-width: 400px) {
+              max-width: 370px !important;
+            }
+
+            @media screen and (max-width: 350px) {
+              max-width: 320px !important;
+            }
+
+            @media screen and (max-width: 300px) {
+              max-width: 250px !important;
+            }
+
+            max-width: 400px;
+            max-height: 400px;
+            object-fit: contain;
+            align-self: center;
+            text-align: center;
+            margin: 0 auto 15px;
+          }
+
+          .ngxImageZoomContainer {
+            border-radius: 5px;
+            height: 100%;
+            aspect-ratio: 1;
+            max-width: 100% !important;
+
+            @media screen and (max-width: 959px) {
+              max-width: 100%;
+              height: 100%;
+            }
+          }
+
+          .ngxImageZoomFull {
+            background-color: white;
+          }
+        }
+
+        .aparat {
+          height: 500px;
+          width: 90%;
+          align-self: center;
+          border-radius: 10px;
+        }
+
+        .gallery-slider {
+          margin-top: 15px;
+
+          swiper {
+            max-width: 400px;
+            width: 100%;
+            height: 100%;
+
+            @media screen and (max-width: 559px) {
+              max-width: 200px;
+            }
+
+            .swiper-button-prev,
+            .swiper-button-next {
+              color: white !important;
+              background-color: var(--custom-primary-color) !important;
+              border-radius: 100%;
+              width: 40px;
+              height: 40px;
+            }
+
+            .swiper-button-prev:after,
+            .swiper-button-next:after {
+              font-size: 20px;
+            }
+
+            .swiper-pagination-bullet-active {
+              background-color: var(--custom-primary-color);
+            }
+
+            .swiper-slide {
+              width: 15%;
+
+              img {
+                object-fit: contain;
+                width: 100%;
+                aspect-ratio: 1;
+                max-height: 80px;
+                max-width: 80px;
+                cursor: pointer;
+                border: 1px solid #cccccc;
+                border-radius: 5px;
+
+                @media screen and (max-width: 559px) {
+                  max-height: 45px;
+                  max-width: 45px;
+                }
+              }
+            }
+          }
+        }
+      }
+
+      .product-detail {
+
+        .action-buttons {
+          button {
+            box-shadow: none
+          }
+
+          .sub-category-name {
+            font-size: 14px;
+            color: var(--custom-primary-color);
+          }
+        }
+
+        .title-row {
+          margin-top: 25px;
+
+          .title {
+            font-size: 24px;
+          }
+        }
+
+        .brand-row {
+          margin-top: 15px;
+          font-size: 16px;
+          color: #707070;
+        }
+
+        .price-row {
+          margin-top: 20px;
+
+          .price-without-offer {
+            font-size: 24px;
+            color: #B91646;
+          }
+
+          .price-with-offer {
+            font-size: 16px;
+            place-self: center;
+            color: #707070;
+            text-decoration-color: #707070 !important;
+          }
+
+          .price-after-offer {
+            font-size: 24px;
+            margin: 0 25px;
+            color: #B91646;
+          }
+
+          .discount {
+            border-radius: 24px;
+            background-color: #B91646;
+            color: white;
+            font-size: 14px;
+            padding: 5px 15px;
+            align-self: center;
+          }
+        }
+
+        .desc-row {
+          margin-top: 25px;
+          font-size: 16px;
+          color: #707070;
+          white-space: pre-wrap;
+          @media screen and (min-width: 959px) {
+            text-align: justify;
+          }
+        }
+
+        .point-row {
+          margin-top: 10px;
+          font-size: 16px;
+        }
+
+        .features-session {
+          margin-top: 10px;
+
+          .feature {
+            width: 100%;
+            font-size: 16px;
+          }
+        }
+
+        .color-row {
+          margin-top: 10px;
+
+          .circle {
+            margin: 0;
+          }
+        }
+
+        .sizes-row {
+          margin-top: 10px;
+
+          .mat-standard-chip {
+            padding: 7px 20px !important;
+          }
+        }
+
+        .digikala-row {
+          margin-top: 10px;
+
+          a {
+            text-decoration: none;
+            color: #606060;
+            display: flex;
+            align-items: center;
+
+            .price-section {
+              margin-right: 10px;
+
+              span {
+                margin-right: 5px
+              }
+            }
+
+            mat-icon {
+              margin-right: 5px;
+            }
+
+          }
+        }
+
+        .feature-boxes {
+          margin-top: 25px;
+
+          .feature {
+            border: 2px solid #f1f1f1;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 15px;
+            font-size: 12px;
+
+            img {
+              aspect-ratio: 1;
+              object-fit: contain;
+            }
+          }
+        }
+
+        .rate {
+          @media screen and (max-width: 959px) {
+            font-size: 12px;
+          }
+        }
+
+      }
+
+    }
+
+    .customer-say {
+      padding: 1rem;
+      border-radius: 10px;
+
+      textarea {
+        resize: none;
+      }
+
+      .user-comments {
+        position: relative;
+        margin: 0 0.5rem;
+        border-right: 1px solid #ccc;
+
+        .each-comment {
+          margin: 1rem;
+          padding: 0 2rem 2rem 0;
+        }
+      }
+
+      .add-comment {
+        .add-comment-hint {
+          font-size: 12px;
+          color: #999;
+        }
+      }
+    }
+
+    .question_answer-section {
+
+      .question_answer {
+
+        .each-Q-A-section {
+          position: relative;
+          margin: 0 0.5rem;
+          border-right: 1px solid #ccc;
+
+          .each-Q-A {
+            margin: 1rem;
+            padding: 0 2rem 2rem 0;
+            border-bottom: 1px solid #ccc;
+
+            .each_Q {
+              font-size: 16px;
+              color: #555555;
+              border-bottom: 1px solid #ccc;
+              padding: 1rem 0;
+              margin: 1rem 0;
+
+              .user-name {
+                color: #555555;
+                font-size: 14px;
+              }
+            }
+
+            .each_A {
+              font-size: 14px;
+              color: #98989b;
+              margin-right: 2rem;
+              padding: 1rem;
+
+              .like-dislike {
+                mat-icon {
+                  cursor: pointer;
+                }
+
+                .check-icon {
+                  fill: 1;
+                  color: var(--primary);
+                }
+              }
+
+
+            }
+          }
+        }
+
+        .add-Q-A {
+          .add-question-hint {
+            font-size: 12px;
+            color: #999;
+          }
+
+          .add-Q-A-btn {
+            position: sticky;
+            top: 0;
+          }
+
+        }
+      }
+    }
+
+    .product-actions-detail {
+      @media screen and (min-width: 959px) {
+        border-bottom: 1px solid #d1d1d1;
+      }
+      font-size: 12px;
+
+      .btn-icon {
+        cursor: default;
+      }
+    }
+
+  }
+
+  .product-actions {
+    border-radius: 5px;
+    padding: 15px;
+    position: relative;
+
+    .inner-actions {
+      position: sticky;
+      top: 6rem;
+
+      .action-buttons {
+        button {
+          box-shadow: none;
+          border-radius: 5px;
+        }
+
+        .sub-category-name {
+          font-size: 14px;
+          color: var(--custom-primary-color);
+        }
+      }
+
+      .product-short-desc {
+        background: linear-gradient(0deg, hsla(240, 3%, 94%, .5), hsla(240, 3%, 94%, .5)), #fff;
+        border: 1px solid #d1d1d1;
+        padding: 20px 30px;
+        margin: 0 8%;
+        border-radius: 5px;
+
+
+        .product-detail-thumbnail {
+          img {
+            max-width: 65px;
+          }
+        }
+
+        .price-row {
+          margin-top: 20px;
+
+          .price-without-offer {
+            font-size: 14px;
+            color: #B91646;
+
+            @media screen and (max-width: 559px) {
+              font-size: 16px;
+            }
+
+          }
+
+          .price-with-offer {
+            font-size: 14px;
+            color: #707070;
+            text-decoration-color: #707070 !important;
+            @media screen and (max-width: 559px) {
+              font-size: 14px;
+            }
+          }
+
+          .price-after-offer {
+            font-size: 14px;
+            color: #B91646;
+          }
+
+          .discount {
+            border-radius: 14px;
+            background-color: #B91646;
+            color: white;
+            font-size: 14px;
+            padding: 3px 10px;
+          }
+        }
+      }
+    }
+
+  }
+
+  .add-buttons {
+    padding: 8px 0;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: white;
+    z-index: 10;
+    border-top: 2px solid #eee;
+    height: 60px;
+
+    .buttons {
+      max-width: 75%;
+
+      @media screen and (max-width: 559px) {
+        max-width: 50%;
+      }
+
+      button {
+        border-radius: 25px;
+        padding: 5px 25px;
+        font-size: 14px;
+      }
+
+      .add-note {
+        max-width: 50%;
+
+        .isDesktop {
+          @media screen and (max-width: 559px) {
+            display: none;
+          }
+
+          .isMobile {
+            @media screen and (min-width: 559px) {
+              display: none;
+            }
+          }
+
+        }
+      }
+
+
+    }
+
+    .count-product {
+      margin: 0 10px;
+      text-align: center;
+
+      input {
+        max-width: 50px;
+        height: 38px;
+        border: 1px solid #aaa;
+        border-radius: 25px;
+        padding: 0 10px;
+      }
+    }
+  }
+
+}
+
+.additional-products {
+  max-width: 95%;
+  margin: 2rem auto;
+}
+
+.add-to-cart-mobile {
+  border-top: 2px solid #f4f4f4;
+  background-color: white;
+  position: sticky;
+  bottom: 0;
+  z-index: 999;
+  font-size: 12px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+
+  .price-row {
+    .price-without-offer {
+      font-size: 14px;
+      color: #B91646;
+
+      @media screen and (max-width: 559px) {
+        font-size: 16px;
+      }
+
+    }
+
+    .price-with-offer {
+      font-size: 14px;
+      color: #707070;
+      text-decoration-color: #707070 !important;
+      @media screen and (max-width: 559px) {
+        font-size: 14px;
+      }
+    }
+
+    .price-after-offer {
+      font-size: 14px;
+      color: #B91646;
+    }
+
+    .discount {
+      border-radius: 14px;
+      background-color: #B91646;
+      color: white;
+      font-size: 14px;
+      padding: 3px 10px;
+    }
+  }
+}
+
+
+
+
+
+

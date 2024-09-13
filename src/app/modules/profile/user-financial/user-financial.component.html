@@ -1,0 +1,78 @@
+<div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="10px">
+
+  <div fxLayout="row" fxLayoutAlign="space-between center" fxLayout.lt-md="column"
+       fxLayoutAlign.lt-md="start stretch" fxLayoutGap="10px">
+
+    <h2>
+      {{'مدیریت مالی' | translate}}
+    </h2>
+
+  </div>
+
+  <div class="my-3">
+    <mat-divider></mat-divider>
+  </div>
+
+  <div fxLayout="column" fxLayoutGap="20px"
+       fxLayoutAlign="start stretch" *ngIf="financialRecords.data?.length > 0 else noFinancialRecord">
+    <table [dataSource]="financialRecords" mat-table>
+
+      <ng-container matColumnDef="COUNTER">
+        <th mat-header-cell *matHeaderCellDef> {{"ردیف" | translate }} </th>
+        <td mat-cell *matCellDef="let element;let i = index"
+            data-label="ردیف"> {{ (i + 1) + ((paginator.pageIndex) * paginator.pageSize) }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="factor_no">
+        <th mat-header-cell *matHeaderCellDef>{{"کد فاکتور"| translate }}</th>
+        <td mat-cell *matCellDef="let element">{{element.ORDER_ID}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="user">
+        <th mat-header-cell *matHeaderCellDef>{{"کاربر"| translate }}</th>
+        <td mat-cell *matCellDef="let element">{{element.CUSTOMER_NAME}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="date">
+        <th mat-header-cell *matHeaderCellDef> {{"تاریخ و ساعت" | translate }} </th>
+        <td mat-cell *matCellDef="let element">{{element.PAYMENT_DATE | jalaliDate: 'dateTime'}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="price">
+        <th mat-header-cell *matHeaderCellDef> {{"قیمت" | translate }} </th>
+        <td mat-cell *matCellDef="let element"> {{element.TOTAL_PAYMENT | number}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef> {{"وضعیت پرداخت" | translate }} </th>
+        <td mat-cell *matCellDef="let element"> {{element.PAYMENT_DESCRIPTION_NAME | number}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="advance">
+        <th mat-header-cell *matHeaderCellDef> {{"بیشتر" | translate }} </th>
+        <td mat-cell *matCellDef="let element">
+          <a [routerLink]="'detail/' + element.ORDER_ID"
+             color="accent" mat-stroked-button>
+            {{'مشاهده' | translate}}
+          </a>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 25]" #paginator
+                   showFirstLastButtons></mat-paginator>
+  </div>
+
+  <ng-template #noFinancialRecord>
+    <div fxLayout="column" fxLayoutGap="20px"
+         fxLayoutAlign="start center">
+      <h2>
+        {{'هیچ موردی یافت نشد' | translate}}
+      </h2>
+    </div>
+  </ng-template>
+
+</div>

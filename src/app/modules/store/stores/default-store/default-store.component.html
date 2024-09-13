@@ -1,0 +1,175 @@
+<div fxLayout="column" fxLayoutAlign="start stretch" [ngStyle]="{'direction': modulesService.lang == 'fa' ? 'rtl' : 'ltr' }">
+
+  <header class="store-header">
+
+    <div class="header-overlay">
+      <div class="color-overlay"></div>
+      <img [src]="storeSettingService.store.desktopBanner"
+           *ngIf="appService.windowWidth > 959 else mobileBanner" alt="store_banner">
+      <ng-template #mobileBanner>
+        <img [src]="storeSettingService.store.mobileBanner" alt="store_banner">
+      </ng-template>
+    </div>
+
+    <app-header *ngIf="modulesService.isMotolead" class="mb-4"></app-header>
+
+    <div class="container" fxLayout="column" fxLayoutAlign="start ">
+
+      <div class="header-title" *ngIf="!modulesService.isMotolead"
+           fxLayout="row" fxLayoutAlign="space-between center">
+
+        <div class="site-info" fxLayout="row" fxLayoutAlign="space-around center">
+          <a routerLink="/" class="logo-link">
+            <img [src]="storeSettingService.store.logo" [alt]="storeSettingService.store.name">
+          </a>
+        </div>
+
+        <div fxLayout="row" class="store-info"
+             fxLayoutAlign.lt-md="start center" fxLayoutGap.lt-md="10px"
+             fxLayoutAlign="start center" fxLayoutGap="20px">
+          <div fxLayout="row" fxLayoutAlign="end center" class="login-action">
+            <ng-container *ngIf="credentialsService.isGuest else loggedIn">
+              <a routerLink="/auth/register-user">
+                {{'ثبت نام' | translate}}
+              </a>
+              <span class="mx-2">/</span>
+              <a routerLink="/auth">
+                {{'ورود' | translate}}
+              </a>
+            </ng-container>
+            <ng-template #loggedIn>
+              <button mat-button [matMenuTriggerFor]="profileAction">
+                <mat-icon class="mx-1">expand_more</mat-icon>
+                <span>{{credentialsService.credentials?.NAME}}</span>
+              </button>
+              <mat-menu #profileAction="matMenu">
+                <a mat-menu-item routerLink="/profile">
+                  <mat-icon>account_circle</mat-icon>
+                  <span>{{'پروفایل' | translate}}</span>
+                </a>
+                <a mat-menu-item (click)="credentialsService.logout()">
+                  <mat-icon>logout</mat-icon>
+                  <span>{{'خروج' | translate}}</span>
+                </a>
+              </mat-menu>
+            </ng-template>
+          </div>
+          <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="15px">
+            <a target="_blank" [href]="storeSettingService.store.appLink"
+               *ngIf="modulesService.hasApplication"
+               class="N-box-shodow" fxHide.lt-md mat-mini-fab download>
+              <mat-icon>android</mat-icon>
+            </a>
+            <button mat-mini-fab class="N-box-shodow" color="primary" [matBadge]="cartCount"
+                    matBadgeColor="warn"
+                    (click)="cartService.cartSidenav = cartSidenavStatus.open">
+              <mat-icon>shopping_cart</mat-icon>
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="market" fxLayout="column" fxLayoutAlign="start center">
+        <img *ngIf="!modulesService.isBazargardon"
+          [src]="storeSettingService.store.logo" [alt]="storeSettingService.store.name">
+        <p class="title">
+          {{storeSettingService.store.name}}
+        </p>
+        <p class="moto">
+          {{storeSettingService.store.motto}}
+        </p>
+      </div>
+
+      <div class="search">
+        <search [circleShape]="true" [useButton]="true" [searchColor]="'primary'"
+                style="width: 70%; align-self: center;"
+                [ngStyle]="{'direction': modulesService.lang == 'fa' ? 'ltr' : 'rtl' }">
+        </search>
+      </div>
+
+    </div>
+
+    <div class="store-menu" fxHide.lt-md fxLayout="row" fxLayoutAlign="space-between center" ngClass.gt-sm="px-3"
+         ngClass.lt-md="py-3 px-2" fxLayoutAlign.lt-md="center stretch" fxLayout.lt-sm="column"
+         fxLayoutGap.lt-md="25px">
+
+      <div class="market-info" fxFlex="15%" fxLayoutGap="5px" fxLayout="row" fxLayoutAlign="start center"
+           fxLayoutAlign.lt-md="center center">
+        {{"شماره تماس" | translate }}:
+        <b>{{storeSettingService.store.phone}}</b>
+      </div>
+
+      <div class="menu" fxLayout="row" fxFlex="35%" fxLayoutAlign="space-around center" fxLayoutGap.gt-sm="25px"
+           fxLayout.lt-md="row wrap" fxLayoutAlign.lt-md="center center" fxLayoutGap.lt-md="5%" >
+
+        <a [routerLink]="(modulesService.isBazargardon || modulesService.isMotolead) ? '/store/category/1':'/store'"
+           fxFlex.lt-md="45%" routerLinkActive="active-link"
+           [routerLinkActiveOptions]="{exact:true}">
+          {{ 'محصولات' | translate }}
+        </a>
+
+        <a routerLink="/store/category"
+           fxFlex.lt-md="45%" routerLinkActive="active-link"
+           [routerLinkActiveOptions]="{exact:true}">
+          {{ 'دسته‌بندی کالا' | translate }}
+        </a>
+
+        <a routerLink="/store/favourite" fxFlex.lt-md="45%" routerLinkActive="active-link"
+           [routerLinkActiveOptions]="{exact:true}" *ngIf="!credentialsService.isGuest">
+          {{ 'لیست علاقه‌مندی‌ها' | translate }}
+        </a>
+
+        <a routerLink="/store/invite-friends" fxFlex.lt-md="45%" routerLinkActive="active-link"
+           [routerLinkActiveOptions]="{exact:true}" *ngIf="!credentialsService.isGuest">
+          {{ 'معرفی به دوستان' | translate }}
+        </a>
+
+      </div>
+
+      <div class="work-time" fxFlex="15%"
+           fxLayoutGap="5px" fxLayout="row" fxLayoutAlign="end center"
+           fxLayoutAlign.lt-md="center center">
+
+        <ng-container *ngIf="today_time && today_time.holiday == false else holiday">
+          <div fxLayout="row" fxLayoutAlign="center center">
+            <mat-icon class="openTime-icon">
+              access_time
+            </mat-icon>
+            <span class="openTime-title">{{'ساعت کاری' | translate }}:</span>
+          </div>
+
+          <span>
+            <b>{{today_time.start_time1}}</b>
+            {{'الی' | translate }}
+            <b>{{today_time.end_time1}}</b>
+            <br>
+            <ng-container *ngIf="today_time.start_time2 != '0:00' && today_time.end_time2 != '0:00'">
+              <b>{{today_time.start_time2}} </b>
+              {{'الی' | translate }}
+              <b> {{today_time.end_time2}}</b>
+            </ng-container>
+          </span>
+        </ng-container>
+
+        <ng-template #holiday>
+          <span>
+            {{ 'امروز' | translate }}
+            {{ 'تعطیل است' | translate }}
+          </span>
+        </ng-template>
+      </div>
+
+    </div>
+
+  </header>
+
+  <app-header [ngStyle]="{'display': headerTopFlag ? 'unset' : 'none'}"></app-header>
+
+  <router-outlet>
+  </router-outlet>
+
+
+</div>
+
+<app-footer></app-footer>

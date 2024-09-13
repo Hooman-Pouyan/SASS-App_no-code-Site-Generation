@@ -1,0 +1,22 @@
+.order-detail {
+  background-color: #EEEEEE;
+  padding: 1rem 2rem;
+  border-radius: 10px;
+
+  .time-detail {
+    border-radius: 50%;
+    aspect-ratio: 1/1;
+    background-color: white;
+  }
+
+  .desc-detail {
+    span {
+      text-align: center;
+    }
+  }
+
+  b {
+    color: red;
+  }
+
+}

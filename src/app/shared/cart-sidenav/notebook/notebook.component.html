@@ -1,0 +1,113 @@
+<div fxLayout="column" fxLayoutAlign="start stretch" class="notebook">
+
+  <div fxLayout="column" fxLayoutAlign="start stretch"
+       fxLayoutGap="5px" class="notebook-products">
+
+    <ng-container *ngIf="sourceNotebook.order_products?.length else emptyNotebook">
+      <div fxLayout="row" fxLayoutAlign="space-between center" class="product"
+           fxLayout.lt-md="column" fxLayoutAlign.lt-md="start stretch"
+           fxLayoutGap="10px"
+           *ngFor="let product of sourceNotebook.order_products">
+
+        <div fxLayout="row" fxLayoutAlign="space-between center"
+             fxLayoutAlign.lt-md="start center"
+             fxLayoutGap="10px">
+
+          <button mat-icon-button color="warn" fxFlex="20px"
+                  (click)="deleteNotebookProduct(product)">
+            <mat-icon class="mat-icon-size" style="--mat-size: 20px">close</mat-icon>
+          </button>
+
+          <div fxFlex="50px" fxLayout="column" fxLayoutAlign="center center">
+            <image-lazy *ngIf="product.product_store.product.IMAGE && !product.product_store.product.IMAGE.includes('null') else noImage"
+                        [src]="imageUrl + '/assets/img/products/' + product.product_store.product.IMAGE"
+                        [alt]="product.product_store.product.NAME" [title]="product.product_store.product.NAME" class="img-fluid product-image"></image-lazy>
+            <ng-template #noImage>
+              <img src="../../../../assets/img/default/product.png"
+                   class="img-fluid product-image" [alt]="product.product_store.product.NAME">
+            </ng-template>
+          </div>
+
+          <div fxLayout="column" fxLayoutAlign="start stretch" class="h-100 product-detail" fxLayoutGap="7px">
+
+            <a [routerLink]="'/product/' + product.product_store.ID + '/' + product.product_store.product.NAME.replace('/', '').split(' ').join('-')"
+               class="notebook-product-title" target="_blank">
+              {{product.product_store.product.NAME}}
+            </a>
+
+            <div fxLayout="row" fxLayoutAlign="start center"
+                 *ngIf="product?.order_product_details?.length && product?.order_product_details[0]?.ProductFeature1?.VALUE">
+              <span>{{'رنگ' | translate}}</span>
+              <span>:</span>
+              <div class="product-detail-color"
+                   [style]="{'background-color': product?.order_product_details[0]?.ProductFeature1?.VALUE}"></div>
+            </div>
+
+            <div fxLayout="row" fxLayoutAlign="start center"
+                 *ngIf="product?.order_product_details?.length && product?.order_product_details[0]?.ProductFeature2?.VALUE">
+              <span>{{product?.order_product_details[0]?.ProductFeature2?.feature?.NAME}}</span>
+              <span>:</span>
+              <span>{{product?.order_product_details[0]?.ProductFeature2?.VALUE}}</span>
+            </div>
+
+            <button mat-button color="primary"
+                    class="add-to-cart"
+                    [matTooltip]="productStatusName(product.product_store.product.PRODUCT_STATUS_ID)"
+                    [disabled]="!checkProductStatus(product.product_store.product.PRODUCT_STATUS_ID)"
+                    (click)="addNoteBookToCart(product)">
+              <mat-icon>add_shopping_cart</mat-icon>
+              <span>{{'اضافه کردن به سبد خرید' | translate}}</span>
+            </button>
+
+          </div>
+        </div>
+
+        <div fxLayout="row" fxLayoutAlign="space-between center"
+             fxLayoutGap="10px">
+
+          <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="5px" class="action-buttons">
+            <button mat-stroked-button color="accent" (click)="addNotebook(product)"
+                    fxFlex="30px" fxLayoutAlign="center center">
+              <mat-icon class="mat-icon-size" style="--mat-size: 16px">add</mat-icon>
+            </button>
+            <span class="px-2">{{product.COUNT}}</span>
+            <button mat-stroked-button color="accent" (click)="subNotebook(product)"
+                    fxFlex="30px" fxLayoutAlign="center center">
+              <mat-icon class="mat-icon-size" style="--mat-size: 16px">remove</mat-icon>
+            </button>
+          </div>
+
+          <div fxLayout="column" fxLayoutAlign="center center" class="product-price">
+            <del *ngIf="product.PRICE_AFTER_OFFER != product.PRICE">
+              {{(product.PRICE * product.COUNT) | number}}
+              {{storeSettingService.storeCurrency | translate}}
+            </del>
+            <b>
+              {{(product.PRICE_AFTER_OFFER * product.COUNT) | number}}
+              {{storeSettingService.storeCurrency | translate}}
+            </b>
+          </div>
+        </div>
+
+      </div>
+    </ng-container>
+
+    <ng-template #emptyNotebook>
+      <b fxFill fxLayout="row" fxLayoutAlign="center center" class="text-center">
+        <mat-icon color="warn">production_quantity_limits</mat-icon>
+        <span style="max-width: 350px">{{'با استفاده از “سبدخرید بعدی” می‌توانید محصولاتی که مایلید در خرید بعدی داشته باشید، را ذخیره کنید.' | translate}}</span>
+      </b>
+    </ng-template>
+
+  </div>
+
+  <div fxLayout="row" fxLayoutAlign="start center"
+       class="submit-action">
+    <button mat-raised-button color="warn" class="p-2" (click)="deleteNotebook()"
+            fxFlex [disabled]="sourceNotebook?.order_products?.length < 1">
+      <mat-icon>delete</mat-icon>
+      <span>{{'حذف سبد خرید بعدی' | translate}}</span>
+    </button>
+  </div>
+
+</div>

@@ -1,0 +1,129 @@
+<div class="main-container">
+  <div class="wrapper">
+    <mat-sidenav-container class="mat-sidenav-container">
+      <mat-sidenav class="mat-sidenav sidenav-menu" #snav [mode]="'over'" position="start">
+
+        <button class="btn-close-snav" mat-mini-fab color="white" aria-label="Example icon button with a close icon"
+                (click)="snav.close()">
+          <mat-icon>close</mat-icon>
+        </button>
+
+        <mat-nav-list class="mat-nav-list">
+          <a class="active mat-list-item" mat-list-item href="/">
+            <mat-icon class="mat-icon" color="primary" aria-hidden="false">home</mat-icon>
+            <span class="mat-list-item-title"> {{ 'صفحه ی اصلی' | translate }} </span>
+          </a>
+
+          <a class="mat-list-item" mat-list-item routerLink="/store">
+            <mat-icon class="mat-icon" color="primary" aria-hidden="false">storefront</mat-icon>
+            <span class="mat-list-item-title">{{ 'فروشگاه' | translate }}</span>
+          </a>
+
+          <a class="mat-list-item" mat-list-item routerLink="/store/category">
+            <mat-icon class="mat-icon" color="primary" aria-hidden="false">category</mat-icon>
+            <span class="mat-list-item-title">{{ 'دسته بندی محصولات' | translate }}</span>
+          </a>
+
+          <a class="mat-list-item" mat-list-item [href]="storeSettingService.store.appLink" download>
+            <mat-icon class="mat-icon" color="primary" aria-hidden="false">system_update</mat-icon>
+            <span class="mat-list-item-title"> {{ 'دانلود اپلیکیشن' | translate }}</span>
+          </a>
+
+          <a class="mat-list-item" mat-list-item routerLink="/about-us">
+            <mat-icon class="mat-icon" color="primary" aria-hidden="false">supervised_user_circle</mat-icon>
+            <span class="mat-list-item-title"> {{ 'درباره ما' | translate }}</span>
+          </a>
+
+          <a class="mat-list-item" mat-list-item routerLink="/contact-us">
+            <mat-icon class="mat-icon" color="primary" aria-hidden="false">phone</mat-icon>
+            <span class="mat-list-item-title"> {{ 'تماس باما' | translate }}</span>
+          </a>
+
+          <!--          <a class="mat-list-item" mat-list-item (click)="getPhoneSupport()">-->
+          <!--            <mat-icon class="mat-icon" color="primary" aria-hidden="false">help_outline</mat-icon>-->
+          <!--            <span class="mat-list-item-title">{{ 'پشتیبانی' | translate }}</span>-->
+          <!--          </a>-->
+        </mat-nav-list>
+      </mat-sidenav>
+
+      <mat-sidenav-content class="mat-sidenav-content">
+        <header class="header main-header">
+          <div class="container">
+            <div class="row">
+              <div class="col-12">
+                <div class="header-row">
+                  <div class="logo-container">
+                    <a href="#" class="logo-img-link">
+                      <img [src]="storeSettingService.store.logo"
+                           class="logo-img" alt="iSee">
+                    </a>
+                  </div>
+
+                  <div class="navbar-container">
+                    <div class="navbar-btn-container">
+                      <button class="navbar-btn" mat-icon-button (click)="snav.open()"
+                              aria-label="Example icon button with a menu icon">
+                        <mat-icon>menu</mat-icon>
+                      </button>
+                    </div>
+                  </div>
+
+                  <div class="auth-container">
+                    <div class="auth-item" *ngIf="credentialsService.isGuest">
+                      <div class="auth-item-btn-container">
+                        <button [routerLink]="['/auth']" class="auth-btn"
+                                mat-stroked-button>{{"ورود" |translate }}</button>
+                      </div>
+                      <div class="auth-item-btn-container">
+                        <button [routerLink]="['/auth/register-user']" class="auth-btn"
+                                mat-stroked-button>{{"ثبت نام" |translate }}
+                        </button>
+                      </div>
+                    </div>
+                    <div class="auth-item" *ngIf="!credentialsService.isGuest">
+                      <div class="auth-item-btn-container" [matMenuTriggerFor]="userMenu">
+                        <button class="auth-btn" mat-stroked-button>
+                          <span class="auth-btn-title">{{credentialsService.credentials.USER_NAME}}</span>
+                          <mat-icon class="auth-btn-icon">
+                            keyboard_arrow_down
+                          </mat-icon>
+                        </button>
+                      </div>
+                      <mat-menu #userMenu="matMenu">
+                        <button [routerLink]="['/profile']" mat-menu-item>
+                          <mat-icon>person</mat-icon>
+                          <span>{{ 'پروفایل کاربری' | translate }}</span>
+                        </button>
+                        <button (click)="credentialsService.logout()" mat-menu-item>
+                          <mat-icon>login</mat-icon>
+                          <span> {{ 'خروج' | translate }}</span>
+                        </button>
+                      </mat-menu>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <div class="main">
+          <div class="main-box">
+            <a class="main-box-header" routerLink="/store">
+              <img [src]="storeSettingService.store.logo"
+                   class="logo-img img-fluid" alt="iSee">
+            </a>
+            <div class="main-box-body">
+              <div class="main-box-content">
+                <p editElement editType="description">
+                  {{dynamicMediaService.getMedia('description')}}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-sidenav-content>
+    </mat-sidenav-container>
+  </div>
+</div>

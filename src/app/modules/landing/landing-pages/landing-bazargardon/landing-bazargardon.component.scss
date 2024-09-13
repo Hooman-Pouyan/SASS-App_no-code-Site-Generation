@@ -1,0 +1,182 @@
+@import '~swiper/swiper';
+@import '~swiper/components/pagination/pagination';
+@import '~swiper/components/navigation/navigation';
+
+.landing-bazargardon {
+
+  .bazargardon-header {
+    background-color: #303030;
+    color: white;
+
+    .login-action {
+      color: white;
+    }
+  }
+
+  .bazargardon-slider {
+    position: relative;
+
+    .slider-header {
+      font-weight: bold;
+      background-color: rgba(255, 255, 255, 0.5);
+      @media screen and (max-width: 959px) {
+        position: relative;
+        padding: 5px;
+      }
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 3;
+      padding: 1rem;
+
+      .categories-drawer {
+        font-weight: bold;
+      }
+    }
+
+    swiper {
+      width: 100%;
+      height: 100%;
+
+      .swiper-pagination-bullet-active {
+        background-color: var(--custom-primary-color);
+      }
+
+      .swiper-slide {
+        text-align: center;
+
+        img {
+          object-fit: cover;
+          width: 100%;
+          max-height: 95vh;
+        }
+      }
+
+    }
+  }
+
+  .bazargardon-products {
+    background-color: #e4e4e4;
+
+    button:hover:not(.mat-button-disabled) {
+      transition: all 0.5s ease-in;
+      transform: rotate(180deg)
+    }
+
+    .product {
+      padding: 1rem;
+      border-radius: 10px;
+      background-color: white;
+
+      img {
+        aspect-ratio: 1/1;
+        object-fit: contain;
+        border-radius: 5px;
+      }
+
+      .price-section {
+        height: 50px;
+
+        .discount-section {
+          .discount-percentage {
+            background-color: #EB6A6A;
+            border-radius: 15px;
+            padding: 3px 10px;
+          }
+
+          .before-price {
+            color: #909090;
+            text-decoration-color: #909090 !important;
+            font-size: 14px;
+          }
+        }
+      }
+    }
+  }
+
+  .bazargardon-banner {
+    img {
+      width: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .bazargardon-video {
+    position: relative;
+
+    @media screen and (max-width: 959px) {
+      button {
+        position: absolute !important;
+        bottom: 10px !important;
+        right: 10px !important;
+
+        mat-icon {
+          font-size: 20px !important;
+          width: 20px !important;
+          height: 20px !important;
+        }
+      }
+    }
+
+    button {
+      position: absolute;
+      bottom: 30px;
+      right: 30px;
+
+      mat-icon {
+        font-size: 50px;
+        width: 50px;
+        height: 50px;
+      }
+    }
+  }
+
+  .bazargardon-decoratives {
+    padding: 1rem;
+
+    .bazargardon-decorative {
+      position: relative;
+      border-radius: 5px;
+
+      &:hover {
+        .decorative-description {
+          bottom: 0;
+          opacity: 1;
+          z-index: 1;
+        }
+      }
+
+      .decorative-description {
+        position: absolute;
+        opacity: 0;
+        z-index: -2;
+        bottom: -6rem;
+        right: 0;
+        left: 0;
+        color: white;
+        padding: 25px;
+        background-image: linear-gradient(transparent, black);
+        transition: all 0.75s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+        p {
+          font-weight: bold;
+        }
+
+        span {
+          width: 100%;
+          overflow: hidden !important;
+          text-overflow: ellipsis;
+        }
+
+      }
+
+      img {
+        max-width: 100%;
+        max-height: 800px;
+        object-fit: contain;
+      }
+    }
+  }
+
+}

@@ -1,0 +1,107 @@
+<div fxLayout="column" fxLayoutAlign="start center" class="signUp-phone"
+     [ngStyle]="{'direction': modulesService.lang == 'fa' ? 'rtl' : 'ltr' }">
+  <mat-card class="form-section my-4">
+
+    <h3 class="text-center">{{'ثبت نام' | translate}}</h3>
+
+    <form [formGroup]="signUpForm" fxLayoutGap="10px" *ngIf="signUpStatus == 'form'" fxLayout="column"
+          fxLayoutAlign="start stretch">
+
+      <mat-form-field appearance="outline">
+        <mat-label>{{'نام و نام خانوادگی' | translate }}</mat-label>
+        <input type="text" matInput formControlName="NAME">
+        <mat-error>
+          {{'لطفا نام و نام خانوادگی را وارد کنید!' | translate }}
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+          <mat-label *ngIf="modulesService.loginWithEmailPhone && modulesService.lang === 'fa'">{{'ایمیل یا شماره همراه' | translate }}</mat-label>
+        <mat-label *ngIf="!modulesService.loginWithEmailPhone && modulesService.lang === 'fa'">{{'شماره همراه' | translate }}</mat-label>
+        <mat-label *ngIf="modulesService.lang !== 'fa'">{{'ایمیل' | translate }} </mat-label>
+        <input type="tel" matInput formControlName="USER_NAME">
+        <mat-error>
+          {{'ایمیل یا شماره تلفن همراه وارد شده صحیح نیست!' | translate }}
+        </mat-error>
+      </mat-form-field>
+
+      <mat-checkbox color="primary" *ngIf="!modulesService.noOTP && !modulesService.onlyOTP"
+                    formControlName="wantPassword">
+        {{'مایل به استفاده از کلمه عبور دائمی هستید؟' | translate }}
+      </mat-checkbox>
+
+      <mat-form-field appearance="outline" *ngIf="signUpForm.controls['wantPassword'].value">
+        <mat-label>{{'کلمه ی عبور' | translate }}</mat-label>
+        <input type="password" autocomplete="off" matInput formControlName="PASSWORD">
+        <mat-error></mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" *ngIf="signUpForm.controls['wantPassword'].value">
+        <mat-label>{{'تکرار کلمه ی عبور' | translate }}</mat-label>
+        <input type="password" autocomplete="off" matInput formControlName="passwordConfirm">
+        <mat-error>
+          {{ "کلمه‌ی عبور و تکرار کلمه ی عبور یکسان نمی باشد" | translate }}
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" *ngIf="!modulesService.noReferralCode">
+        <mat-label>{{'کد معرف' | translate }}</mat-label>
+        <input type="text" matInput formControlName="REFERRAL_CODE">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" *ngIf="modulesService.pastime">
+        <mat-label>{{'تفریح مورد علاقه' | translate }}</mat-label>
+        <input type="text" matInput formControlName="PASTIME">
+      </mat-form-field>
+
+      <mat-checkbox (click)="openLawsDialog()"
+                    class="rules" formControlName="rules">
+        {{'تمام قوانین را مطالعه کردم' | translate}}
+      </mat-checkbox>
+
+
+      <button mat-raised-button color="primary" [disabled]="signUpForm.invalid"
+              type="submit" (click)="submitForm()">
+        {{'ثبت نام' | translate }}
+      </button>
+
+      <a routerLink="/auth" class="text-center">
+        {{'قبلا ثبت‌نام کرده‌ام' | translate}}
+      </a>
+
+    </form>
+
+    <div fxLayoutGap="10px" *ngIf="signUpStatus == 'otp'"
+         class="p-4" fxLayout="column" fxLayoutAlign="start stretch">
+
+      <mat-form-field appearance="outline">
+        <mat-label>{{'کد تأیید' | translate }}</mat-label>
+        <input type="number" min="1000" max="9999" matInput [(ngModel)]="otpCode">
+        <mat-error>
+          {{'لطفا کد تأیید را وارد کنید!' | translate }}
+        </mat-error>
+      </mat-form-field>
+
+      <div fxLayout="row" fxLayoutAlign="space-between center">
+        <button mat-stroked-button (click)="getOtpCode()" [disabled]="otpTimer > 0" color="primary">
+          <span>
+            {{'ارسال مجدد' | translate }}
+            {{'کد' | translate }}
+          </span>
+          <span *ngIf="otpTimer > 0">
+            (
+            {{otpTimer}}
+            {{'ثانیه' | translate}}
+            )
+          </span>
+        </button>
+        <button mat-raised-button (click)="submitOtp()" [disabled]="!otpCode || otpCode > 9999 || otpCode < 1000"
+                color="primary">
+          <span>{{'تأیید کد' | translate }}</span>
+        </button>
+      </div>
+
+    </div>
+
+  </mat-card>
+</div>

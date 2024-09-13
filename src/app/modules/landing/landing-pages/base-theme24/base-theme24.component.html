@@ -1,0 +1,516 @@
+<div class="base-theme24" fxLayout="column" fxLayoutAlign="start stretch"
+     [style]="{'--first-gradient':adjustColor(180), '--second-gradient': adjustColor(100) , '--third-gradient':adjustColor(-180), '--fourth-gradient':adjustColor(-80)  }">
+
+  <section class="base24-header-nav" fxLayout="column" fxLayoutAlign="center stretch"
+           [ngClass]="{ 'header-top' : !ScrollFlag, 'header-below': ScrollFlag }"
+           *ngIf="appService.windowWidth > 959 else appHeader">
+
+    <div class="header container" fxLayout="row" fxLayoutAlign="space-between center">
+
+      <div class="header-item" fxLayout="row" fxLayoutAlign="center center" fxFlex="50%" fxLayoutGap="5px">
+
+        <a [href]="dragDropService.fieldLink('header-main-page') || '/'" cdkDrag
+           [cdkDragDisabled]="dragDropService.disabled"
+           [cdkDragFreeDragPosition]="dragDropService.findPosition('header-main-page')"
+           (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'header-main-page')" editElement
+           editType="header-main-page" class="header-main-page list-item">
+          {{(dragDropService.fieldText('header-main-page') || 'صفحه اصلی') |
+          translate}}
+        </a>
+
+        <a [href]="dragDropService.fieldLink('header-products') || '/store'" cdkDrag
+           [cdkDragDisabled]="dragDropService.disabled"
+           [cdkDragFreeDragPosition]="dragDropService.findPosition('header-products')"
+           (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'header-products')" editElement
+           editType="header-products" class="list-item">
+          {{(dragDropService.fieldText('header-products') || 'محصولات') | translate}}
+        </a>
+
+        <a [href]="dragDropService.fieldLink('header-categories') || '/store/category'" cdkDrag
+           [cdkDragDisabled]="dragDropService.disabled"
+           [cdkDragFreeDragPosition]="dragDropService.findPosition('header-categories')"
+           (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'header-categories')" editElement
+           editType="header-categories" *ngIf="!modulesService.categoriesDrawer" class="list-item">
+          {{(dragDropService.fieldText('header-categories') || 'دسته‌بندی') |
+          translate}}
+        </a>
+
+        <button cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+                [cdkDragFreeDragPosition]="dragDropService.findPosition('header-categories')"
+                (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'header-categories')" mat-button
+                class="categories-drawer" *ngIf="modulesService.categoriesDrawer && categories?.length"
+                [matMenuTriggerFor]="profileMenu" class="list-item">
+                <span editElement editType="header-categories">
+                    {{(dragDropService.fieldText('header-categories') || 'دسته‌بندی') |
+                  translate}}
+                </span>
+          <mat-icon>expand_more</mat-icon>
+          <mat-menu #profileMenu="matMenu">
+            <a mat-menu-item [href]="'/store/category/' + category.PRODUCT_ID + '/' + category.NAME.split(' ').join('-')"
+               *ngFor="let category of categories">
+              {{category.NAME}}
+            </a>
+          </mat-menu>
+        </button>
+
+        <a [href]="dragDropService.fieldLink('header-about') || '/about-us'" cdkDrag
+           [cdkDragDisabled]="dragDropService.disabled"
+           [cdkDragFreeDragPosition]="dragDropService.findPosition('header-about')"
+           (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'header-about')" editElement
+           editType="header-about" class="list-item">
+          {{(dragDropService.fieldText('header-about') || 'درباره ما') | translate}}
+        </a>
+
+        <div class="base24-login-header">
+          <ng-container *ngIf="credentialsService.isGuest else loggedIn">
+            <button color="primary" [dir]="modulesService.lang == 'fa' ? 'rtl' : 'ltr' " mat-raised-button>
+              <a [href]="dragDropService.fieldLink('header-sign-up') || '/auth'" cdkDrag
+                 [cdkDragDisabled]="dragDropService.disabled"
+                 [cdkDragFreeDragPosition]="dragDropService.findPosition('header-sign-up')"
+                 (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'header-sign-up')">
+                {{'ورود' | translate}}
+              </a>
+            </button>
+
+          </ng-container>
+          <ng-template #loggedIn>
+            <button color="primary" [dir]="modulesService.lang == 'fa' ? 'rtl' : 'ltr' " mat-raised-button
+                    [matMenuTriggerFor]="profileAction" cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+                    [cdkDragFreeDragPosition]="dragDropService.findPosition('header-login')"
+                    (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'header-login')">
+              <mat-icon class="mx-1">expand_more</mat-icon>
+              <span>{{credentialsService.credentials?.NAME}}</span>
+            </button>
+            <mat-menu #profileAction="matMenu">
+              <a mat-menu-item routerLink="/profile">
+                <mat-icon>account_circle</mat-icon>
+                <span>{{'پروفایل' | translate}}</span>
+              </a>
+              <a mat-menu-item (click)="credentialsService.logout()">
+                <mat-icon>logout</mat-icon>
+                <span>{{'خروج' | translate}}</span>
+              </a>
+            </mat-menu>
+          </ng-template>
+        </div>
+
+      </div>
+
+      <div class="header-logo" fxFlex="10%">
+        <img [src]="storeSettingService.store.logo" class="img-fluid"
+             [alt]="storeSettingService.store.name" style="max-height: 50px">
+      </div>
+    </div>
+
+  </section>
+  <ng-template #appHeader>
+    <app-header style="width: 100%;"></app-header>
+  </ng-template>
+
+
+  <section class="base-theme24-slider" fxLayout="column" fxLayoutAlign="start stretch" cdkDrag
+           [cdkDragDisabled]="dragDropService.disabled"
+           [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme24-slider')"
+           (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme24-slider')">
+    <swiper [config]="mainSliderConfig" #sliderSwiper>
+      <ng-container *ngFor="let sliderIdx of dynamicMediaService.mediaSliderLoop">
+        <ng-template swiperSlide *ngIf="dynamicMediaService.getMedia('base-theme24-slider' + sliderIdx)">
+          <div fxFill fxLayout="row" fxLayoutAlign="center center" class="each-swiper">
+            <div fxLayout="column" fxLayoutAlign="center center" class="each-swiper-content"
+                 fxFlex.gt-sm="50%" fxFlex>
+              <h1 editElement [editType]="'base-theme24-slider-title'" class="text-primary">
+                {{dragDropService.fieldText('base-theme24-slider-title') || 'بهترین محصولات در'}}
+                <span class="slider-title-store-name">
+                      {{   storeSettingService.store.name  }}
+                </span>
+              </h1>
+              <h4 editElement [editType]="'base-theme24-slider-sub-title'" class="text-primary">
+                {{dragDropService.fieldText('base-theme24-slider-sub-title') || 'لورم ایپسوم متن ساختگی اینجا کلیک کنید و متن را ادیت کنید'}}
+              </h4>
+              <div class="content-btns" fxLayout="row" fxLayoutAlign="space-around center">
+                <a editElement [editType]="'base-theme24-slider-buy-btn'"
+                   [href]="dragDropService.fieldLink('base-theme24-slider-buy-btn') || '/store'"
+                   class="base-theme24-slider-btn">
+                  {{ dragDropService.fieldText('base-theme24-slider-buy-btn') || 'خرید' | translate}}
+                </a>
+
+                <a editElement [editType]="'base-theme24-slider-about-btn'"
+                   [href]="dragDropService.fieldLink('base-theme24-slider-about-btn') || '/store'"
+                   class="base-theme24-slider-btn">
+                  {{ dragDropService.fieldText('base-theme24-slider-about-btn') || 'درباره ما' | translate}}
+                </a>
+
+              </div>
+
+            </div>
+
+            <div class="img-overlay">
+              <div class="color-overlay"></div>
+              <img editElement [editType]="'base-theme24-slider' + sliderIdx" class="img-fluid"
+                   [src]="dynamicMediaService.getMedia('base-theme24-slider' + sliderIdx)" alt="">
+            </div>
+
+          </div>
+        </ng-template>
+      </ng-container>
+    </swiper>
+
+  </section>
+
+  <section class="base24-about-us container" fxLayout="row" fxLayoutAlign="space-around center" fxLayoutGap.lt-md="1rem"
+           fxLayout.lt-md="column"
+           fxLayoutAlign.lt-md="start stretch">
+
+    <div class="base24-about-us-desc" fxLayout="column" fxLayoutAlign="start stretch" fxFlex="45%" cdkDrag
+         [cdkDragDisabled]="dragDropService.disabled"
+         [cdkDragFreeDragPosition]="dragDropService.findPosition('base24-about-us-desc')"
+         (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base24-about-us-desc')" editElement
+         editType="base24-about-us-desc">
+      <span class="base24-about-us-badge" cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+            [cdkDragFreeDragPosition]="dragDropService.findPosition('base24-about-us-badge')"
+            (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base24-about-us-badge')" editElement
+            editType="base24-about-us-badge">
+                {{dragDropService.fieldText('base24-about-us-badge') ||
+      '//درباره ما'
+        }}
+            </span>
+      <h2 class="base24-about-us-title" cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+          [cdkDragFreeDragPosition]="dragDropService.findPosition('base24-about-us-title')"
+          (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base24-about-us-title')" editElement
+          editType="base24-about-us-title">
+        {{  storeSettingService.store.name }}
+      </h2>
+      <p class="w-75 base24-about-us-p" cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+         [cdkDragFreeDragPosition]="dragDropService.findPosition('base24-about-us-p')"
+         (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base24-about-us-p')" editElement
+         editType="base24-about-us-p">
+        {{  storeSettingService.store.aboutUs }}
+
+
+      </p>
+
+      <div class="about-us-service" fxLayout="row wrap" fxLayoutAlign="space-between center" cdkDrag
+           [cdkDragDisabled]="dragDropService.disabled"
+           [cdkDragFreeDragPosition]="dragDropService.findPosition('base24-about-us-service')"
+           (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base24-about-us-service')" editElement
+           editType="base24-about-us-service">
+
+        <div class="about-us" fxLayout="column" fxLayoutAlign="start stretch" fxFlex="45%" cdkDrag
+             [cdkDragDisabled]="dragDropService.disabled"
+             [cdkDragFreeDragPosition]="dragDropService.findPosition('base24-about-us-service-1')"
+             (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base24-about-us-service-1')" editElement
+             editType="base24-about-us-service-1">
+          <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="5px">
+            <mat-icon cdkDrag
+                      [cdkDragDisabled]="dragDropService.disabled"
+                      [cdkDragFreeDragPosition]="dragDropService.findPosition('base24-about-us-btn-1')"
+                      (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base24-about-us-btn-1')"
+                      editElement editType="base24-about-us-btn-1">
+              done_all
+            </mat-icon>
+            <h4 class="about-us-service-name" cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+                [cdkDragFreeDragPosition]="dragDropService.findPosition('base24-about-us-service-name-1')"
+                (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base24-about-us-service-name-1')"
+                editElement editType="base24-our-service-name-1">
+              {{dragDropService.fieldText('base24-about-us-service-name-1') ||
+            'محصولات سفارشی'
+              }}
+
+            </h4>
+          </div>
+          <p class="about-us-service-p w-75 text-justify" cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+             [cdkDragFreeDragPosition]="dragDropService.findPosition('base24-about-us-service-p-1')"
+             (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base24-about-us-service-p-1')"
+             editElement editType="base24-about-us-service-p-1">
+            {{dragDropService.fieldText('base24-our-service-p-1') ||
+          'از صنعت چاپ و با استفاده از طراحان گرافیک است'
+            }}
+
+          </p>
+
+        </div>
+
+        <div class="about-us" fxLayout="column" fxLayoutAlign="start stretch" fxFlex="45%" cdkDrag
+             [cdkDragDisabled]="dragDropService.disabled"
+             [cdkDragFreeDragPosition]="dragDropService.findPosition('base24-about-us-service-2')"
+             (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base24-about-us-service-2')" editElement
+             editType="base24-about-us-service-2">
+          <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="5px">
+            <mat-icon cdkDrag
+                      [cdkDragDisabled]="dragDropService.disabled"
+                      [cdkDragFreeDragPosition]="dragDropService.findPosition('base24-about-us-btn-2')"
+                      (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base24-about-us-btn-2')"
+                      editElement editType="base24-about-us-btn-2">
+              done_all
+            </mat-icon>
+            <h4 class="about-us-service-name" cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+                [cdkDragFreeDragPosition]="dragDropService.findPosition('base24-about-us-service-name-2')"
+                (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base24-about-us-service-name-2')"
+                editElement editType="base24-our-service-name-2">
+              {{dragDropService.fieldText('base24-about-us-service-name-2') ||
+            'محصولات سفارشی'
+              }}
+
+            </h4>
+          </div>
+          <p class="about-us-service-p w-75 text-justify" cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+             [cdkDragFreeDragPosition]="dragDropService.findPosition('base24-about-us-service-p-2')"
+             (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base24-about-us-service-p-2')"
+             editElement editType="base24-about-us-service-p-2">
+            {{dragDropService.fieldText('base24-our-service-p-2') ||
+          'از صنعت چاپ و با استفاده از طراحان گرافیک است'
+            }}
+
+          </p>
+
+        </div>
+
+        <div class="about-us" fxLayout="column" fxLayoutAlign="start stretch" fxFlex="45%" cdkDrag
+             [cdkDragDisabled]="dragDropService.disabled"
+             [cdkDragFreeDragPosition]="dragDropService.findPosition('base24-about-us-service-3')"
+             (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base24-about-us-service-3')" editElement
+             editType="base24-about-us-service-3">
+          <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="5px">
+            <mat-icon cdkDrag
+                      [cdkDragDisabled]="dragDropService.disabled"
+                      [cdkDragFreeDragPosition]="dragDropService.findPosition('base24-about-us-btn-3')"
+                      (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base24-about-us-btn-3')"
+                      editElement editType="base24-about-us-btn-3">
+              done_all
+            </mat-icon>
+            <h4 class="about-us-service-name" cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+                [cdkDragFreeDragPosition]="dragDropService.findPosition('base24-about-us-service-name-3')"
+                (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base24-about-us-service-name-3')"
+                editElement editType="base24-our-service-name-3">
+              {{dragDropService.fieldText('base24-about-us-service-name-3') ||
+            'محصولات سفارشی'
+              }}
+
+            </h4>
+          </div>
+          <p class="about-us-service-p w-75 text-justify" cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+             [cdkDragFreeDragPosition]="dragDropService.findPosition('base24-about-us-service-p-3')"
+             (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base24-about-us-service-p-3')"
+             editElement editType="base24-about-us-service-p-3">
+            {{dragDropService.fieldText('base24-our-service-p-3') ||
+          'از صنعت چاپ و با استفاده از طراحان گرافیک است'
+            }}
+
+          </p>
+
+        </div>
+
+        <div class="about-us" fxLayout="column" fxLayoutAlign="start stretch" fxFlex="45%" cdkDrag
+             [cdkDragDisabled]="dragDropService.disabled"
+             [cdkDragFreeDragPosition]="dragDropService.findPosition('base24-about-us-service-4')"
+             (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base24-about-us-service-4')" editElement
+             editType="base24-about-us-service-4">
+          <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="5px">
+            <mat-icon cdkDrag
+                      [cdkDragDisabled]="dragDropService.disabled"
+                      [cdkDragFreeDragPosition]="dragDropService.findPosition('base24-about-us-btn-4')"
+                      (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base24-about-us-btn-4')"
+                      editElement editType="base24-about-us-btn-4">
+              done_all
+            </mat-icon>
+            <h4 class="about-us-service-name" cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+                [cdkDragFreeDragPosition]="dragDropService.findPosition('base24-about-us-service-name-4')"
+                (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base24-about-us-service-name-4')"
+                editElement editType="base24-our-service-name-4">
+              {{dragDropService.fieldText('base24-about-us-service-name-4') ||
+            'محصولات سفارشی'
+              }}
+
+            </h4>
+          </div>
+          <p class="about-us-service-p w-75 text-justify" cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+             [cdkDragFreeDragPosition]="dragDropService.findPosition('base24-about-us-service-p-4')"
+             (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base24-about-us-service-p-4')"
+             editElement editType="base24-about-us-service-p-4">
+            {{dragDropService.fieldText('base24-our-service-p-4') ||
+          'از صنعت چاپ و با استفاده از طراحان گرافیک است'
+            }}
+
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="base24-about-us-img" fxLayout="column" fxLayoutAlign="center center" fxFlex="45%">
+      <div class="overlay-img" *ngIf="!credentialsService.isAdmin"></div>
+      <img [src]="dynamicMediaService.getMedia('base24-about-us-img' )" [alt]="'base24-about-us-img' "
+           class="text-center img-fluid" editElement [editType]="'base24-about-us-img' "
+           (mediaUpdated)="$event == true ? dynamicMediaService.initMedias() : null">
+
+    </div>
+
+  </section>
+
+  <section class="base24-why-us container" fxLayout="row" fxLayoutAlign="space-around center" fxLayout.lt-md="column"
+           fxLayoutAlign.lt-md="start center">
+    <div class="why-us-1" fxLayout="column" fxLayoutAlign="center stretch" fxFlex="27.5%" cdkDrag
+         [cdkDragDisabled]="dragDropService.disabled"
+         [cdkDragFreeDragPosition]="dragDropService.findPosition('base24-why-us-1')"
+         (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base24-why-us-1')" editElement
+         editType="base24-why-us-1">
+      <b class="badge-count" cdkDrag
+         [cdkDragDisabled]="dragDropService.disabled"
+         [cdkDragFreeDragPosition]="dragDropService.findPosition('base24-why-us-badge-count-1')"
+         (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base24-why-us-badge-count-1')" editElement
+         editType="base24-why-us-badge-count-1">
+        {{dragDropService.fieldText('base24-why-us-badge-count-1') || '01'}}
+      </b>
+      <h4 class="title" cdkDrag
+          [cdkDragDisabled]="dragDropService.disabled"
+          [cdkDragFreeDragPosition]="dragDropService.findPosition('base24-why-us-title-1')"
+          (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base24-why-us-title-1')" editElement
+          editType="base24-why-us-title-1">
+        {{dragDropService.fieldText('base24-why-us-title-1') || 'لورم ایپسوم'}}
+
+      </h4>
+      <p class="desc" cdkDrag
+         [cdkDragDisabled]="dragDropService.disabled"
+         [cdkDragFreeDragPosition]="dragDropService.findPosition('base24-why-us-desc-1')"
+         (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base24-why-us-desc-1')" editElement
+         editType="base24-why-us-desc-1">
+        {{dragDropService.fieldText('base24-why-us-desc-1') || 'از صنعت چاپ و با استفاده از طراحان گرافیک است'}}
+      </p>
+    </div>
+
+    <div class="why-us-2" fxLayout="column" fxLayoutAlign="center stretch" fxFlex="27.5%" cdkDrag
+         [cdkDragDisabled]="dragDropService.disabled"
+         [cdkDragFreeDragPosition]="dragDropService.findPosition('base24-why-us-2')"
+         (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base24-why-us-2')" editElement
+         editType="base24-why-us-2">
+      <b class="badge-count" cdkDrag
+         [cdkDragDisabled]="dragDropService.disabled"
+         [cdkDragFreeDragPosition]="dragDropService.findPosition('base24-why-us-badge-count-2')"
+         (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base24-why-us-badge-count-2')" editElement
+         editType="base24-why-us-badge-count-2">
+        {{dragDropService.fieldText('base24-why-us-badge-count-2') || '02'}}
+      </b>
+      <h4 class="title" cdkDrag
+          [cdkDragDisabled]="dragDropService.disabled"
+          [cdkDragFreeDragPosition]="dragDropService.findPosition('base24-why-us-title-2')"
+          (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base24-why-us-title-2')" editElement
+          editType="base24-why-us-title-2">
+        {{dragDropService.fieldText('base24-why-us-title-2') || 'لورم ایپسوم'}}
+
+      </h4>
+      <p class="desc" cdkDrag
+         [cdkDragDisabled]="dragDropService.disabled"
+         [cdkDragFreeDragPosition]="dragDropService.findPosition('base24-why-us-desc-2')"
+         (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base24-why-us-desc-2')" editElement
+         editType="base24-why-us-desc-2">
+        {{dragDropService.fieldText('base24-why-us-desc-2') || 'از صنعت چاپ و با استفاده از طراحان گرافیک است'}}
+      </p>
+    </div>
+
+    <div class="why-us-3" fxLayout="column" fxLayoutAlign="center stretch" fxFlex="27.5%" cdkDrag
+         [cdkDragDisabled]="dragDropService.disabled"
+         [cdkDragFreeDragPosition]="dragDropService.findPosition('base24-why-us-3')"
+         (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base24-why-us-3')" editElement
+         editType="base24-why-us-3">
+      <b class="badge-count" cdkDrag
+         [cdkDragDisabled]="dragDropService.disabled"
+         [cdkDragFreeDragPosition]="dragDropService.findPosition('base24-why-us-badge-count-3')"
+         (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base24-why-us-badge-count-3')" editElement
+         editType="base24-why-us-badge-count-3">
+        {{dragDropService.fieldText('base24-why-us-badge-count-3') || '03'}}
+      </b>
+      <h4 class="title" cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+          [cdkDragFreeDragPosition]="dragDropService.findPosition('base24-why-us-title-3')"
+          (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base24-why-us-title-3')" editElement
+          editType="base24-why-us-title-3">
+        {{dragDropService.fieldText('base24-why-us-title-3') || 'لورم ایپسوم'}}
+
+      </h4>
+      <p class="desc" cdkDrag
+         [cdkDragDisabled]="dragDropService.disabled"
+         [cdkDragFreeDragPosition]="dragDropService.findPosition('base24-why-us-desc-2')"
+         (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base24-why-us-desc-2')" editElement
+         editType="base24-why-us-desc-2">
+        {{dragDropService.fieldText('base24-why-us-desc-2') || 'از صنعت چاپ و با استفاده از طراحان گرافیک است'}}
+      </p>
+    </div>
+
+  </section>
+
+  <section class="base-theme24-products container py-5" fxLayout="column" fxLayoutAlign="start center">
+
+    <h2 class="text-center" cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+        [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme24-products-title')"
+        (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme24-products-title')"
+        editElement editType="base-theme24-products-title">
+      {{dragDropService.fieldText('base-theme24-products-title') || 'محصولات'}}
+      <span class="product-title-store">
+           {{  storeSettingService.store.name  }}
+        </span>
+    </h2>
+
+    <mat-button-toggle-group fxLayout="row wrap" fxLayoutAlign="center stretch" class="categories-toggle mt-4"
+                             cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+                             [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme24-categories-list')"
+                             (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme24-categories-list')">
+      <mat-button-toggle *ngFor="let category of categories; let idx = index" [checked]="idx == 0"
+                         (change)="categoriesToggle($event.value)" [value]="category.PRODUCT_ID">
+        <span>{{category.NAME}}</span>
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+
+    <div fxLayout="row wrap" fxLayoutAlign="space-between stretch" class="products">
+      <ng-container *ngFor="let product of selectedCategory?.products">
+        <product-slide [product]="product" fxFlex="24%" class="mb-3" fxHide.lt-md>
+        </product-slide>
+        <product-slide-mobile [product]="product" fxFlex="49%" class="mb-3" fxHide.gt-sm>
+        </product-slide-mobile>
+      </ng-container>
+    </div>
+
+  </section>
+
+  <app-section></app-section>
+
+  <default-contact-us [asComponent]="true"></default-contact-us>
+
+  <section class="base24-introduce-store" fxLayout="column" fxLayoutAlign="start center" cdkDrag
+           [cdkDragDisabled]="dragDropService.disabled"
+           [cdkDragFreeDragPosition]="dragDropService.findPosition('base24-introduce-store')"
+           (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base24-introduce-store')"
+           editElement editType="base24-introduce-store">
+
+    <h2 class="introduce-title" cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+        [cdkDragFreeDragPosition]="dragDropService.findPosition('base24-introduce-title')"
+        (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base24-introduce-title')"
+        editElement editType="base24-introduce-title">
+      {{dragDropService.fieldText('base24-introduce-title') || 'معرفی فروشگاه ما'}}
+    </h2>
+    <p class="introduce-p" cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+       [cdkDragFreeDragPosition]="dragDropService.findPosition('base24-introduce-p')"
+       (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base24-introduce-p')"
+       editElement editType="base24-introduce-p">
+      {{dragDropService.fieldText('base24-introduce-p') || 'از صنعت چاپ و با استفاده از طراحان گرافیک است'}}
+    </p>
+    <div class="introduce-store-banner" fxLayout="row wrap" fxLayoutAlign="space-between center">
+      <ng-container *ngFor="let idx of [1,2,3,4,5,6,7,8]">
+        <div class="introduce-img" fxFlex="25%" fxFlex.lt-md="50%">
+          <img [src]="dynamicMediaService.getMedia('base24-store-banner-img-' + idx )"
+               [alt]="'base24-store-banner-img-' + idx "
+               class="text-center img-fluid" editElement [editType]="'base24-store-banner-img-' + idx ">
+        </div>
+      </ng-container>
+    </div>
+
+  </section>
+
+  <app-brands-slider></app-brands-slider>
+
+  <app-footer></app-footer>
+
+</div>
+
+
+

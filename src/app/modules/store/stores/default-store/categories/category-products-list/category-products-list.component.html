@@ -1,0 +1,76 @@
+<mat-drawer-container autosize class="drawer-container" [hasBackdrop]="false">
+
+  <mat-drawer position="start" #categoriesFilter
+              mode="side" id="categories-list">
+    <products-filter *ngIf="appService.windowWidth < 959"
+                     (closeSideNav)="categoriesFilter.close()"></products-filter>
+  </mat-drawer>
+
+  <mat-drawer-content class="drawer-content">
+
+    <div fxLayout="row" fxLayoutAlign="space-around stretch">
+
+      <div *ngIf="appService.windowWidth > 959"
+           fxLayout="column" fxLayoutAlign="start stretch"
+           fxFlex.gt-sm="25%" class="category-list-desktop">
+        <products-filter></products-filter>
+      </div>
+
+      <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap.gt-sm="30px" fxLayoutGap.lt-md="10px"
+           fxFlex.gt-sm="70%" fxFlex.lt-md class="categories-products mt-3">
+
+        <div fxHide.gt-sm fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="5px">
+          <button mat-button color="primary"
+                  (click)="categoriesFilter.toggle()">
+            <mat-icon>filter_alt</mat-icon>
+            <span>{{'فیلتر ها' | translate}}</span>
+          </button>
+        </div>
+
+        <div fxHide.gt-sm>
+          <mat-divider></mat-divider>
+        </div>
+
+        <ng-container *ngFor="let subCategory of category?.subCategories">
+          <products-slider *ngIf="subCategory.products?.length" [products]="subCategory.products" [title]="subCategory.NAME"
+                           [link]="'/store/category/' + subCategory.PRODUCT_ID + '/' + subCategory.NAME.split(' ').join('-')"></products-slider>
+        </ng-container>
+
+        <div fxLayout="column" fxLayoutAlign="start stretch" #categoryProductList
+             *ngIf="category?.PRODUCT_ID" class="products-list mx-1 px-2">
+          <h2>{{'محصولات' | translate}}</h2>
+
+          <div fxLayout="row wrap" *ngIf="category.products?.length else noProduct"
+               fxLayoutGap="1%" class="products">
+            <ng-container *ngFor="let product of category.products | slice: 0 : sliceProducts">
+              <product-slide *ngIf="appService.windowWidth > 959" [product]="product" [fixWidth]="false"
+                             fxFlex="24%" fxFlex.md="32%" class="mb-3"></product-slide>
+              <product-slide-mobile *ngIf="appService.windowWidth <= 959" [product]="product" [fixWidth]="true"
+                                    fxFlex="49%" class="mb-2"></product-slide-mobile>
+            </ng-container>
+          </div>
+
+          <div fxLayout="row" fxLayoutAlign="end center"  *ngIf="category.products?.length">
+            <mat-paginator [pageSizeOptions]="[5, 10, 15, 25, 50, 100]"
+                           (page)="paginatorEvent($event)"
+                           showFirstLastButtons
+                           [pageSize]="paginatorConfig.PAGE_SIZE"
+                           [length]="paginatorConfig.TOTAL_COUNT"></mat-paginator>
+          </div>
+
+          <ng-template #noProduct>
+            <h2 class="text-center">
+              {{'محصولی یافت نشد!' | translate}}
+              <mat-icon color="warn">filter_list_off</mat-icon>
+            </h2>
+          </ng-template>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </mat-drawer-content>
+
+</mat-drawer-container>

@@ -1,0 +1,174 @@
+<app-header></app-header>
+
+<div fxLayout="column" fxLayoutAlign="start stretch" class="landing-base-theme2">
+
+  <div class="base-theme2-slider" fxLayout="column" fxLayoutAlign="start stretch"
+       cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+       [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme2-slider')"
+       (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme2-slider')">
+    <swiper [config]="mainSliderConfig">
+      <ng-container *ngFor="let sliderIdx of dynamicMediaService.mediaSliderLoop">
+        <ng-template swiperSlide *ngIf="dynamicMediaService.getMedia('slider' + sliderIdx)">
+          <div fxFill fxLayout="column" fxLayoutAlign="start stretch">
+            <a *ngIf="dynamicMediaService.getMediaLink('slider' + sliderIdx) else noLink"
+               [href]="dynamicMediaService.getMediaLink('slider' + sliderIdx)" target="_blank">
+              <image-lazy [src]="dynamicMediaService.getMedia('slider' + sliderIdx)"
+                          fxLayout="row" fxLayoutAlign="center center"
+                          [alt]="'slider' + sliderIdx" class="text-center img-fluid" editElement
+                          [editType]="'slider' + sliderIdx"></image-lazy>
+            </a>
+            <ng-template #noLink>
+              <image-lazy [src]="dynamicMediaService.getMedia('slider' + sliderIdx)"
+                          fxLayout="row" fxLayoutAlign="center center"
+                          [alt]="'slider' + sliderIdx" class="text-center img-fluid" editElement
+                          [editType]="'slider' + sliderIdx"></image-lazy>
+            </ng-template>
+          </div>
+        </ng-template>
+      </ng-container>
+    </swiper>
+  </div>
+
+  <div fxLayout="row" fxLayoutAlign="center center" class="my-5">
+    <div class="container" fxLayout="column" fxLayoutAlign="start stretch"
+         cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+         [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme2-products')"
+         (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme2-products')">
+      <products-slider [products]="products" *ngIf="products?.length">
+      </products-slider>
+      <products-packs-slider *ngIf="modulesService.isApadanaComputer"></products-packs-slider>
+    </div>
+  </div>
+
+  <div class="base-theme2-decoratives container" fxLayout="row" fxLayoutAlign="space-evenly center"
+       fxLayout.lt-md="column" fxLayoutAlign.lt-md=" stretch">
+
+    <div fxLayout="column" fxLayoutAlign=" stretch" fxFlex="63%" fxLayoutGap="10px">
+
+      <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap.lt-md="10px"
+           cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+           [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme2-decoratives-upper')"
+           (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme2-decoratives-upper')">
+
+        <div fxFlex="48%" fxLayoutAlign="start stretch">
+          <a *ngIf="dynamicMediaService.getMediaLink('feature1_img') else noLink"
+             [href]="dynamicMediaService.getMediaLink('feature1_img')" target="_blank"
+              class="base-theme2-decorative" fxLayoutAlign="center center">
+            <image-lazy [src]="dynamicMediaService.getMedia('feature1_img')" alt="base-theme2-decorative-text-0"
+                        editElement editType="feature1_img"></image-lazy>
+            <div class="decorative-description" fxLayout="column" fxLayoutAlign="start stretch">
+              <span class="text-preWrap" editElement editType="base-theme2-decorative-text-0">
+              {{dragDropService.fieldText('base-theme2-decorative-text-0') || dynamicMediaService.getMedia('feature1Desc')}}
+              </span>
+            </div>
+          </a>
+        </div>
+        <ng-template #noLink>
+          <div class="base-theme2-decorative" fxLayoutAlign="center center" fxFlex="48%">
+            <image-lazy [src]="dynamicMediaService.getMedia('feature1_img')" alt="base-theme2-decorative-text-0"
+                        editElement editType="feature1_img"></image-lazy>
+            <div class="decorative-description" fxLayout="column" fxLayoutAlign="start stretch">
+                <span class="text-preWrap" editElement editType="base-theme2-decorative-text-0">
+              {{dragDropService.fieldText('base-theme2-decorative-text-0') || dynamicMediaService.getMedia('feature1Desc')}}
+                </span>
+            </div>
+          </div>
+        </ng-template>
+
+
+        <a *ngIf="dynamicMediaService.getMediaLink('feature2_img') else noLink2"
+           [href]="dynamicMediaService.getMediaLink('feature2_img')" target="_blank"
+           fxFlex="48%" class="base-theme2-decorative" fxLayoutAlign="center center">
+          <image-lazy [src]="dynamicMediaService.getMedia('feature2_img')" alt="base-theme2-decorative-text-1"
+                      editElement editType="feature2_img"></image-lazy>
+          <div class="decorative-description" fxLayout="column" fxLayoutAlign="start stretch">
+              <span class="text-preWrap" editElement editType="base-theme2-decorative-text-1">
+              {{dragDropService.fieldText('base-theme2-decorative-text-1') || dynamicMediaService.getMedia('feature2Desc')}}
+              </span>
+          </div>
+        </a>
+        <ng-template #noLink2>
+          <div class="base-theme2-decorative" fxLayoutAlign="center center" fxFlex="48%">
+            <image-lazy [src]="dynamicMediaService.getMedia('feature2_img')" alt="base-theme2-decorative-text-1"
+                        editElement editType="feature2_img"></image-lazy>
+            <div class="decorative-description" fxLayout="column" fxLayoutAlign="start stretch">
+                <span class="text-preWrap" editElement editType="base-theme2-decorative-text-1">
+              {{dragDropService.fieldText('base-theme2-decorative-text-1') || dynamicMediaService.getMedia('feature2Desc')}}
+                </span>
+            </div>
+          </div>
+        </ng-template>
+
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign=" stretch"
+           cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+           [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme2-decoratives-downer')"
+           (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme2-decoratives-downer')">
+        <a *ngIf="dynamicMediaService.getMediaLink('feature3_img') else noLink3"
+           [href]="dynamicMediaService.getMediaLink('feature3_img')" target="_blank"
+           class="base-theme2-decorative" fxLayoutAlign="center center">
+          <image-lazy [src]="dynamicMediaService.getMedia('feature3_img')" alt="base-theme2-decorative-text-2"
+                      editElement editType="feature3_img"></image-lazy>
+          <div class="decorative-description" fxLayout="column" fxLayoutAlign="start stretch">
+              <span class="text-preWrap" editElement editType="base-theme2-decorative-text-2">
+              {{dragDropService.fieldText('base-theme2-decorative-text-2') || dynamicMediaService.getMedia('feature3Desc')}}
+              </span>
+          </div>
+        </a>
+        <ng-template #noLink3>
+          <div class="base-theme2-decorative" fxLayoutAlign="center center">
+            <image-lazy [src]="dynamicMediaService.getMedia('feature3_img')" alt="base-theme2-decorative-text-2"
+                        editElement editType="feature3_img"></image-lazy>
+            <div class="decorative-description" fxLayout="column" fxLayoutAlign="start stretch">
+                <span class="text-justify" editElement editType="base-theme2-decorative-text-2">
+              {{dragDropService.fieldText('base-theme2-decorative-text-2') || dynamicMediaService.getMedia('feature3Desc')}}
+                </span>
+            </div>
+          </div>
+        </ng-template>
+      </div>
+
+    </div>
+
+    <div fxLayout="column" fxLayoutAlign=" stretch" fxFlex="30%"
+         cdkDrag [cdkDragDisabled]="dragDropService.disabled"
+         [cdkDragFreeDragPosition]="dragDropService.findPosition('base-theme2-decoratives-stretched')"
+         (cdkDragEnded)="dragDropService.dropEvent($event.distance, 'base-theme2-decoratives-stretched')">
+      <a *ngIf="dynamicMediaService.getMediaLink('feature4_img') else noLink4"
+         [href]="dynamicMediaService.getMediaLink('feature4_img')" target="_blank"
+         class="base-theme2-decorative" fxLayoutAlign="center center">
+        <image-lazy [src]="dynamicMediaService.getMedia('feature4_img')" alt="base-theme2-decorative-text-3"
+                    editElement editType="feature4_img"></image-lazy>
+        <div class="decorative-description" fxLayout="column" fxLayoutAlign="start stretch">
+            <span class="text-preWrap" editElement editType="base-theme2-decorative-text-3">
+              {{dragDropService.fieldText('base-theme2-decorative-text-3') || dynamicMediaService.getMedia('feature4Desc')}}
+            </span>
+        </div>
+      </a>
+      <ng-template #noLink4>
+        <div class="base-theme2-decorative" fxLayoutAlign="center center">
+          <image-lazy [src]="dynamicMediaService.getMedia('feature4_img')" alt="base-theme2-decorative-text-3"
+                      editElement editType="feature4_img"></image-lazy>
+          <div class="decorative-description" fxLayout="column" fxLayoutAlign="start stretch">
+              <span class="text-preWrap" editElement editType="base-theme2-decorative-text-3">
+              {{dragDropService.fieldText('base-theme2-decorative-text-3') || dynamicMediaService.getMedia('feature4Desc')}}
+              </span>
+          </div>
+        </div>
+      </ng-template>
+    </div>
+
+  </div>
+
+</div>
+
+<landing-video></landing-video>
+
+<luck-wheel></luck-wheel>
+
+<app-section></app-section>
+
+<app-brands-slider></app-brands-slider>
+
+<app-footer></app-footer>

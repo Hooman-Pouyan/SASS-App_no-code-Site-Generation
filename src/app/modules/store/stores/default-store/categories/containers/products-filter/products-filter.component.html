@@ -1,0 +1,185 @@
+<div fxLayout="row" fxLayoutAlign="center start" class="products-filter">
+
+  <div fxLayout="column" fxLayoutAlign="start stretch"
+       fxFlex="82%" fxLayoutGap="20px">
+
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+      <h4>
+        {{'فیلتر ها' | translate}}
+      </h4>
+      <button mat-icon-button color="warn" fxHide.gt-sm
+              (click)="closeSideNav.emit(true)">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{"مرتب سازی براساس" | translate }}</mat-label>
+      <mat-select [(ngModel)]="sortBy" [multiple]="false"
+                  (ngModelChange)="sortProducts();closeSideNav.emit(true)">
+        <mat-option *ngFor="let item of sortTypes" [value]="item.value">
+          {{item.name | translate}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div fxLayout="column" fxLayoutAlign="start stretch" *ngIf="brands.length">
+      <mat-form-field appearance="outline">
+        <mat-label>{{"برند ها" | translate }}</mat-label>
+        <mat-select [(ngModel)]="selectedBrands" [multiple]="true"
+                    (closed)="filterByBrands();closeSideNav.emit(true)">
+          <mat-form-field appearance="outline" class="w-100">
+            <input (keyup)="search($event.target.value, 'brand')" matInput>
+            <mat-icon matSuffix>search</mat-icon>
+          </mat-form-field>
+          <mat-option *ngFor="let brand of searchedBrands" [value]="brand.ID">
+            {{brand.NAME}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-chip-list aria-label="brands selection" *ngIf="selectedBrands.length">
+        <mat-chip [removable]="true" selected color="warn"
+                  (removed)="selectedBrands = [];filterByBrands();closeSideNav.emit(true)">
+          {{'حذف برند ها' | translate}}
+          <mat-icon matChipRemove>cancel</mat-icon>
+        </mat-chip>
+      </mat-chip-list>
+    </div>
+
+    <div fxLayout="column" fxLayoutAlign="start stretch" *ngIf="sizes.length">
+      <mat-form-field appearance="outline">
+        <mat-label>{{"سایز ها" | translate }}</mat-label>
+        <mat-select [(ngModel)]="selectedSizes" [multiple]="true"
+                    (closed)="filterBySize();closeSideNav.emit(true)">
+          <mat-form-field appearance="outline" class="w-100">
+            <input (keyup)="search($event.target.value, 'size')" matInput>
+            <mat-icon matSuffix>search</mat-icon>
+          </mat-form-field>
+          <mat-option *ngFor="let size of searchedSizes" [value]="size.VALUE">
+            {{size.VALUE}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-chip-list aria-label="brands selection" *ngIf="selectedSizes.length">
+        <mat-chip [removable]="true" selected color="warn"
+                  (removed)="selectedSizes = [];filterBySize();closeSideNav.emit(true)">
+          {{'حذف سایز ها' | translate}}
+          <mat-icon matChipRemove>cancel</mat-icon>
+        </mat-chip>
+      </mat-chip-list>
+    </div>
+
+    <div fxLayout="column" fxLayoutAlign="start stretch" *ngIf="colors.length">
+      <mat-form-field appearance="outline">
+        <mat-label>{{"رنگ" | translate }}</mat-label>
+        <mat-select [(ngModel)]="selectedColors" [multiple]="true"
+                    (closed)="filterByColor();closeSideNav.emit(true)">
+          <!--          <mat-form-field appearance="outline" class="w-100">-->
+          <!--            <input (keyup)="search($event.target.value, 'color')" matInput>-->
+          <!--            <mat-icon matSuffix>search</mat-icon>-->
+          <!--          </mat-form-field>-->
+          <mat-option *ngFor="let color of searchedColors"
+                      [ngStyle]="{'background-color' : color.VALUE}" [value]="color.VALUE">
+            <!--            {{color.VALUE}}-->
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-chip-list aria-label="colors selection" *ngIf="selectedColors.length">
+        <mat-chip [removable]="true" selected color="warn"
+                  (removed)="selectedColors = [];filterByColor();closeSideNav.emit(true)">
+          {{'حذف رنگ ها' | translate}}
+          <mat-icon matChipRemove>cancel</mat-icon>
+        </mat-chip>
+      </mat-chip-list>
+    </div>
+
+    <div fxLayout="column" fxLayoutAlign="start stretch"
+         *ngFor="let featureFilter of featureFilters">
+      <mat-form-field appearance="outline" *ngIf="featureFilter.defaultValues?.length">
+        <mat-label>{{featureFilter.filterName}}</mat-label>
+        <mat-select [(ngModel)]="featureFilter.selectedValues" [multiple]="true"
+                    (closed)="filterByFeature(featureFilter.filterName);closeSideNav.emit(true)">
+          <mat-form-field appearance="outline" class="w-100">
+            <input (keyup)="search($event.target.value, featureFilter.filterName)" matInput>
+            <mat-icon matSuffix>search</mat-icon>
+          </mat-form-field>
+          <mat-option *ngFor="let searchedFilter of featureFilter.searchedValues" [value]="searchedFilter.VALUE">
+            {{searchedFilter.VALUE}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-chip-list aria-label="brands selection" *ngIf="featureFilter?.selectedValues?.length">
+        <mat-chip [removable]="true" selected color="warn"
+                  (removed)="featureFilter.selectedValues = [];filterByFeature(featureFilter.filterName);
+                  closeSideNav.emit(true)">
+          {{'حذف فیلتر' | translate}}
+          {{featureFilter.filterName}}
+          <mat-icon matChipRemove>cancel</mat-icon>
+        </mat-chip>
+      </mat-chip-list>
+    </div>
+
+    <!--    <div class="price-range" fxLayout="column"-->
+    <!--         fxLayoutAlign="start stretch" fxLayoutGap="10px">-->
+    <!--      <b>{{'محدوده قیمت' | translate}}</b>-->
+
+    <!--      <mat-slider color="primary" step="100000" tickInterval="auto" [min]="minimumFilterPrice"-->
+    <!--                  [max]="maximumProductsPrice" [invert]="true"-->
+    <!--                  [(ngModel)]="maximumFilterPrice" id="max-price-slider"></mat-slider>-->
+    <!--      <mat-slider color="accent" step="100000" [invert]="true" tickInterval="auto" min="0" [max]="maximumProductsPrice"-->
+    <!--                  [(ngModel)]="minimumFilterPrice" id="min-price-slider"></mat-slider>-->
+
+    <!--      <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="1%">-->
+    <!--        <mat-form-field appearance="outline" fxFlex="48%">-->
+    <!--          <mat-label>{{'حداقل' | translate }}</mat-label>-->
+    <!--          <input matInput dir="ltr" [(ngModel)]="minimumFilterPrice">-->
+    <!--          <span matSuffix>{{storeSettingService.storeCurrency | translate}}</span>-->
+    <!--        </mat-form-field>-->
+    <!--        <span>{{'تا' | translate}}</span>-->
+    <!--        <mat-form-field appearance="outline" fxFlex="48%">-->
+    <!--          <mat-label>{{'حداکثر' | translate }}</mat-label>-->
+    <!--          <input matInput dir="ltr" [(ngModel)]="maximumFilterPrice">-->
+    <!--          <span matSuffix>{{storeSettingService.storeCurrency | translate}}</span>-->
+    <!--        </mat-form-field>-->
+    <!--      </div>-->
+
+    <!--      <button mat-stroked-button (click)="filterByPrice();closeSideNav.emit(true)" color="primary">-->
+    <!--        {{'اعمال قیمت' | translate}}-->
+    <!--      </button>-->
+
+    <!--    </div>-->
+
+    <h4>
+      {{'دسته‌بندی‌ها' | translate}}
+    </h4>
+
+    <a routerLink="/store/category/1" (click)="closeSideNav.emit(true)"
+       routerLinkActive="active-link" class="all-product-link">
+      {{'همه محصولات' | translate}}
+    </a>
+
+    <mat-accordion>
+      <mat-expansion-panel class="categories-expansion"
+                           (opened)="!category.subCategories.length ? getSubCategories(category) : null"
+                           *ngFor="let category of categories">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+          <span>
+            {{category.NAME}}
+          </span>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <ul fxLayout="column" fxLayoutAlign="space-around start" class="p-0"
+            *ngFor="let subCategory of category.subCategories">
+          <li style="list-style-type: circle;">
+            <a [routerLink]="'/store/category/' + subCategory.PRODUCT_ID + '/' + subCategory.NAME.split(' ').join('-')"
+               (click)="closeSideNav.emit(true)" routerLinkActive="active-link">
+              {{subCategory.NAME}}
+            </a>
+          </li>
+        </ul>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+
+</div>

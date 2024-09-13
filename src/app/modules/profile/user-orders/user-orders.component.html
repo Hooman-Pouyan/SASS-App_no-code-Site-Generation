@@ -1,0 +1,22 @@
+<div fxLayout="column" fxLayoutAlign="start stretch" class="orders-management">
+
+  <div fxLayout="row" fxLayoutAlign="space-between center">
+
+    <h2>{{ 'سفارش های من' | translate}}</h2>
+
+    <div></div>
+
+  </div>
+
+  <mat-tab-group>
+    <mat-tab [label]="'فعال' | translate">
+      <user-orders-active></user-orders-active>
+    </mat-tab>
+
+    <mat-tab [label]="'غیر فعال' | translate">
+      <user-orders-inactive></user-orders-inactive>
+    </mat-tab>
+
+  </mat-tab-group>
+
+</div>

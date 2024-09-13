@@ -1,0 +1,76 @@
+@import '~swiper/swiper';
+@import '~swiper/components/pagination/pagination';
+@import '~swiper/components/navigation/navigation';
+
+.landing-motolead {
+
+  .motolead-slider {
+
+    width: 100%;
+    height: 100%;
+
+    .swiper-pagination-bullet-active {
+      background-color: var(--custom-primary-color);
+    }
+
+    .swiper-slide {
+      text-align: center;
+
+      img {
+        max-height: 85vh;
+        width: 100%;
+        object-fit: contain;
+      }
+    }
+  }
+
+  .motolead-categories {
+
+    swiper {
+      width: 100%;
+      height: 100%;
+
+      .swiper-button-prev, .swiper-button-next {
+        color: var(--custom-primary-color) !important;
+      }
+
+      .category-slide {
+        border: 2px solid var(--custom-primary-color);
+        color: var(--custom-primary-color);
+        background-color: transparent;
+        border-radius: 2rem;
+        transition: all 0.3s ease-in-out;
+        max-width: 110px;
+
+        &:hover {
+          color: white;
+          background-color: var(--custom-primary-color);
+        }
+      }
+
+    }
+
+  }
+
+  .motolead-tiles {
+    font-size: 14px;
+
+    p {
+      max-width: 75%;
+      text-align: center;
+    }
+
+    img {
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .section-btn {
+      background-color: var(--custom-primary-color);
+      color: white;
+      padding: 10px 30px;
+      border-radius: 10px;
+    }
+  }
+
+}

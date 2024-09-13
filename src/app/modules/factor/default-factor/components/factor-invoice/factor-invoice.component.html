@@ -1,0 +1,260 @@
+<div fxLayout="column" fxLayoutAlign="start stretch" class="factor-invoice">
+
+  <h2>{{ 'فاکتور' | translate}}</h2>
+
+  <div fxLayout="column" fxLayoutAlign="start stretch"
+       class="my-3 prices-detail" fxLayoutGap="15px">
+
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+      <span>{{'مجموع سبد خرید' | translate}}</span>
+
+      <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="8px">
+
+        <del *ngIf="factorService.currentOrder.productsOffer"
+             fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="5px">
+          {{ (factorService.currentOrder.productsPrice + factorService.currentOrder.productsOffer) | number}}
+          {{ storeSettingService.storeCurrency | translate}}
+        </del>
+
+        <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="5px">
+          {{factorService.currentOrder.productsPrice | number}}
+          {{storeSettingService.storeCurrency | translate}}
+        </div>
+
+      </div>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="space-between center"
+         *ngIf="factorStep == 'setting'">
+      <span>{{'هزینه پیک' | translate}}</span>
+
+      <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="8px">
+        <!--        <ng-container-->
+        <!--          *ngIf="factorService.currentOrder.freeCourier &&-->
+        <!--            modulesService.customDelivery">-->
+        <!--          <b>{{'رایگان' | translate}}</b>-->
+        <!--        </ng-container>-->
+
+        <ng-container *ngIf="modulesService.customDelivery  &&
+        factorService.currentOrder.courierPrice == 0 &&
+        factorService.currentOrder.courierOffer == 0">
+          <span>{{'بر عهده مشتری' | translate}}</span>
+        </ng-container>
+
+        <ng-container *ngIf="modulesService.customDelivery  &&
+        (factorService.currentOrder.courierPrice != 0  ||
+        (factorService.currentOrder.courierPrice == 0 && factorService.currentOrder.courierOffer != 0 ) ) ">
+          <del *ngIf="factorService.currentOrder.courierOffer"
+               fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="5px">
+            {{ (factorService.currentOrder.courierPrice + factorService.currentOrder.courierOffer) | number}}
+            {{storeSettingService.storeCurrency | translate}}
+          </del>
+
+          <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="5px">
+            {{factorService.currentOrder.courierPrice | number}}
+            {{storeSettingService.storeCurrency | translate}}
+          </div>
+        </ng-container>
+
+      </div>
+    </div>
+
+    <mat-divider *ngIf="factorService.currentOrder.invoiceOffer +
+         factorService.currentOrder.productsOffer +
+          factorService.currentOrder.courierOffer +
+           factorService.currentOrder.firstOrderOffer +
+           factorService.currentOrder.introducedOffer +
+           factorService.currentOrder.discountCodeOffer > 0"></mat-divider>
+
+    <mat-accordion class="discounts-accordion"
+                   *ngIf="factorService.currentOrder.invoiceOffer +
+         factorService.currentOrder.productsOffer +
+          factorService.currentOrder.courierOffer +
+           factorService.currentOrder.firstOrderOffer +
+           factorService.currentOrder.introducedOffer +
+           factorService.currentOrder.giftOffer +
+           factorService.currentOrder.discountCodeOffer > 0">
+      <mat-expansion-panel>
+
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{'سود شما در این خرید' | translate}}
+          </mat-panel-title>
+          <mat-panel-description fxLayout="row" fxLayoutAlign="end center">
+            {{ (
+            factorService.currentOrder.invoiceOffer +
+            factorService.currentOrder.productsOffer +
+            factorService.currentOrder.courierOffer +
+            factorService.currentOrder.firstOrderOffer +
+            factorService.currentOrder.introducedOffer +
+            factorService.currentOrder.discountCodeOffer
+          ) | number}}
+            {{storeSettingService.storeCurrency | translate}}
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="10px">
+
+          <div fxLayout="row" fxLayoutAlign="space-between center" *ngIf="factorService.currentOrder.productsOffer">
+            <span>{{'سود شما در محصول ها' | translate}}</span>
+
+            <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="8px">
+
+              <b fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="5px">
+                {{factorService.currentOrder.productsOffer | number}}
+                {{storeSettingService.storeCurrency | translate}}
+              </b>
+
+            </div>
+          </div>
+
+          <div fxLayout="row" fxLayoutAlign="space-between center"
+               *ngIf="factorService.currentOrder.courierOffer">
+            <span>{{'سود شما در پیک' | translate}}</span>
+
+            <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="8px">
+
+              <b fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="5px">
+                {{factorService.currentOrder.courierOffer | number}}
+                {{storeSettingService.storeCurrency | translate}}
+              </b>
+
+            </div>
+          </div>
+
+          <div fxLayout="row" fxLayoutAlign="space-between center" *ngIf="factorService.currentOrder.invoiceOffer">
+            <span>{{'سود شما در فاکتور' | translate}}</span>
+
+            <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="8px">
+              <b fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="5px">
+                {{factorService.currentOrder.invoiceOffer | number}}
+                {{storeSettingService.storeCurrency | translate}}
+              </b>
+            </div>
+          </div>
+
+          <div fxLayout="row" fxLayoutAlign="space-between center" *ngIf="factorService.currentOrder.firstOrderOffer">
+            <span>{{'سود شما در سفارش اول' | translate}}</span>
+
+            <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="8px">
+              <b fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="5px">
+                {{factorService.currentOrder.firstOrderOffer | number}}
+                {{storeSettingService.storeCurrency | translate}}
+              </b>
+            </div>
+          </div>
+
+          <div fxLayout="row" fxLayoutAlign="space-between center" *ngIf="factorService.currentOrder.introducedOffer">
+            <span>{{'سود شما در معرفی' | translate}}</span>
+
+            <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="8px">
+              <b fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="5px">
+                {{factorService.currentOrder.introducedOffer | number}}
+                {{storeSettingService.storeCurrency | translate}}
+              </b>
+            </div>
+          </div>
+
+          <div fxLayout="row" fxLayoutAlign="space-between center" *ngIf="factorService.currentOrder.giftOffer">
+            <span>{{'هدیه خرید' | translate}}</span>
+
+            <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="8px">
+              <b fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="5px">
+                {{factorService.currentOrder.giftOffer | number}}
+                {{storeSettingService.storeCurrency | translate}}
+              </b>
+            </div>
+          </div>
+
+          <div fxLayout="row" fxLayoutAlign="space-between center" *ngIf="factorService.currentOrder.discountCodeOffer">
+            <span>{{'سود شما در کد تخفیف' | translate}}</span>
+
+            <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="8px">
+              <b fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="5px">
+                {{factorService.currentOrder.discountCodeOffer | number}}
+                {{storeSettingService.storeCurrency | translate}}
+              </b>
+            </div>
+
+          </div>
+        </div>
+
+      </mat-expansion-panel>
+    </mat-accordion>
+
+    <mat-divider></mat-divider>
+
+    <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="10px">
+      <mat-form-field fxFlex appearance="outline">
+        <mat-label>{{'کد تخفیف' | translate}}</mat-label>
+        <input type="text" matInput [(ngModel)]="factorService.discountCode"
+               [disabled]="factorService.currentOrder.introducedOffer > 0 || factorService.currentOrder.firstOrderOffer > 0">
+      </mat-form-field>
+
+      <button mat-raised-button color="accent" (click)="discountVerify()"
+              [disabled]="(factorService.currentOrder.introducedOffer > 0 || factorService.currentOrder.firstOrderOffer > 0) && !factorService.discountCode">
+        {{'اعمال' | translate}}
+      </button>
+    </div>
+
+  </div>
+
+  <b class="mt-3 mb-5"
+     fxLayout="row" fxLayoutAlign="space-between center">
+    <span>{{'مبلغ قابل پرداخت' | translate}}:</span>
+
+    <ng-container *ngIf="factorStep == 'setting' else noCourierValue">
+      <div fxLayout="row" fxLayoutAlign="center center">
+        <span>
+          {{ (factorService.currentOrder.invoicePrice -
+          factorService.currentOrder.invoiceOffer -
+          factorService.currentOrder.firstOrderOffer -
+          factorService.currentOrder.introducedOffer -
+          factorService.currentOrder.courierOffer -
+          factorService.currentOrder.discountCodeOffer) | number}}
+        </span>
+        <span>{{storeSettingService.storeCurrency | translate}}</span>
+      </div>
+    </ng-container>
+
+    <ng-template #noCourierValue>
+      <div fxLayout="row" fxLayoutAlign="center center">
+        <span>
+          {{
+          (factorService.currentOrder.invoicePrice -
+            factorService.currentOrder.courierPrice -
+            factorService.currentOrder.invoiceOffer -
+            factorService.currentOrder.firstOrderOffer -
+            factorService.currentOrder.courierOffer -
+            factorService.currentOrder.introducedOffer -
+            factorService.currentOrder.discountCodeOffer) | number}}
+        </span>
+        <span>{{storeSettingService.storeCurrency | translate}}</span>
+      </div>
+    </ng-template>
+
+  </b>
+
+  <div fxLayout="row" fxLayoutAlign="space-between center">
+
+    <ng-container *ngIf="factorStep == 'cart' else factorSettingActions">
+      <a mat-stroked-button color="primary" routerLink="/store" fxFlex="48%">
+        {{'صفحه محصولات' | translate}}
+      </a>
+      <a mat-raised-button color="primary" (click)="routeToFactorSetting()" fxFlex="48%">
+        {{'مرحله بعد' | translate}}
+      </a>
+    </ng-container>
+
+    <ng-template #factorSettingActions>
+      <a mat-stroked-button color="primary" routerLink="../" fxFlex="48%">
+        {{'سبد خرید' | translate}}
+      </a>
+      <button mat-raised-button color="primary" fxFlex="48%" (click)="submitOrder()">
+        {{'ثبت سفارش' | translate}}
+      </button>
+    </ng-template>
+
+  </div>
+
+</div>
